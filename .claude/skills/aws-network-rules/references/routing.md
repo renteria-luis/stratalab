@@ -72,6 +72,12 @@ Code: validation issues `ROUTE_DUPLICATE_DESTINATION`, `ROUTE_DESTINATION_RESERV
 Fidelity: Exact · Status: verified 2026-11-04
 Sources: https://docs.aws.amazon.com/ec2/latest/devguide/errors-overview.html · https://docs.aws.amazon.com/vpc/latest/userguide/subnet-route-tables.html
 
+### RT-12 · Custom route tables
+Rule: By default a route table contains only the local route. After you create a custom route table you add routes and associate it with subnets yourself, so a new custom table has no associations. You can add, remove and modify its routes, and you can delete it only when it has no associations.
+Engine: `createRouteTable` stores no routes and changes no subnet. Deleting route tables is Unsupported in the R0 console (YAML can remove them).
+Fidelity: Exact · Status: verified 2026-11-04 · Exam: SAA
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/subnet-route-tables.html · https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateRouteTable.html
+
 ## Internet gateway
 
 ### IGW-01 · Going out needs a public IPv4 address
@@ -107,6 +113,12 @@ Rule: When a path starts or ends at an internet gateway, its internet-side addre
 Engine: a trace query's internet address must not be in RFC 1918, RFC 6598, a restricted range (ADR-01) or a VPC CIDR; otherwise the query is rejected with `IGW_EXPECTS_PUBLIC_ADDRESS`. An instance reaching another instance through its public address (hairpin through the internet gateway) is Unsupported in R0 (`UNSUPPORTED_FEATURE`).
 Fidelity: Exact · Status: verified 2026-11-04
 Source: https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
+
+### IGW-07 · Detach and delete
+Rule: You can't detach an internet gateway if the VPC has resources with associated public IP addresses or Elastic IP addresses. You can't delete an internet gateway while it is attached to a VPC.
+Engine: `detachInternetGateway` fails with helper error `IGW_HAS_PUBLIC_ADDRESSES` while any network interface in the VPC has a public IPv4 address (`params.count`). Deleting internet gateways is Unsupported in the R0 console. Whether an instance can get a public IPv4 address at launch in a VPC without an attached internet gateway is open (Q11); the launch helper allows it (Inferred).
+Fidelity: Exact · Status: verified 2026-11-04 · Exam: SAA
+Source: https://docs.aws.amazon.com/vpc/latest/userguide/delete-igw.html
 
 ## NAT gateway (public, zonal)
 
@@ -146,4 +158,5 @@ Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html
 
 - Q1: Confirm that traffic arriving from the internet gateway isn't looked up in the destination subnet's route table (RT-02, IGW-04). Golden test: Reachability Analyzer from the internet gateway to an instance, once with and once without the 0.0.0.0/0 → igw route in the instance's subnet.
 - Q8: Confirm that a blackhole route still wins longest prefix match over a less specific active route, and decide whether a subnet whose only internet gateway route is blackhole counts as public (RT-08, RT-09). Golden test: 0.0.0.0/0 → attached igw plus 198.51.100.0/24 → a detached igw, then analyze instance → 198.51.100.10.
+- Q11: Can an instance get an auto-assigned public IPv4 address at launch in a VPC with no attached internet gateway (IGW-07, ADR-10)? IGW-07 forbids detaching while public addresses exist, so the console path to "detached gateway + public address" (used by the RT-08 and IGW-05 trace tests) may only exist through launch. No Reachability Analyzer cost: the user launches one instance in the sandbox account and terminates it.
 - Q10: What happens to internet traffic aimed at an instance's public IPv4 address when the VPC has no attached internet gateway, and can that state exist at all (detaching an internet gateway while public addresses are mapped)? The engine uses `NO_INTERNET_GATEWAY` until the docs or a capture answer it (IGW-05).

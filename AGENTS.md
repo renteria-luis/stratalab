@@ -80,7 +80,7 @@ Run `pnpm typecheck` and `pnpm test` before you say a task is done.
 - Accessibility: WCAG 2.1 AA. Color is never the only signal. Verdicts use an icon and text (Cloudscape `StatusIndicator`), and on the canvas also a shape or line style. Use a colorblind-safe palette (blue/orange); never rely on red vs green. All text is real DOM text, never drawn on `<canvas>`.
 - 60 FPS: never store moving packet positions in React Flow `nodes` or `edges`. Packet components subscribe only to the trace playhead (`currentHopIndex`) through a Zustand selector or DOM refs.
 - Lab mode: all menus stay visible and clickable, nothing is highlighted or locked, and pages outside the lab show a realistic empty state. Never show messages that hint at the answer (such as "this isn't the cause"). Hints are opt-in.
-- i18n from day one: every user-facing string goes through the i18n layer (`es`, `en`). Code, comments, docs and commit messages are in English.
+- Language: console text is English only and never translated. If the real AWS console shows a text (menus, search, page titles, table columns, form labels, buttons, empty states, console errors), we show it in English as captured. Text only the simulator shows (banner, footer, storage notices, fidelity labels, issue and reason messages, Console Home simulator widgets, labs, hints, workbench) goes through the i18n layer (`es`, `en`) from day one. Code, comments, docs and commit messages are in English.
 - Desktop first (1280 px and wider).
 
 ## Security, branding and anti-phishing

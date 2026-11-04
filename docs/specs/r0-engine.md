@@ -1,6 +1,6 @@
 # R0 engine spec
 
-Status: draft, waiting for review · Date: 2026-11-04 · Package: `packages/engine`
+Status: draft, waiting for review · Date: 2026-11-04 (sections 3.8, 3.10 and 8.5 added for P7) · Package: `packages/engine`
 Rules: `.claude/skills/aws-network-rules` (R0 rules re-verified 2026-11-04, see section 10).
 
 This spec defines the R0 topology schema, `validate()`, `trace()` and `deriveStatus()`.
@@ -195,16 +195,45 @@ type RunningService = {
 
 ### 3.8 What the creation helpers set
 
-The schema doesn't create defaults. The store's creation helpers (pure functions in `packages/engine`) build the AWS defaults:
+The schema doesn't create defaults. Pure functions in `packages/engine/src/helpers` build the AWS defaults (this section) and apply console edits (section 3.10). Each one takes a parsed `Topology`, never mutates it, and returns a new one:
 
-| Action                  | Creates                                                                                                                                                                                                       | Rules                  |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
-| Create VPC              | VPC; main route table with no stored routes (local only); default network ACL with entry 100 ALLOW all in each direction; security group `default` with inbound all from itself and outbound all to 0.0.0.0/0 | RT-01, NACL-05, SG-05  |
-| Create subnet           | `mapPublicIpOnLaunch: false`, no explicit associations                                                                                                                                                        | RT-01, NACL-01, ADR-10 |
-| Create security group   | No inbound rules; one outbound rule all to 0.0.0.0/0                                                                                                                                                          | SG-05                  |
-| Create network ACL      | No numbered entries (only `*`), not associated                                                                                                                                                                | NACL-05                |
-| Create internet gateway | Detached                                                                                                                                                                                                      | IGW-05                 |
-| Launch instance         | Public IP if the launch setting (prefilled from `mapPublicIpOnLaunch`) asks for one; the VPC default security group when none is chosen                                                                       | ADR-10, SG-05          |
+```ts
+type HelperResult<T> =
+  | { ok: true; topology: Topology; created: T } // created: the new IDs, e.g. { vpcId, mainRouteTableId, … }
+  | { ok: false; error: HelperError };
+
+type HelperError = {
+  code: HelperErrorCode; // translated by the UI as `helper.<code>`
+  ruleIds: RuleId[];
+  params: Record<string, string | number>;
+  issues?: { path: (string | number)[]; message: string }[]; // INVALID_INPUT only
+};
+```
+
+- Helpers build the candidate as `TopologyInput` and parse it with `topologySchema`, so CIDRs are stored in canonical form (ADR-05). A parse failure returns `INVALID_INPUT`; forms check fields first, so this is a safety net.
+- Helpers check only what `validate()` can't see: lookups and state changes (codes below). AWS rules between resources stay in `validate()`. The store calls `newErrors(before, after)`, which returns the `validate()` errors of `after` that `before` doesn't have (same code, resource, related resources and params). A non-empty list rejects the change, as the AWS API would, and the form shows `issue.<code>`. Errors that already existed (for example from a YAML import) don't block unrelated edits.
+
+**IDs** (our convention, deterministic). `nextId(topology, prefix)` returns the largest existing hex value with that prefix plus one, written with at least 8 hex characters (`vpc-00000001`, after `vpc-0a1b2c3d` comes `vpc-0a1b2c3e`). If that needs more than 17 characters, it returns the smallest unused value from 1. A helper that creates several resources takes their IDs in the order listed below, so the same calls on the same topology always give the same IDs. Removing the resource with the largest ID frees that ID again; AWS never reuses IDs, and R0 keeps no history keyed by ID.
+
+| Action                  | Helper and input                                                                                                             | Creates                                                                                                                                                                                                                                                                                                                      | Rules                         | Fidelity                          |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | --------------------------------- |
+| Create VPC              | `createVpc({ cidrBlock, name? })`                                                                                            | VPC; main route table with no stored routes (local only); default network ACL with entry 100 ALLOW all in each direction; security group `default` (description `default VPC security group`) with inbound all from itself and outbound all to 0.0.0.0/0. ID order: `vpc`, `rtb`, `acl`, `sg`, `sgr` inbound, `sgr` outbound | RT-01, NACL-05, SG-05, ADR-05 | Exact (description text Inferred) |
+| Create subnet           | `createSubnet({ vpcId, cidrBlock, availabilityZone?, name? })`                                                               | `mapPublicIpOnLaunch: false`, no explicit associations. "No preference" (no zone given) picks `<region>a`                                                                                                                                                                                                                    | RT-01, NACL-01, ADR-10        | Exact (zone choice Inferred)      |
+| Create route table      | `createRouteTable({ vpcId, name? })`                                                                                         | No stored routes (local only), no associations                                                                                                                                                                                                                                                                               | RT-12                         | Exact                             |
+| Create internet gateway | `createInternetGateway({ name? })`                                                                                           | Detached                                                                                                                                                                                                                                                                                                                     | IGW-05                        | Exact                             |
+| Create security group   | `createSecurityGroup({ vpcId, name, description })`                                                                          | No inbound rules; one outbound rule all to 0.0.0.0/0                                                                                                                                                                                                                                                                         | SG-05, SG-06                  | Exact                             |
+| Create network ACL      | `createNetworkAcl({ vpcId, name? })`                                                                                         | No numbered entries (only `*`), not associated                                                                                                                                                                                                                                                                               | NACL-05                       | Exact                             |
+| Launch instance         | `launchInstance({ subnetId, platform, name?, privateIpAddress?, autoAssignPublicIp?, securityGroupIds?, runningServices? })` | Instance and its primary network interface (ID order: `i`, `eni`), as below                                                                                                                                                                                                                                                  | ADR-04, ADR-09, ADR-10, SG-05 | see below                         |
+
+Launch instance:
+
+- `privateIpAddress` absent: the first address of the subnet that isn't reserved (ADR-04) and isn't used by another interface in the same VPC. AWS only says it picks "an available address" (ADR-09), so the choice is Inferred. None free: `NO_FREE_PRIVATE_ADDRESS`.
+- `autoAssignPublicIp` absent: the subnet's `mapPublicIpOnLaunch` (ADR-10). When true, the interface gets `{ kind: 'auto-assigned', address }` with the first address of 203.0.113.1–203.0.113.254 (RFC 5737, our stand-in for Amazon's pool, Inferred) that no interface uses and no VPC CIDR contains. None free: `PUBLIC_POOL_EXHAUSTED`. In a VPC without an attached internet gateway the helper still assigns one (Q11, Inferred).
+- `securityGroupIds` absent or empty: the VPC's default security group (SG-05).
+- `runningServices` absent: none. AWS has no such launch field (software comes from the AMI or user data), so the launch view's "Simulated software" choice (none, or web server: `nginx` on TCP 80) is labeled Inferred.
+- `platform` is required; the launch view maps the AMI choice to `linux` or `windows` (EPH-01).
+
+Helper error codes: `UNKNOWN_REFERENCE` (an input ID doesn't exist), `INVALID_INPUT`, `NO_FREE_PRIVATE_ADDRESS`, `PUBLIC_POOL_EXHAUSTED`, and the internet gateway codes in section 3.10.
 
 ### 3.9 Example (lab 1 solution)
 
@@ -281,6 +310,28 @@ instances:
     runningServices:
       - { protocol: tcp, port: 80, name: nginx, responseHtml: '<h1>It works</h1>' }
 ```
+
+### 3.10 Edit helpers
+
+Same `HelperResult` and `newErrors` check as section 3.8. `created` is `{}` unless stated.
+
+| Console action                                    | Helper                                                         | Effect                                                                                                                                                              | Helper errors                                  | Rules               |
+| ------------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | ------------------- |
+| Route table › Edit routes                         | `replaceRoutes(routeTableId, routes)`                          | Replaces the stored routes (the local route stays derived)                                                                                                          | none                                           | RT-03, RT-04, RT-11 |
+| Route table › Edit subnet associations            | `associateRouteTable(subnetId, routeTableId)`                  | Explicit association; replaces the previous one. Choosing the main table makes the association explicit                                                             | none                                           | RT-01               |
+| Route table › Edit subnet associations (unselect) | `disassociateRouteTable(subnetId)`                             | Removes the explicit association, so the subnet uses the main table implicitly                                                                                      | none                                           | RT-01               |
+| Route table › Set main route table                | `setMainRouteTable(routeTableId)`                              | The table's VPC uses it as main; explicit associations don't change                                                                                                 | none                                           | RT-01               |
+| Internet gateway › Attach to VPC                  | `attachInternetGateway(internetGatewayId, vpcId)`              | Sets `attachedVpcId`                                                                                                                                                | `IGW_ALREADY_ATTACHED`, `VPC_ALREADY_HAS_IGW`  | IGW-05              |
+| Internet gateway › Detach from VPC                | `detachInternetGateway(internetGatewayId)`                     | Removes `attachedVpcId`                                                                                                                                             | `IGW_NOT_ATTACHED`, `IGW_HAS_PUBLIC_ADDRESSES` | IGW-07              |
+| Security group › Edit inbound / outbound rules    | `replaceSecurityGroupRules(securityGroupId, direction, rules)` | Replaces the rules of one direction. A rule whose `id` the group already has in that direction keeps it; every other rule gets a new `sgr` ID, in list order        | none                                           | SG-02, SG-03, SG-04 |
+| Network ACL › Edit inbound / outbound rules       | `replaceNetworkAclEntries(networkAclId, direction, entries)`   | Replaces the numbered entries of one direction (the `*` entry stays implicit)                                                                                       | none                                           | NACL-02, NACL-08    |
+| Network ACL › Edit subnet associations            | `associateNetworkAcl(subnetId, networkAclId)`                  | Explicit association. Choosing the VPC's default network ACL clears `networkAclId`, because R0 models the default association as absent (section 3.2)               | none                                           | NACL-01             |
+| Subnet › Edit subnet settings                     | `setMapPublicIpOnLaunch(subnetId, value)`                      | Sets the attribute; existing instances don't change                                                                                                                 | none                                           | ADR-10              |
+| Any › Name tag                                    | `setNameTag(resource, name)`                                   | Sets or clears (`''`) `name` on a VPC, subnet, route table, internet gateway, network ACL or instance. A security group's name is its group name, not a tag (SG-06) | none                                           | none                |
+
+- `IGW_ALREADY_ATTACHED`: the gateway is attached to a VPC (`params.vpcId`). `VPC_ALREADY_HAS_IGW`: the VPC has another attached gateway (`params.internetGatewayId`). `IGW_NOT_ATTACHED`: nothing to detach. `IGW_HAS_PUBLIC_ADDRESSES`: interfaces in the VPC have public IPv4 addresses (`params.count`).
+- Every helper returns `UNKNOWN_REFERENCE` for an ID that doesn't exist and `INVALID_INPUT` when the result fails `topologySchema`.
+- Deleting resources and terminating instances are Unsupported in the R0 console (section 9). The YAML editor can still remove them.
 
 ## 4. `validate(topology): Issue[]`
 
@@ -636,7 +687,23 @@ CIDR property tests (fast-check) follow the addressing reference (P3).
 - `ADR-04: available IPv4 count of a /24 with one instance is 250`.
 - `EPH-01: client port range follows the platform`.
 
-### 8.5 Golden tests
+### 8.5 Helpers
+
+- `RT-01`, `NACL-05`, `SG-05`, `ADR-05`: create VPC builds the main route table, the default network ACL and the default security group, with the CIDR in canonical form.
+- `RT-01`, `NACL-01`, `ADR-10`: a new subnet uses the main table and the default ACL implicitly and doesn't map public IPs; no zone gives `<region>a`.
+- `RT-12`: a new route table has only the local route and no associations.
+- `IGW-05`: a new internet gateway is detached; attach rejects an attached gateway and a VPC that already has one.
+- `IGW-07`: detach rejects while an interface in the VPC has a public IPv4 address.
+- `SG-05`: a new security group has no inbound rules and one outbound rule; launch without groups uses the VPC default group.
+- `NACL-05`: a new network ACL has no entries and no associations.
+- `ADR-09`, `ADR-04`: launch picks the first usable free address and skips reserved and used ones; a full subnet gives `NO_FREE_PRIVATE_ADDRESS`.
+- `ADR-10`: launch assigns a public address when the subnet setting or the launch override asks for one, and none otherwise; the pool skips used addresses and VPC CIDRs.
+- `RT-01`, `NACL-01`: associate, disassociate and set main; associating the default ACL clears the explicit association.
+- `SG-04`: replacing rules keeps known rule IDs and gives new rules new IDs.
+- `HELPERS: the same calls give the same IDs`, `HELPERS: helpers never mutate their input`, `HELPERS: newErrors returns only errors the change introduced`.
+- `HELPERS: console steps build the lab 1 solution` (create, attach, route, associate, rules, launch), then `trace` F1 gives `REACHED`.
+
+### 8.6 Golden tests
 
 R0 needs golden fixtures (TRC-06) for F1 and F2 split into two analyses each, plus the IGW-04 and Q8 cases, before R0 ships. The user runs `pnpm golden:capture` (AGENTS.md, "Golden capture").
 
@@ -649,6 +716,7 @@ None of these can be expressed in the R0 schema, except where noted.
 | IPv6, secondary VPC CIDRs                                       | ADR-01, ADR-08              | not in MVP          |
 | Secondary private addresses and network interfaces              | ADR-09                      | not planned         |
 | Instance stop and start, address release                        | ADR-10                      | not planned         |
+| Deleting resources and terminating instances in the console     | RT-12, IGW-07               | after lab 1         |
 | Local route retargeting, middlebox routes, gateway route tables | RT-02, RT-03                | not in MVP          |
 | Prefix lists, NAT gateway, VPC endpoints, SSM status            | RT-06, NAT-_, VPCE-_, SSM-* | R1                  |
 | Peering, transit gateway, VPN (`DISCONNECTED_VPCS` until then)  | PCX-_, TGW-_, VPN-*         | R2                  |
@@ -682,7 +750,9 @@ New rules added from the same pages: ADR-09, ADR-10, RT-11, IGW-06, SG-06, SG-07
 
 ## 11. Open questions and decisions to confirm
 
-Open questions (skill files): Q1 and Q8 (routing), Q3 (filtering, R1), Q7 (trace order), Q9 (addressing), Q10 (no attached internet gateway).
+Open questions (skill files): Q1, Q8 and Q11 (routing), Q3 (filtering, R1), Q7 (trace order), Q9 (addressing), Q10 (no attached internet gateway).
+
+Helper decisions (P7, confirmed 2026-11-04): deterministic IDs as in section 3.8; first free private address; public pool 203.0.113.0/24; `<region>a` for "No preference"; "Simulated software" at launch; `newErrors` rejects changes; console deletion deferred.
 
 Design decisions in this spec, to confirm before P3:
 

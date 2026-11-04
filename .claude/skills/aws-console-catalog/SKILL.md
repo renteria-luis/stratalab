@@ -29,6 +29,8 @@ Inside a reproduced console, each side-navigation item is `functional`, `referen
    - Each capture folder may hold a `.txt` next to a screenshot: the full page text (select all, copy) from the same visit. Use it for exact spelling and for items the screenshot cuts off. It does not show grouping (section headers look like items), so grouping comes from the screenshot; where only the text exists, mark the section `groupingFrom: "page-text"`. Never copy the account ID or user name that appear in it.
 3. **Card facts**: AWS documentation, service pages and FAQs, looked up with the AWS documentation MCP tool. Each card lists its sources and a status (`verified YYYY-MM-DD` or `to-verify`).
 
+**Language**: console text is English only, exactly as captured, and never goes through i18n or gets a Spanish translation. That covers everything the real console shows: names, menus, search, page titles, table columns, form labels, buttons, empty states and console error messages. Only simulator text (banner, footer, notices, fidelity labels, issue and reason messages, simulator widgets, labs, hints, workbench) is translated (`es`, `en`). Decided 2026-11-04.
+
 AWS renames and retires services. If a capture or a doc shows a service as retired or renamed, update the catalog (`retired: true` hides it from menus and search). Re-capture navigation every 6 months.
 
 ## Modes
