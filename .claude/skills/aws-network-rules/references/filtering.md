@@ -34,11 +34,11 @@ Fidelity: Exact · Status: verified 2026-11-04 · Exam: SAA
 Sources: https://docs.aws.amazon.com/vpc/latest/userguide/default-security-group.html · https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html
 
 ### SG-06 · Scope and names
-Rule: You assign a security group to resources in the VPC it belongs to (the Security Group VPC Association feature extends this to other VPCs in the Region). A security group name is unique within its VPC, isn't case-sensitive, has up to 255 characters and can't start with `sg-`. Name and description are required.
-Code: validation issues `VPC_MISMATCH`, `SG_NAME_DUPLICATE`, `SG_NAME_INVALID`.
-Engine: the Security Group VPC Association feature is Unsupported.
+Rule: You assign a security group to resources in the VPC it belongs to (the Security Group VPC Association feature extends this to other VPCs in the Region). A security group name is unique within its VPC, isn't case-sensitive, has up to 255 characters and can't start with `sg-`. Name and description are required, up to 255 characters, and use only a-z, A-Z, 0-9, spaces and `._-:/()#,@[]+=&;{}!$*`. AWS trims trailing spaces from the name before storing it.
+Code: validation issues `VPC_MISMATCH`, `SG_NAME_DUPLICATE`, `SG_NAME_INVALID` (`params.reason`: `empty`, `too-long`, `invalid-characters`, `sg-prefix`).
+Engine: names are compared and checked after trimming trailing spaces; descriptions as written. The Security Group VPC Association feature is Unsupported.
 Fidelity: Exact · Status: verified 2026-11-04
-Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html · https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateSecurityGroup.html
 
 ### SG-07 · Quotas
 Rule: Default quotas: 60 inbound and 60 outbound rules per security group (IPv4 and IPv6 counted separately), and 5 security groups per network interface (adjustable up to 16). Both are adjustable.

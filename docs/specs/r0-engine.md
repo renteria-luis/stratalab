@@ -361,7 +361,7 @@ Supported shapes and their flow (TRC-03):
 
 ```ts
 type TraceResult =
-  | { status: 'blocked'; issues: Issue[] }
+  | { status: 'blocked'; issues: (Issue | QueryIssue)[] } // validate() errors, then query issues
   | {
       status: 'evaluated';
       flow: 'F0' | 'F1' | 'F2';
@@ -420,6 +420,7 @@ type Hop = {
 };
 ```
 
+- `QueryIssue` has the fields of `Issue` without `resource`; its `path` starts with `'query'` (for example `['query', 'destination', 'ipAddress']`).
 - `destinationIp` is `null` only in one case: an F1 query to `public` when the instance has no public IPv4 address. Hop 0 then fails with `IGW_PRIVATE_IP_ASSOCIATION_FOR_INGRESS`, and the `null` shows the learner that there was no address to reach.
 - Skipped hops are kept, so the learner sees that a NACL was not checked inside one subnet and that a security group let a response through.
 - The trace stops at the first failing hop. The return path runs only after the forward path passes (TRC-02).
@@ -428,14 +429,14 @@ type Hop = {
 
 `trace()` returns `status: 'blocked'` and doesn't evaluate when:
 
-| Code                         | Rule IDs  | Cause                                                                                                                                                |
-| ---------------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| any `validate()` error       | section 4 | The topology can't exist in AWS                                                                                                                      |
-| `UNKNOWN_REFERENCE`          | none      | The query names an instance that doesn't exist                                                                                                       |
-| `IGW_EXPECTS_PUBLIC_ADDRESS` | IGW-06    | An internet address is in RFC 1918, RFC 6598, a restricted range or a VPC CIDR                                                                       |
-| `DISCONNECTED_VPCS`          | TRC-04    | Source and destination instances are in different VPCs (nothing connects VPCs before R2)                                                             |
-| `UNSUPPORTED_FEATURE`        | IGW-06    | Instance to instance through a public address (hairpin), including an internet destination that is the public address of an instance in the topology |
-| `INVALID_QUERY`              | EPH-02    | Internet to internet, same source and destination, `sourcePort` outside the client range, or `custom` without `sourcePort`                           |
+| Code                         | Rule IDs  | Cause                                                                                                                                                                                  |
+| ---------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| any `validate()` error       | section 4 | The topology can't exist in AWS                                                                                                                                                        |
+| `UNKNOWN_REFERENCE`          | none      | The query names an instance that doesn't exist                                                                                                                                         |
+| `IGW_EXPECTS_PUBLIC_ADDRESS` | IGW-06    | An internet address is in RFC 1918, RFC 6598, a restricted range or a VPC CIDR                                                                                                         |
+| `DISCONNECTED_VPCS`          | TRC-04    | Source and destination instances are in different VPCs (nothing connects VPCs before R2)                                                                                               |
+| `UNSUPPORTED_FEATURE`        | IGW-06    | Instance to instance through a public address (hairpin), including an internet source or destination that is the public address of an instance in the topology                         |
+| `INVALID_QUERY`              | EPH-02    | Internet to internet, same source and destination, `destinationPort` outside 1–65535, an invalid IPv4 address, `sourcePort` outside the client range, or `custom` without `sourcePort` |
 
 ### 5.4 Hop sequences
 
@@ -475,21 +476,21 @@ The internet server is outside the model and always answers (Inferred).
 
 **F0 · instance → instance, same VPC, private address**
 
-| #   | Dir     | Step          | Notes                                                                  | Rule IDs                 |
-| --- | ------- | ------------- | ---------------------------------------------------------------------- | ------------------------ |
-| 0   | forward | sg-egress     |                                                                        | SG-02, SG-03             |
-| 1   | forward | nacl-outbound | skipped `same-subnet` when the destination is in the source subnet     | NACL-04                  |
-| 2   | forward | route-lookup  | always the local route (RT-03; `LOCAL_ROUTE_CONFLICT` keeps it unique) | RT-03, RT-04             |
-| 3   | forward | nacl-inbound  | skipped `same-subnet`                                                  | NACL-04                  |
-| 4   | forward | sg-ingress    | security group references can match (private addresses)                | SG-04                    |
-| 5   | forward | host          |                                                                        | TRC-01                   |
-| 6   | return  | sg-egress     | skipped `stateful-response`                                            | SG-01                    |
-| 7   | return  | nacl-outbound | to the client port; skipped `same-subnet`                              | NACL-03, NACL-04, EPH-02 |
-| 8   | return  | route-lookup  | local route                                                            | RT-03                    |
-| 9   | return  | nacl-inbound  | skipped `same-subnet`                                                  | NACL-03, NACL-04         |
-| 10  | return  | sg-ingress    | skipped `stateful-response`                                            | SG-01                    |
+| #   | Dir     | Step          | Notes                                                                  | Rule IDs            |
+| --- | ------- | ------------- | ---------------------------------------------------------------------- | ------------------- |
+| 0   | forward | sg-egress     |                                                                        | SG-02, SG-03, SG-04 |
+| 1   | forward | nacl-outbound | skipped `same-subnet` when the destination is in the source subnet     | NACL-02, NACL-04    |
+| 2   | forward | route-lookup  | always the local route (RT-03; `LOCAL_ROUTE_CONFLICT` keeps it unique) | RT-03, RT-04        |
+| 3   | forward | nacl-inbound  | skipped `same-subnet`                                                  | NACL-02, NACL-04    |
+| 4   | forward | sg-ingress    | security group references can match (private addresses)                | SG-02, SG-03, SG-04 |
+| 5   | forward | host          |                                                                        | TRC-01              |
+| 6   | return  | sg-egress     | skipped `stateful-response`                                            | SG-01               |
+| 7   | return  | nacl-outbound | to the client port; skipped `same-subnet`                              | NACL-02..04, EPH-02 |
+| 8   | return  | route-lookup  | local route                                                            | RT-03, RT-04        |
+| 9   | return  | nacl-inbound  | skipped `same-subnet`                                                  | NACL-02..04         |
+| 10  | return  | sg-ingress    | skipped `stateful-response`                                            | SG-01               |
 
-Fidelity of F0 hops: Exact, except `host` (Inferred) and the overall order (Inferred until Q7 is answered).
+Fidelity of F0 hops: Exact, except `host` (Inferred) and the overall order (Inferred until Q7 is answered). A skipped `same-subnet` hop lists only NACL-04.
 
 ### 5.5 Matching details
 
