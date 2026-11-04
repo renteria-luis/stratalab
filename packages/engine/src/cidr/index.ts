@@ -22,8 +22,11 @@ export {
   type ReservedPurpose,
 } from './reserved';
 export {
+  classifyNonPublic,
   findBlockContaining,
   RFC1918_BLOCKS,
   RFC6598_BLOCK,
+  ROUTE_RESERVED_BLOCK,
   VPC_RESTRICTED_BLOCKS,
+  type NonPublicReason,
 } from './ranges';

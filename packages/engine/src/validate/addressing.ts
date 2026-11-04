@@ -1,4 +1,5 @@
 import {
+  classifyNonPublic,
   contains,
   findBlockContaining,
   formatCidr,
@@ -7,8 +8,6 @@ import {
   mustParseIpv4,
   overlaps,
   reservedPurpose,
-  RFC1918_BLOCKS,
-  RFC6598_BLOCK,
   toBlock,
   VPC_RESTRICTED_BLOCKS,
   type CidrBlock,
@@ -234,22 +233,4 @@ function checkInterfaces(topology: Topology): Issue[] {
     }
   });
   return issues;
-}
-
-/**
- * Why an address can't be a public IPv4 address, or null when it can. The first match wins:
- * RFC 1918, RFC 6598, a restricted VPC block (ADR-01), then any VPC CIDR of the topology.
- */
-function classifyNonPublic(
-  address: CidrBlock,
-  vpcBlocks: readonly CidrBlock[],
-): { reason: 'rfc1918' | 'rfc6598' | 'restricted' | 'vpc-cidr'; range: CidrBlock } | null {
-  const rfc1918 = findBlockContaining(RFC1918_BLOCKS, address);
-  if (rfc1918 !== null) return { reason: 'rfc1918', range: rfc1918 };
-  if (isWithin(address, RFC6598_BLOCK)) return { reason: 'rfc6598', range: RFC6598_BLOCK };
-  const restricted = findBlockContaining(VPC_RESTRICTED_BLOCKS, address);
-  if (restricted !== null) return { reason: 'restricted', range: restricted };
-  const vpc = findBlockContaining(vpcBlocks, address);
-  if (vpc !== null) return { reason: 'vpc-cidr', range: vpc };
-  return null;
 }

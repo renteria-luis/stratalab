@@ -131,6 +131,62 @@ export function extraInstance(
   };
 }
 
+/**
+ * Adds a second VPC (vpc-0000000b, 10.1.0.0/16) with its own main route table, default network
+ * ACL, default security group and one subnet (subnet-0000000b, 10.1.1.0/24). Valid on its own.
+ */
+export function addOtherVpc(input: TopologyInput): void {
+  const allowAll = {
+    ruleNumber: 100,
+    protocol: 'all',
+    cidrBlock: '0.0.0.0/0',
+    action: 'allow',
+  } as const;
+  input.vpcs.push({
+    id: 'vpc-0000000b',
+    cidrBlock: '10.1.0.0/16',
+    mainRouteTableId: 'rtb-0000000b',
+    defaultNetworkAclId: 'acl-0000000b',
+    defaultSecurityGroupId: 'sg-0000000b',
+  });
+  input.subnets.push({
+    id: 'subnet-0000000b',
+    vpcId: 'vpc-0000000b',
+    cidrBlock: '10.1.1.0/24',
+    availabilityZone: 'us-east-1b',
+  });
+  input.routeTables.push({ id: 'rtb-0000000b', vpcId: 'vpc-0000000b', routes: [] });
+  input.securityGroups.push({
+    id: 'sg-0000000b',
+    vpcId: 'vpc-0000000b',
+    name: 'default',
+    description: 'default VPC security group',
+    inboundRules: [
+      {
+        id: 'sgr-000000b1',
+        protocol: 'all',
+        peer: { type: 'security-group', securityGroupId: 'sg-0000000b' },
+      },
+    ],
+    outboundRules: [
+      { id: 'sgr-000000b2', protocol: 'all', peer: { type: 'cidr', cidrBlock: '0.0.0.0/0' } },
+    ],
+  });
+  input.networkAcls.push({
+    id: 'acl-0000000b',
+    vpcId: 'vpc-0000000b',
+    inboundEntries: [allowAll],
+    outboundEntries: [allowAll],
+  });
+}
+
+/** `items[index]`, or a test failure when it doesn't exist. */
+export function at<T>(items: readonly T[], index: number): T {
+  const item = items[index];
+  if (item === undefined) throw new Error(`Fixture has no item at index ${String(index)}`);
+  return item;
+}
+
 /** Applies `change` to a fresh base input and parses it. Throws if the result is not schema-valid. */
 export function parseBase(change: (input: TopologyInput) => void = () => undefined): Topology {
   const input = baseInput();
