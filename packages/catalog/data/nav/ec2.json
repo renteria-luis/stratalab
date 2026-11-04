@@ -1,0 +1,100 @@
+{
+  "serviceId": "ec2",
+  "capturedOn": "2026-11-03",
+  "sources": ["2026-11-03/ec2-1.png", "2026-11-03/ec2-2.png", "2026-11-03/ec2.txt"],
+  "header": { "label": "EC2", "target": "functional", "route": "/ec2" },
+  "sections": [
+    {
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Dashboard", "target": "empty", "route": "/ec2/dashboard" },
+        {
+          "label": "AWS Global View",
+          "target": "service",
+          "serviceId": "global-view",
+          "external": true
+        },
+        { "label": "Events", "target": "empty", "route": "/ec2/events" }
+      ]
+    },
+    {
+      "title": "Instances",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Instances", "target": "functional", "route": "/ec2/instances" },
+        { "label": "Instance Types", "target": "empty", "route": "/ec2/instance-types" },
+        { "label": "Launch Templates", "target": "empty", "route": "/ec2/launch-templates" },
+        { "label": "Spot Requests", "target": "empty", "route": "/ec2/spot-requests" },
+        { "label": "Savings Plans", "target": "empty", "route": "/ec2/savings-plans" },
+        { "label": "Reserved Instances", "target": "empty", "route": "/ec2/reserved-instances" },
+        { "label": "Dedicated Hosts", "target": "empty", "route": "/ec2/dedicated-hosts" },
+        {
+          "label": "Capacity Reservations",
+          "target": "empty",
+          "route": "/ec2/capacity-reservations"
+        },
+        {
+          "label": "UltraServers",
+          "target": "empty",
+          "route": "/ec2/ultraservers",
+          "badge": "New"
+        },
+        {
+          "label": "Capacity Manager",
+          "target": "empty",
+          "route": "/ec2/capacity-manager",
+          "badge": "New"
+        }
+      ]
+    },
+    {
+      "title": "Images",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "AMIs", "target": "empty", "route": "/ec2/amis" },
+        { "label": "AMI Catalog", "target": "empty", "route": "/ec2/ami-catalog" }
+      ]
+    },
+    {
+      "title": "Elastic Block Store",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Volumes", "target": "empty", "route": "/ec2/volumes" },
+        { "label": "Snapshots", "target": "empty", "route": "/ec2/snapshots" },
+        { "label": "Lifecycle Manager", "target": "empty", "route": "/ec2/lifecycle-manager" }
+      ]
+    },
+    {
+      "title": "Network & Security",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Security Groups", "target": "functional", "route": "/ec2/security-groups" },
+        { "label": "Elastic IPs", "target": "empty", "route": "/ec2/elastic-ips" },
+        { "label": "Placement Groups", "target": "empty", "route": "/ec2/placement-groups" },
+        { "label": "Key Pairs", "target": "empty", "route": "/ec2/key-pairs" },
+        { "label": "Network Interfaces", "target": "empty", "route": "/ec2/network-interfaces" }
+      ]
+    },
+    {
+      "title": "Load Balancing",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Load Balancers", "target": "empty", "route": "/ec2/load-balancers" },
+        { "label": "Target Groups", "target": "empty", "route": "/ec2/target-groups" },
+        { "label": "Trust Stores", "target": "empty", "route": "/ec2/trust-stores" }
+      ]
+    },
+    {
+      "title": "Auto Scaling",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Auto Scaling Groups", "target": "empty", "route": "/ec2/auto-scaling-groups" }
+      ]
+    },
+    {
+      "dividerBefore": true,
+      "groupingFrom": "screenshot",
+      "items": [{ "label": "Settings", "target": "empty", "route": "/ec2/settings" }]
+    }
+  ]
+}

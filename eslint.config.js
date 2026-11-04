@@ -87,5 +87,20 @@ export default defineConfig(
     },
   },
 
+  // Catalog data and search run in the browser: no Node imports (tests may use them).
+  {
+    files: ['packages/catalog/src/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            { group: ['node:*'], message: 'packages/catalog/src runs in the browser: no Node.' },
+          ],
+        },
+      ],
+    },
+  },
+
   prettier,
 );

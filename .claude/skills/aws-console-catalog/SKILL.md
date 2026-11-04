@@ -21,9 +21,12 @@ Inside a reproduced console, each side-navigation item is `functional`, `referen
 
 1. **Navigation** (service names, categories, order, side-navigation items): transcribe it from dated screenshots of the real console in `docs/console-capture/<YYYY-MM-DD>/`. Record `capturedOn` in the data. If a screenshot doesn't show something, leave it out and list it as unreadable; never fill gaps from memory. Captures are local reference only and stay out of git.
 2. **Exam scope**: the official in-scope service lists. Cards for in-scope services come first. AWS says the CLF-C02 list is non-exhaustive and can change, so record the date you copied it.
-   - CLF-C02: https://docs.aws.amazon.com/aws-certification/latest/userguide/clf-02-in-scope-services.html
+   - CLF-C02: https://docs.aws.amazon.com/aws-certification/latest/cloud-practitioner-02/clf-02-in-scope-services.html (the old `userguide/` URL returns 404 since at least 2026-11-04)
+   - CLF-C02 out of scope: https://docs.aws.amazon.com/aws-certification/latest/cloud-practitioner-02/clf-02-out-of-scope-services.html
    - SAA-C03: https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03/saa-03-in-scope-services.html
    - SAA-C03 out of scope: https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03/saa-03-out-of-scope-services.html
+   - Docs landing pages (`docsUrl`): the product list on https://docs.aws.amazon.com/. Match by name; when the docs entry is named differently from the console entry, record it in `data/capture-notes.md`.
+   - Each capture folder may hold a `.txt` next to a screenshot: the full page text (select all, copy) from the same visit. Use it for exact spelling and for items the screenshot cuts off. It does not show grouping (section headers look like items), so grouping comes from the screenshot; where only the text exists, mark the section `groupingFrom: "page-text"`. Never copy the account ID or user name that appear in it.
 3. **Card facts**: AWS documentation, service pages and FAQs, looked up with the AWS documentation MCP tool. Each card lists its sources and a status (`verified YYYY-MM-DD` or `to-verify`).
 
 AWS renames and retires services. If a capture or a doc shows a service as retired or renamed, update the catalog (`retired: true` hides it from menus and search). Re-capture navigation every 6 months.

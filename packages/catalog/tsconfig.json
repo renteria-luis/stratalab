@@ -1,7 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "types": []
+    // Node types are for the tests, which read the data folders. src/ must stay
+    // platform-free; eslint.config.js blocks node:* imports there.
+    "types": ["node"]
   },
   "include": ["src", "__tests__"]
 }

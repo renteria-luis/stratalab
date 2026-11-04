@@ -1,0 +1,3101 @@
+{
+  "capturedOn": "2026-11-03",
+  "sources": [
+    "2026-11-03/all_services.png",
+    "2026-11-03/all_services.txt",
+    "2026-11-03/services_per_category.png",
+    "2026-11-03/services_per_category.txt",
+    "2026-11-03/ec2-1.png",
+    "2026-11-03/vpc.txt"
+  ],
+  "menu": {
+    "views": ["Recently visited", "Favorites", "All applications", "All services"],
+    "categories": [
+      "Analytics",
+      "Application Integration",
+      "Blockchain",
+      "Business Applications",
+      "Cloud Financial Management",
+      "Compute",
+      "Containers",
+      "Customer Enablement",
+      "Database",
+      "Developer Tools",
+      "End User Computing",
+      "Front-end Web & Mobile",
+      "Game Development",
+      "Internet of Things",
+      "Machine Learning",
+      "Management & Governance",
+      "Media Services",
+      "Migration & Transfer",
+      "Networking & Content Delivery",
+      "Quantum Technologies",
+      "Satellite",
+      "Security, Identity, & Compliance",
+      "Storage"
+    ]
+  },
+  "services": [
+    {
+      "id": "ec2",
+      "name": "EC2",
+      "category": "Compute",
+      "aliases": ["Amazon Elastic Compute Cloud", "Amazon Elastic Compute Cloud (EC2)"],
+      "kind": "simulated",
+      "release": "R0",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/ec2/",
+      "menuDescription": "Virtual Servers in the Cloud",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "lightsail",
+      "name": "Lightsail",
+      "category": "Compute",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/lightsail/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "lambda",
+      "name": "Lambda",
+      "category": "Compute",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/lambda/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "batch",
+      "name": "Batch",
+      "category": "Compute",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/batch/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "elastic-beanstalk",
+      "name": "Elastic Beanstalk",
+      "category": "Compute",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/elastic-beanstalk/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "serverless-application-repository",
+      "name": "Serverless Application Repository",
+      "category": "Compute",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/serverlessrepo/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "outposts",
+      "name": "AWS Outposts",
+      "category": "Compute",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/outposts/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "ec2-image-builder",
+      "name": "EC2 Image Builder",
+      "category": "Compute",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/imagebuilder/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "app-runner",
+      "name": "AWS App Runner",
+      "category": "Compute",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/apprunner/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "parallel-computing-service",
+      "name": "Parallel Computing Service",
+      "category": "Compute",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/pcs/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "global-view",
+      "name": "AWS Global View",
+      "category": "Compute",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "elastic-container-service",
+      "name": "Elastic Container Service",
+      "category": "Containers",
+      "aliases": ["Amazon ECS"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/ecs/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "elastic-kubernetes-service",
+      "name": "Elastic Kubernetes Service",
+      "category": "Containers",
+      "aliases": ["Amazon EKS"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/eks/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "red-hat-openshift-service-on-aws",
+      "name": "Red Hat OpenShift Service on AWS",
+      "category": "Containers",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/rosa/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "elastic-container-registry",
+      "name": "Elastic Container Registry",
+      "category": "Containers",
+      "aliases": ["Amazon ECR"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/ecr/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "s3",
+      "name": "S3",
+      "category": "Storage",
+      "aliases": ["Amazon Simple Storage Service"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/s3/",
+      "menuDescription": "Scalable Storage in the Cloud",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "efs",
+      "name": "EFS",
+      "category": "Storage",
+      "aliases": ["Amazon Elastic File System"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/efs/",
+      "menuDescription": "Managed File Storage for EC2",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "fsx",
+      "name": "FSx",
+      "category": "Storage",
+      "aliases": ["Amazon FSx (for all types)"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/fsx/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "s3-glacier",
+      "name": "S3 Glacier",
+      "category": "Storage",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/s3/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "storage-gateway",
+      "name": "Storage Gateway",
+      "category": "Storage",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/storagegateway/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "backup",
+      "name": "AWS Backup",
+      "category": "Storage",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/aws-backup/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "recycle-bin",
+      "name": "Recycle Bin",
+      "category": "Storage",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "menuDescription": "Protect resources from accidental deletion",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "elastic-disaster-recovery",
+      "name": "AWS Elastic Disaster Recovery",
+      "category": "Storage",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/drs/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "aurora-and-rds",
+      "name": "Aurora and RDS",
+      "category": "Database",
+      "aliases": ["Amazon Relational Database Service", "Amazon Aurora", "Amazon RDS"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/rds/",
+      "menuDescription": "Managed Relational Database Service",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "elasticache",
+      "name": "ElastiCache",
+      "category": "Database",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/elasticache/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "neptune",
+      "name": "Neptune",
+      "category": "Database",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/neptune/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "documentdb",
+      "name": "Amazon DocumentDB",
+      "category": "Database",
+      "aliases": ["Amazon DocumentDB (with MongoDB compatibility)"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/documentdb/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "keyspaces",
+      "name": "Amazon Keyspaces",
+      "category": "Database",
+      "aliases": ["Amazon Keyspaces (for Apache Cassandra)"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/keyspaces/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "timestream",
+      "name": "Amazon Timestream",
+      "category": "Database",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/timestream/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "dynamodb",
+      "name": "DynamoDB",
+      "category": "Database",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/dynamodb/",
+      "menuDescription": "Managed NoSQL Database",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "aurora-dsql",
+      "name": "Aurora DSQL",
+      "category": "Database",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/aurora-dsql/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "memorydb",
+      "name": "Amazon MemoryDB",
+      "category": "Database",
+      "aliases": ["Amazon MemoryDB for Redis OSS"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/memorydb/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "oracle-database-at-aws",
+      "name": "Oracle Database@AWS",
+      "category": "Database",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/odb/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "migration-hub",
+      "name": "AWS Migration Hub",
+      "category": "Migration & Transfer",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/migrationhub/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "transform-mgn",
+      "name": "AWS Transform MGN",
+      "category": "Migration & Transfer",
+      "aliases": ["AWS Application Migration Service"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/mgn/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "application-discovery-service",
+      "name": "Application Discovery Service",
+      "category": "Migration & Transfer",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/application-discovery/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "database-migration-service",
+      "name": "Database Migration Service",
+      "category": "Migration & Transfer",
+      "aliases": ["AWS DMS"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/dms/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "transfer-family",
+      "name": "AWS Transfer Family",
+      "category": "Migration & Transfer",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/transfer/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "snow-family",
+      "name": "AWS Snow Family",
+      "category": "Migration & Transfer",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/snowball/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "datasync",
+      "name": "DataSync",
+      "category": "Migration & Transfer",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/datasync/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "transform",
+      "name": "AWS Transform",
+      "category": "Migration & Transfer",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/transform/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "mainframe-modernization",
+      "name": "AWS Mainframe Modernization",
+      "category": "Migration & Transfer",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/m2/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "elastic-vmware-service",
+      "name": "Amazon Elastic VMware Service",
+      "category": "Migration & Transfer",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/evs/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "vpc",
+      "name": "VPC",
+      "category": "Networking & Content Delivery",
+      "aliases": ["Amazon Virtual Private Cloud"],
+      "kind": "simulated",
+      "release": "R0",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/vpc/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "cloudfront",
+      "name": "CloudFront",
+      "category": "Networking & Content Delivery",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/cloudfront/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "api-gateway",
+      "name": "API Gateway",
+      "category": "Networking & Content Delivery",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/apigateway/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "direct-connect",
+      "name": "Direct Connect",
+      "category": "Networking & Content Delivery",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/directconnect/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "app-mesh",
+      "name": "AWS App Mesh",
+      "category": "Networking & Content Delivery",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/app-mesh/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "global-accelerator",
+      "name": "Global Accelerator",
+      "category": "Networking & Content Delivery",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/global-accelerator/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "route-53",
+      "name": "Route 53",
+      "category": "Networking & Content Delivery",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/route53/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "data-transfer-terminal",
+      "name": "AWS Data Transfer Terminal",
+      "category": "Networking & Content Delivery",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/datatransferterminal/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "route-53-global-resolver",
+      "name": "Amazon Route 53 Global Resolver",
+      "category": "Networking & Content Delivery",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "cloud-map",
+      "name": "AWS Cloud Map",
+      "category": "Networking & Content Delivery",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/cloud-map/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "rtb-fabric",
+      "name": "RTB Fabric",
+      "category": "Networking & Content Delivery",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/rtb-fabric/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "application-recovery-controller",
+      "name": "Application Recovery Controller",
+      "category": "Networking & Content Delivery",
+      "aliases": ["Amazon Application Recovery Controller (ARC)"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/amazonarc/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "codecommit",
+      "name": "CodeCommit",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "codebuild",
+      "name": "CodeBuild",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/codebuild/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "codedeploy",
+      "name": "CodeDeploy",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/codedeploy/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "codepipeline",
+      "name": "CodePipeline",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/codepipeline/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "cloud9",
+      "name": "Cloud9",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/cloud9/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "cloudshell",
+      "name": "CloudShell",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/cloudshell/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "x-ray",
+      "name": "X-Ray",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/xray/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "fis",
+      "name": "AWS FIS",
+      "category": "Developer Tools",
+      "aliases": ["AWS Fault Injection Service", "AWS Fault Injection Simulator"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/fis/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "infrastructure-composer",
+      "name": "Infrastructure Composer",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/infrastructure-composer/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "app-studio",
+      "name": "AWS App Studio",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/appstudio/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "devops-agent",
+      "name": "AWS DevOps Agent",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/devopsagent/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "appconfig",
+      "name": "AWS AppConfig",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/appconfig/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "codeartifact",
+      "name": "CodeArtifact",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/codeartifact/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "q-developer",
+      "name": "Amazon Q Developer",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/what-is.html",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "codecatalyst",
+      "name": "Amazon CodeCatalyst",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/codecatalyst",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "kiro",
+      "name": "Kiro",
+      "category": "Developer Tools",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://kiro.dev/docs/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "managed-services",
+      "name": "Managed Services",
+      "category": "Customer Enablement",
+      "aliases": ["AMS"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/managedservices/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "activate-for-startups",
+      "name": "Activate for Startups",
+      "category": "Customer Enablement",
+      "aliases": ["AWS Activate"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "re-post-private",
+      "name": "AWS re:Post Private",
+      "category": "Customer Enablement",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/repostprivate/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "support",
+      "name": "Support",
+      "category": "Customer Enablement",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/aws-support/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "managed-blockchain",
+      "name": "Amazon Managed Blockchain",
+      "category": "Blockchain",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/managed-blockchain/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "ground-station",
+      "name": "Ground Station",
+      "category": "Satellite",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/ground-station/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "braket",
+      "name": "Amazon Braket",
+      "category": "Quantum Technologies",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/braket/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "organizations",
+      "name": "AWS Organizations",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/organizations/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "cloudwatch",
+      "name": "CloudWatch",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/cloudwatch/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "auto-scaling",
+      "name": "AWS Auto Scaling",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "cloudformation",
+      "name": "CloudFormation",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/cloudformation/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "config",
+      "name": "AWS Config",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/config/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "service-catalog",
+      "name": "Service Catalog",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/servicecatalog/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "systems-manager",
+      "name": "Systems Manager",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/systems-manager/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "trusted-advisor",
+      "name": "Trusted Advisor",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/aws-support/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "control-tower",
+      "name": "Control Tower",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/controltower/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "well-architected-tool",
+      "name": "AWS Well-Architected Tool",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/wellarchitected/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "q-developer-in-chat-applications",
+      "name": "Amazon Q Developer in chat applications (previously AWS Chatbot)",
+      "category": "Management & Governance",
+      "aliases": ["Amazon Q Developer in chat applications", "AWS Chatbot"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/chatbot/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "launch-wizard",
+      "name": "Launch Wizard",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/launchwizard/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "compute-optimizer",
+      "name": "AWS Compute Optimizer",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/compute-optimizer/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "resource-groups-and-tag-editor",
+      "name": "Resource Groups & Tag Editor",
+      "category": "Management & Governance",
+      "aliases": ["AWS Resource Groups", "Tag Editor"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/ARG/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "grafana",
+      "name": "Amazon Grafana",
+      "category": "Management & Governance",
+      "aliases": ["Amazon Managed Grafana"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/grafana/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "prometheus",
+      "name": "Amazon Prometheus",
+      "category": "Management & Governance",
+      "aliases": ["Amazon Managed Service for Prometheus"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/prometheus/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "resilience-hub",
+      "name": "AWS Resilience Hub",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/resilience-hub/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "incident-manager",
+      "name": "Incident Manager",
+      "category": "Management & Governance",
+      "aliases": ["AWS Systems Manager Incident Manager"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/systems-manager/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "for-sap",
+      "name": "AWS for SAP",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "health-dashboard",
+      "name": "AWS Health Dashboard",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/health/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "proton",
+      "name": "AWS Proton",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/proton/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "sustainability",
+      "name": "AWS Sustainability",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/sustainability/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "user-notifications",
+      "name": "AWS User Notifications",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/notifications/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "partner-central",
+      "name": "AWS Partner Central",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/partner-central/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "cloudtrail",
+      "name": "CloudTrail",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/cloudtrail/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "license-manager",
+      "name": "AWS License Manager",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/license-manager/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "resource-explorer",
+      "name": "AWS Resource Explorer",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/ARG/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "service-quotas",
+      "name": "Service Quotas",
+      "category": "Management & Governance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/servicequotas/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "kinesis-video-streams",
+      "name": "Kinesis Video Streams",
+      "category": "Media Services",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/kinesis/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "mediaconvert",
+      "name": "MediaConvert",
+      "category": "Media Services",
+      "aliases": ["AWS Elemental MediaConvert"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/mediaconvert/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "medialive",
+      "name": "MediaLive",
+      "category": "Media Services",
+      "aliases": ["AWS Elemental MediaLive"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/medialive/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "mediapackage",
+      "name": "MediaPackage",
+      "category": "Media Services",
+      "aliases": ["AWS Elemental MediaPackage"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/mediapackage/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "mediastore",
+      "name": "MediaStore",
+      "category": "Media Services",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "mediatailor",
+      "name": "MediaTailor",
+      "category": "Media Services",
+      "aliases": ["AWS Elemental MediaTailor"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/mediatailor/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "elemental-appliances-and-software",
+      "name": "Elemental Appliances & Software",
+      "category": "Media Services",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "interactive-video-service",
+      "name": "Amazon Interactive Video Service",
+      "category": "Media Services",
+      "aliases": ["Amazon IVS"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/ivs/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "elemental-inference",
+      "name": "Elemental Inference",
+      "category": "Media Services",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/elemental-inference/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "deadline-cloud",
+      "name": "AWS Deadline Cloud",
+      "category": "Media Services",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/deadline-cloud/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "mediaconnect",
+      "name": "MediaConnect",
+      "category": "Media Services",
+      "aliases": ["AWS Elemental MediaConnect"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/mediaconnect/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "sagemaker-ai",
+      "name": "Amazon SageMaker AI",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/sagemaker/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "augmented-ai",
+      "name": "Amazon Augmented AI",
+      "category": "Machine Learning",
+      "aliases": ["Amazon A2I"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/augmented-ai/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "codeguru",
+      "name": "Amazon CodeGuru",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/codeguru/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "devops-guru",
+      "name": "Amazon DevOps Guru",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/devops-guru/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "comprehend",
+      "name": "Amazon Comprehend",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/comprehend/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "forecast",
+      "name": "Amazon Forecast",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/forecast/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "fraud-detector",
+      "name": "Amazon Fraud Detector",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/frauddetector/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "kendra",
+      "name": "Amazon Kendra",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/kendra/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "personalize",
+      "name": "Amazon Personalize",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/personalize/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "polly",
+      "name": "Amazon Polly",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/polly/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "rekognition",
+      "name": "Amazon Rekognition",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/rekognition/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "textract",
+      "name": "Amazon Textract",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/textract/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "transcribe",
+      "name": "Amazon Transcribe",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/transcribe/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "translate",
+      "name": "Amazon Translate",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/translate/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "monitron",
+      "name": "Amazon Monitron",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/Monitron/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "healthlake",
+      "name": "AWS HealthLake",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/healthlake/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "q-business",
+      "name": "Amazon Q Business",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/amazonq/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "bedrock-mantle-endpoint",
+      "name": "Amazon Bedrock (mantle endpoint)",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "agent-registry",
+      "name": "AWS Agent Registry",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "claude-platform-on-aws",
+      "name": "Claude Platform on AWS",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/claude-platform/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "healthomics",
+      "name": "AWS HealthOmics",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/omics/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "nova-act",
+      "name": "Amazon Nova Act",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/nova-act/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "bedrock",
+      "name": "Amazon Bedrock",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/bedrock/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "bedrock-agentcore",
+      "name": "Amazon Bedrock AgentCore",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/bedrock-agentcore/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "q",
+      "name": "Amazon Q",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/amazonq/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "comprehend-medical",
+      "name": "Amazon Comprehend Medical",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/comprehend-medical/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "lex",
+      "name": "Amazon Lex",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/lex/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "bio-discovery",
+      "name": "Amazon Bio Discovery",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "healthimaging",
+      "name": "AWS HealthImaging",
+      "category": "Machine Learning",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/healthimaging/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "athena",
+      "name": "Athena",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/athena/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "redshift",
+      "name": "Amazon Redshift",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/redshift/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "cloudsearch",
+      "name": "CloudSearch",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/cloudsearch/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "opensearch-service",
+      "name": "Amazon OpenSearch Service",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/opensearch-service/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "kinesis",
+      "name": "Kinesis",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/kinesis/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "quicksight",
+      "name": "QuickSight",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "data-exchange",
+      "name": "AWS Data Exchange",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/data-exchange/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "lake-formation",
+      "name": "AWS Lake Formation",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/lake-formation/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "msk",
+      "name": "MSK",
+      "category": "Analytics",
+      "aliases": ["Amazon Managed Streaming for Apache Kafka"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/msk/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "glue-databrew",
+      "name": "AWS Glue DataBrew",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "managed-apache-flink",
+      "name": "Managed Apache Flink",
+      "category": "Analytics",
+      "aliases": ["Amazon Managed Service for Apache Flink"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/managed-flink/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "emr",
+      "name": "EMR",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/emr/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "clean-rooms",
+      "name": "AWS Clean Rooms",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/clean-rooms/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "sagemaker",
+      "name": "Amazon SageMaker",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/next-generation-sagemaker/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "entity-resolution",
+      "name": "AWS Entity Resolution",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/entityresolution/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "glue",
+      "name": "AWS Glue",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/glue/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "data-firehose",
+      "name": "Amazon Data Firehose",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/firehose/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "datazone",
+      "name": "Amazon DataZone",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/datazone/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "quick",
+      "name": "Amazon Quick",
+      "category": "Analytics",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/quick/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "resource-access-manager",
+      "name": "Resource Access Manager",
+      "category": "Security, Identity, & Compliance",
+      "aliases": ["AWS RAM"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/ARG/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "cognito",
+      "name": "Cognito",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/cognito/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "secrets-manager",
+      "name": "Secrets Manager",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/secretsmanager/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "guardduty",
+      "name": "GuardDuty",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/guardduty/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "inspector",
+      "name": "Amazon Inspector",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/inspector/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "macie",
+      "name": "Amazon Macie",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/macie/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "iam-identity-center",
+      "name": "IAM Identity Center",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/singlesignon/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "certificate-manager",
+      "name": "Certificate Manager",
+      "category": "Security, Identity, & Compliance",
+      "aliases": ["ACM"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/acm/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "key-management-service",
+      "name": "Key Management Service",
+      "category": "Security, Identity, & Compliance",
+      "aliases": ["AWS KMS"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/kms/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "cloudhsm",
+      "name": "CloudHSM",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/cloudhsm/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "directory-service",
+      "name": "Directory Service",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/directory-service/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "firewall-manager",
+      "name": "AWS Firewall Manager",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/firewall-manager/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "artifact",
+      "name": "AWS Artifact",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/artifact/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "detective",
+      "name": "Detective",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/detective/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "signer",
+      "name": "AWS Signer",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/signer/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "security-lake",
+      "name": "Security Lake",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/security-lake/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "security-agent",
+      "name": "AWS Security Agent (now part of AWS Continuum)",
+      "category": "Security, Identity, & Compliance",
+      "aliases": ["AWS Security Agent"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/securityagent/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "verified-permissions",
+      "name": "Amazon Verified Permissions",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/verifiedpermissions/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "audit-manager",
+      "name": "AWS Audit Manager",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/audit-manager/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "continuum",
+      "name": "AWS Continuum",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/continuum/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "security-hub-cspm",
+      "name": "Security Hub CSPM",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "iam",
+      "name": "IAM",
+      "category": "Security, Identity, & Compliance",
+      "aliases": ["AWS Identity and Access Management"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/iam/",
+      "menuDescription": "Manage access to AWS resources",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "waf-and-shield",
+      "name": "WAF & Shield",
+      "category": "Security, Identity, & Compliance",
+      "aliases": ["AWS WAF", "AWS Shield"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/waf/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "security-hub",
+      "name": "Security Hub",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/securityhub/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "private-certificate-authority",
+      "name": "AWS Private Certificate Authority",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/privateca/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "network-security-manager",
+      "name": "Network Security Manager",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/network-security-manager/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "payment-cryptography",
+      "name": "AWS Payment Cryptography",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/payment-cryptography/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "security-incident-response",
+      "name": "AWS Security Incident Response",
+      "category": "Security, Identity, & Compliance",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/security-ir/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "marketplace",
+      "name": "AWS Marketplace",
+      "category": "Cloud Financial Management",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/marketplace/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "billing-conductor",
+      "name": "AWS Billing Conductor",
+      "category": "Cloud Financial Management",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "finops-agent",
+      "name": "AWS FinOps Agent",
+      "category": "Cloud Financial Management",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "billing-and-cost-management",
+      "name": "Billing and Cost Management",
+      "category": "Cloud Financial Management",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/account-billing/",
+      "menuDescription": "View and pay bills, analyze and govern your spending, and optimize your costs",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "amplify",
+      "name": "AWS Amplify",
+      "category": "Front-end Web & Mobile",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/amplify/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "appsync",
+      "name": "AWS AppSync",
+      "category": "Front-end Web & Mobile",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/appsync/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "device-farm",
+      "name": "Device Farm",
+      "category": "Front-end Web & Mobile",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/devicefarm/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "location-service",
+      "name": "Amazon Location Service",
+      "category": "Front-end Web & Mobile",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/location/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "step-functions",
+      "name": "Step Functions",
+      "category": "Application Integration",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/step-functions/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "appflow",
+      "name": "Amazon AppFlow",
+      "category": "Application Integration",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/appflow/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "mq",
+      "name": "Amazon MQ",
+      "category": "Application Integration",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/amazon-mq/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "simple-notification-service",
+      "name": "Simple Notification Service",
+      "category": "Application Integration",
+      "aliases": ["Amazon SNS"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/sns/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "simple-queue-service",
+      "name": "Simple Queue Service",
+      "category": "Application Integration",
+      "aliases": ["Amazon SQS"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/sqs/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "swf",
+      "name": "SWF",
+      "category": "Application Integration",
+      "aliases": ["Amazon Simple Workflow Service"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/swf/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "managed-apache-airflow",
+      "name": "Managed Apache Airflow",
+      "category": "Application Integration",
+      "aliases": ["Amazon MWAA", "Amazon Managed Workflows for Apache Airflow"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/mwaa/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "b2b-data-interchange",
+      "name": "AWS B2B Data Interchange",
+      "category": "Application Integration",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/b2bi/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "eventbridge",
+      "name": "Amazon EventBridge",
+      "category": "Application Integration",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": true
+      },
+      "docsUrl": "https://docs.aws.amazon.com/eventbridge/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "connect-customer",
+      "name": "Amazon Connect Customer",
+      "category": "Business Applications",
+      "aliases": ["Amazon Connect"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/connect/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "chime",
+      "name": "Amazon Chime",
+      "category": "Business Applications",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/chime/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "simple-email-service",
+      "name": "Amazon Simple Email Service",
+      "category": "Business Applications",
+      "aliases": ["Amazon SES"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/ses/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "workdocs",
+      "name": "Amazon WorkDocs",
+      "category": "Business Applications",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "workmail",
+      "name": "Amazon WorkMail",
+      "category": "Business Applications",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/workmail/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "connect-health",
+      "name": "Amazon Connect Health",
+      "category": "Business Applications",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/connecthealth/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "connect-talent",
+      "name": "Amazon Connect Talent",
+      "category": "Business Applications",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/talent/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "connect-decisions",
+      "name": "Amazon Connect Decisions",
+      "category": "Business Applications",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/connect-decisions/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "pinpoint",
+      "name": "Amazon Pinpoint",
+      "category": "Business Applications",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/pinpoint/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "wickr",
+      "name": "AWS Wickr",
+      "category": "Business Applications",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/wickr/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "appfabric",
+      "name": "AWS AppFabric",
+      "category": "Business Applications",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/appfabric/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "end-user-messaging",
+      "name": "AWS End User Messaging",
+      "category": "Business Applications",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/end-user-messaging/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "chime-sdk",
+      "name": "Amazon Chime SDK",
+      "category": "Business Applications",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/chime-sdk/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "workspaces",
+      "name": "WorkSpaces",
+      "category": "End User Computing",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/workspaces/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "workspaces-applications",
+      "name": "WorkSpaces Applications",
+      "category": "End User Computing",
+      "aliases": ["Amazon AppStream 2.0"],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/appstream2/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "workspaces-thin-client",
+      "name": "WorkSpaces Thin Client",
+      "category": "End User Computing",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/workspaces-thin-client/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "workspaces-secure-browser",
+      "name": "WorkSpaces Secure Browser",
+      "category": "End User Computing",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/workspaces-web/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "iot-device-defender",
+      "name": "IoT Device Defender",
+      "category": "Internet of Things",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/iot-device-defender/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "iot-device-management",
+      "name": "IoT Device Management",
+      "category": "Internet of Things",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/iot-device-management/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "iot-greengrass",
+      "name": "IoT Greengrass",
+      "category": "Internet of Things",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/greengrass/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "iot-sitewise",
+      "name": "IoT SiteWise",
+      "category": "Internet of Things",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/iot-sitewise/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "iot-core",
+      "name": "IoT Core",
+      "category": "Internet of Things",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": true,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/iot/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "iot-twinmaker",
+      "name": "IoT TwinMaker",
+      "category": "Internet of Things",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/iot-twinmaker/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "iot-fleetwise",
+      "name": "AWS IoT FleetWise",
+      "category": "Internet of Things",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/iot-fleetwise/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "gamelift-servers",
+      "name": "Amazon GameLift Servers",
+      "category": "Game Development",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/gameliftservers/",
+      "capturedOn": "2026-11-03"
+    },
+    {
+      "id": "gamelift-streams",
+      "name": "Amazon GameLift Streams",
+      "category": "Game Development",
+      "aliases": [],
+      "kind": "nav-only",
+      "exam": {
+        "clf": false,
+        "saa": false
+      },
+      "docsUrl": "https://docs.aws.amazon.com/gameliftstreams/",
+      "capturedOn": "2026-11-03"
+    }
+  ]
+}

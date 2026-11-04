@@ -1,0 +1,2047 @@
+{
+  "copiedOn": "2026-11-04",
+  "clf": {
+    "inScope": {
+      "url": "https://docs.aws.amazon.com/aws-certification/latest/cloud-practitioner-02/clf-02-in-scope-services.html",
+      "entries": [
+        {
+          "name": "Amazon Athena",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["athena"]
+        },
+        {
+          "name": "Amazon EMR",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["emr"]
+        },
+        {
+          "name": "AWS Glue",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["glue"]
+        },
+        {
+          "name": "Amazon Kinesis",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["kinesis"]
+        },
+        {
+          "name": "Amazon OpenSearch Service",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["opensearch-service"]
+        },
+        {
+          "name": "Amazon Quick",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["quick"]
+        },
+        {
+          "name": "Amazon Redshift",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["redshift"]
+        },
+        {
+          "name": "Amazon EventBridge",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["eventbridge"]
+        },
+        {
+          "name": "Amazon Simple Notification Service (Amazon SNS)",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["simple-notification-service"]
+        },
+        {
+          "name": "Amazon Simple Queue Service (Amazon SQS)",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["simple-queue-service"]
+        },
+        {
+          "name": "AWS Step Functions",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["step-functions"]
+        },
+        {
+          "name": "Amazon Connect",
+          "category": "Business Applications",
+          "match": "renamed",
+          "serviceIds": ["connect-customer"],
+          "evidence": [
+            "https://docs.aws.amazon.com/connect/latest/adminguide/what-is-amazon-connect.html"
+          ]
+        },
+        {
+          "name": "Amazon Simple Email Service (Amazon SES)",
+          "category": "Business Applications",
+          "match": "same",
+          "serviceIds": ["simple-email-service"]
+        },
+        {
+          "name": "AWS Budgets",
+          "category": "Cloud Financial Management",
+          "match": "feature",
+          "serviceIds": ["billing-and-cost-management"],
+          "evidence": [
+            "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html"
+          ]
+        },
+        {
+          "name": "AWS Cost and Usage Reports",
+          "category": "Cloud Financial Management",
+          "match": "none",
+          "serviceIds": [],
+          "note": "Not named in the Billing and Cost Management feature list, which lists \"Data exports\". To verify."
+        },
+        {
+          "name": "AWS Cost Explorer",
+          "category": "Cloud Financial Management",
+          "match": "feature",
+          "serviceIds": ["billing-and-cost-management"],
+          "evidence": [
+            "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html"
+          ]
+        },
+        {
+          "name": "AWS Marketplace",
+          "category": "Cloud Financial Management",
+          "match": "same",
+          "serviceIds": ["marketplace"]
+        },
+        {
+          "name": "AWS Batch",
+          "category": "Compute",
+          "match": "same",
+          "serviceIds": ["batch"]
+        },
+        {
+          "name": "Amazon EC2",
+          "category": "Compute",
+          "match": "same",
+          "serviceIds": ["ec2"]
+        },
+        {
+          "name": "AWS Elastic Beanstalk",
+          "category": "Compute",
+          "match": "same",
+          "serviceIds": ["elastic-beanstalk"]
+        },
+        {
+          "name": "Amazon Lightsail",
+          "category": "Compute",
+          "match": "same",
+          "serviceIds": ["lightsail"]
+        },
+        {
+          "name": "AWS Outposts",
+          "category": "Compute",
+          "match": "same",
+          "serviceIds": ["outposts"]
+        },
+        {
+          "name": "Amazon Elastic Container Registry (Amazon ECR)",
+          "category": "Containers",
+          "match": "same",
+          "serviceIds": ["elastic-container-registry"]
+        },
+        {
+          "name": "Amazon Elastic Container Service (Amazon ECS)",
+          "category": "Containers",
+          "match": "same",
+          "serviceIds": ["elastic-container-service"]
+        },
+        {
+          "name": "Amazon Elastic Kubernetes Service (Amazon EKS)",
+          "category": "Containers",
+          "match": "same",
+          "serviceIds": ["elastic-kubernetes-service"]
+        },
+        {
+          "name": "AWS Support",
+          "category": "Customer Enablement",
+          "match": "same",
+          "serviceIds": ["support"]
+        },
+        {
+          "name": "Amazon Aurora",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["aurora-and-rds"]
+        },
+        {
+          "name": "Amazon DocumentDB",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["documentdb"]
+        },
+        {
+          "name": "Amazon DynamoDB",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["dynamodb"]
+        },
+        {
+          "name": "Amazon ElastiCache",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["elasticache"]
+        },
+        {
+          "name": "Amazon Neptune",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["neptune"]
+        },
+        {
+          "name": "Amazon RDS",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["aurora-and-rds"]
+        },
+        {
+          "name": "AWS CLI",
+          "category": "Developer Tools",
+          "match": "none",
+          "serviceIds": [],
+          "note": "A tool (the docs home lists it as a CLI, SDK or tool), not a console service."
+        },
+        {
+          "name": "AWS CodeBuild",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["codebuild"]
+        },
+        {
+          "name": "AWS CodePipeline",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["codepipeline"]
+        },
+        {
+          "name": "AWS X-Ray",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["x-ray"]
+        },
+        {
+          "name": "Amazon AppStream 2.0",
+          "category": "End User Computing",
+          "match": "renamed",
+          "serviceIds": ["workspaces-applications"],
+          "evidence": [
+            "https://docs.aws.amazon.com/managedservices/latest/userguide/amz-app-stream-2.0.html",
+            "https://docs.aws.amazon.com/"
+          ],
+          "note": "The docs home lists \"Amazon WorkSpaces Applications\" at /appstream2/."
+        },
+        {
+          "name": "Amazon WorkSpaces",
+          "category": "End User Computing",
+          "match": "same",
+          "serviceIds": ["workspaces"]
+        },
+        {
+          "name": "Amazon WorkSpaces Secure Browser",
+          "category": "End User Computing",
+          "match": "same",
+          "serviceIds": ["workspaces-secure-browser"]
+        },
+        {
+          "name": "AWS Amplify",
+          "category": "Frontend Web and Mobile",
+          "match": "same",
+          "serviceIds": ["amplify"]
+        },
+        {
+          "name": "AWS IoT Core",
+          "category": "Internet of Things (IoT)",
+          "match": "same",
+          "serviceIds": ["iot-core"]
+        },
+        {
+          "name": "Amazon Comprehend",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["comprehend"]
+        },
+        {
+          "name": "Amazon Lex",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["lex"]
+        },
+        {
+          "name": "Amazon Polly",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["polly"]
+        },
+        {
+          "name": "Amazon Q",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["q"]
+        },
+        {
+          "name": "Amazon Rekognition",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["rekognition"]
+        },
+        {
+          "name": "Amazon SageMaker AI",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["sagemaker-ai"]
+        },
+        {
+          "name": "Amazon Textract",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["textract"]
+        },
+        {
+          "name": "Amazon Transcribe",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["transcribe"]
+        },
+        {
+          "name": "Amazon Translate",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["translate"]
+        },
+        {
+          "name": "AWS Auto Scaling",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["auto-scaling"]
+        },
+        {
+          "name": "AWS CloudFormation",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["cloudformation"]
+        },
+        {
+          "name": "AWS CloudTrail",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["cloudtrail"]
+        },
+        {
+          "name": "Amazon CloudWatch",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["cloudwatch"]
+        },
+        {
+          "name": "AWS Compute Optimizer",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["compute-optimizer"]
+        },
+        {
+          "name": "AWS Config",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["config"]
+        },
+        {
+          "name": "AWS Control Tower",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["control-tower"]
+        },
+        {
+          "name": "AWS Health Dashboard",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["health-dashboard"]
+        },
+        {
+          "name": "AWS License Manager",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["license-manager"]
+        },
+        {
+          "name": "AWS Management Console",
+          "category": "Management and Governance",
+          "match": "none",
+          "serviceIds": [],
+          "note": "The console itself; the simulator shell reproduces it."
+        },
+        {
+          "name": "AWS Organizations",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["organizations"]
+        },
+        {
+          "name": "AWS Service Catalog",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["service-catalog"]
+        },
+        {
+          "name": "Service Quotas",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["service-quotas"]
+        },
+        {
+          "name": "AWS Systems Manager",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["systems-manager"]
+        },
+        {
+          "name": "AWS Trusted Advisor",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["trusted-advisor"]
+        },
+        {
+          "name": "AWS Well-Architected Tool",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["well-architected-tool"]
+        },
+        {
+          "name": "AWS Application Discovery Service",
+          "category": "Migration and Transfer",
+          "match": "same",
+          "serviceIds": ["application-discovery-service"]
+        },
+        {
+          "name": "AWS Application Migration Service",
+          "category": "Migration and Transfer",
+          "match": "renamed",
+          "serviceIds": ["transform-mgn"],
+          "evidence": [
+            "https://docs.aws.amazon.com/MAP/latest/userguide/getting-started-step2-MGN.html",
+            "https://docs.aws.amazon.com/managedservices/latest/appguide/tools-account-mgn.html"
+          ]
+        },
+        {
+          "name": "AWS Database Migration Service (AWS DMS)",
+          "category": "Migration and Transfer",
+          "match": "same",
+          "serviceIds": ["database-migration-service"]
+        },
+        {
+          "name": "Migration Evaluator",
+          "category": "Migration and Transfer",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Migration Hub",
+          "category": "Migration and Transfer",
+          "match": "same",
+          "serviceIds": ["migration-hub"]
+        },
+        {
+          "name": "AWS Schema Conversion Tool (AWS SCT)",
+          "category": "Migration and Transfer",
+          "match": "none",
+          "serviceIds": [],
+          "note": "A tool (the docs home lists it as a CLI, SDK or tool), not a console service."
+        },
+        {
+          "name": "Amazon API Gateway",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["api-gateway"]
+        },
+        {
+          "name": "Amazon CloudFront",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["cloudfront"]
+        },
+        {
+          "name": "AWS Direct Connect",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["direct-connect"]
+        },
+        {
+          "name": "AWS Global Accelerator",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["global-accelerator"]
+        },
+        {
+          "name": "AWS PrivateLink",
+          "category": "Networking and Content Delivery",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc-1.png"],
+          "note": "VPC side navigation: \"PrivateLink and Lattice\"."
+        },
+        {
+          "name": "Amazon Route 53",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["route-53"]
+        },
+        {
+          "name": "AWS Transit Gateway",
+          "category": "Networking and Content Delivery",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc-3.png"],
+          "note": "VPC side navigation: \"Transit gateways\"."
+        },
+        {
+          "name": "Amazon VPC",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["vpc"]
+        },
+        {
+          "name": "AWS VPN",
+          "category": "Networking and Content Delivery",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc.txt"],
+          "note": "VPC side navigation: \"Virtual private network (VPN)\" (page text only)."
+        },
+        {
+          "name": "AWS Site-to-Site VPN",
+          "category": "Networking and Content Delivery",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc.txt"],
+          "note": "VPC side navigation: \"Site-to-Site VPN connections\" (page text only)."
+        },
+        {
+          "name": "AWS Client VPN",
+          "category": "Networking and Content Delivery",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc.txt"],
+          "note": "VPC side navigation: \"Client VPN endpoints\" (page text only)."
+        },
+        {
+          "name": "AWS Artifact",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["artifact"]
+        },
+        {
+          "name": "AWS Certificate Manager (ACM)",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["certificate-manager"]
+        },
+        {
+          "name": "AWS CloudHSM",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["cloudhsm"]
+        },
+        {
+          "name": "Amazon Cognito",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["cognito"]
+        },
+        {
+          "name": "Amazon Detective",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["detective"]
+        },
+        {
+          "name": "AWS Directory Service",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["directory-service"]
+        },
+        {
+          "name": "AWS Firewall Manager",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["firewall-manager"]
+        },
+        {
+          "name": "Amazon GuardDuty",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["guardduty"]
+        },
+        {
+          "name": "AWS Identity and Access Management (IAM)",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["iam"]
+        },
+        {
+          "name": "AWS IAM Identity Center",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["iam-identity-center"]
+        },
+        {
+          "name": "Amazon Inspector",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["inspector"]
+        },
+        {
+          "name": "AWS Key Management Service (AWS KMS)",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["key-management-service"]
+        },
+        {
+          "name": "Amazon Macie",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["macie"]
+        },
+        {
+          "name": "AWS Resource Access Manager (AWS RAM)",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["resource-access-manager"]
+        },
+        {
+          "name": "AWS Secrets Manager",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["secrets-manager"]
+        },
+        {
+          "name": "AWS Security Hub",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["security-hub"]
+        },
+        {
+          "name": "AWS Shield",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["waf-and-shield"]
+        },
+        {
+          "name": "AWS WAF",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["waf-and-shield"]
+        },
+        {
+          "name": "AWS Fargate",
+          "category": "Serverless",
+          "match": "feature",
+          "serviceIds": ["elastic-container-service"],
+          "evidence": [
+            "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+          ],
+          "note": "The docs home links Fargate to the Amazon ECS Developer Guide."
+        },
+        {
+          "name": "AWS Lambda",
+          "category": "Serverless",
+          "match": "same",
+          "serviceIds": ["lambda"]
+        },
+        {
+          "name": "AWS Backup",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["backup"]
+        },
+        {
+          "name": "Amazon Elastic Block Store (Amazon EBS)",
+          "category": "Storage",
+          "match": "feature",
+          "serviceIds": ["ec2"],
+          "evidence": ["capture:2026-11-03/ec2-1.png"],
+          "note": "EC2 side navigation: \"Elastic Block Store\"."
+        },
+        {
+          "name": "Amazon Elastic File System (Amazon EFS)",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["efs"]
+        },
+        {
+          "name": "AWS Elastic Disaster Recovery",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["elastic-disaster-recovery"]
+        },
+        {
+          "name": "Amazon FSx",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["fsx"]
+        },
+        {
+          "name": "Amazon S3",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["s3"]
+        },
+        {
+          "name": "Amazon S3 Glacier",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["s3-glacier"]
+        },
+        {
+          "name": "AWS Storage Gateway",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["storage-gateway"]
+        }
+      ]
+    },
+    "outOfScope": {
+      "url": "https://docs.aws.amazon.com/aws-certification/latest/cloud-practitioner-02/clf-02-out-of-scope-services.html",
+      "entries": [
+        {
+          "name": "Amazon AppFlow",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["appflow"]
+        },
+        {
+          "name": "AWS Clean Rooms",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["clean-rooms"]
+        },
+        {
+          "name": "AWS Data Exchange",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["data-exchange"]
+        },
+        {
+          "name": "Amazon DataZone",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["datazone"]
+        },
+        {
+          "name": "Amazon Managed Streaming for Apache Kafka (Amazon MSK)",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["msk"]
+        },
+        {
+          "name": "AWS AppFabric",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["appfabric"]
+        },
+        {
+          "name": "Amazon Simple Workflow Service",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["swf"]
+        },
+        {
+          "name": "AWS Copilot",
+          "category": "Compute",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Wavelength",
+          "category": "Compute",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Application Cost Profiler",
+          "category": "Cost Management",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "Amazon DevPay",
+          "category": "Cost Management",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Activate",
+          "category": "Customer Enablement",
+          "match": "same",
+          "serviceIds": ["activate-for-startups"]
+        },
+        {
+          "name": "AWS IQ",
+          "category": "Customer Enablement",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "Amazon Managed Services (AMS)",
+          "category": "Customer Enablement",
+          "match": "same",
+          "serviceIds": ["managed-services"]
+        },
+        {
+          "name": "AWS Billing Conductor",
+          "category": "Cloud Financial Management",
+          "match": "same",
+          "serviceIds": ["billing-conductor"]
+        },
+        {
+          "name": "Amazon Keyspaces (for Apache Cassandra)",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["keyspaces"]
+        },
+        {
+          "name": "Amazon MemoryDB for Redis OSS",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["memorydb"]
+        },
+        {
+          "name": "AWS AppConfig",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["appconfig"]
+        },
+        {
+          "name": "AWS Application Composer",
+          "category": "Developer Tools",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture. A Toolkit for VS Code page at appcomposer.html is now titled \"Working with AWS Infrastructure Composer\"; a rename is not stated. To verify."
+        },
+        {
+          "name": "AWS CodeArtifact",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["codeartifact"]
+        },
+        {
+          "name": "AWS CodeDeploy",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["codedeploy"]
+        },
+        {
+          "name": "Amazon CodeGuru",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["codeguru"]
+        },
+        {
+          "name": "AWS CloudShell",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["cloudshell"]
+        },
+        {
+          "name": "AWS Device Farm",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["device-farm"]
+        },
+        {
+          "name": "Amazon GameLift",
+          "category": "Game Tech",
+          "match": "none",
+          "serviceIds": [],
+          "note": "The console shows \"Amazon GameLift Servers\" and \"Amazon GameLift Streams\"; which ones the list means is not stated."
+        },
+        {
+          "name": "AWS IoT Device Defender",
+          "category": "Internet of Things (IoT)",
+          "match": "same",
+          "serviceIds": ["iot-device-defender"]
+        },
+        {
+          "name": "AWS IoT Greengrass",
+          "category": "Internet of Things (IoT)",
+          "match": "same",
+          "serviceIds": ["iot-greengrass"]
+        },
+        {
+          "name": "Amazon Fraud Detector",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["fraud-detector"]
+        },
+        {
+          "name": "Amazon Personalize",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["personalize"]
+        },
+        {
+          "name": "AWS Chatbot",
+          "category": "Management and Governance",
+          "match": "renamed",
+          "serviceIds": ["q-developer-in-chat-applications"],
+          "evidence": ["capture:2026-11-03/all_services.txt"]
+        },
+        {
+          "name": "Amazon Data Lifecycle Manager",
+          "category": "Management and Governance",
+          "match": "feature",
+          "serviceIds": ["ec2"],
+          "evidence": ["capture:2026-11-03/ec2-1.png", "https://docs.aws.amazon.com/"],
+          "note": "EC2 side navigation: \"Lifecycle Manager\" under Elastic Block Store; the docs home describes Data Lifecycle Manager as managing EBS snapshots."
+        },
+        {
+          "name": "AWS Launch Wizard",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["launch-wizard"]
+        },
+        {
+          "name": "AWS Elemental Appliances and Software",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["elemental-appliances-and-software"]
+        },
+        {
+          "name": "AWS Elemental MediaConnect",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["mediaconnect"]
+        },
+        {
+          "name": "AWS Elemental MediaConvert",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["mediaconvert"]
+        },
+        {
+          "name": "AWS Elemental MediaLive",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["medialive"]
+        },
+        {
+          "name": "AWS Elemental MediaPackage",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["mediapackage"]
+        },
+        {
+          "name": "AWS Elemental MediaTailor",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["mediatailor"]
+        },
+        {
+          "name": "Amazon Interactive Video Service (Amazon IVS)",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["interactive-video-service"]
+        },
+        {
+          "name": "AWS Migration Hub Refactor Spaces",
+          "category": "Migration and Transfer",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Transfer Family",
+          "category": "Migration and Transfer",
+          "match": "same",
+          "serviceIds": ["transfer-family"]
+        },
+        {
+          "name": "AWS Cloud Map",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["cloud-map"]
+        },
+        {
+          "name": "AWS Network Access Analyzer",
+          "category": "Networking and Content Delivery",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Ground Station",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["ground-station"]
+        },
+        {
+          "name": "Amazon VPC Lattice",
+          "category": "Networking and Content Delivery",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc-2.png"],
+          "note": "VPC side navigation: \"PrivateLink and Lattice\", \"Lattice services\"."
+        },
+        {
+          "name": "Amazon Cloud Directory",
+          "category": "Security, Identity, and Compliance",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Network Firewall",
+          "category": "Security, Identity, and Compliance",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc-2.png"],
+          "note": "VPC side navigation: \"Network Firewall\"."
+        },
+        {
+          "name": "Amazon FSx for Lustre",
+          "category": "Storage",
+          "match": "feature",
+          "serviceIds": ["fsx"],
+          "evidence": [
+            "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03/saa-03-in-scope-services.html"
+          ],
+          "note": "An FSx file system type; the SAA-C03 list says \"Amazon FSx (for all types)\"."
+        }
+      ]
+    }
+  },
+  "saa": {
+    "inScope": {
+      "url": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03/saa-03-in-scope-services.html",
+      "entries": [
+        {
+          "name": "Amazon Athena",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["athena"]
+        },
+        {
+          "name": "AWS Data Exchange",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["data-exchange"]
+        },
+        {
+          "name": "AWS Data Pipeline",
+          "category": "Analytics",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "Amazon EMR",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["emr"]
+        },
+        {
+          "name": "AWS Glue",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["glue"]
+        },
+        {
+          "name": "Amazon Kinesis",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["kinesis"]
+        },
+        {
+          "name": "AWS Lake Formation",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["lake-formation"]
+        },
+        {
+          "name": "Amazon Managed Streaming for Apache Kafka (Amazon MSK)",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["msk"]
+        },
+        {
+          "name": "Amazon OpenSearch Service",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["opensearch-service"]
+        },
+        {
+          "name": "Amazon Quick",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["quick"]
+        },
+        {
+          "name": "Amazon Redshift",
+          "category": "Analytics",
+          "match": "same",
+          "serviceIds": ["redshift"]
+        },
+        {
+          "name": "Amazon AppFlow",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["appflow"]
+        },
+        {
+          "name": "Amazon EventBridge",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["eventbridge"]
+        },
+        {
+          "name": "Amazon MQ",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["mq"]
+        },
+        {
+          "name": "Amazon SNS",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["simple-notification-service"]
+        },
+        {
+          "name": "Amazon SQS",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["simple-queue-service"]
+        },
+        {
+          "name": "AWS Step Functions",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["step-functions"]
+        },
+        {
+          "name": "AWS Budgets",
+          "category": "AWS Cost Management",
+          "match": "feature",
+          "serviceIds": ["billing-and-cost-management"],
+          "evidence": [
+            "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html"
+          ]
+        },
+        {
+          "name": "AWS Cost and Usage Report",
+          "category": "AWS Cost Management",
+          "match": "none",
+          "serviceIds": [],
+          "note": "Not named in the Billing and Cost Management feature list, which lists \"Data exports\". To verify."
+        },
+        {
+          "name": "AWS Cost Explorer",
+          "category": "AWS Cost Management",
+          "match": "feature",
+          "serviceIds": ["billing-and-cost-management"],
+          "evidence": [
+            "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html"
+          ]
+        },
+        {
+          "name": "Savings Plans",
+          "category": "AWS Cost Management",
+          "match": "feature",
+          "serviceIds": ["billing-and-cost-management", "ec2"],
+          "evidence": [
+            "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html",
+            "capture:2026-11-03/ec2-1.png"
+          ],
+          "note": "Listed in the Billing and Cost Management features and in the EC2 side navigation under Instances."
+        },
+        {
+          "name": "AWS Batch",
+          "category": "Compute",
+          "match": "same",
+          "serviceIds": ["batch"]
+        },
+        {
+          "name": "Amazon EC2",
+          "category": "Compute",
+          "match": "same",
+          "serviceIds": ["ec2"]
+        },
+        {
+          "name": "Amazon EC2 Auto Scaling",
+          "category": "Compute",
+          "match": "feature",
+          "serviceIds": ["ec2"],
+          "evidence": ["capture:2026-11-03/ec2-2.png"],
+          "note": "EC2 side navigation: \"Auto Scaling Groups\"."
+        },
+        {
+          "name": "AWS Elastic Beanstalk",
+          "category": "Compute",
+          "match": "same",
+          "serviceIds": ["elastic-beanstalk"]
+        },
+        {
+          "name": "AWS Outposts",
+          "category": "Compute",
+          "match": "same",
+          "serviceIds": ["outposts"]
+        },
+        {
+          "name": "AWS Serverless Application Repository",
+          "category": "Compute",
+          "match": "same",
+          "serviceIds": ["serverless-application-repository"]
+        },
+        {
+          "name": "VMware Cloud on AWS",
+          "category": "Compute",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Wavelength",
+          "category": "Compute",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "Amazon ECR",
+          "category": "Containers",
+          "match": "same",
+          "serviceIds": ["elastic-container-registry"]
+        },
+        {
+          "name": "Amazon ECS",
+          "category": "Containers",
+          "match": "same",
+          "serviceIds": ["elastic-container-service"]
+        },
+        {
+          "name": "Amazon ECS Anywhere",
+          "category": "Containers",
+          "match": "feature",
+          "serviceIds": ["elastic-container-service"],
+          "evidence": [
+            "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-anywhere.html"
+          ]
+        },
+        {
+          "name": "Amazon EKS",
+          "category": "Containers",
+          "match": "same",
+          "serviceIds": ["elastic-kubernetes-service"]
+        },
+        {
+          "name": "Amazon EKS Anywhere",
+          "category": "Containers",
+          "match": "feature",
+          "serviceIds": ["elastic-kubernetes-service"],
+          "evidence": [
+            "https://docs.aws.amazon.com/whitepapers/latest/overview-deployment-options/amazon-elastic-kubernetes-service.html"
+          ]
+        },
+        {
+          "name": "Amazon EKS Distro",
+          "category": "Containers",
+          "match": "feature",
+          "serviceIds": ["elastic-kubernetes-service"],
+          "evidence": [
+            "https://docs.aws.amazon.com/whitepapers/latest/overview-deployment-options/amazon-elastic-kubernetes-service.html"
+          ]
+        },
+        {
+          "name": "Amazon Aurora",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["aurora-and-rds"]
+        },
+        {
+          "name": "Amazon Aurora Serverless",
+          "category": "Database",
+          "match": "feature",
+          "serviceIds": ["aurora-and-rds"],
+          "evidence": [
+            "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html"
+          ]
+        },
+        {
+          "name": "Amazon DocumentDB",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["documentdb"]
+        },
+        {
+          "name": "Amazon DynamoDB",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["dynamodb"]
+        },
+        {
+          "name": "Amazon ElastiCache",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["elasticache"]
+        },
+        {
+          "name": "Amazon Keyspaces",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["keyspaces"]
+        },
+        {
+          "name": "Amazon Neptune",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["neptune"]
+        },
+        {
+          "name": "Amazon RDS",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["aurora-and-rds"]
+        },
+        {
+          "name": "Amazon Redshift",
+          "category": "Database",
+          "match": "same",
+          "serviceIds": ["redshift"]
+        },
+        {
+          "name": "AWS X-Ray",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["x-ray"]
+        },
+        {
+          "name": "AWS Amplify",
+          "category": "Front-End Web and Mobile",
+          "match": "same",
+          "serviceIds": ["amplify"]
+        },
+        {
+          "name": "Amazon API Gateway",
+          "category": "Front-End Web and Mobile",
+          "match": "same",
+          "serviceIds": ["api-gateway"]
+        },
+        {
+          "name": "AWS Device Farm",
+          "category": "Front-End Web and Mobile",
+          "match": "same",
+          "serviceIds": ["device-farm"]
+        },
+        {
+          "name": "Amazon Comprehend",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["comprehend"]
+        },
+        {
+          "name": "Amazon Lex",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["lex"]
+        },
+        {
+          "name": "Amazon Polly",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["polly"]
+        },
+        {
+          "name": "Amazon Rekognition",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["rekognition"]
+        },
+        {
+          "name": "Amazon SageMaker AI",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["sagemaker-ai"]
+        },
+        {
+          "name": "Amazon Textract",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["textract"]
+        },
+        {
+          "name": "Amazon Transcribe",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["transcribe"]
+        },
+        {
+          "name": "Amazon Translate",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["translate"]
+        },
+        {
+          "name": "AWS Auto Scaling",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["auto-scaling"]
+        },
+        {
+          "name": "AWS CLI",
+          "category": "Management and Governance",
+          "match": "none",
+          "serviceIds": [],
+          "note": "A tool (the docs home lists it as a CLI, SDK or tool), not a console service."
+        },
+        {
+          "name": "AWS CloudFormation",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["cloudformation"]
+        },
+        {
+          "name": "AWS CloudTrail",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["cloudtrail"]
+        },
+        {
+          "name": "Amazon CloudWatch",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["cloudwatch"]
+        },
+        {
+          "name": "AWS Compute Optimizer",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["compute-optimizer"]
+        },
+        {
+          "name": "AWS Config",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["config"]
+        },
+        {
+          "name": "AWS Control Tower",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["control-tower"]
+        },
+        {
+          "name": "AWS Health Dashboard",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["health-dashboard"]
+        },
+        {
+          "name": "AWS License Manager",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["license-manager"]
+        },
+        {
+          "name": "Amazon Managed Grafana",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["grafana"]
+        },
+        {
+          "name": "Amazon Managed Service for Prometheus",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["prometheus"]
+        },
+        {
+          "name": "AWS Management Console",
+          "category": "Management and Governance",
+          "match": "none",
+          "serviceIds": [],
+          "note": "The console itself; the simulator shell reproduces it."
+        },
+        {
+          "name": "AWS Organizations",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["organizations"]
+        },
+        {
+          "name": "AWS Proton",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["proton"]
+        },
+        {
+          "name": "AWS Service Catalog",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["service-catalog"]
+        },
+        {
+          "name": "AWS Systems Manager",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["systems-manager"]
+        },
+        {
+          "name": "AWS Well-Architected Tool",
+          "category": "Management and Governance",
+          "match": "same",
+          "serviceIds": ["well-architected-tool"]
+        },
+        {
+          "name": "Amazon Kinesis Video Streams",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["kinesis-video-streams"]
+        },
+        {
+          "name": "AWS Application Discovery Service",
+          "category": "Migration and Transfer",
+          "match": "same",
+          "serviceIds": ["application-discovery-service"]
+        },
+        {
+          "name": "AWS Application Migration Service",
+          "category": "Migration and Transfer",
+          "match": "renamed",
+          "serviceIds": ["transform-mgn"],
+          "evidence": [
+            "https://docs.aws.amazon.com/MAP/latest/userguide/getting-started-step2-MGN.html",
+            "https://docs.aws.amazon.com/managedservices/latest/appguide/tools-account-mgn.html"
+          ]
+        },
+        {
+          "name": "AWS DataSync",
+          "category": "Migration and Transfer",
+          "match": "same",
+          "serviceIds": ["datasync"]
+        },
+        {
+          "name": "AWS DMS",
+          "category": "Migration and Transfer",
+          "match": "same",
+          "serviceIds": ["database-migration-service"]
+        },
+        {
+          "name": "AWS Snow Family",
+          "category": "Migration and Transfer",
+          "match": "same",
+          "serviceIds": ["snow-family"]
+        },
+        {
+          "name": "AWS Transfer Family",
+          "category": "Migration and Transfer",
+          "match": "same",
+          "serviceIds": ["transfer-family"]
+        },
+        {
+          "name": "AWS Client VPN",
+          "category": "Networking and Content Delivery",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc.txt"],
+          "note": "VPC side navigation: \"Client VPN endpoints\" (page text only)."
+        },
+        {
+          "name": "Amazon CloudFront",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["cloudfront"]
+        },
+        {
+          "name": "AWS Direct Connect",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["direct-connect"]
+        },
+        {
+          "name": "Elastic Load Balancing (ELB)",
+          "category": "Networking and Content Delivery",
+          "match": "feature",
+          "serviceIds": ["ec2"],
+          "evidence": ["capture:2026-11-03/ec2-2.png"],
+          "note": "EC2 side navigation: \"Load Balancing\"."
+        },
+        {
+          "name": "AWS Global Accelerator",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["global-accelerator"]
+        },
+        {
+          "name": "AWS PrivateLink",
+          "category": "Networking and Content Delivery",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc-1.png"],
+          "note": "VPC side navigation: \"PrivateLink and Lattice\"."
+        },
+        {
+          "name": "Amazon Route 53",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["route-53"]
+        },
+        {
+          "name": "AWS Site-to-Site VPN",
+          "category": "Networking and Content Delivery",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc.txt"],
+          "note": "VPC side navigation: \"Site-to-Site VPN connections\" (page text only)."
+        },
+        {
+          "name": "AWS Transit Gateway",
+          "category": "Networking and Content Delivery",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc-3.png"],
+          "note": "VPC side navigation: \"Transit gateways\"."
+        },
+        {
+          "name": "Amazon VPC",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["vpc"]
+        },
+        {
+          "name": "AWS Artifact",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["artifact"]
+        },
+        {
+          "name": "AWS Certificate Manager (ACM)",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["certificate-manager"]
+        },
+        {
+          "name": "AWS CloudHSM",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["cloudhsm"]
+        },
+        {
+          "name": "Amazon Cognito",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["cognito"]
+        },
+        {
+          "name": "Amazon Detective",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["detective"]
+        },
+        {
+          "name": "AWS Directory Service",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["directory-service"]
+        },
+        {
+          "name": "AWS Firewall Manager",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["firewall-manager"]
+        },
+        {
+          "name": "Amazon GuardDuty",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["guardduty"]
+        },
+        {
+          "name": "AWS IAM Identity Center",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["iam-identity-center"]
+        },
+        {
+          "name": "Amazon Inspector",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["inspector"]
+        },
+        {
+          "name": "AWS KMS",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["key-management-service"]
+        },
+        {
+          "name": "Amazon Macie",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["macie"]
+        },
+        {
+          "name": "AWS Network Firewall",
+          "category": "Security, Identity, and Compliance",
+          "match": "feature",
+          "serviceIds": ["vpc"],
+          "evidence": ["capture:2026-11-03/vpc-2.png"],
+          "note": "VPC side navigation: \"Network Firewall\"."
+        },
+        {
+          "name": "AWS Resource Access Manager (AWS RAM)",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["resource-access-manager"]
+        },
+        {
+          "name": "AWS Secrets Manager",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["secrets-manager"]
+        },
+        {
+          "name": "AWS Security Hub",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["security-hub"]
+        },
+        {
+          "name": "AWS Shield",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["waf-and-shield"]
+        },
+        {
+          "name": "AWS WAF",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["waf-and-shield"]
+        },
+        {
+          "name": "IAM",
+          "category": "Security, Identity, and Compliance",
+          "match": "same",
+          "serviceIds": ["iam"]
+        },
+        {
+          "name": "AWS Fargate",
+          "category": "Serverless",
+          "match": "feature",
+          "serviceIds": ["elastic-container-service"],
+          "evidence": [
+            "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+          ],
+          "note": "The docs home links Fargate to the Amazon ECS Developer Guide."
+        },
+        {
+          "name": "AWS Lambda",
+          "category": "Serverless",
+          "match": "same",
+          "serviceIds": ["lambda"]
+        },
+        {
+          "name": "AWS Backup",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["backup"]
+        },
+        {
+          "name": "Amazon EBS",
+          "category": "Storage",
+          "match": "feature",
+          "serviceIds": ["ec2"],
+          "evidence": ["capture:2026-11-03/ec2-1.png"],
+          "note": "EC2 side navigation: \"Elastic Block Store\"."
+        },
+        {
+          "name": "Amazon EFS",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["efs"]
+        },
+        {
+          "name": "Amazon FSx (for all types)",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["fsx"]
+        },
+        {
+          "name": "Amazon S3",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["s3"]
+        },
+        {
+          "name": "Amazon S3 Glacier",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["s3-glacier"]
+        },
+        {
+          "name": "AWS Storage Gateway",
+          "category": "Storage",
+          "match": "same",
+          "serviceIds": ["storage-gateway"]
+        }
+      ]
+    },
+    "outOfScope": {
+      "url": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03/saa-03-out-of-scope-services.html",
+      "entries": [
+        {
+          "name": "Amazon Managed Workflows for Apache Airflow (Amazon MWAA)",
+          "category": "Application Integration",
+          "match": "same",
+          "serviceIds": ["managed-apache-airflow"]
+        },
+        {
+          "name": "Amazon Lightsail",
+          "category": "Compute",
+          "match": "same",
+          "serviceIds": ["lightsail"]
+        },
+        {
+          "name": "Amazon RDS on VMware",
+          "category": "Database",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS CDK",
+          "category": "Developer Tools",
+          "match": "none",
+          "serviceIds": [],
+          "note": "A tool (the docs home lists it as a CLI, SDK or tool), not a console service."
+        },
+        {
+          "name": "AWS CloudShell",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["cloudshell"]
+        },
+        {
+          "name": "AWS CodeArtifact",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["codeartifact"]
+        },
+        {
+          "name": "AWS CodeBuild",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["codebuild"]
+        },
+        {
+          "name": "AWS CodeCommit",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["codecommit"]
+        },
+        {
+          "name": "AWS CodeDeploy",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["codedeploy"]
+        },
+        {
+          "name": "Amazon Corretto",
+          "category": "Developer Tools",
+          "match": "none",
+          "serviceIds": [],
+          "note": "A tool (the docs home lists it as a CLI, SDK or tool), not a console service."
+        },
+        {
+          "name": "AWS Fault Injection Simulator (AWS FIS)",
+          "category": "Developer Tools",
+          "match": "same",
+          "serviceIds": ["fis"]
+        },
+        {
+          "name": "AWS Tools and SDKs",
+          "category": "Developer Tools",
+          "match": "none",
+          "serviceIds": [],
+          "note": "A tool (the docs home lists it as a CLI, SDK or tool), not a console service."
+        },
+        {
+          "name": "Amazon Location Service",
+          "category": "Front-End Web and Mobile",
+          "match": "same",
+          "serviceIds": ["location-service"]
+        },
+        {
+          "name": "Amazon GameLift",
+          "category": "Game Tech",
+          "match": "none",
+          "serviceIds": [],
+          "note": "The console shows \"Amazon GameLift Servers\" and \"Amazon GameLift Streams\"; which ones the list means is not stated."
+        },
+        {
+          "name": "All services",
+          "category": "Internet of Things",
+          "match": "category",
+          "serviceIds": [
+            "iot-device-defender",
+            "iot-device-management",
+            "iot-greengrass",
+            "iot-sitewise",
+            "iot-core",
+            "iot-twinmaker",
+            "iot-fleetwise"
+          ],
+          "note": "Every service in the console category \"Internet of Things\"."
+        },
+        {
+          "name": "Apache MXNet on AWS",
+          "category": "Machine Learning",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Deep Learning AMIs (DLAMI)",
+          "category": "Machine Learning",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Deep Learning Containers",
+          "category": "Machine Learning",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "Amazon HealthLake",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["healthlake"]
+        },
+        {
+          "name": "AWS Inferentia",
+          "category": "Machine Learning",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "Amazon Personalize",
+          "category": "Machine Learning",
+          "match": "same",
+          "serviceIds": ["personalize"]
+        },
+        {
+          "name": "PyTorch on AWS",
+          "category": "Machine Learning",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "TensorFlow on AWS",
+          "category": "Machine Learning",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Console Mobile Application",
+          "category": "Management and Governance",
+          "match": "none",
+          "serviceIds": [],
+          "note": "The capture shows it only as a footer link (\"Console Mobile App\")."
+        },
+        {
+          "name": "AWS Distro for OpenTelemetry",
+          "category": "Management and Governance",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Elemental Appliances and Software",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["elemental-appliances-and-software"]
+        },
+        {
+          "name": "AWS Elemental MediaConnect",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["mediaconnect"]
+        },
+        {
+          "name": "AWS Elemental MediaConvert",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["mediaconvert"]
+        },
+        {
+          "name": "AWS Elemental MediaLive",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["medialive"]
+        },
+        {
+          "name": "AWS Elemental MediaPackage",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["mediapackage"]
+        },
+        {
+          "name": "AWS Elemental MediaTailor",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["mediatailor"]
+        },
+        {
+          "name": "Amazon Interactive Video Service (Amazon IVS)",
+          "category": "Media Services",
+          "match": "same",
+          "serviceIds": ["interactive-video-service"]
+        },
+        {
+          "name": "Migration Evaluator",
+          "category": "Migration and Transfer",
+          "match": "none",
+          "serviceIds": [],
+          "note": "No console entry with this name in the 2026-11-03 All services capture."
+        },
+        {
+          "name": "AWS Cloud Map",
+          "category": "Networking and Content Delivery",
+          "match": "same",
+          "serviceIds": ["cloud-map"]
+        },
+        {
+          "name": "Amazon Braket",
+          "category": "Quantum Technologies",
+          "match": "same",
+          "serviceIds": ["braket"]
+        },
+        {
+          "name": "AWS Ground Station",
+          "category": "Satellite",
+          "match": "same",
+          "serviceIds": ["ground-station"]
+        }
+      ]
+    }
+  }
+}

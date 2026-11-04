@@ -1,0 +1,241 @@
+{
+  "serviceId": "vpc",
+  "capturedOn": "2026-11-03",
+  "sources": [
+    "2026-11-03/vpc-1.png",
+    "2026-11-03/vpc-2.png",
+    "2026-11-03/vpc-3.png",
+    "2026-11-03/vpc.txt"
+  ],
+  "header": { "label": "VPC dashboard", "target": "functional", "route": "/vpc" },
+  "filter": { "label": "Filter by VPC", "placeholder": "Choose a VPC" },
+  "sections": [
+    {
+      "groupingFrom": "screenshot",
+      "items": [
+        {
+          "label": "AWS Global View",
+          "target": "service",
+          "serviceId": "global-view",
+          "external": true
+        }
+      ]
+    },
+    {
+      "title": "Virtual private cloud",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Your VPCs", "target": "functional", "route": "/vpc/your-vpcs" },
+        { "label": "Subnets", "target": "functional", "route": "/vpc/subnets" },
+        { "label": "Route tables", "target": "functional", "route": "/vpc/route-tables" },
+        { "label": "Internet gateways", "target": "functional", "route": "/vpc/internet-gateways" },
+        {
+          "label": "Egress-only internet gateways",
+          "target": "empty",
+          "route": "/vpc/egress-only-internet-gateways"
+        },
+        { "label": "DHCP option sets", "target": "empty", "route": "/vpc/dhcp-option-sets" },
+        { "label": "Elastic IPs", "target": "empty", "route": "/vpc/elastic-ips" },
+        {
+          "label": "Managed prefix lists",
+          "target": "empty",
+          "route": "/vpc/managed-prefix-lists"
+        },
+        { "label": "NAT gateways", "target": "empty", "route": "/vpc/nat-gateways" },
+        { "label": "Peering connections", "target": "empty", "route": "/vpc/peering-connections" },
+        { "label": "Route servers", "target": "empty", "route": "/vpc/route-servers" }
+      ]
+    },
+    {
+      "title": "Security",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Network ACLs", "target": "functional", "route": "/vpc/network-acls" },
+        { "label": "Security groups", "target": "functional", "route": "/vpc/security-groups" }
+      ]
+    },
+    {
+      "title": "PrivateLink and Lattice",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Getting started", "target": "empty", "route": "/vpc/getting-started" },
+        { "label": "Endpoints", "target": "empty", "route": "/vpc/endpoints" },
+        { "label": "Endpoint services", "target": "empty", "route": "/vpc/endpoint-services" },
+        { "label": "Service networks", "target": "empty", "route": "/vpc/service-networks" },
+        { "label": "Lattice services", "target": "empty", "route": "/vpc/lattice-services" },
+        {
+          "label": "Resource configurations",
+          "target": "empty",
+          "route": "/vpc/resource-configurations"
+        },
+        { "label": "Resource gateways", "target": "empty", "route": "/vpc/resource-gateways" },
+        { "label": "Target groups", "target": "empty", "route": "/vpc/target-groups" },
+        {
+          "label": "Domain verifications",
+          "target": "empty",
+          "route": "/vpc/domain-verifications",
+          "badge": "New"
+        }
+      ]
+    },
+    {
+      "title": "DNS firewall",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Rule groups", "target": "empty", "route": "/vpc/dns-firewall-rule-groups" },
+        { "label": "Domain lists", "target": "empty", "route": "/vpc/domain-lists" }
+      ]
+    },
+    {
+      "title": "Network Firewall",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Firewalls", "target": "empty", "route": "/vpc/firewalls" },
+        { "label": "Firewall policies", "target": "empty", "route": "/vpc/firewall-policies" },
+        {
+          "label": "Network Firewall rule groups",
+          "target": "empty",
+          "route": "/vpc/network-firewall-rule-groups"
+        },
+        {
+          "label": "TLS inspection configurations",
+          "target": "empty",
+          "route": "/vpc/tls-inspection-configurations"
+        },
+        {
+          "label": "Network Firewall resource groups",
+          "target": "empty",
+          "route": "/vpc/network-firewall-resource-groups"
+        },
+        {
+          "label": "VPC endpoint associations",
+          "target": "empty",
+          "route": "/vpc/vpc-endpoint-associations"
+        },
+        {
+          "label": "Container associations",
+          "target": "empty",
+          "route": "/vpc/container-associations"
+        }
+      ]
+    },
+    {
+      "title": "Virtual private network (VPN)",
+      "groupingFrom": "page-text",
+      "items": [
+        { "label": "Customer gateways", "target": "empty", "route": "/vpc/customer-gateways" },
+        {
+          "label": "Virtual private gateways",
+          "target": "empty",
+          "route": "/vpc/virtual-private-gateways"
+        },
+        {
+          "label": "Site-to-Site VPN Concentrators",
+          "target": "empty",
+          "route": "/vpc/site-to-site-vpn-concentrators"
+        },
+        {
+          "label": "Site-to-Site VPN connections",
+          "target": "empty",
+          "route": "/vpc/site-to-site-vpn-connections"
+        },
+        { "label": "Client VPN endpoints", "target": "empty", "route": "/vpc/client-vpn-endpoints" }
+      ]
+    },
+    {
+      "title": "AWS Verified Access",
+      "groupingFrom": "page-text",
+      "items": [
+        {
+          "label": "Verified Access instances",
+          "target": "empty",
+          "route": "/vpc/verified-access-instances"
+        },
+        {
+          "label": "Verified Access trust providers",
+          "target": "empty",
+          "route": "/vpc/verified-access-trust-providers"
+        },
+        {
+          "label": "Verified Access groups",
+          "target": "empty",
+          "route": "/vpc/verified-access-groups"
+        },
+        {
+          "label": "Verified Access endpoints",
+          "target": "empty",
+          "route": "/vpc/verified-access-endpoints"
+        }
+      ]
+    },
+    {
+      "title": "Transit gateways",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Transit gateways", "target": "empty", "route": "/vpc/transit-gateways" },
+        {
+          "label": "Transit gateway attachments",
+          "target": "empty",
+          "route": "/vpc/transit-gateway-attachments"
+        },
+        {
+          "label": "Transit gateway policy tables",
+          "target": "empty",
+          "route": "/vpc/transit-gateway-policy-tables"
+        },
+        {
+          "label": "Transit gateway route tables",
+          "target": "empty",
+          "route": "/vpc/transit-gateway-route-tables"
+        },
+        {
+          "label": "Transit gateway multicast",
+          "target": "empty",
+          "route": "/vpc/transit-gateway-multicast"
+        },
+        { "label": "Metering policies", "target": "empty", "route": "/vpc/metering-policies" }
+      ]
+    },
+    {
+      "title": "Traffic Mirroring",
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Mirror sessions", "target": "empty", "route": "/vpc/mirror-sessions" },
+        { "label": "Mirror targets", "target": "empty", "route": "/vpc/mirror-targets" },
+        { "label": "Mirror filters", "target": "empty", "route": "/vpc/mirror-filters" }
+      ]
+    },
+    {
+      "dividerBefore": true,
+      "groupingFrom": "screenshot",
+      "items": [
+        {
+          "label": "Network Manager",
+          "target": "empty",
+          "route": "/vpc/network-manager",
+          "external": true
+        },
+        { "label": "Cloud WAN", "target": "empty", "route": "/vpc/cloud-wan", "external": true },
+        {
+          "label": "VPC IP Address Manager",
+          "target": "empty",
+          "route": "/vpc/ip-address-manager",
+          "external": true
+        },
+        {
+          "label": "AWS Firewall Manager",
+          "target": "service",
+          "serviceId": "firewall-manager",
+          "external": true
+        }
+      ]
+    },
+    {
+      "dividerBefore": true,
+      "groupingFrom": "screenshot",
+      "items": [
+        { "label": "Settings", "target": "empty", "route": "/vpc/settings", "badge": "New" }
+      ]
+    }
+  ]
+}
