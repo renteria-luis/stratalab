@@ -1,0 +1,142 @@
+/* Shell layout. Colors, spacing and type come from Cloudscape tokens (see tokens.ts). */
+
+.sim-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1002;
+}
+
+.sim-banner {
+  display: flex;
+  gap: var(--sim-space-xs);
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: var(--sim-space-xxs) var(--sim-space-m);
+  background: var(--sim-banner-bg);
+  color: var(--sim-banner-text);
+  font-size: var(--sim-font-size-s);
+  line-height: var(--sim-line-height-s);
+}
+
+.sim-footer {
+  display: grid;
+  gap: var(--sim-space-xxs);
+  padding: var(--sim-space-s) var(--sim-space-m);
+  border-block-start: 1px solid var(--sim-divider);
+  background: var(--sim-bg-layout);
+  color: var(--sim-text-secondary);
+  font-size: var(--sim-font-size-s);
+  line-height: var(--sim-line-height-s);
+}
+
+.sim-footer p {
+  margin: 0;
+}
+
+.sim-search-area {
+  display: flex;
+  gap: var(--sim-space-xs);
+  align-items: center;
+  inline-size: 100%;
+}
+
+.sim-search-area__input {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+/* Services menu: anchored under the top bar, inside the sticky header. */
+
+.sim-services-anchor {
+  position: relative;
+}
+
+.sim-services-panel {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: var(--sim-space-m);
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  inline-size: min(1040px, calc(100vw - 2 * var(--sim-space-m)));
+  block-size: min(640px, 75vh);
+  overflow: hidden;
+  border: 1px solid var(--sim-border-dropdown);
+  border-radius: var(--sim-radius-dropdown);
+  background: var(--sim-bg-container);
+  box-shadow: var(--sim-shadow);
+  color: var(--sim-text-body);
+}
+
+.sim-services-groups {
+  overflow-y: auto;
+  padding-block: var(--sim-space-xs);
+  border-inline-end: 1px solid var(--sim-divider);
+}
+
+.sim-services-groups ul,
+.sim-services-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sim-services-groups hr {
+  margin: var(--sim-space-xs) 0;
+  border: 0;
+  border-block-start: 1px solid var(--sim-divider);
+}
+
+.sim-services-group-button {
+  display: flex;
+  gap: var(--sim-space-xs);
+  align-items: center;
+  inline-size: 100%;
+  padding: var(--sim-space-xxs) var(--sim-space-m);
+  border: 0;
+  /* The selected group also gets a thick start border and bold text, never color alone. */
+  border-inline-start: 4px solid transparent;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.sim-services-group-button:hover {
+  background: var(--sim-bg-hover);
+}
+
+.sim-services-group-button[aria-current='true'] {
+  border-inline-start-color: var(--sim-border-selected);
+  background: var(--sim-bg-selected);
+  font-weight: var(--sim-font-weight-strong);
+}
+
+.sim-services-group-button:focus-visible {
+  outline: 2px solid var(--sim-focus);
+  outline-offset: -2px;
+}
+
+.sim-services-content {
+  overflow-y: auto;
+  padding: var(--sim-space-s) var(--sim-space-m);
+}
+
+.sim-services-content__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-end: var(--sim-space-s);
+}
+
+.sim-services-list {
+  display: grid;
+  gap: var(--sim-space-xs);
+}
+
+.sim-services-item {
+  display: flex;
+  gap: var(--sim-space-xs);
+  align-items: flex-start;
+}

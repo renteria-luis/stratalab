@@ -105,7 +105,7 @@ describe('simulated services and nav routes', () => {
     }
   });
 
-  it.todo('CAT-05: every functional route exists in the app (move to apps/web with the router)');
+  // CAT-05 "every functional route exists in the app" lives in apps/web/__tests__/routes.test.ts.
 });
 
 describe('cards', () => {

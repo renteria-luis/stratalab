@@ -72,5 +72,4 @@ Out of scope (listed for completeness): AWS Copilot, AWS Wavelength, AWS Applica
 
 ## Open
 
-- The test that every functional route exists in the app waits for the `apps/web` router (`it.todo` in `consistency.test.ts`).
 - Side navigation for other consoles (IAM and Systems Manager are R1) needs new captures.
