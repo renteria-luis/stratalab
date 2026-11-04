@@ -29,10 +29,10 @@ Everything else is listed in section 9 (Unsupported) and can't be expressed in t
 
 ### Two layers of checks
 
-| Layer                         | Checks                                                                                                                                     | On failure                                                                                                                       |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| Zod schema (`topologySchema`) | Shape, types, enums, number ranges, IPv4 and CIDR syntax, canonical CIDR, unique IDs, references to existing IDs, per-protocol port fields | The YAML draft isn't committed (AGENTS rule 6). Structural codes: `DUPLICATE_ID`, `UNKNOWN_REFERENCE`, `DUPLICATE_SERVICE_PORT`. |
-| `validate(topology)`          | AWS rules between resources (section 4)                                                                                                    | Returns `Issue[]`. Errors block `trace()`; warnings don't.                                                                       |
+| Layer                         | Checks                                                                                                                                     | On failure                                                                                                                                           |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Zod schema (`topologySchema`) | Shape, types, enums, number ranges, IPv4 and CIDR syntax, canonical CIDR, unique IDs, references to existing IDs, per-protocol port fields | The YAML draft isn't committed (AGENTS rule 6). Structural codes: `DUPLICATE_ID`, `UNKNOWN_REFERENCE`, `DUPLICATE_SERVICE_PORT`, `AZ_NOT_IN_REGION`. |
+| `validate(topology)`          | AWS rules between resources (section 4)                                                                                                    | Returns `Issue[]`. Errors block `trace()`; warnings don't.                                                                                           |
 
 After a successful parse every ID lookup succeeds, so the engine never crashes on a dangling reference.
 
@@ -186,7 +186,7 @@ type RunningService = {
   protocol: 'tcp';
   port: number; // 1..65535
   name: string; // "nginx"
-  responseHtml?: string; // up to 64 KiB (our limit); shown only in <iframe sandbox srcdoc>
+  responseHtml?: string; // up to 65,536 characters (our limit); shown only in <iframe sandbox srcdoc>
 };
 ```
 
