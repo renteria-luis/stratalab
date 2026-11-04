@@ -2,10 +2,11 @@
 
 Read for: CIDR parsing and math, VPC and subnet validation, reserved IPs, overlaps.
 
-### ADR-01 · VPC IPv4 CIDR size
-Rule: A VPC IPv4 CIDR block is between /16 and /28.
-Code: validation issue `VPC_SIZE_INVALID`.
-Fidelity: Exact · Status: to-verify · Exam: CLF, SAA
+### ADR-01 · VPC IPv4 CIDR size and restricted ranges
+Rule: A VPC IPv4 CIDR block is between /16 (65,536 addresses) and /28 (16 addresses). You can't use 0.0.0.0/8, 127.0.0.0/8 (loopback), 169.254.0.0/16 (link-local) or 224.0.0.0/4 (multicast). AWS recommends RFC 1918 ranges, but a publicly routable block is allowed; the docs still call addresses inside the VPC CIDR "private".
+Code: validation issues `VPC_SIZE_INVALID`, `VPC_CIDR_RESTRICTED`.
+Engine: one primary IPv4 CIDR per VPC. Secondary CIDR blocks are Unsupported in R0. Any CIDR inside a restricted range is rejected (Inferred, see Q9).
+Fidelity: Exact (size, ranges) · Inferred (subsets of the ranges) · Status: verified 2026-11-04 · Exam: CLF, SAA
 Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-cidr-blocks.html
 
 ### ADR-02 · Subnet CIDR size and placement
@@ -46,6 +47,20 @@ Source: https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html
 ### ADR-08 · IPv6
 Unsupported in the MVP. Reachability Analyzer golden tests are IPv4-only as well.
 
+### ADR-09 · Primary private IPv4 address of an instance
+Rule: Each instance has a default network interface (index 0) with a primary private IPv4 address from the subnet's IPv4 range. If you don't pick one at launch, AWS selects an available address in that range. The address stays through stop and start and is released when the instance is terminated.
+Code: validation issues `IP_OUT_OF_SUBNET`, `IP_RESERVED` (ADR-04), `IP_DUPLICATE`.
+Engine: `IP_DUPLICATE` (two interfaces with the same private address) is inferred from "available address". Secondary private addresses and secondary network interfaces are Unsupported in R0.
+Fidelity: Exact (range) · Inferred (uniqueness) · Status: verified 2026-11-04 · Exam: SAA
+Source: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
+
+### ADR-10 · Public IPv4 address of an instance
+Rule: Each subnet has an attribute that decides whether a new network interface in it (including an instance's primary interface) gets a public IPv4 address. Instances in a nondefault subnet get none by default; the launch setting overrides the subnet attribute. The address comes from Amazon's pool and the internet gateway maps it one to one to the primary private address. It is released when the instance stops, hibernates or terminates, and when an Elastic IP address is associated; an Elastic IP address is persistent.
+Code: validation issue `PUBLIC_IP_INVALID` when the stored address is in RFC 1918, RFC 6598 (100.64.0.0/10), a restricted range (ADR-01) or any VPC CIDR.
+Engine: the interface stores the resulting address and its kind (`auto-assigned` or `elastic-ip`). The subnet attribute only prefills the launch view. Stop, start and the address changes they cause are Unsupported in R0.
+Fidelity: Exact · Status: verified 2026-11-04 · Exam: CLF, SAA
+Sources: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html · https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html · https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html
+
 ## CIDR math (implementation)
 
 Use unsigned 32-bit integers. JavaScript bitwise operators return signed 32-bit values, so end each expression with `>>> 0`.
@@ -68,4 +83,4 @@ overlaps(a, b)    = a.start <= b.end && b.start <= a.end
 
 ## Open questions
 
-- None yet.
+- Q9: ADR-01 lists blocks you "can't specify". Confirm whether that also covers smaller CIDRs inside them (for example 127.0.0.0/16). No Reachability Analyzer cost: the user tries `create-vpc` once in the sandbox account.

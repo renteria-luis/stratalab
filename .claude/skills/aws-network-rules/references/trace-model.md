@@ -27,6 +27,10 @@ Always report which direction failed and at which hop.
 ### TRC-03 · Canonical flows
 Use these as test fixtures and lab templates.
 
+**F0 · Instance → instance in the same VPC, private address (TCP)**
+- Forward: security group outbound → NACL outbound only if the subnets differ (NACL-04) → local route (RT-03) → NACL inbound of the destination subnet only if the subnets differ → security group inbound (an SG reference can match, SG-04) → host listening on the port.
+- Return: security group passes (stateful) → NACL outbound to the client's ephemeral port, if the subnets differ → local route → NACL inbound, if the subnets differ → security group passes.
+
 **F1 · Internet client → web server in a public subnet (TCP 80)**
 - Forward: client → internet gateway (the destination must be the instance's public IP; the gateway maps it to the private IP, IGW-02) → no route table lookup on arrival (RT-02, Q1) → NACL inbound, port 80 → security group inbound, port 80 → host listening on 80.
 - Return: security group passes (stateful) → NACL outbound to the client's ephemeral port → the subnet route table must send the client's IP to the internet gateway (IGW-04) → the internet gateway maps the private IP back to the public IP → client.
@@ -50,16 +54,18 @@ Use these as test fixtures and lab templates.
 
 ### TRC-04 · Reason codes
 Reuse these Reachability Analyzer explanation codes with the same name and meaning:
-- Routing and targets (`BROKE_AT_HOP`): `NO_ROUTE_TO_DESTINATION`, `MORE_SPECIFIC_ROUTE`, `HIGHER_PRIORITY_ROUTE`, `BAD_STATE_ROUTE`, `VPC_LOCAL_ROUTE_CIDR_RESTRICTION`, `DISCONNECTED_VPCS`, `IGW_PUBLIC_IP_ASSOCIATION_FOR_EGRESS`, `IGW_PRIVATE_IP_ASSOCIATION_FOR_INGRESS`, `IGW_DESTINATION_ADDRESS_NOT_IN_RFC1918_EGRESS`, `NGW_REQUIRES_SOURCE_IN_VPC`, `PCX_REQUIRES_ADDRESS_IN_VPC_CIDR`, `VPCE_INTRA_VPC_TRAFFIC`, `TGW_ATTACH_MISSING_TGW_RTB_ASSOCIATION`, `TGW_RTB_NO_ROUTE_TO_TGW_ATTACHMENT`, `TGW_ROUTE_AZ_RESTRICTION`.
+- Routing and targets (`BROKE_AT_HOP`): `NO_ROUTE_TO_DESTINATION`, `MORE_SPECIFIC_ROUTE`, `HIGHER_PRIORITY_ROUTE`, `BAD_STATE_ROUTE`, `VPC_LOCAL_ROUTE_CIDR_RESTRICTION`, `DISCONNECTED_VPCS`, `IGW_PUBLIC_IP_ASSOCIATION_FOR_EGRESS`, `IGW_PRIVATE_IP_ASSOCIATION_FOR_INGRESS`, `IGW_DESTINATION_ADDRESS_NOT_IN_RFC1918_EGRESS`, `IGW_DESTINATION_ADDRESS_NOT_IN_RFC6598_EGRESS`, `IGW_SOURCE_ADDRESS_NOT_IN_RFC1918_INGRESS`, `IGW_SOURCE_ADDRESS_NOT_IN_RFC6598_INGRESS`, `NGW_REQUIRES_SOURCE_IN_VPC`, `PCX_REQUIRES_ADDRESS_IN_VPC_CIDR`, `VPCE_INTRA_VPC_TRAFFIC`, `TGW_ATTACH_MISSING_TGW_RTB_ASSOCIATION`, `TGW_RTB_NO_ROUTE_TO_TGW_ATTACHMENT`, `TGW_ROUTE_AZ_RESTRICTION`.
 - Filtering (`ROUTED_THEN_DROPPED`): `SUBNET_ACL_RESTRICTION`, `ENI_SG_RULES_MISMATCH`, `SG_HAS_NO_RULES`, `SG_REFERENCING_SUPPORT`, `VPCE_GATEWAY_PROTOCOL_RESTRICTION`.
+- Query configuration (the trace doesn't run): `IGW_EXPECTS_PUBLIC_ADDRESS` (IGW-06), and `DISCONNECTED_VPCS` for instances in different VPCs while no peering, transit gateway or VPN is modeled (R0 and R1). Reachability Analyzer's `IGW_NAT_REFLECTION` explains why hairpin paths are Unsupported.
 
 Our own codes, for cases Reachability Analyzer doesn't cover:
 - `NO_LISTENER`: no service on the destination port (`ROUTED_THEN_DROPPED`).
-- Validation: `VPC_SIZE_INVALID`, `SUBNET_SIZE_INVALID`, `SUBNET_CIDR_OUT_OF_VPC`, `CIDR_OVERLAP`, `IP_RESERVED`, `NAT_SUBNET_NOT_PUBLIC`.
+- `NO_INTERNET_GATEWAY`: internet traffic aimed at a VPC with no attached internet gateway (`BROKE_AT_HOP`, Inferred, IGW-05, Q10).
+- Validation: `VPC_SIZE_INVALID`, `VPC_CIDR_RESTRICTED`, `SUBNET_SIZE_INVALID`, `SUBNET_CIDR_OUT_OF_VPC`, `CIDR_OVERLAP`, `IP_RESERVED`, `IP_OUT_OF_SUBNET`, `IP_DUPLICATE`, `PUBLIC_IP_INVALID`, `ROUTE_DUPLICATE_DESTINATION`, `ROUTE_DESTINATION_RESERVED`, `LOCAL_ROUTE_CONFLICT`, `IGW_MULTIPLE_ATTACHED`, `VPC_MISMATCH`, `SG_NAME_DUPLICATE`, `SG_NAME_INVALID`, `NACL_RULE_NUMBER_DUPLICATE`, `QUOTA_EXCEEDED`, `NAT_SUBNET_NOT_PUBLIC`. Reference and structure checks are listed in `docs/specs/r0-engine.md`.
 - SSM status: see SSM-04.
 - `UNSUPPORTED_FEATURE`: the path needs something the engine doesn't model. Never report `REACHED` in that case.
 
-Source: https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
+Source: https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html (code list re-read 2026-11-04)
 
 ### TRC-05 · Determinism and scope
 - Same input, same output: no randomness and no clock.

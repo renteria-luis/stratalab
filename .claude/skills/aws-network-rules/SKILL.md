@@ -67,4 +67,4 @@ IPv6 · DNS beyond endpoint private DNS · gateway (ingress) route tables and mi
 
 - Re-verify `verified` rules every 6 months, or right away when a golden test disagrees with the engine.
 - Keep this file short. Put detail in the reference files.
-- Last full review: 2026-11-03.
+- Last full review: 2026-11-03. R0 rules re-verified 2026-11-04 (see `docs/specs/r0-engine.md`).

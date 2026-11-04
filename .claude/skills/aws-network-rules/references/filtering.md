@@ -11,31 +11,47 @@ Fidelity: Exact · Status: verified 2026-11-03 · Exam: CLF, SAA
 Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
 ### SG-02 · Allow rules only
-Rule: Security group rules can only allow. Traffic that matches no allow rule is dropped. There are no deny rules (use a NACL for that).
+Rule: Security group rules can only allow. Traffic that matches no allow rule is dropped. There are no deny rules (use a NACL for that). A security group with no outbound rules allows no outbound traffic.
 Code: `ENI_SG_RULES_MISMATCH` (no rule applies) or `SG_HAS_NO_RULES`.
-Fidelity: Exact · Status: to-verify · Exam: CLF, SAA
-Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
+Engine: report `SG_HAS_NO_RULES` when every security group on the interface has no rules in the evaluated direction; otherwise `ENI_SG_RULES_MISMATCH` (Inferred mapping).
+Fidelity: Exact · Status: verified 2026-11-04 · Exam: CLF, SAA
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html · https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
 
 ### SG-03 · Where security groups apply
-Rule: Security groups apply at the network interface. The outbound rules of the source interface apply to connections it starts; the inbound rules of the destination interface apply to traffic it receives. With several groups on one interface, their rules add up.
-Fidelity: Exact · Status: to-verify
-Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
+Rule: Security groups are associated with network interfaces; changing an instance's groups changes its primary interface's groups. The outbound rules of the source interface apply to traffic it sends; the inbound rules of the destination interface apply to traffic it receives. With several groups on one interface, their rules are aggregated into one set.
+Fidelity: Exact · Status: verified 2026-11-04 · Exam: SAA
+Sources: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/changing-security-group.html · https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html
 
 ### SG-04 · Rule sources and destinations
-Rule: A rule can name a CIDR, a prefix list (for example the S3 prefix list) or another security group. A security group reference matches traffic from interfaces that belong to that group.
-Engine: a reference matches only while the packet keeps its original private source address inside the VPC. Traffic that went through an internet gateway or a NAT gateway doesn't match (`SG_REFERENCES_NOT_PRESERVED` describes components that drop security group information).
-Fidelity: Exact (rule types) · Inferred (internet gateway and NAT behavior) · Status: to-verify
-Sources: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html · https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
+Rule: A rule has a protocol (TCP 6, UDP 17, ICMP 1 or all), a port range for TCP and UDP (or ICMP type and code), and one source or destination: an IPv4 CIDR (a single address uses /32), a prefix list or a security group ID. A security group reference matches the private IP addresses of the network interfaces associated with the referenced group; no rules are copied from it. An inbound reference works within the same VPC or across a peering connection or transit gateway; an outbound reference within the same VPC or across a peering connection.
+Engine: a reference matches only while the packet's address is the private address of a member interface. Traffic that arrives through an internet gateway carries a public source address, so it never matches (follows from the rule). Traffic through a NAT gateway carries the NAT gateway's address and doesn't match either (Inferred, `SG_REFERENCES_NOT_PRESERVED` describes components that drop security group information, Q3). Prefix lists are R1; references across VPCs are R2.
+Fidelity: Exact (rule parts and reference matching) · Inferred (NAT behavior) · Status: verified 2026-11-04 (rule parts and reference matching)
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html · https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
 
 ### SG-05 · Defaults
-Rule: The default security group allows inbound traffic from itself and all outbound traffic. A new security group has no inbound rules and one rule that allows all outbound traffic.
-Fidelity: Exact · Status: to-verify · Exam: SAA
+Rule: Every VPC comes with a default security group named `default`. Its inbound rule allows all protocols and ports from the group itself; its outbound rule allows all traffic to 0.0.0.0/0 (plus ::/0 only with IPv6). You can change its rules but can't delete it. An instance launched without a security group gets the VPC's default group. A new security group has no inbound rules and one outbound rule that allows all traffic.
+Fidelity: Exact · Status: verified 2026-11-04 · Exam: SAA
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/default-security-group.html · https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html
+
+### SG-06 · Scope and names
+Rule: You assign a security group to resources in the VPC it belongs to (the Security Group VPC Association feature extends this to other VPCs in the Region). A security group name is unique within its VPC, isn't case-sensitive, has up to 255 characters and can't start with `sg-`. Name and description are required.
+Code: validation issues `VPC_MISMATCH`, `SG_NAME_DUPLICATE`, `SG_NAME_INVALID`.
+Engine: the Security Group VPC Association feature is Unsupported.
+Fidelity: Exact · Status: verified 2026-11-04
 Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
+
+### SG-07 · Quotas
+Rule: Default quotas: 60 inbound and 60 outbound rules per security group (IPv4 and IPv6 counted separately), and 5 security groups per network interface (adjustable up to 16). Both are adjustable.
+Code: validation warning `QUOTA_EXCEEDED`.
+Engine: checks the default values only; adjusted quotas are Unsupported.
+Fidelity: Exact · Status: verified 2026-11-04
+Source: https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html
 
 ## Network ACLs
 
 ### NACL-01 · Association
 Rule: Every subnet has exactly one network ACL. Without an explicit association it uses the VPC's default network ACL. One network ACL can serve many subnets.
+Code: validation issue `VPC_MISMATCH` when a subnet uses a network ACL of another VPC.
 Fidelity: Exact · Status: verified 2026-11-03 · Exam: SAA
 Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
@@ -56,9 +72,9 @@ Fidelity: Exact · Status: verified 2026-11-03 · Exam: SAA
 Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
 ### NACL-05 · Defaults
-Rule: The default network ACL allows all inbound and outbound IPv4 traffic. A custom network ACL denies everything until you add rules.
-Fidelity: Exact · Status: verified 2026-11-03 (default ACL) · to-verify (custom ACL) · Exam: SAA
-Sources: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html · https://docs.aws.amazon.com/vpc/latest/userguide/custom-network-acl.html
+Rule: The default network ACL allows all inbound and outbound IPv4 traffic with rule 100 (all traffic, 0.0.0.0/0, ALLOW) in each direction, before the `*` DENY rule. You can remove its numbered rules. A new custom network ACL blocks all inbound and outbound traffic (only the `*` rules) and isn't associated with any subnet until you associate it.
+Fidelity: Exact · Status: verified 2026-11-04 · Exam: SAA
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/default-network-acl.html · https://docs.aws.amazon.com/vpc/latest/userguide/create-network-acl.html · https://docs.aws.amazon.com/vpc/latest/userguide/custom-network-acl.html
 
 ### NACL-06 · Traffic that NACLs never filter
 Rule: NACLs don't filter traffic to or from the Amazon DNS server (Route 53 Resolver, VPC+2), DHCP, instance metadata (IMDS), ECS task metadata, Windows license activation, Amazon Time Sync, or the addresses reserved for the VPC router.
@@ -69,6 +85,19 @@ Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 Rule: NACL rules can't reference prefix lists. Use CIDRs.
 Fidelity: Exact · Status: verified 2026-11-03
 Source: https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html
+
+### NACL-08 · Unique rule numbers
+Rule: A rule number can be used only once per direction in a network ACL (API error `NetworkAclEntryAlreadyExists`). With the API you can only add and delete rules; the console replaces a rule when you edit it.
+Code: validation issue `NACL_RULE_NUMBER_DUPLICATE`.
+Fidelity: Exact · Status: verified 2026-11-04
+Sources: https://docs.aws.amazon.com/ec2/latest/devguide/errors-overview.html · https://docs.aws.amazon.com/vpc/latest/userguide/create-network-acl.html
+
+### NACL-09 · Quota
+Rule: The default quota is 20 rules per network ACL in each direction, adjustable up to 40 per direction.
+Code: validation warning `QUOTA_EXCEEDED`.
+Engine: checks the default value only; adjusted quotas are Unsupported.
+Fidelity: Exact · Status: verified 2026-11-04
+Source: https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html
 
 ## Ephemeral ports
 
@@ -88,5 +117,5 @@ Source: https://docs.aws.amazon.com/vpc/latest/userguide/custom-network-acl.html
 
 ## Open questions
 
-- Q2: Confirm SG-02, SG-03 and SG-05 on the security groups page.
+- Q2: Resolved 2026-11-04. SG-02, SG-03 and SG-05 confirmed in the security group pages.
 - Q3: Confirm which components drop security group information (SG-04): golden test with an SG rule that references another group, once with direct private traffic and once through a NAT gateway.
