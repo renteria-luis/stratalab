@@ -13,8 +13,8 @@ Only some services are backed by the engine. They open functional views that edi
 Every other service opens a reference card (study mode) or acts as a navigable distractor (lab mode).
 Everything runs in the browser. The MVP has no real AWS calls, no backend and no user accounts.
 
-- Product name: StrataLab. It must not contain "AWS", "Amazon" or the name of an AWS service (for example "X-Ray").
-- Package scope placeholder: `@strata/*`. Rename it once the name is chosen.
+- Product name: not chosen yet. The placeholder is "Untitled Simulator" (`apps/web/src/product.ts` and the `<title>` in `apps/web/index.html`). The final name must not contain "AWS", "Amazon" or the name of an AWS service (for example "X-Ray").
+- Package scope placeholder: `@sim/*`. Rename it once the name is chosen.
 
 ## Repository layout
 

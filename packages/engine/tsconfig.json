@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Purity guard: no DOM lib and no Node types, so window, document, fetch,
+    // process or console are type errors here. Same code runs in browser and Node.
+    "lib": ["ES2023"],
+    "types": []
+  },
+  "include": ["src", "__tests__"]
+}

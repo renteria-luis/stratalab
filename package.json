@@ -1,0 +1,33 @@
+{
+  "name": "sim-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.16.1",
+  "engines": {
+    "node": "^24.0.0",
+    "pnpm": "^12.16.1"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @sim/web dev",
+    "test": "vitest run",
+    "test:engine": "vitest run --project engine",
+    "test:e2e": "pnpm --filter @sim/web test:e2e",
+    "typecheck": "tsc -p tsconfig.json && pnpm -r typecheck",
+    "lint": "eslint . && prettier --check .",
+    "golden:capture": "pnpm --filter @sim/golden capture"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.2",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.14.0",
+    "prettier": "^3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "vitest": "^5.1.0"
+  }
+}

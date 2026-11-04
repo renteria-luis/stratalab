@@ -1,0 +1,13 @@
+{
+  "name": "@sim/engine",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Pure, deterministic topology engine: schema, CIDR math, validate, trace, deriveStatus.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

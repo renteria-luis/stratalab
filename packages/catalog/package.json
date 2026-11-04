@@ -1,0 +1,13 @@
+{
+  "name": "@sim/catalog",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Service catalog data (services, side navigation, reference cards) and Zod schemas.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}
