@@ -1,17 +1,15 @@
 import { z } from 'zod';
 import { useStore } from 'zustand';
-import { persist, type PersistStorage, type StorageValue } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 import { createStore, type StoreApi } from 'zustand/vanilla';
 import { LOCALES, detectLocale, type Locale } from '../i18n/locales';
 import { createIdbKeyValue, createMemoryKeyValue, type KeyValueStore } from './keyValue';
+import { backupKeyFor, createValidatedStorage, type StorageProblem } from './persistence';
 
 /**
- * UI store: language, recently visited services, favorites and the Console Home layout.
- * It holds no topology data (AGENTS.md, architecture rule 5).
- *
- * Persistence follows architecture rule 7: IndexedDB through `persist`, a `version` with a
- * migration step, and Zod validation on load. Data that fails validation is copied to a
- * backup key before the app starts clean, and the shell tells the user. Loading never throws.
+ * UI store: language, recently visited services, favorites, the Console Home layout and the
+ * session's "Filter by VPC". It holds no topology data (AGENTS.md, architecture rule 5).
+ * Persistence (rule 7) goes through `createValidatedStorage` in `persistence.ts`.
  */
 
 export const UI_STORE_KEY = 'sim-ui';
@@ -37,18 +35,18 @@ export const persistedUiSchema = z.strictObject({
 export type PersistedUi = z.output<typeof persistedUiSchema>;
 export type HomeLayoutItem = z.output<typeof homeLayoutItemSchema>;
 
-const envelopeSchema = z.object({ state: z.unknown(), version: z.number().int() });
-
-/** What went wrong with browser storage, shown once by the shell. */
-export type StorageProblem = 'backed-up' | 'unreadable' | 'save-failed';
+export type { StorageProblem } from './persistence';
 
 export interface UiState extends PersistedUi {
   readonly hydrated: boolean;
   readonly storageProblem: StorageProblem | null;
+  /** "Filter by VPC" of the reproduced consoles. Session only: not persisted. */
+  readonly vpcFilter: string | null;
   readonly setLocale: (locale: Locale) => void;
   readonly visitService: (serviceId: string) => void;
   readonly toggleFavorite: (serviceId: string) => void;
   readonly setHomeLayout: (layout: readonly HomeLayoutItem[]) => void;
+  readonly setVpcFilter: (vpcId: string | null) => void;
   readonly dismissStorageProblem: () => void;
 }
 
@@ -66,60 +64,23 @@ export function defaultPersistedUi(locale: Locale): PersistedUi {
 }
 
 export function backupKey(date: Date): string {
-  return `${UI_STORE_KEY}-backup-${date.toISOString()}`;
-}
-
-interface LoadResult {
-  readonly value: StorageValue<PersistedUi> | null;
-  readonly problem: StorageProblem | null;
-}
-
-async function load(kv: KeyValueStore, name: string): Promise<LoadResult> {
-  let raw: unknown;
-  try {
-    raw = await kv.get(name);
-  } catch {
-    return { value: null, problem: 'unreadable' };
-  }
-  if (raw === undefined) return { value: null, problem: null };
-
-  const envelope = envelopeSchema.safeParse(raw);
-  const parsed = envelope.success
-    ? persistedUiSchema.safeParse(migrateUiState(envelope.data.state, envelope.data.version))
-    : undefined;
-  if (parsed?.success) {
-    return { value: { state: parsed.data, version: UI_STORE_VERSION }, problem: null };
-  }
-
-  try {
-    await kv.set(backupKey(new Date()), raw);
-    return { value: null, problem: 'backed-up' };
-  } catch {
-    return { value: null, problem: 'unreadable' };
-  }
+  return backupKeyFor(UI_STORE_KEY, date);
 }
 
 export function createUiStore(kv: KeyValueStore, initialLocale: Locale): StoreApi<UiState> {
-  let loadProblem: StorageProblem | null = null;
-
-  const storage: PersistStorage<PersistedUi, Promise<void>> = {
-    getItem: async (name) => {
-      const result = await load(kv, name);
-      loadProblem = result.problem;
-      return result.value;
-    },
-    setItem: async (name, value) => {
-      try {
-        await kv.set(name, value);
-      } catch {
-        // Guarded so a storage that keeps failing cannot loop through setState -> setItem.
-        if (store.getState().storageProblem !== 'save-failed') {
-          store.setState({ storageProblem: 'save-failed' });
-        }
+  const { storage, loadProblem } = createValidatedStorage<PersistedUi>({
+    kv,
+    name: UI_STORE_KEY,
+    version: UI_STORE_VERSION,
+    schema: persistedUiSchema,
+    migrate: migrateUiState,
+    // Guarded so a storage that keeps failing cannot loop through setState -> setItem.
+    onSaveFailed: () => {
+      if (store.getState().storageProblem !== 'save-failed') {
+        store.setState({ storageProblem: 'save-failed' });
       }
     },
-    removeItem: () => Promise.resolve(),
-  };
+  });
 
   const store = createStore<UiState>()(
     persist(
@@ -127,6 +88,7 @@ export function createUiStore(kv: KeyValueStore, initialLocale: Locale): StoreAp
         ...defaultPersistedUi(initialLocale),
         hydrated: false,
         storageProblem: null,
+        vpcFilter: null,
         setLocale: (locale) => {
           set({ locale });
         },
@@ -148,6 +110,9 @@ export function createUiStore(kv: KeyValueStore, initialLocale: Locale): StoreAp
         setHomeLayout: (layout) => {
           set({ homeLayout: [...layout] });
         },
+        setVpcFilter: (vpcId) => {
+          set({ vpcFilter: vpcId });
+        },
         dismissStorageProblem: () => {
           set({ storageProblem: null });
         },
@@ -168,7 +133,7 @@ export function createUiStore(kv: KeyValueStore, initialLocale: Locale): StoreAp
         onRehydrateStorage: () => (_state, error) => {
           store.setState({
             hydrated: true,
-            storageProblem: error === undefined ? loadProblem : 'unreadable',
+            storageProblem: error === undefined ? loadProblem() : 'unreadable',
           });
         },
       },
