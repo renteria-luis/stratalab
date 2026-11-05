@@ -2,12 +2,16 @@
   "name": "@sim/labs",
   "version": "0.0.0",
   "private": true,
-  "description": "Lab scenarios and quiz items.",
+  "description": "Lab scenarios and quiz items, each with its own tests.",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sim/engine": "workspace:*",
+    "zod": "^4.6.7"
   }
 }
