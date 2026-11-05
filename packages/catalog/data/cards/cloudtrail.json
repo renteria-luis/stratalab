@@ -1,0 +1,86 @@
+{
+  "serviceId": "cloudtrail",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html",
+      "title": "What Is AWS CloudTrail?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html",
+      "title": "What Is AWS Config?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html",
+      "title": "What is Amazon CloudWatch?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_billing.html",
+      "title": "Analyzing, optimizing, and reducing CloudWatch costs",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "Records actions taken by users, roles and AWS services as events, whether they come from the console, the AWS CLI or the SDKs and APIs. Use it for operational and risk auditing, governance and compliance.",
+    "examCues": [
+      "Find out who deleted a resource or changed a security group, and when → CloudTrail",
+      "Keep a long-term record of account activity in an S3 bucket → CloudTrail (trail)",
+      "Review recent management events without setting anything up → CloudTrail (Event history)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "config",
+        "difference": "AWS Config records how resource configurations and their relationships change over time; CloudTrail records the actions that made the changes."
+      },
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch tracks performance and health with metrics, logs and alarms; CloudTrail records account activity for auditing."
+      }
+    ],
+    "pricingModel": "Viewing Event history is free, and a trail delivers one copy of ongoing management events to S3 at no CloudTrail charge (S3 storage still applies). CloudTrail Lake charges for ingesting and storing events and for the data its queries scan, and logging data events costs extra.",
+    "sharedResponsibility": {
+      "aws": [
+        "Records events and keeps an immutable, searchable Event history of recent management events",
+        "Delivers trail log files to the S3 bucket you choose"
+      ],
+      "customer": [
+        "Creates trails or event data stores to keep events beyond the Event history",
+        "Protects the S3 bucket that holds the logs",
+        "Chooses whether to log data events and Insights events"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Registra como eventos las acciones de usuarios, roles y servicios de AWS, ya sea que vengan de la consola, de la AWS CLI o de los SDKs y APIs. Sirve para auditoría operativa y de riesgos, gobierno y cumplimiento.",
+    "examCues": [
+      "Averiguar quién borró un recurso o cambió un security group, y cuándo → CloudTrail",
+      "Guardar un registro de largo plazo de la actividad de la cuenta en un bucket de S3 → CloudTrail (trail)",
+      "Revisar eventos de administración recientes sin configurar nada → CloudTrail (Event history)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "config",
+        "difference": "AWS Config registra cómo cambian en el tiempo las configuraciones de los recursos y sus relaciones; CloudTrail registra las acciones que hicieron esos cambios."
+      },
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch sigue el rendimiento y la salud con métricas, logs y alarmas; CloudTrail registra la actividad de la cuenta para auditoría."
+      }
+    ],
+    "pricingModel": "Ver el Event history es gratis, y un trail entrega a S3 una copia de los eventos de administración sin cargo de CloudTrail (sí se cobra el almacenamiento en S3). CloudTrail Lake cobra por ingerir y guardar eventos y por los datos que escanean sus consultas, y registrar data events cuesta aparte.",
+    "sharedResponsibility": {
+      "aws": [
+        "Registra los eventos y mantiene un Event history inmutable y consultable de los eventos de administración recientes",
+        "Entrega los archivos de log del trail al bucket de S3 que elijas"
+      ],
+      "customer": [
+        "Crea trails o event data stores para conservar eventos más allá del Event history",
+        "Protege el bucket de S3 donde están los logs",
+        "Elige si registrar data events e Insights events"
+      ]
+    }
+  }
+}

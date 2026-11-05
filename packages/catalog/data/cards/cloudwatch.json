@@ -1,0 +1,78 @@
+{
+  "serviceId": "cloudwatch",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html",
+      "title": "What is Amazon CloudWatch?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_billing.html",
+      "title": "Analyzing, optimizing, and reducing CloudWatch costs",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html",
+      "title": "Logging IP traffic using VPC Flow Logs",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html",
+      "title": "What Is AWS CloudTrail?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "Monitors your AWS resources and applications in real time with metrics, logs, alarms and dashboards. Many AWS services send metrics to it automatically, and alarms can alert you or start automated actions when a threshold is breached.",
+    "examCues": [
+      "Get an alert when an EC2 instance's CPU use stays above a threshold → CloudWatch",
+      "Collect memory and disk metrics and application logs from EC2 instances → CloudWatch (CloudWatch agent)",
+      "Store and query application logs or VPC Flow Logs in one place → CloudWatch (CloudWatch Logs)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudtrail",
+        "difference": "CloudTrail records who did what through console, CLI and API actions; CloudWatch tracks performance and health through metrics, logs and alarms."
+      }
+    ],
+    "pricingModel": "Basic monitoring metrics that AWS services send are free. You pay for custom metrics, detailed monitoring, alarms, API requests and for logs collected, stored and analyzed.",
+    "sharedResponsibility": {
+      "aws": [
+        "Collects and stores the metrics that AWS services publish",
+        "Evaluates alarms and stores the logs you send"
+      ],
+      "customer": [
+        "Chooses which metrics, logs and alarms to create and their thresholds",
+        "Installs and configures the CloudWatch agent for metrics and logs from inside instances",
+        "Sets log retention to balance cost and needs"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Monitorea en tiempo real tus recursos y aplicaciones en AWS con métricas, logs, alarmas y dashboards. Muchos servicios de AWS le envían métricas de forma automática, y las alarmas pueden avisarte o iniciar acciones automáticas cuando se supera un umbral.",
+    "examCues": [
+      "Recibir un aviso cuando el uso de CPU de una instancia EC2 se queda sobre un umbral → CloudWatch",
+      "Recolectar métricas de memoria y disco y logs de aplicaciones desde instancias EC2 → CloudWatch (CloudWatch agent)",
+      "Guardar y consultar en un solo lugar logs de aplicaciones o VPC Flow Logs → CloudWatch (CloudWatch Logs)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudtrail",
+        "difference": "CloudTrail registra quién hizo qué mediante acciones de consola, CLI y API; CloudWatch sigue el rendimiento y la salud con métricas, logs y alarmas."
+      }
+    ],
+    "pricingModel": "Las métricas de monitoreo básico que envían los servicios de AWS son gratis. Pagas por métricas personalizadas, monitoreo detallado, alarmas, solicitudes a la API y por los logs que se recolectan, guardan y analizan.",
+    "sharedResponsibility": {
+      "aws": [
+        "Recolecta y guarda las métricas que publican los servicios de AWS",
+        "Evalúa las alarmas y guarda los logs que envías"
+      ],
+      "customer": [
+        "Elige qué métricas, logs y alarmas crear y sus umbrales",
+        "Instala y configura el CloudWatch agent para métricas y logs desde dentro de las instancias",
+        "Define la retención de logs para equilibrar costo y necesidades"
+      ]
+    }
+  }
+}

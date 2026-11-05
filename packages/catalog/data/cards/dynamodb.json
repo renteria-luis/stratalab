@@ -1,0 +1,75 @@
+{
+  "serviceId": "dynamodb",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
+      "title": "What is Amazon DynamoDB?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/capacity-mode.html",
+      "title": "DynamoDB throughput capacity",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html",
+      "title": "What is Amazon Relational Database Service (Amazon RDS)?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "A serverless, fully managed NoSQL database for key-value and document data, with single-digit millisecond performance at any scale. There are no servers to provision or patch and no maintenance windows.",
+    "examCues": [
+      "Shopping cart or session data that needs consistent low latency at any traffic level → DynamoDB",
+      "Unpredictable traffic where you want to pay per request without capacity planning → DynamoDB (on-demand mode)",
+      "Restore a table to an earlier second after a bad write → DynamoDB (point-in-time recovery)",
+      "A table that must stay available across several Regions → DynamoDB (global tables)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "aurora-and-rds",
+        "difference": "RDS and Aurora are relational databases that support SQL joins; DynamoDB has no JOIN operator and favors denormalized data."
+      }
+    ],
+    "pricingModel": "You pay for reading, writing and storing data, plus optional features. On-demand mode charges per request; provisioned mode charges by the hour for the read and write capacity you set, even if you don't use it.",
+    "sharedResponsibility": {
+      "aws": [
+        "Handles setup, maintenance, high availability, hardware provisioning and scaling",
+        "Encrypts all data at rest by default and replicates it across three Availability Zones"
+      ],
+      "customer": [
+        "Designs keys and the data model for the application's access patterns",
+        "Controls access with IAM policies, down to attribute level if needed",
+        "Chooses the capacity mode and turns on point-in-time recovery or backups"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Una base de datos NoSQL serverless y totalmente administrada para datos key-value y documentos, con rendimiento de milisegundos de un dígito a cualquier escala. No hay servidores que aprovisionar ni parchar, ni ventanas de mantenimiento.",
+    "examCues": [
+      "Datos de carrito de compras o de sesión que necesitan latencia baja y constante con cualquier tráfico → DynamoDB",
+      "Tráfico impredecible donde quieres pagar por solicitud sin planear capacidad → DynamoDB (modo on-demand)",
+      "Restaurar una tabla a un segundo anterior después de una escritura errónea → DynamoDB (point-in-time recovery)",
+      "Una tabla que debe seguir disponible en varias regiones → DynamoDB (global tables)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "aurora-and-rds",
+        "difference": "RDS y Aurora son bases relacionales que soportan joins de SQL; DynamoDB no tiene operador JOIN y favorece datos desnormalizados."
+      }
+    ],
+    "pricingModel": "Pagas por leer, escribir y guardar datos, más las funciones opcionales. El modo on-demand cobra por solicitud; el modo provisioned cobra por hora la capacidad de lectura y escritura que defines, aunque no la uses.",
+    "sharedResponsibility": {
+      "aws": [
+        "Se encarga de la configuración, el mantenimiento, la alta disponibilidad, el aprovisionamiento de hardware y el escalado",
+        "Cifra todos los datos en reposo por defecto y los replica en tres Availability Zones"
+      ],
+      "customer": [
+        "Diseña las keys y el modelo de datos según los patrones de acceso de la aplicación",
+        "Controla el acceso con políticas de IAM, hasta nivel de atributo si hace falta",
+        "Elige el modo de capacidad y activa point-in-time recovery o backups"
+      ]
+    }
+  }
+}

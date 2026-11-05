@@ -1,0 +1,86 @@
+{
+  "serviceId": "iam",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html",
+      "title": "What is IAM?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2.html",
+      "title": "Use an IAM role to grant permissions to applications running on Amazon EC2 instances",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+      "title": "Security best practices in IAM",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
+      "title": "Service control policies (SCPs)",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "Controls who is authenticated (signed in) and who is authorized (has permissions) to use resources in your AWS accounts. You create identities such as users and roles and attach policies that grant permissions.",
+    "examCues": [
+      "Give an application on an EC2 instance access to S3 without storing access keys on the instance → IAM (role with an instance profile)",
+      "Grant a user or workload only the permissions it needs → IAM",
+      "Require multi-factor authentication and stop using the root user for daily tasks → IAM"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iam-identity-center",
+        "difference": "IAM Identity Center is the recommended way to manage workforce access to many AWS accounts; IAM defines the users, roles and policies inside an account."
+      },
+      {
+        "serviceId": "organizations",
+        "difference": "Service control policies in Organizations set the maximum permissions for member accounts but grant nothing; IAM policies are what grant permissions."
+      }
+    ],
+    "pricingModel": "IAM is offered at no additional charge; you pay only for the other AWS services your users and roles use. Some IAM Access Analyzer features, such as unused access analysis, are charged.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs IAM and replicates its data across many servers for high availability",
+        "Authenticates each request and checks it against your policies"
+      ],
+      "customer": [
+        "Protects the root user and requires MFA",
+        "Grants least-privilege permissions and removes unused users, roles, permissions and credentials",
+        "Uses roles with temporary credentials instead of long-term access keys"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Controla quién está autenticado (inició sesión) y quién está autorizado (tiene permisos) para usar recursos en tus cuentas de AWS. Creas identidades como usuarios y roles y les asignas políticas que otorgan permisos.",
+    "examCues": [
+      "Dar a una aplicación en una instancia EC2 acceso a S3 sin guardar access keys en la instancia → IAM (rol con instance profile)",
+      "Dar a un usuario o carga de trabajo solo los permisos que necesita → IAM",
+      "Exigir autenticación multifactor y dejar de usar el usuario root para tareas diarias → IAM"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iam-identity-center",
+        "difference": "IAM Identity Center es la forma recomendada de administrar el acceso del personal a muchas cuentas de AWS; IAM define los usuarios, roles y políticas dentro de una cuenta."
+      },
+      {
+        "serviceId": "organizations",
+        "difference": "Las service control policies de Organizations fijan los permisos máximos de las cuentas miembro pero no otorgan nada; las políticas de IAM son las que otorgan permisos."
+      }
+    ],
+    "pricingModel": "IAM no tiene cargo adicional; solo pagas por los demás servicios de AWS que usan tus usuarios y roles. Algunas funciones de IAM Access Analyzer, como el análisis de accesos sin usar, tienen cargo.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera IAM y replica sus datos en muchos servidores para alta disponibilidad",
+        "Autentica cada solicitud y la compara con tus políticas"
+      ],
+      "customer": [
+        "Protege el usuario root y exige MFA",
+        "Otorga permisos de mínimo privilegio y elimina usuarios, roles, permisos y credenciales sin uso",
+        "Usa roles con credenciales temporales en lugar de access keys de largo plazo"
+      ]
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "serviceId": "cloudfront",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
+      "title": "What is Amazon CloudFront?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html",
+      "title": "What is AWS Global Accelerator?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+      "title": "What is Amazon S3?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "A content delivery network that serves your static and dynamic web content from edge locations around the world. Each request goes to the edge location with the lowest latency, which serves a cached copy or fetches it from your origin.",
+    "examCues": [
+      "Reduce latency for users around the world who load images, video or web pages → CloudFront",
+      "Cache content from an S3 bucket or a web server on EC2 close to viewers → CloudFront",
+      "Serve private content to authorized users with signed URLs or signed cookies → CloudFront"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "global-accelerator",
+        "difference": "Global Accelerator gives fixed anycast IP addresses and sends traffic to endpoints such as load balancers or EC2 instances; CloudFront caches copies of your content at edge locations."
+      },
+      {
+        "serviceId": "s3",
+        "difference": "S3 stores the original objects and can be a CloudFront origin; CloudFront keeps cached copies near viewers."
+      }
+    ],
+    "pricingModel": "You pay for data transferred out from edge locations to viewers and for HTTP or HTTPS requests; rates vary by usage type, geography and features. Transfer from AWS origins such as S3 or Elastic Load Balancing to CloudFront is free.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the worldwide network of edge locations and their caches",
+        "Routes each request over the AWS backbone network to the best edge location"
+      ],
+      "customer": [
+        "Chooses the origins and keeps the original content correct",
+        "Decides whether content is public or private, for example with signed URLs or signed cookies",
+        "Configures the distribution, such as logging and alternate domain names"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Una red de entrega de contenido que sirve tu contenido web estático y dinámico desde edge locations en todo el mundo. Cada solicitud va a la edge location con menor latencia, que entrega una copia en caché o la trae de tu origen.",
+    "examCues": [
+      "Reducir la latencia para usuarios de todo el mundo que cargan imágenes, video o páginas web → CloudFront",
+      "Guardar en caché, cerca de los usuarios, contenido de un bucket de S3 o de un servidor web en EC2 → CloudFront",
+      "Servir contenido privado a usuarios autorizados con signed URLs o signed cookies → CloudFront"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "global-accelerator",
+        "difference": "Global Accelerator da direcciones IP anycast fijas y envía el tráfico a endpoints como load balancers o instancias EC2; CloudFront guarda copias de tu contenido en edge locations."
+      },
+      {
+        "serviceId": "s3",
+        "difference": "S3 guarda los objetos originales y puede ser un origen de CloudFront; CloudFront mantiene copias en caché cerca de los usuarios."
+      }
+    ],
+    "pricingModel": "Pagas por los datos transferidos desde las edge locations hacia los usuarios y por las solicitudes HTTP o HTTPS; las tarifas varían según tipo de uso, geografía y funciones. La transferencia desde orígenes de AWS como S3 o Elastic Load Balancing hacia CloudFront es gratis.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera la red mundial de edge locations y sus cachés",
+        "Lleva cada solicitud por la red troncal de AWS hasta la mejor edge location"
+      ],
+      "customer": [
+        "Elige los orígenes y mantiene correcto el contenido original",
+        "Decide si el contenido es público o privado, por ejemplo con signed URLs o signed cookies",
+        "Configura la distribución, como los logs y los nombres de dominio alternativos"
+      ]
+    }
+  }
+}

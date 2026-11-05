@@ -1,0 +1,80 @@
+{
+  "serviceId": "billing-and-cost-management",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html",
+      "title": "Use AWS Billing and Cost Management for AWS",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html",
+      "title": "Analyzing your costs and usage with AWS Cost Explorer",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html",
+      "title": "Managing your costs with AWS Budgets",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html",
+      "title": "AWS Trusted Advisor",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "A set of features to pay your AWS bills and to analyze, organize, plan and optimize your costs. It includes Cost Explorer, Budgets, cost categories and cost allocation tags, Savings Plans and reservations.",
+    "examCues": [
+      "Get an alert when actual or forecasted spend goes over a set amount → Billing and Cost Management (AWS Budgets)",
+      "See spending trends by service over past months and forecast future costs → Billing and Cost Management (Cost Explorer)",
+      "Lower compute costs compared to On-Demand prices in exchange for a commitment → Billing and Cost Management (Savings Plans)",
+      "Show costs per team, application or environment → Billing and Cost Management (cost allocation tags or cost categories)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor inspects your environment and recommends ways to save money, improve availability and performance, or close security gaps; Billing and Cost Management is where you see, plan and pay what you spend."
+      }
+    ],
+    "pricingModel": "Viewing costs in the Cost Explorer console is free; Cost Explorer API requests are charged per request. Savings Plans and reservations lower your rates in exchange for a commitment.",
+    "sharedResponsibility": {
+      "aws": [
+        "Produces the bills and the cost and usage data behind the reports",
+        "Refreshes Cost Explorer data at least once a day and Budgets data up to three times a day"
+      ],
+      "customer": [
+        "Sets budgets and alerts and acts on them",
+        "Tags resources and defines cost categories to allocate costs",
+        "Controls with IAM who can see billing and cost pages"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un conjunto de funciones para pagar tus facturas de AWS y para analizar, organizar, planear y optimizar tus costos. Incluye Cost Explorer, Budgets, cost categories y cost allocation tags, Savings Plans y reservas.",
+    "examCues": [
+      "Recibir un aviso cuando el gasto real o pronosticado supera un monto definido → Billing and Cost Management (AWS Budgets)",
+      "Ver la tendencia de gasto por servicio en los últimos meses y pronosticar costos → Billing and Cost Management (Cost Explorer)",
+      "Bajar el costo de cómputo frente a los precios On-Demand a cambio de un compromiso → Billing and Cost Management (Savings Plans)",
+      "Mostrar los costos por equipo, aplicación o entorno → Billing and Cost Management (cost allocation tags o cost categories)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor revisa tu entorno y recomienda formas de ahorrar dinero, mejorar disponibilidad y rendimiento o cerrar brechas de seguridad; Billing and Cost Management es donde ves, planeas y pagas lo que gastas."
+      }
+    ],
+    "pricingModel": "Ver los costos en la consola de Cost Explorer es gratis; las solicitudes a la API de Cost Explorer se cobran por solicitud. Los Savings Plans y las reservas bajan tus tarifas a cambio de un compromiso.",
+    "sharedResponsibility": {
+      "aws": [
+        "Genera las facturas y los datos de costo y uso detrás de los reportes",
+        "Actualiza los datos de Cost Explorer al menos una vez al día y los de Budgets hasta tres veces al día"
+      ],
+      "customer": [
+        "Define presupuestos y alertas y actúa sobre ellos",
+        "Etiqueta recursos y define cost categories para asignar costos",
+        "Controla con IAM quién puede ver las páginas de facturación y costos"
+      ]
+    }
+  }
+}

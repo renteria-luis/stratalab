@@ -1,0 +1,91 @@
+{
+  "serviceId": "systems-manager",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html",
+      "title": "What is AWS Systems Manager?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html",
+      "title": "AWS Systems Manager Session Manager",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html",
+      "title": "Choosing parameter tiers in Parameter Store",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
+      "title": "What is AWS Secrets Manager?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html",
+      "title": "What is CloudFormation?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "Helps you view, manage and operate nodes at scale across AWS, on-premises and multicloud environments. A node must be managed, which means SSM Agent is installed on it and can communicate with Systems Manager.",
+    "examCues": [
+      "Open a shell on an instance without inbound SSH ports, bastion hosts or SSH keys → Systems Manager (Session Manager)",
+      "Patch operating systems or run a command on many instances at once → Systems Manager",
+      "Store configuration values that applications read at runtime → Systems Manager (Parameter Store)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "secrets-manager",
+        "difference": "Secrets Manager is built for secrets such as database credentials and can rotate them on a schedule; Parameter Store in Systems Manager holds configuration data for applications."
+      },
+      {
+        "serviceId": "cloudformation",
+        "difference": "CloudFormation provisions AWS resources from a template; Systems Manager operates the nodes once they exist, for example patching them or running commands."
+      }
+    ],
+    "pricingModel": "Pricing depends on the tool. For example, standard parameters in Parameter Store have no additional charge, while advanced parameters are charged.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the Systems Manager service and its tools",
+        "Offers a runbook that diagnoses why nodes aren't reporting as managed"
+      ],
+      "customer": [
+        "Installs SSM Agent and makes sure each node can reach Systems Manager",
+        "Grants access to nodes and sessions with IAM policies",
+        "Decides which patches and commands run on which nodes"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Ayuda a ver, administrar y operar nodos a escala en AWS, on-premises y entornos multicloud. Un nodo debe estar administrado, es decir, tener SSM Agent instalado y poder comunicarse con Systems Manager.",
+    "examCues": [
+      "Abrir una shell en una instancia sin puertos SSH de entrada, bastion hosts ni llaves SSH → Systems Manager (Session Manager)",
+      "Aplicar parches al sistema operativo o ejecutar un comando en muchas instancias a la vez → Systems Manager",
+      "Guardar valores de configuración que las aplicaciones leen al ejecutarse → Systems Manager (Parameter Store)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "secrets-manager",
+        "difference": "Secrets Manager está hecho para secretos como credenciales de bases de datos y puede rotarlos con un calendario; Parameter Store, en Systems Manager, guarda datos de configuración para aplicaciones."
+      },
+      {
+        "serviceId": "cloudformation",
+        "difference": "CloudFormation crea recursos de AWS a partir de una plantilla; Systems Manager opera los nodos cuando ya existen, por ejemplo aplicando parches o ejecutando comandos."
+      }
+    ],
+    "pricingModel": "El precio depende de la herramienta. Por ejemplo, los parámetros estándar de Parameter Store no tienen cargo adicional, mientras que los parámetros avanzados sí se cobran.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera el servicio Systems Manager y sus herramientas",
+        "Ofrece un runbook que diagnostica por qué los nodos no aparecen como administrados"
+      ],
+      "customer": [
+        "Instala SSM Agent y se asegura de que cada nodo pueda llegar a Systems Manager",
+        "Da acceso a los nodos y a las sesiones con políticas de IAM",
+        "Decide qué parches y comandos se ejecutan en qué nodos"
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "serviceId": "organizations",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html",
+      "title": "What is AWS Organizations?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/organizations/latest/userguide/pricing.html",
+      "title": "Billing and pricing for AWS Organizations",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
+      "title": "Service control policies (SCPs)",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html",
+      "title": "What Is AWS Control Tower?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "Centrally manages and governs many AWS accounts: create accounts, group them into organizational units and apply policies. It also lets all accounts share a single payment method through consolidated billing.",
+    "examCues": [
+      "Pay one bill for all of a company's AWS accounts → AWS Organizations",
+      "Stop every member account from using a Region or service, even administrators in those accounts → AWS Organizations (service control policy)",
+      "Group accounts by team or environment and apply policies to each group → AWS Organizations"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iam",
+        "difference": "IAM grants permissions inside an account; service control policies in Organizations only set the maximum permissions for member accounts."
+      },
+      {
+        "serviceId": "control-tower",
+        "difference": "Control Tower builds on Organizations to set up a governed multi-account landing zone with controls; Organizations is the account and policy service underneath."
+      }
+    ],
+    "pricingModel": "Organizations is offered at no additional charge. The management account pays for all the resources that member accounts use.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the organization structure and enforces the policies you attach",
+        "Combines member account charges into one bill for the management account"
+      ],
+      "customer": [
+        "Designs the account and organizational unit structure",
+        "Writes and tests service control policies before attaching them",
+        "Protects the management account, which service control policies don't restrict"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Administra y gobierna de forma central muchas cuentas de AWS: crea cuentas, las agrupa en organizational units y aplica políticas. También permite que todas las cuentas compartan un solo método de pago con la facturación consolidada.",
+    "examCues": [
+      "Pagar una sola factura por todas las cuentas de AWS de una empresa → AWS Organizations",
+      "Impedir que todas las cuentas miembro usen una región o un servicio, incluso los administradores de esas cuentas → AWS Organizations (service control policy)",
+      "Agrupar cuentas por equipo o entorno y aplicar políticas a cada grupo → AWS Organizations"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iam",
+        "difference": "IAM otorga permisos dentro de una cuenta; las service control policies de Organizations solo fijan los permisos máximos de las cuentas miembro."
+      },
+      {
+        "serviceId": "control-tower",
+        "difference": "Control Tower se apoya en Organizations para montar una landing zone multicuenta gobernada con controles; Organizations es el servicio de cuentas y políticas que está debajo."
+      }
+    ],
+    "pricingModel": "Organizations no tiene cargo adicional. La cuenta de administración paga todos los recursos que usan las cuentas miembro.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera la estructura de la organización y aplica las políticas que asignas",
+        "Junta los cargos de las cuentas miembro en una sola factura para la cuenta de administración"
+      ],
+      "customer": [
+        "Diseña la estructura de cuentas y organizational units",
+        "Escribe y prueba las service control policies antes de asignarlas",
+        "Protege la cuenta de administración, que las service control policies no restringen"
+      ]
+    }
+  }
+}

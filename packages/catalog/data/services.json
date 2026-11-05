@@ -70,7 +70,7 @@
       "name": "Lambda",
       "category": "Compute",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -238,7 +238,7 @@
       "name": "S3",
       "category": "Storage",
       "aliases": ["Amazon Simple Storage Service"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -252,7 +252,7 @@
       "name": "EFS",
       "category": "Storage",
       "aliases": ["Amazon Elastic File System"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -344,7 +344,7 @@
       "name": "Aurora and RDS",
       "category": "Database",
       "aliases": ["Amazon Relational Database Service", "Amazon Aurora", "Amazon RDS"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -423,7 +423,7 @@
       "name": "DynamoDB",
       "category": "Database",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -620,7 +620,7 @@
       "name": "CloudFront",
       "category": "Networking & Content Delivery",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -633,7 +633,7 @@
       "name": "API Gateway",
       "category": "Networking & Content Delivery",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -646,7 +646,7 @@
       "name": "Direct Connect",
       "category": "Networking & Content Delivery",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -672,7 +672,7 @@
       "name": "Global Accelerator",
       "category": "Networking & Content Delivery",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -685,7 +685,7 @@
       "name": "Route 53",
       "category": "Networking & Content Delivery",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1059,7 +1059,7 @@
       "name": "AWS Organizations",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1072,7 +1072,7 @@
       "name": "CloudWatch",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1136,7 +1136,7 @@
       "name": "Systems Manager",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1369,7 +1369,7 @@
       "name": "CloudTrail",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2285,7 +2285,7 @@
       "name": "Key Management Service",
       "category": "Security, Identity, & Compliance",
       "aliases": ["AWS KMS"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2453,7 +2453,7 @@
       "name": "IAM",
       "category": "Security, Identity, & Compliance",
       "aliases": ["AWS Identity and Access Management"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2467,7 +2467,7 @@
       "name": "WAF & Shield",
       "category": "Security, Identity, & Compliance",
       "aliases": ["AWS WAF", "AWS Shield"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2582,7 +2582,7 @@
       "name": "Billing and Cost Management",
       "category": "Cloud Financial Management",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2687,7 +2687,7 @@
       "name": "Simple Notification Service",
       "category": "Application Integration",
       "aliases": ["Amazon SNS"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2700,7 +2700,7 @@
       "name": "Simple Queue Service",
       "category": "Application Integration",
       "aliases": ["Amazon SQS"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true

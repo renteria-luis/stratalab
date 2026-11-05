@@ -1,0 +1,80 @@
+{
+  "serviceId": "api-gateway",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
+      "title": "What is Amazon API Gateway?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/whitepapers/latest/security-overview-amazon-api-gateway/about-amazon-api-gateway.html",
+      "title": "About Amazon API Gateway",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/security.html",
+      "title": "Security in Amazon API Gateway",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+      "title": "What is AWS Lambda?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "A managed service to create, publish, maintain, monitor and secure REST, HTTP and WebSocket APIs at any scale. It acts as the front door to backends such as Lambda functions, EC2 workloads or other web applications.",
+    "examCues": [
+      "Expose Lambda functions to clients as a REST or HTTP API → API Gateway",
+      "Check callers with IAM, Lambda authorizers or Cognito user pools before they reach a backend → API Gateway",
+      "Two-way, real-time messaging between clients and a backend, such as a chat app → API Gateway (WebSocket API)",
+      "Manage API traffic and roll out changes safely with canary releases → API Gateway"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda runs your code; API Gateway receives the HTTP requests and passes them to Lambda or another backend."
+      }
+    ],
+    "pricingModel": "For REST and HTTP APIs you pay for the API calls you receive and the data transferred out; WebSocket APIs are billed by messages and connection minutes. Optional caching is billed per hour based on cache size.",
+    "sharedResponsibility": {
+      "aws": [
+        "Accepts and processes the API calls, including traffic management and scaling",
+        "Protects the infrastructure that runs the service"
+      ],
+      "customer": [
+        "Chooses how callers authenticate and what each one may call",
+        "Configures throttling, logging and optional AWS WAF protection",
+        "Secures the backend that the API calls"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio administrado para crear, publicar, mantener, monitorear y proteger APIs REST, HTTP y WebSocket a cualquier escala. Funciona como puerta de entrada a backends como funciones Lambda, cargas de trabajo en EC2 u otras aplicaciones web.",
+    "examCues": [
+      "Exponer funciones Lambda a los clientes como una API REST o HTTP → API Gateway",
+      "Verificar a quien llama con IAM, Lambda authorizers o Cognito user pools antes de llegar a un backend → API Gateway",
+      "Mensajería bidireccional en tiempo real entre clientes y un backend, como una app de chat → API Gateway (WebSocket API)",
+      "Administrar el tráfico de una API y publicar cambios de forma segura con canary releases → API Gateway"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda ejecuta tu código; API Gateway recibe las solicitudes HTTP y las pasa a Lambda o a otro backend."
+      }
+    ],
+    "pricingModel": "En las APIs REST y HTTP pagas por las llamadas que recibes y por los datos transferidos hacia afuera; las APIs WebSocket se cobran por mensajes y minutos de conexión. El caché opcional se cobra por hora según su tamaño.",
+    "sharedResponsibility": {
+      "aws": [
+        "Recibe y procesa las llamadas a la API, incluido el manejo de tráfico y el escalado",
+        "Protege la infraestructura que ejecuta el servicio"
+      ],
+      "customer": [
+        "Elige cómo se autentica quien llama y qué puede llamar cada uno",
+        "Configura el throttling, los logs y la protección opcional con AWS WAF",
+        "Protege el backend al que llama la API"
+      ]
+    }
+  }
+}

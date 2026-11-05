@@ -1,0 +1,66 @@
+{
+  "serviceId": "direct-connect",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/directconnect/latest/UserGuide/Welcome.html",
+      "title": "What is Direct Connect?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html",
+      "title": "What is AWS Site-to-Site VPN?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "Links your internal network to a Direct Connect location over a standard Ethernet fiber-optic cable, bypassing internet service providers. Virtual interfaces on that connection reach your VPCs privately or public AWS services such as S3.",
+    "examCues": [
+      "Connect a data center to a VPC without sending traffic through internet service providers → Direct Connect",
+      "A company needs a dedicated network connection from its premises to an AWS Region → Direct Connect",
+      "Reach public AWS services such as S3 from on-premises over a dedicated link → Direct Connect"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "vpc",
+        "difference": "Site-to-Site VPN (VPC console) connects your network to a VPC through encrypted IPsec tunnels; Direct Connect uses a dedicated cable at a Direct Connect location."
+      }
+    ],
+    "pricingModel": "You pay for port hours, set by capacity and by connection type (dedicated or hosted), and for data transferred out through the connection.",
+    "sharedResponsibility": {
+      "aws": [
+        "Operates the Direct Connect routers at each Direct Connect location",
+        "Provides access to AWS from each location in its associated Region"
+      ],
+      "customer": [
+        "Provides a router that supports BGP and the required fiber transceiver, or works with a partner or service provider",
+        "Creates the virtual interfaces and configures routing on both sides"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Une tu red interna con una Direct Connect location mediante un cable estándar de fibra óptica Ethernet, sin pasar por proveedores de internet. Las virtual interfaces de esa conexión llegan a tus VPCs de forma privada o a servicios públicos de AWS como S3.",
+    "examCues": [
+      "Conectar un centro de datos con una VPC sin enviar el tráfico por proveedores de internet → Direct Connect",
+      "Una empresa necesita una conexión de red dedicada desde sus instalaciones hasta una región de AWS → Direct Connect",
+      "Llegar desde on-premises a servicios públicos de AWS como S3 por un enlace dedicado → Direct Connect"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "vpc",
+        "difference": "Site-to-Site VPN (consola de VPC) conecta tu red con una VPC mediante túneles IPsec cifrados; Direct Connect usa un cable dedicado en una Direct Connect location."
+      }
+    ],
+    "pricingModel": "Pagas por horas de puerto, según la capacidad y el tipo de conexión (dedicada u hospedada), y por los datos transferidos hacia afuera por la conexión.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera los routers de Direct Connect en cada Direct Connect location",
+        "Da acceso a AWS desde cada location en su región asociada"
+      ],
+      "customer": [
+        "Aporta un router compatible con BGP y el transceptor de fibra requerido, o trabaja con un partner o proveedor",
+        "Crea las virtual interfaces y configura el ruteo en ambos lados"
+      ]
+    }
+  }
+}

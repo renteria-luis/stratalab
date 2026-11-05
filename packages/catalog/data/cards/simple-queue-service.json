@@ -1,0 +1,73 @@
+{
+  "serviceId": "simple-queue-service",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html",
+      "title": "What is Amazon Simple Queue Service?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-throughput-horizontal-scaling-and-batching.html",
+      "title": "Increasing throughput using horizontal scaling and action batching with Amazon SQS",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/sns/latest/dg/welcome.html",
+      "title": "What is Amazon SNS?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed message queue that lets parts of a distributed system send, store and receive messages so they can work independently. Producers send messages to a queue and consumers receive and process them.",
+    "examCues": [
+      "Buffer work between a web tier and background workers so each can scale on its own → Simple Queue Service",
+      "Messages must be processed exactly once → Simple Queue Service (FIFO queue)",
+      "Set aside messages that keep failing so they can be inspected later → Simple Queue Service (dead-letter queue)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-notification-service",
+        "difference": "SNS pushes a copy of each message to every subscriber of a topic; SQS holds messages in a queue until a consumer receives them."
+      }
+    ],
+    "pricingModel": "You pay by the request, so sending, receiving or deleting several messages in one batch request lowers cost. There is no capacity to provision.",
+    "sharedResponsibility": {
+      "aws": [
+        "Stores messages on multiple servers and scales with the load",
+        "Offers managed server-side encryption for message contents"
+      ],
+      "customer": [
+        "Controls who can send and receive messages",
+        "Chooses standard or FIFO queues and sets up dead-letter queues",
+        "Builds consumers that handle the delivery behavior of the queue type, such as at-least-once delivery in standard queues"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Una cola de mensajes totalmente administrada que permite a las partes de un sistema distribuido enviar, guardar y recibir mensajes para que trabajen de forma independiente. Los productores envían mensajes a una cola y los consumidores los reciben y procesan.",
+    "examCues": [
+      "Amortiguar el trabajo entre una capa web y workers en segundo plano para que cada uno escale por su cuenta → Simple Queue Service",
+      "Los mensajes deben procesarse exactamente una vez → Simple Queue Service (FIFO queue)",
+      "Apartar los mensajes que fallan una y otra vez para revisarlos después → Simple Queue Service (dead-letter queue)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-notification-service",
+        "difference": "SNS envía una copia de cada mensaje a todos los suscriptores de un topic; SQS guarda los mensajes en una cola hasta que un consumidor los recibe."
+      }
+    ],
+    "pricingModel": "Pagas por solicitud, así que enviar, recibir o borrar varios mensajes en una sola solicitud por lotes reduce el costo. No hay capacidad que aprovisionar.",
+    "sharedResponsibility": {
+      "aws": [
+        "Guarda los mensajes en varios servidores y escala con la carga",
+        "Ofrece cifrado administrado del lado del servidor para el contenido de los mensajes"
+      ],
+      "customer": [
+        "Controla quién puede enviar y recibir mensajes",
+        "Elige colas standard o FIFO y configura dead-letter queues",
+        "Construye consumidores que manejen el comportamiento de entrega del tipo de cola, como la entrega at-least-once de las colas standard"
+      ]
+    }
+  }
+}

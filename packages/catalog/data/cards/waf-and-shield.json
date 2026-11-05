@@ -1,0 +1,98 @@
+{
+  "serviceId": "waf-and-shield",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/waf/latest/developerguide/what-is-aws-waf.html",
+      "title": "What are AWS WAF, AWS Shield Advanced, AWS Shield network security director and AWS Firewall Manager?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/waf/latest/developerguide/ddos-standard-summary.html",
+      "title": "AWS Shield Standard overview",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/waf/latest/developerguide/ddos-advanced-summary-deciding.html",
+      "title": "Deciding whether to subscribe to AWS Shield Advanced and apply additional protections",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/amplify/latest/userguide/waf-pricing.html",
+      "title": "Firewall pricing for Amplify applications",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html",
+      "title": "Security group rules",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html",
+      "title": "Control subnet traffic with network access control lists",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "AWS WAF is a web application firewall that allows, blocks or counts HTTP and HTTPS requests based on rules you define. AWS Shield protects against DDoS attacks: Shield Standard is automatic for all customers, and Shield Advanced adds paid protection and help from the Shield Response Team.",
+    "examCues": [
+      "Block SQL injection or cross-site scripting against a CloudFront distribution, API Gateway API or Application Load Balancer → WAF & Shield",
+      "Allow or block web requests by source IP address or country → WAF & Shield",
+      "Limit how many requests one source can send within a few minutes → WAF & Shield",
+      "A high-visibility website needs expanded DDoS protection and expert response support → WAF & Shield (Shield Advanced)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "vpc",
+        "difference": "Security groups and network ACLs (VPC console) filter traffic by protocol, port and IP address; WAF inspects what is inside HTTP and HTTPS requests, such as headers and query strings."
+      },
+      {
+        "serviceId": "firewall-manager",
+        "difference": "WAF and Shield are the protections; Firewall Manager applies them, and security group rules, across many accounts and new resources."
+      }
+    ],
+    "pricingModel": "WAF charges for each web ACL, each rule in it and the number of web requests it receives. Shield Standard has no extra charge; Shield Advanced adds a monthly subscription plus usage fees based on data transferred out.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs WAF and its managed rule groups",
+        "Applies Shield Standard against common network and transport layer DDoS attacks"
+      ],
+      "customer": [
+        "Writes the WAF rules and chooses which resources each web ACL protects",
+        "Tests new rules with the Count action before switching them to block",
+        "Designs the application architecture for DDoS resiliency and decides whether Shield Advanced is needed"
+      ]
+    }
+  },
+  "es": {
+    "summary": "AWS WAF es un firewall de aplicaciones web que permite, bloquea o cuenta solicitudes HTTP y HTTPS según reglas que tú defines. AWS Shield protege contra ataques DDoS: Shield Standard es automático para todos los clientes y Shield Advanced agrega protección de pago y ayuda del Shield Response Team.",
+    "examCues": [
+      "Bloquear SQL injection o cross-site scripting contra una distribución de CloudFront, una API de API Gateway o un Application Load Balancer → WAF & Shield",
+      "Permitir o bloquear solicitudes web por dirección IP de origen o país → WAF & Shield",
+      "Limitar cuántas solicitudes puede enviar un mismo origen en pocos minutos → WAF & Shield",
+      "Un sitio web muy visible necesita protección DDoS ampliada y soporte experto de respuesta → WAF & Shield (Shield Advanced)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "vpc",
+        "difference": "Los security groups y las network ACLs (consola de VPC) filtran tráfico por protocolo, puerto y dirección IP; WAF inspecciona lo que va dentro de las solicitudes HTTP y HTTPS, como headers y query strings."
+      },
+      {
+        "serviceId": "firewall-manager",
+        "difference": "WAF y Shield son las protecciones; Firewall Manager las aplica, junto con reglas de security groups, en muchas cuentas y en recursos nuevos."
+      }
+    ],
+    "pricingModel": "WAF cobra por cada web ACL, por cada regla dentro de ella y por la cantidad de solicitudes web que recibe. Shield Standard no tiene cargo extra; Shield Advanced agrega una suscripción mensual más cargos por uso según los datos transferidos hacia afuera.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera WAF y sus managed rule groups",
+        "Aplica Shield Standard contra los ataques DDoS comunes de las capas de red y transporte"
+      ],
+      "customer": [
+        "Escribe las reglas de WAF y elige qué recursos protege cada web ACL",
+        "Prueba reglas nuevas con la acción Count antes de pasarlas a bloquear",
+        "Diseña la arquitectura de la aplicación para resistir DDoS y decide si necesita Shield Advanced"
+      ]
+    }
+  }
+}

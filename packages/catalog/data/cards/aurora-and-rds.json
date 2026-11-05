@@ -1,0 +1,84 @@
+{
+  "serviceId": "aurora-and-rds",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html",
+      "title": "What is Amazon Relational Database Service (Amazon RDS)?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html",
+      "title": "What is Amazon Aurora?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html",
+      "title": "DB instance billing for Amazon RDS",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
+      "title": "What is Amazon DynamoDB?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "Managed relational databases: Amazon RDS runs engines such as MySQL, PostgreSQL, MariaDB, Oracle, SQL Server and Db2, and Aurora is a MySQL- and PostgreSQL-compatible engine whose storage grows automatically. AWS handles tasks such as backups, software patching, failure detection and recovery.",
+    "examCues": [
+      "Move a MySQL or PostgreSQL database to AWS without managing the operating system or database patches → Aurora and RDS",
+      "Keep a synchronous secondary DB instance ready to fail over to when the primary has problems → Aurora and RDS",
+      "Scale a read-heavy relational workload with read replicas → Aurora and RDS"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "dynamodb",
+        "difference": "DynamoDB is a serverless NoSQL key-value and document database with no JOIN operator; RDS and Aurora are relational databases."
+      },
+      {
+        "serviceId": "ec2",
+        "difference": "A database you install on EC2 leaves operating system and database patching, backups, scaling and high availability to you; RDS takes over those tasks."
+      }
+    ],
+    "pricingModel": "You pay for DB instance hours by instance class, provisioned storage, provisioned IOPS, backup storage and data transfer. Reserved instances with a one-year or three-year term cost less than on-demand instances.",
+    "sharedResponsibility": {
+      "aws": [
+        "Scaling, high availability, database backups and database software patching",
+        "Operating system installation and patching, server maintenance and hardware"
+      ],
+      "customer": [
+        "Application optimization and query tuning",
+        "Database design and access control, for example with IAM and by placing databases in a VPC"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Bases de datos relacionales administradas: Amazon RDS ejecuta motores como MySQL, PostgreSQL, MariaDB, Oracle, SQL Server y Db2, y Aurora es un motor compatible con MySQL y PostgreSQL cuyo almacenamiento crece solo. AWS se encarga de tareas como backups, parches de software, detección de fallas y recuperación.",
+    "examCues": [
+      "Llevar una base MySQL o PostgreSQL a AWS sin administrar el sistema operativo ni los parches de la base → Aurora and RDS",
+      "Tener una DB instance secundaria síncrona lista para hacer failover cuando la primaria falla → Aurora and RDS",
+      "Escalar una carga relacional con muchas lecturas usando read replicas → Aurora and RDS"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "dynamodb",
+        "difference": "DynamoDB es una base NoSQL serverless de tipo key-value y documentos, sin operador JOIN; RDS y Aurora son bases relacionales."
+      },
+      {
+        "serviceId": "ec2",
+        "difference": "Una base que instalas en EC2 te deja los parches del sistema operativo y de la base, los backups, el escalado y la alta disponibilidad; RDS se encarga de esas tareas."
+      }
+    ],
+    "pricingModel": "Pagas por horas de DB instance según la instance class, el almacenamiento aprovisionado, las IOPS aprovisionadas, el almacenamiento de backups y la transferencia de datos. Las reserved instances con plazo de uno o tres años cuestan menos que las on-demand.",
+    "sharedResponsibility": {
+      "aws": [
+        "Escalado, alta disponibilidad, backups de la base y parches del software de base de datos",
+        "Instalación y parches del sistema operativo, mantenimiento de servidores y hardware"
+      ],
+      "customer": [
+        "Optimización de la aplicación y ajuste de consultas",
+        "Diseño de la base y control de acceso, por ejemplo con IAM y ubicando las bases en una VPC"
+      ]
+    }
+  }
+}

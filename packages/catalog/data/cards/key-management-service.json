@@ -1,0 +1,91 @@
+{
+  "serviceId": "key-management-service",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html",
+      "title": "AWS Key Management Service",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html",
+      "title": "AWS KMS keys",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html",
+      "title": "Rotate AWS KMS keys",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/introduction.html",
+      "title": "What is AWS CloudHSM?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
+      "title": "What is AWS Secrets Manager?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "A managed service to create and control the keys that encrypt and sign your data. KMS keys are protected by validated hardware security modules and never leave the service unencrypted.",
+    "examCues": [
+      "Encrypt data at rest in AWS services with keys you control → Key Management Service",
+      "Rotate an encryption key automatically on a schedule → Key Management Service (customer managed key)",
+      "Decide exactly which users and roles may use a key → Key Management Service (key policy)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudhsm",
+        "difference": "CloudHSM gives you single-tenant HSMs in the AWS Cloud over which you have complete control; KMS is a managed service that you call to use and manage keys."
+      },
+      {
+        "serviceId": "secrets-manager",
+        "difference": "Secrets Manager stores and rotates secrets such as database credentials and API keys; KMS manages encryption keys."
+      }
+    ],
+    "pricingModel": "Customer managed keys have a monthly fee per key plus a fee per use. AWS managed keys have no monthly fee but API use is charged, and AWS owned keys have no charges.",
+    "sharedResponsibility": {
+      "aws": [
+        "Protects keys in hardware security modules and never exposes them unencrypted",
+        "Rotates the key material of AWS managed keys every year"
+      ],
+      "customer": [
+        "Writes key policies that decide who can use and manage each key",
+        "Turns on rotation for customer managed keys when needed",
+        "Chooses whether each service uses an AWS owned, AWS managed or customer managed key"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio administrado para crear y controlar las llaves que cifran y firman tus datos. Las KMS keys están protegidas por hardware security modules validados y nunca salen del servicio sin cifrar.",
+    "examCues": [
+      "Cifrar datos en reposo en servicios de AWS con llaves que tú controlas → Key Management Service",
+      "Rotar una llave de cifrado de forma automática con un calendario → Key Management Service (customer managed key)",
+      "Decidir con exactitud qué usuarios y roles pueden usar una llave → Key Management Service (key policy)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudhsm",
+        "difference": "CloudHSM te da HSMs de un solo inquilino en la nube de AWS sobre los que tienes control total; KMS es un servicio administrado al que llamas para usar y administrar llaves."
+      },
+      {
+        "serviceId": "secrets-manager",
+        "difference": "Secrets Manager guarda y rota secretos como credenciales de bases de datos y API keys; KMS administra llaves de cifrado."
+      }
+    ],
+    "pricingModel": "Las customer managed keys tienen una tarifa mensual por llave más un cargo por uso. Las AWS managed keys no tienen tarifa mensual pero se cobra el uso de la API, y las AWS owned keys no tienen cargos.",
+    "sharedResponsibility": {
+      "aws": [
+        "Protege las llaves en hardware security modules y nunca las expone sin cifrar",
+        "Rota cada año el material de las AWS managed keys"
+      ],
+      "customer": [
+        "Escribe las key policies que deciden quién puede usar y administrar cada llave",
+        "Activa la rotación de las customer managed keys cuando hace falta",
+        "Elige si cada servicio usa una AWS owned key, una AWS managed key o una customer managed key"
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "serviceId": "lambda",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+      "title": "What is AWS Lambda?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html",
+      "title": "Lambda Event Function runtimes",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/optimize-costs-microsoft-workloads/net-serverless.html",
+      "title": "Consider serverless .NET",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
+      "title": "What is Amazon API Gateway?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "A serverless compute service that runs your code without provisioning or managing servers. Lambda takes care of server maintenance, capacity, scaling and patching, and runs your code in response to events or API calls.",
+    "examCues": [
+      "Run code when a file lands in S3 or a message arrives in SQS, with no servers to manage → Lambda",
+      "Event-driven tasks with spiky traffic where you pay only for what runs → Lambda",
+      "Backend logic for an API built with API Gateway → Lambda"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "ec2",
+        "difference": "EC2 gives you virtual servers where you manage the operating system and scaling; with Lambda, AWS manages the servers and you supply the code."
+      },
+      {
+        "serviceId": "api-gateway",
+        "difference": "API Gateway is the HTTP front door; Lambda runs the code behind it."
+      }
+    ],
+    "pricingModel": "You pay per use: the number of requests and how long your code runs with the memory you assign. There are no upfront commitments.",
+    "sharedResponsibility": {
+      "aws": [
+        "Manages servers, capacity, scaling and infrastructure patching",
+        "Publishes security updates for managed runtimes and applies them automatically by default"
+      ],
+      "customer": [
+        "Writes and updates the function code and its dependencies",
+        "Moves functions to a supported runtime before the current one is deprecated",
+        "Rebuilds container images from the latest base image when functions use images"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de cómputo serverless que ejecuta tu código sin aprovisionar ni administrar servidores. Lambda se encarga del mantenimiento de servidores, la capacidad, el escalado y los parches, y ejecuta tu código en respuesta a eventos o llamadas a una API.",
+    "examCues": [
+      "Ejecutar código cuando llega un archivo a S3 o un mensaje a SQS, sin servidores que administrar → Lambda",
+      "Tareas basadas en eventos con tráfico irregular donde pagas solo lo que se ejecuta → Lambda",
+      "Lógica de backend para una API creada con API Gateway → Lambda"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "ec2",
+        "difference": "EC2 te da servidores virtuales donde tú administras el sistema operativo y el escalado; con Lambda, AWS administra los servidores y tú pones el código."
+      },
+      {
+        "serviceId": "api-gateway",
+        "difference": "API Gateway es la puerta de entrada HTTP; Lambda ejecuta el código que está detrás."
+      }
+    ],
+    "pricingModel": "Pagas por uso: la cantidad de solicitudes y cuánto tiempo corre tu código con la memoria que le asignas. No hay compromisos por adelantado.",
+    "sharedResponsibility": {
+      "aws": [
+        "Administra los servidores, la capacidad, el escalado y los parches de la infraestructura",
+        "Publica actualizaciones de seguridad de los runtimes administrados y las aplica de forma automática por defecto"
+      ],
+      "customer": [
+        "Escribe y actualiza el código de la función y sus dependencias",
+        "Cambia las funciones a un runtime soportado antes de que el actual quede obsoleto",
+        "Reconstruye las imágenes de contenedor desde la imagen base más reciente cuando las funciones usan imágenes"
+      ]
+    }
+  }
+}

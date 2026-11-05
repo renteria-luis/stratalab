@@ -1,0 +1,84 @@
+{
+  "serviceId": "global-accelerator",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html",
+      "title": "What is AWS Global Accelerator?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-pricing.html",
+      "title": "Pricing for AWS Global Accelerator",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
+      "title": "What is Amazon CloudFront?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html",
+      "title": "What is Amazon Route 53?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "Creates accelerators that give your application static anycast IP addresses from the AWS edge network and carry user traffic over the AWS global network. Standard accelerators send each client to the best healthy endpoint based on health, client location and your policies.",
+    "examCues": [
+      "An application needs static IP addresses that stay the same while the endpoints behind them change → Global Accelerator",
+      "Improve availability for global users of an application behind load balancers or EC2 instances in several Regions → Global Accelerator",
+      "Shift traffic to healthy endpoints as soon as endpoint health changes → Global Accelerator"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudfront",
+        "difference": "CloudFront caches copies of web content at edge locations; Global Accelerator routes traffic to endpoints in your Regions through fixed IP addresses."
+      },
+      {
+        "serviceId": "route-53",
+        "difference": "Route 53 directs users by answering DNS queries; Global Accelerator gives clients fixed IP addresses and moves traffic between the endpoints behind them."
+      }
+    ],
+    "pricingModel": "You pay a fixed hourly fee for each accelerator, enabled or disabled, plus a charge per GB of traffic in the dominant direction on top of standard data transfer. Public IPv4 address charges also apply.",
+    "sharedResponsibility": {
+      "aws": [
+        "Announces the static anycast addresses from the AWS edge network",
+        "Watches endpoint health and directs traffic only to healthy endpoints"
+      ],
+      "customer": [
+        "Chooses the endpoints and Regions and the traffic policies",
+        "Limits who can delete an accelerator, because deleting it releases its static IP addresses"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Crea accelerators que dan a tu aplicación direcciones IP anycast estáticas desde la red edge de AWS y llevan el tráfico de los usuarios por la red global de AWS. Los standard accelerators envían cada cliente al mejor endpoint sano según salud, ubicación del cliente y tus políticas.",
+    "examCues": [
+      "Una aplicación necesita direcciones IP estáticas que no cambien aunque cambien los endpoints detrás → Global Accelerator",
+      "Mejorar la disponibilidad para usuarios globales de una aplicación detrás de load balancers o instancias EC2 en varias regiones → Global Accelerator",
+      "Mover el tráfico a endpoints sanos en cuanto cambia su salud → Global Accelerator"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudfront",
+        "difference": "CloudFront guarda copias de contenido web en edge locations; Global Accelerator dirige el tráfico a endpoints en tus regiones mediante direcciones IP fijas."
+      },
+      {
+        "serviceId": "route-53",
+        "difference": "Route 53 dirige a los usuarios respondiendo consultas DNS; Global Accelerator da a los clientes direcciones IP fijas y mueve el tráfico entre los endpoints detrás de ellas."
+      }
+    ],
+    "pricingModel": "Pagas una tarifa fija por hora por cada accelerator, activo o desactivado, más un cargo por GB de tráfico en la dirección dominante, aparte de la transferencia de datos estándar. También aplican los cargos por direcciones IPv4 públicas.",
+    "sharedResponsibility": {
+      "aws": [
+        "Anuncia las direcciones anycast estáticas desde la red edge de AWS",
+        "Vigila la salud de los endpoints y dirige el tráfico solo a los sanos"
+      ],
+      "customer": [
+        "Elige los endpoints, las regiones y las políticas de tráfico",
+        "Limita quién puede borrar un accelerator, porque al borrarlo se pierden sus direcciones IP estáticas"
+      ]
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "serviceId": "simple-notification-service",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/sns/latest/dg/welcome.html",
+      "title": "What is Amazon SNS?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html",
+      "title": "What is Amazon Simple Queue Service?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed publish-subscribe service: publishers send messages to a topic, and SNS delivers them to every subscriber. Subscribers can be SQS queues, Lambda functions, HTTP endpoints, email, mobile push or SMS.",
+    "examCues": [
+      "Send one event to several systems at the same time (fanout) → Simple Notification Service",
+      "Notify people by email or text message when something happens → Simple Notification Service",
+      "Copy each new order to several SQS queues for parallel processing → Simple Notification Service"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-queue-service",
+        "difference": "SQS keeps messages in a queue until a consumer receives them; SNS pushes a copy to every subscriber of the topic."
+      }
+    ],
+    "pricingModel": "You pay for the messages you publish, the notifications you deliver and extra API calls to manage topics and subscriptions. Delivery rates differ by endpoint type, and there are no upfront costs.",
+    "sharedResponsibility": {
+      "aws": [
+        "Delivers messages from topics to the subscribed endpoints",
+        "Runs and scales the service"
+      ],
+      "customer": [
+        "Creates topics and decides who can publish and subscribe",
+        "Keeps subscriber endpoints available and able to process the messages"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio publish-subscribe totalmente administrado: los publicadores envían mensajes a un topic y SNS los entrega a cada suscriptor. Los suscriptores pueden ser colas de SQS, funciones Lambda, endpoints HTTP, email, notificaciones push móviles o SMS.",
+    "examCues": [
+      "Enviar un mismo evento a varios sistemas al mismo tiempo (fanout) → Simple Notification Service",
+      "Avisar a personas por email o mensaje de texto cuando algo ocurre → Simple Notification Service",
+      "Copiar cada pedido nuevo a varias colas de SQS para procesarlo en paralelo → Simple Notification Service"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-queue-service",
+        "difference": "SQS guarda los mensajes en una cola hasta que un consumidor los recibe; SNS envía una copia a cada suscriptor del topic."
+      }
+    ],
+    "pricingModel": "Pagas por los mensajes que publicas, las notificaciones que entregas y las llamadas extra a la API para administrar topics y suscripciones. Las tarifas de entrega varían según el tipo de endpoint y no hay costos por adelantado.",
+    "sharedResponsibility": {
+      "aws": [
+        "Entrega los mensajes de los topics a los endpoints suscritos",
+        "Opera y escala el servicio"
+      ],
+      "customer": [
+        "Crea los topics y decide quién puede publicar y suscribirse",
+        "Mantiene los endpoints suscriptores disponibles y capaces de procesar los mensajes"
+      ]
+    }
+  }
+}

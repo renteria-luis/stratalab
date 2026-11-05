@@ -1,0 +1,88 @@
+{
+  "serviceId": "route-53",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html",
+      "title": "What is Amazon Route 53?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Route53Pricing.html",
+      "title": "Amazon Route 53 pricing and billing",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
+      "title": "What is Amazon CloudFront?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html",
+      "title": "What is AWS Global Accelerator?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "A highly available DNS service that registers domain names, routes users to your resources by answering DNS queries, and checks the health of those resources. It can send traffic away from resources that fail their health checks.",
+    "examCues": [
+      "Register a domain and point it to a web application running on AWS → Route 53",
+      "Route traffic away from an unhealthy web server by using DNS and health checks → Route 53",
+      "Send users to the best endpoint based on latency, geoproximity or health → Route 53",
+      "Resolve DNS names between VPCs and an on-premises network → Route 53"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudfront",
+        "difference": "CloudFront caches and delivers your content from edge locations; Route 53 resolves the domain name to the resource that serves it."
+      },
+      {
+        "serviceId": "global-accelerator",
+        "difference": "Global Accelerator gives clients static anycast IP addresses and carries their traffic over the AWS network; Route 53 steers users by answering DNS queries."
+      }
+    ],
+    "pricingModel": "You pay for each hosted zone you configure and for the number of DNS queries Route 53 answers. There are no contracts or minimum commitments.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the highly available, scalable DNS service",
+        "Runs the health checkers that send requests to your resources"
+      ],
+      "customer": [
+        "Creates and maintains hosted zones and DNS records",
+        "Chooses which resources to health-check and where to send traffic when one fails",
+        "Controls who can change DNS settings with IAM"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio DNS de alta disponibilidad que registra nombres de dominio, dirige a los usuarios a tus recursos respondiendo consultas DNS y revisa la salud de esos recursos. Puede desviar el tráfico de los recursos que fallan sus health checks.",
+    "examCues": [
+      "Registrar un dominio y apuntarlo a una aplicación web que corre en AWS → Route 53",
+      "Desviar el tráfico de un servidor web que no responde usando DNS y health checks → Route 53",
+      "Enviar a los usuarios al mejor endpoint según latencia, geoproximidad o salud → Route 53",
+      "Resolver nombres DNS entre VPCs y una red on-premises → Route 53"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudfront",
+        "difference": "CloudFront guarda en caché y entrega tu contenido desde edge locations; Route 53 resuelve el nombre de dominio al recurso que lo sirve."
+      },
+      {
+        "serviceId": "global-accelerator",
+        "difference": "Global Accelerator da a los clientes direcciones IP anycast estáticas y lleva su tráfico por la red de AWS; Route 53 dirige a los usuarios respondiendo consultas DNS."
+      }
+    ],
+    "pricingModel": "Pagas por cada hosted zone que configuras y por la cantidad de consultas DNS que Route 53 responde. No hay contratos ni compromisos mínimos.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera el servicio DNS de alta disponibilidad y escalable",
+        "Opera los health checkers que envían solicitudes a tus recursos"
+      ],
+      "customer": [
+        "Crea y mantiene las hosted zones y los registros DNS",
+        "Elige qué recursos revisar y a dónde enviar el tráfico cuando uno falla",
+        "Controla con IAM quién puede cambiar la configuración DNS"
+      ]
+    }
+  }
+}

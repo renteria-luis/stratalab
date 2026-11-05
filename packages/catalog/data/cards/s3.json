@@ -1,0 +1,88 @@
+{
+  "serviceId": "s3",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+      "title": "What is Amazon S3?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/aws-billing-reports.html",
+      "title": "AWS Billing reports for Amazon S3",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html",
+      "title": "What is Amazon Elastic File System?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/ebs/latest/userguide/what-is-ebs.html",
+      "title": "What is Amazon Elastic Block Store?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "Object storage that keeps any amount of data as objects inside buckets, in the AWS Region you choose. Storage classes let you trade access speed for lower cost, from frequent access to long-term archive.",
+    "examCues": [
+      "Store backups, media or data-lake files without planning capacity → S3",
+      "Keep earlier versions of objects to recover from accidental deletes or overwrites → S3 (S3 Versioning)",
+      "Move objects to cheaper storage classes as they age, or expire them → S3 (S3 Lifecycle)",
+      "Prevent objects from being deleted or overwritten for a fixed time (WORM) → S3 (S3 Object Lock)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "efs",
+        "difference": "EFS is a shared file system that compute resources mount over NFS; S3 stores objects addressed by bucket name and key."
+      },
+      {
+        "serviceId": "ec2",
+        "difference": "EBS volumes (EC2 console) are block storage that you attach to instances like a local disk; S3 stores objects in buckets."
+      }
+    ],
+    "pricingModel": "You pay only for what you use: storage by size, time stored and storage class, plus requests, retrievals from some classes, data transfer and optional management features. You don't buy capacity in advance.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs and scales the storage infrastructure",
+        "Keeps objects in the Region you chose unless you transfer or replicate them"
+      ],
+      "customer": [
+        "Controls access with bucket policies, IAM policies and access points; buckets stay private until access is granted",
+        "Turns on features such as versioning, replication or Object Lock when needed",
+        "Chooses storage classes and lifecycle rules to control cost"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Almacenamiento de objetos que guarda cualquier cantidad de datos como objetos dentro de buckets, en la región de AWS que elijas. Las storage classes permiten cambiar velocidad de acceso por menor costo, desde acceso frecuente hasta archivo de largo plazo.",
+    "examCues": [
+      "Guardar backups, archivos multimedia o archivos de un data lake sin planear capacidad → S3",
+      "Conservar versiones anteriores de objetos para recuperarse de borrados o sobrescrituras accidentales → S3 (S3 Versioning)",
+      "Mover objetos a storage classes más baratas a medida que envejecen, o expirarlos → S3 (S3 Lifecycle)",
+      "Impedir que los objetos se borren o sobrescriban durante un tiempo fijo (WORM) → S3 (S3 Object Lock)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "efs",
+        "difference": "EFS es un sistema de archivos compartido que los recursos de cómputo montan por NFS; S3 guarda objetos identificados por nombre de bucket y key."
+      },
+      {
+        "serviceId": "ec2",
+        "difference": "Los volúmenes EBS (consola de EC2) son almacenamiento en bloques que conectas a instancias como un disco local; S3 guarda objetos en buckets."
+      }
+    ],
+    "pricingModel": "Pagas solo lo que usas: almacenamiento según tamaño, tiempo guardado y storage class, más solicitudes, recuperaciones de algunas clases, transferencia de datos y funciones de administración opcionales. No compras capacidad por adelantado.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera y escala la infraestructura de almacenamiento",
+        "Mantiene los objetos en la región que elegiste, salvo que los transfieras o repliques"
+      ],
+      "customer": [
+        "Controla el acceso con bucket policies, políticas de IAM y access points; los buckets son privados hasta que se otorga acceso",
+        "Activa funciones como versioning, replicación u Object Lock cuando hacen falta",
+        "Elige storage classes y reglas de lifecycle para controlar el costo"
+      ]
+    }
+  }
+}

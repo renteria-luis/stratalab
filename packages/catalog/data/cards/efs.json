@@ -1,0 +1,91 @@
+{
+  "serviceId": "efs",
+  "status": "to-verify",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html",
+      "title": "What is Amazon Elastic File System?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/efs/latest/ug/metered-sizes.html",
+      "title": "How Amazon EFS reports file system and object sizes",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/efs/latest/ug/lifecycle-management-efs.html",
+      "title": "Managing storage lifecycle",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+      "title": "What is Amazon S3?",
+      "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/ebs/latest/userguide/what-is-ebs.html",
+      "title": "What is Amazon Elastic Block Store?",
+      "accessedOn": "2026-11-05"
+    }
+  ],
+  "en": {
+    "summary": "Serverless, fully elastic file storage that many compute resources can share over NFS, growing and shrinking as you add and remove files. You don't provision or manage storage capacity or performance.",
+    "examCues": [
+      "Several EC2 instances in different Availability Zones need the same shared files → EFS",
+      "Shared file storage for containers or Lambda functions with POSIX permissions → EFS",
+      "Move rarely used files to lower-cost storage automatically → EFS (lifecycle management)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "ec2",
+        "difference": "EBS volumes (EC2 console) are block storage that you attach to instances like a local disk; EFS is a file system that many clients share over the network."
+      },
+      {
+        "serviceId": "s3",
+        "difference": "S3 stores objects in buckets addressed by key; EFS offers file system behavior such as strong consistency and file locking."
+      }
+    ],
+    "pricingModel": "You pay for the data stored each hour in each storage class; the Infrequent Access and Archive classes are cost-optimized for rarely used files, and their data access is metered. Throughput is billed by data read and written in Elastic mode, or by the time it is enabled in Provisioned mode.",
+    "sharedResponsibility": {
+      "aws": [
+        "Manages the file storage infrastructure, including deployment, patching and maintenance",
+        "Stores data of Regional file systems across multiple Availability Zones"
+      ],
+      "customer": [
+        "Controls access with IAM policies, security groups and POSIX permissions",
+        "Turns on encryption at rest when creating the file system and encryption in transit when mounting it",
+        "Sets lifecycle policies that move files between storage classes"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Almacenamiento de archivos serverless y totalmente elástico que muchos recursos de cómputo pueden compartir por NFS, y que crece y se reduce a medida que agregas y borras archivos. No aprovisionas ni administras capacidad ni rendimiento.",
+    "examCues": [
+      "Varias instancias EC2 en distintas Availability Zones necesitan los mismos archivos compartidos → EFS",
+      "Almacenamiento de archivos compartido para contenedores o funciones Lambda con permisos POSIX → EFS",
+      "Mover automáticamente los archivos poco usados a un almacenamiento más barato → EFS (lifecycle management)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "ec2",
+        "difference": "Los volúmenes EBS (consola de EC2) son almacenamiento en bloques que conectas a instancias como un disco local; EFS es un sistema de archivos que muchos clientes comparten por la red."
+      },
+      {
+        "serviceId": "s3",
+        "difference": "S3 guarda objetos en buckets identificados por key; EFS ofrece comportamiento de sistema de archivos, como consistencia fuerte y bloqueo de archivos."
+      }
+    ],
+    "pricingModel": "Pagas por los datos guardados cada hora en cada storage class; las clases Infrequent Access y Archive están optimizadas en costo para archivos poco usados, y el acceso a sus datos se mide. El throughput se cobra por los datos leídos y escritos en modo Elastic, o por el tiempo que está activo en modo Provisioned.",
+    "sharedResponsibility": {
+      "aws": [
+        "Administra la infraestructura de almacenamiento de archivos, incluidos despliegue, parches y mantenimiento",
+        "Guarda los datos de los file systems Regional en varias Availability Zones"
+      ],
+      "customer": [
+        "Controla el acceso con políticas de IAM, security groups y permisos POSIX",
+        "Activa el cifrado en reposo al crear el file system y el cifrado en tránsito al montarlo",
+        "Define las lifecycle policies que mueven archivos entre storage classes"
+      ]
+    }
+  }
+}
