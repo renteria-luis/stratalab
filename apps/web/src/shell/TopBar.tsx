@@ -6,6 +6,7 @@ import { FAKE_ACCOUNT_ID, FAKE_USER_NAME, PRODUCT_LOGO_URL, PRODUCT_NAME } from 
 import { useUi } from '../state/uiStore';
 import { GlobalSearch } from './GlobalSearch';
 import { ServicesMenu } from './ServicesMenu';
+import { ct } from '../console/text';
 
 const isLocale = (value: string): value is Locale => LOCALES.some((locale) => locale === value);
 
@@ -57,15 +58,15 @@ export function TopBar({ servicesMenuAnchor }: { servicesMenuAnchor: HTMLElement
           type: 'menu-dropdown',
           iconName: 'user-profile',
           text: FAKE_USER_NAME,
-          description: t('top.accountId', { id: FAKE_ACCOUNT_ID }),
-          items: [{ id: 'account-id', text: t('top.accountId', { id: FAKE_ACCOUNT_ID }) }],
+          description: ct('top.accountId', { id: FAKE_ACCOUNT_ID }),
+          items: [{ id: 'account-id', text: ct('top.accountId', { id: FAKE_ACCOUNT_ID }) }],
         },
       ]}
       i18nStrings={{
-        overflowMenuTriggerText: t('top.overflowMenuTrigger'),
-        overflowMenuTitleText: t('top.overflowMenuTitle'),
-        searchIconAriaLabel: t('top.searchIconAriaLabel'),
-        searchDismissIconAriaLabel: t('top.searchDismissIconAriaLabel'),
+        overflowMenuTriggerText: ct('top.overflowMenuTrigger'),
+        overflowMenuTitleText: ct('top.overflowMenuTitle'),
+        searchIconAriaLabel: ct('top.searchIconAriaLabel'),
+        searchDismissIconAriaLabel: ct('top.searchDismissIconAriaLabel'),
       }}
     />
   );

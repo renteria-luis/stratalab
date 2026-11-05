@@ -2,7 +2,7 @@ import AppLayout from '@cloudscape-design/components/app-layout';
 import BreadcrumbGroup, {
   type BreadcrumbGroupProps,
 } from '@cloudscape-design/components/breadcrumb-group';
-import Flashbar from '@cloudscape-design/components/flashbar';
+import Flashbar, { type FlashbarProps } from '@cloudscape-design/components/flashbar';
 import { consoleNavs } from '@sim/catalog';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useLocation, useMatches, useNavigate } from 'react-router';
@@ -11,12 +11,14 @@ import { useT } from '../i18n/useT';
 import { PRODUCT_NAME } from '../product';
 import { navItemHref, servicesById } from '../routes/appRoutes';
 import { isPageHandle, type PageHandle } from '../routes/pageHandle';
+import { useTopologyStore } from '../state/topologyStore';
 import { useUi, type StorageProblem } from '../state/uiStore';
 import { AppFooter, DisclaimerBanner } from './Disclaimers';
 import { ConsoleSideNav } from './ConsoleSideNav';
 import { TopBar } from './TopBar';
 import { shellTokenStyle } from './tokens';
 import './shell.css';
+import { ct } from '../console/text';
 
 const HEADER_ID = 'sim-header';
 const FOOTER_ID = 'sim-footer';
@@ -25,6 +27,12 @@ const STORAGE_MESSAGES: Readonly<Record<StorageProblem, MessageKey>> = {
   'backed-up': 'storage.backedUp',
   unreadable: 'storage.unreadable',
   'save-failed': 'storage.saveFailed',
+};
+
+const TOPOLOGY_STORAGE_MESSAGES: Readonly<Record<StorageProblem, MessageKey>> = {
+  'backed-up': 'storage.topology.backedUp',
+  unreadable: 'storage.topology.unreadable',
+  'save-failed': 'storage.topology.saveFailed',
 };
 
 function useCurrentPage(): { handle: PageHandle; serviceId: string | undefined } {
@@ -41,7 +49,7 @@ function useCurrentPage(): { handle: PageHandle; serviceId: string | undefined }
 
 /** Banner, top bar, side navigation for reproduced consoles, page content and footer. */
 export function Shell() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const navigate = useNavigate();
   const location = useLocation();
   const { handle, serviceId } = useCurrentPage();
@@ -51,6 +59,8 @@ export function Shell() {
   const visitService = useUi((state) => state.visitService);
   const storageProblem = useUi((state) => state.storageProblem);
   const dismissStorageProblem = useUi((state) => state.dismissStorageProblem);
+  const topologyProblem = useTopologyStore((state) => state.storageProblem);
+  const dismissTopologyProblem = useTopologyStore((state) => state.dismissStorageProblem);
 
   const service = serviceId === undefined ? undefined : servicesById.get(serviceId);
   const nav = handle.page === 'console' ? consoleNavs[handle.consolePage.serviceId] : undefined;
@@ -63,9 +73,9 @@ export function Shell() {
 
   const pageTitle =
     handle.page === 'home'
-      ? t('home.title')
+      ? ct('home.title')
       : handle.page === 'console'
-        ? handle.consolePage.label
+        ? (handle.subPage?.label ?? handle.consolePage.label)
         : (service?.name ?? t('notFound.title'));
   useEffect(() => {
     document.title = `${pageTitle} | ${PRODUCT_NAME}`;
@@ -82,6 +92,33 @@ export function Shell() {
     heading.focus();
   }, [location.pathname]);
 
+  const notifications: FlashbarProps.MessageDefinition[] = [
+    ...(storageProblem === null
+      ? []
+      : [
+          {
+            id: 'storage',
+            type: 'warning' as const,
+            content: t(STORAGE_MESSAGES[storageProblem]),
+            dismissible: true,
+            dismissLabel: t('storage.dismiss'),
+            onDismiss: dismissStorageProblem,
+          },
+        ]),
+    ...(topologyProblem === null
+      ? []
+      : [
+          {
+            id: 'topology-storage',
+            type: 'warning' as const,
+            content: t(TOPOLOGY_STORAGE_MESSAGES[topologyProblem]),
+            dismissible: true,
+            dismissLabel: t('storage.dismiss'),
+            onDismiss: dismissTopologyProblem,
+          },
+        ]),
+  ];
+
   const breadcrumbs: BreadcrumbGroupProps.Item[] =
     nav && handle.page === 'console' && service
       ? [
@@ -89,6 +126,9 @@ export function Shell() {
           ...(handle.consolePage.path === navItemHref(nav.header)
             ? []
             : [{ text: handle.consolePage.label, href: handle.consolePage.path }]),
+          ...(handle.subPage === undefined
+            ? []
+            : [{ text: handle.subPage.label, href: location.pathname }]),
         ]
       : [];
 
@@ -108,13 +148,20 @@ export function Shell() {
         onNavigationChange={({ detail }) => {
           setNavigationOpen(detail.open);
         }}
-        navigation={nav && <ConsoleSideNav nav={nav} />}
+        navigation={
+          nav && (
+            <ConsoleSideNav
+              nav={nav}
+              activeHref={handle.page === 'console' ? handle.consolePage.path : location.pathname}
+            />
+          )
+        }
         breadcrumbs={
           breadcrumbs.length > 0 && (
             <BreadcrumbGroup
               items={breadcrumbs}
-              ariaLabel={t('breadcrumbs.ariaLabel')}
-              expandAriaLabel={t('breadcrumbs.expandAriaLabel')}
+              ariaLabel={ct('breadcrumbs.ariaLabel')}
+              expandAriaLabel={ct('breadcrumbs.expandAriaLabel')}
               onFollow={(event) => {
                 event.preventDefault();
                 void navigate(event.detail.href);
@@ -123,19 +170,10 @@ export function Shell() {
           )
         }
         notifications={
-          storageProblem !== null && (
-            <Flashbar
-              items={[
-                {
-                  id: 'storage',
-                  type: 'warning',
-                  content: t(STORAGE_MESSAGES[storageProblem]),
-                  dismissible: true,
-                  dismissLabel: t('storage.dismiss'),
-                  onDismiss: dismissStorageProblem,
-                },
-              ]}
-            />
+          notifications.length > 0 && (
+            <div lang={locale}>
+              <Flashbar items={notifications} />
+            </div>
           )
         }
         content={<Outlet />}

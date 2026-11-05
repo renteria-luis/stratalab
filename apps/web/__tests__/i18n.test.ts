@@ -21,8 +21,8 @@ describe('i18n', () => {
 
   it('I18N: formats placeholders and keeps unknown ones as written', () => {
     expect(format('{a} and {b}', { a: 1 })).toBe('1 and {b}');
-    expect(translate('es', 'top.accountId', { id: '000000000000' })).toBe(
-      'ID de cuenta: 000000000000',
+    expect(translate('es', 'reference.openConsole', { name: 'VPC' })).toBe(
+      es['reference.openConsole'].replace('{name}', 'VPC'),
     );
   });
 

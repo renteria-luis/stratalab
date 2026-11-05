@@ -66,3 +66,12 @@ All published at least 14 days before 2026-11-04.
 
 No capture at all: Create route table, Edit subnet associations (route table and network ACL), Attach internet gateway, Create network ACL, Edit subnet settings, instance details tabs, EC2 Security Groups page.
 PNG only: Edit routes, Internet gateways list and create, Network ACL tabs and edit, Security group rules and edit.
+
+## Phase B notes (2026-11-05)
+
+- Details of the selected resource render under its table, not in the AppLayout split panel, so the split panel stays free for the phase C workbench.
+- Pages with no text capture (Internet gateways, Network ACLs, Security groups lists and rule pages, route table and subnet edit pages, instance details) use labels from the AWS docs procedures. Each page's JSDoc names its source. Replace them once `.txt` captures exist.
+- Launch instance: "No preference" subnet picks the first subnet of the VPC (Inferred). "Create security group" makes `launch-wizard-<n>` with the captured SSH rule, as the wizard does.
+- Console Home "Topology health" and the side navigation "Filter by VPC" read the topology store. The filter lasts for the session only.
+- The P6 shell strings the real console shows moved to `apps/web/src/console/text.ts` (English only). `<html lang>` is `en`; simulator text carries `lang` with the UI locale.
+- `topology/compose.ts` exports `andThen`, not `then`: a module that exports `then` is thenable, so `await import()` of it never resolves.

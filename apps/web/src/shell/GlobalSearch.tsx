@@ -2,13 +2,12 @@ import Autosuggest, { type AutosuggestProps } from '@cloudscape-design/component
 import { searchServices } from '@sim/catalog';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useT } from '../i18n/useT';
 import { serviceHrefById } from '../routes/appRoutes';
 import { SEARCH_LIMIT, isFocusSearchShortcut, searchIndex } from './menuData';
+import { ct } from '../console/text';
 
 /** Global search over the catalog (CAT-08 ranking lives in packages/catalog). Alt+S focuses it. */
 export function GlobalSearch() {
-  const { t } = useT();
   const navigate = useNavigate();
   const ref = useRef<AutosuggestProps.Ref>(null);
   const [value, setValue] = useState('');
@@ -42,9 +41,9 @@ export function GlobalSearch() {
       options={options}
       filteringType="manual"
       hideEnteredTextOption
-      placeholder={t('search.placeholder')}
-      ariaLabel={t('search.ariaLabel')}
-      empty={value.trim() === '' ? undefined : t('search.empty')}
+      placeholder={ct('search.placeholder')}
+      ariaLabel={ct('search.ariaLabel')}
+      empty={value.trim() === '' ? undefined : ct('search.empty')}
       onChange={({ detail }) => {
         setValue(detail.value);
       }}

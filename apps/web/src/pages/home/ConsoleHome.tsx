@@ -4,7 +4,7 @@ import ContentLayout from '@cloudscape-design/components/content-layout';
 import Header from '@cloudscape-design/components/header';
 import { useMemo } from 'react';
 import { useT, type Translator } from '../../i18n/useT';
-import type { MessageKey } from '../../i18n/translate';
+import { ct } from '../../console/text';
 import { useUi, type HomeLayoutItem } from '../../state/uiStore';
 import { applyLayout, toLayout, type WidgetId } from './layout';
 import {
@@ -14,12 +14,19 @@ import {
   TopologyHealthWidget,
 } from './widgets';
 
-const WIDGET_TITLES: Readonly<Record<WidgetId, MessageKey>> = {
-  'recently-visited': 'home.recent.title',
-  'labs-in-progress': 'home.labs.title',
-  'topology-health': 'home.health.title',
-  'estimated-cost': 'home.cost.title',
-};
+/** "Recently visited" is console text (English only); the other widgets are the simulator's. */
+function widgetTitle(id: WidgetId, { t }: Translator): string {
+  switch (id) {
+    case 'recently-visited':
+      return ct('home.recent.title');
+    case 'labs-in-progress':
+      return t('home.labs.title');
+    case 'topology-health':
+      return t('home.health.title');
+    case 'estimated-cost':
+      return t('home.cost.title');
+  }
+}
 
 function WidgetContent({ id }: { id: WidgetId }) {
   switch (id) {
@@ -40,28 +47,27 @@ function WidgetContent({ id }: { id: WidgetId }) {
  */
 export function ConsoleHome() {
   const translator = useT();
-  const { t } = translator;
   const storedLayout = useUi((state) => state.homeLayout);
   const setHomeLayout = useUi((state) => state.setHomeLayout);
   const items = useMemo(() => applyLayout(storedLayout), [storedLayout]);
   const boardStrings = useMemo(() => boardI18n(translator), [translator]);
   const itemStrings = useMemo(
     () => ({
-      dragHandleAriaLabel: t('home.board.dragHandle'),
-      dragHandleAriaDescription: t('home.board.handleDescription'),
-      resizeHandleAriaLabel: t('home.board.resizeHandle'),
-      resizeHandleAriaDescription: t('home.board.handleDescription'),
+      dragHandleAriaLabel: ct('home.board.dragHandle'),
+      dragHandleAriaDescription: ct('home.board.handleDescription'),
+      resizeHandleAriaLabel: ct('home.board.resizeHandle'),
+      resizeHandleAriaDescription: ct('home.board.handleDescription'),
     }),
-    [t],
+    [],
   );
 
   return (
-    <ContentLayout header={<Header variant="h1">{t('home.title')}</Header>}>
+    <ContentLayout header={<Header variant="h1">{ct('home.title')}</Header>}>
       <Board<WidgetId>
         items={items}
         renderItem={(item) => (
           <BoardItem
-            header={<Header variant="h2">{t(WIDGET_TITLES[item.data])}</Header>}
+            header={<Header variant="h2">{widgetTitle(item.data, translator)}</Header>}
             i18nStrings={itemStrings}
           >
             <WidgetContent id={item.data} />
@@ -70,18 +76,18 @@ export function ConsoleHome() {
         onItemsChange={({ detail }) => {
           setHomeLayout(detail.items.map(toLayout) satisfies HomeLayoutItem[]);
         }}
-        empty={t('home.board.empty')}
+        empty={ct('home.board.empty')}
         i18nStrings={boardStrings}
       />
     </ContentLayout>
   );
 }
 
-function boardI18n({ t }: Translator): BoardProps.I18nStrings<WidgetId> {
+function boardI18n(translator: Translator): BoardProps.I18nStrings<WidgetId> {
   const started = {
-    reorder: t('home.board.started.reorder'),
-    resize: t('home.board.started.resize'),
-    insert: t('home.board.started.insert'),
+    reorder: ct('home.board.started.reorder'),
+    resize: ct('home.board.started.resize'),
+    insert: ct('home.board.started.insert'),
   } as const;
   const position = (placement: { x: number; y: number }) => ({
     column: placement.x + 1,
@@ -90,19 +96,19 @@ function boardI18n({ t }: Translator): BoardProps.I18nStrings<WidgetId> {
   return {
     liveAnnouncementDndStarted: (operation) => started[operation],
     liveAnnouncementDndItemReordered: ({ placement }) =>
-      t('home.board.reordered', position(placement)),
+      ct('home.board.reordered', position(placement)),
     liveAnnouncementDndItemResized: ({ placement }) =>
-      t('home.board.resized', { width: placement.width, height: placement.height }),
+      ct('home.board.resized', { width: placement.width, height: placement.height }),
     liveAnnouncementDndItemInserted: ({ placement }) =>
-      t('home.board.inserted', position(placement)),
-    liveAnnouncementDndCommitted: () => t('home.board.committed'),
-    liveAnnouncementDndDiscarded: () => t('home.board.discarded'),
-    liveAnnouncementItemRemoved: () => t('home.board.removed'),
+      ct('home.board.inserted', position(placement)),
+    liveAnnouncementDndCommitted: () => ct('home.board.committed'),
+    liveAnnouncementDndDiscarded: () => ct('home.board.discarded'),
+    liveAnnouncementItemRemoved: () => ct('home.board.removed'),
     // Deprecated by board-components ("has no effect") but still required by its type.
     // eslint-disable-next-line @typescript-eslint/no-deprecated
-    navigationAriaLabel: t('home.board.navigation'),
+    navigationAriaLabel: ct('home.board.navigation'),
     // eslint-disable-next-line @typescript-eslint/no-deprecated
     navigationItemAriaLabel: (item) =>
-      item === null ? t('home.board.emptySlot') : t(WIDGET_TITLES[item.data]),
+      item === null ? ct('home.board.emptySlot') : widgetTitle(item.data, translator),
   };
 }

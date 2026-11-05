@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { CONSOLE_TEXT } from '../src/console/text';
 import { en } from '../src/i18n/messages/en';
 import { PRODUCT_NAME } from '../src/product';
 
@@ -17,17 +18,21 @@ async function expectNoWcagViolations(page: Page) {
 
 test('SMOKE: the app opens straight into Console Home', async ({ page }) => {
   await page.goto('/');
-  await expect(page).toHaveTitle(`${en['home.title']} | ${PRODUCT_NAME}`);
-  await expect(page.getByRole('heading', { level: 1, name: en['home.title'] })).toBeVisible();
+  await expect(page).toHaveTitle(`${CONSOLE_TEXT['home.title']} | ${PRODUCT_NAME}`);
+  await expect(
+    page.getByRole('heading', { level: 1, name: CONSOLE_TEXT['home.title'] }),
+  ).toBeVisible();
   await expect(page.getByText(en['banner.text'])).toBeVisible();
   await expectNoWcagViolations(page);
 });
 
 test('SMOKE: Alt+S, search "macie", open it and see the reference notice', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: en['home.title'] })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { level: 1, name: CONSOLE_TEXT['home.title'] }),
+  ).toBeVisible();
   await page.keyboard.press('Alt+KeyS');
-  const search = page.getByRole('combobox', { name: en['search.ariaLabel'] });
+  const search = page.getByRole('combobox', { name: CONSOLE_TEXT['search.ariaLabel'] });
   await expect(search).toBeFocused();
   await search.pressSequentially('macie');
   await page.getByRole('option', { name: /Amazon Macie/ }).click();

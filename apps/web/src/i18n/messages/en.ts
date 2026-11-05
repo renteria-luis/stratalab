@@ -16,35 +16,6 @@ export const en = {
 
   'top.logoAlt': '{product} logo',
   'top.language': 'Language',
-  'top.accountId': 'Account ID: {id}',
-  'top.overflowMenuTrigger': 'More',
-  'top.overflowMenuTitle': 'All',
-  'top.searchIconAriaLabel': 'Search',
-  'top.searchDismissIconAriaLabel': 'Close search',
-
-  'search.placeholder': 'Search [Alt+S]',
-  'search.ariaLabel': 'Search services',
-  'search.empty': 'No services match your search',
-
-  'menu.button': 'Services',
-  'menu.dialogLabel': 'Services menu',
-  'menu.viewsLabel': 'Views',
-  'menu.categoriesLabel': 'Categories',
-  'menu.close': 'Close services menu',
-  'menu.favorite': 'Favorite: {name}',
-  'menu.recent.empty': 'No recently visited services',
-  'menu.recent.emptyHint': 'Services you open appear here.',
-  'menu.favorites.empty': 'No favorites yet',
-  'menu.favorites.emptyHint': 'Use the star next to a service to add it here.',
-  'menu.applications.empty': 'No applications',
-  'menu.applications.emptyHint': 'This simulated account has no applications.',
-
-  'nav.opensInNewTab': 'Opens in a new tab',
-  'nav.badgeNew': 'New',
-  'nav.filterNoOptions': 'No options available',
-
-  'breadcrumbs.ariaLabel': 'Breadcrumbs',
-  'breadcrumbs.expandAriaLabel': 'Show path',
 
   'storage.backedUp':
     'Saved settings could not be loaded, so the app started clean. A backup copy of the old data was kept in this browser.',
@@ -53,25 +24,6 @@ export const en = {
     'Settings could not be saved in this browser. Changes last until you close the tab.',
   'storage.dismiss': 'Dismiss',
 
-  'home.title': 'Console Home',
-  'home.board.empty': 'No widgets',
-  'home.board.navigation': 'Board navigation',
-  'home.board.emptySlot': 'Empty',
-  'home.board.dragHandle': 'Drag handle',
-  'home.board.resizeHandle': 'Resize handle',
-  'home.board.handleDescription':
-    'Use Space or Enter to activate, arrow keys to move, Space or Enter to submit, or Escape to discard.',
-  'home.board.started.reorder': 'Moving widget',
-  'home.board.started.resize': 'Resizing widget',
-  'home.board.started.insert': 'Inserting widget',
-  'home.board.reordered': 'Widget moved to column {column}, row {row}.',
-  'home.board.resized': 'Widget resized to {width} columns and {height} rows.',
-  'home.board.inserted': 'Widget inserted at column {column}, row {row}.',
-  'home.board.committed': 'Changes applied.',
-  'home.board.discarded': 'Changes discarded.',
-  'home.board.removed': 'Widget removed.',
-
-  'home.recent.title': 'Recently visited',
   'home.labs.title': 'Labs in progress',
   'home.labs.empty': 'No labs in progress',
   'home.labs.emptyHint': 'Labs you start appear here.',
@@ -89,12 +41,6 @@ export const en = {
   'home.cost.empty': 'No price snapshot yet',
   'home.cost.emptyHint':
     'Estimates appear once the build includes a dated snapshot of the AWS Price List.',
-
-  'functional.status': 'Coming with lab 1',
-  'functional.hint': 'This view becomes functional with lab 1.',
-
-  'empty.title': 'No resources',
-  'empty.hint': 'There are no resources to display in this simulated account.',
 
   'notFound.title': 'Page not found',
   'notFound.hint': 'This address does not match any page in the console.',
@@ -119,6 +65,111 @@ export const en = {
   'reference.responsibilityCustomer': 'Customer',
   'reference.sources': 'Sources',
   'reference.accessedOn': 'accessed {date}',
+  'storage.topology.backedUp':
+    'The saved topology could not be loaded, so the sandbox started empty. A backup copy of the old data was kept in this browser.',
+  'storage.topology.unreadable':
+    'The saved topology could not be read, so the sandbox started empty.',
+  'storage.topology.saveFailed':
+    'The topology could not be saved in this browser. Changes last until you close the tab.',
+
+  'fidelity.Exact': 'Exact',
+  'fidelity.Inferred': 'Inferred',
+  'fidelity.Unsupported': 'Unsupported',
+  'fidelity.Exact.description': 'Matches a documented AWS rule.',
+  'fidelity.Inferred.description':
+    "The simulator's model of something AWS doesn't state in one place, or a simplification.",
+  'fidelity.Unsupported.description':
+    'Not simulated in this release. Never treat it as allowed, free or instant.',
+  'fidelity.title': 'Simulator fidelity: {label}',
+  'fidelity.rules': 'Rules: {ruleIds}',
+  'fidelity.notSimulated': 'Not simulated in this release',
+
+  'change.rejected': 'AWS would reject this change',
+  'change.failed': "This change can't be made",
+
+  'helper.UNKNOWN_REFERENCE': '{id} no longer exists.',
+  'helper.INVALID_INPUT': 'Some values are not valid: {details}',
+  'helper.NO_FREE_PRIVATE_ADDRESS':
+    'Subnet {subnetId} ({cidrBlock}) has no free private IPv4 address.',
+  'helper.PUBLIC_POOL_EXHAUSTED': 'The simulated public IPv4 pool ({pool}) has no free address.',
+  'helper.IGW_ALREADY_ATTACHED':
+    'Internet gateway {internetGatewayId} is already attached to {vpcId}.',
+  'helper.VPC_ALREADY_HAS_IGW':
+    '{vpcId} already has internet gateway {internetGatewayId}. A VPC can have only one internet gateway.',
+  'helper.IGW_NOT_ATTACHED': 'Internet gateway {internetGatewayId} is not attached to a VPC.',
+  'helper.IGW_HAS_PUBLIC_ADDRESSES_one':
+    "Internet gateway {internetGatewayId} can't be detached: {vpcId} has {count} network interface with a public IPv4 address.",
+  'helper.IGW_HAS_PUBLIC_ADDRESSES_other':
+    "Internet gateway {internetGatewayId} can't be detached: {vpcId} has {count} network interfaces with a public IPv4 address.",
+
+  'issue.VPC_SIZE_INVALID':
+    'VPC CIDR {cidrBlock} is a /{prefixLength}. A VPC CIDR must be between /{minPrefixLength} and /{maxPrefixLength}.',
+  'issue.VPC_CIDR_RESTRICTED':
+    "VPC CIDR {cidrBlock} is inside {restrictedBlock}, which AWS doesn't allow for a VPC.",
+  'issue.SUBNET_SIZE_INVALID':
+    'Subnet CIDR {cidrBlock} is a /{prefixLength}. A subnet CIDR must be between /{minPrefixLength} and /{maxPrefixLength}.',
+  'issue.SUBNET_CIDR_OUT_OF_VPC':
+    'Subnet CIDR {cidrBlock} is not inside the VPC CIDR {vpcCidrBlock}.',
+  'issue.CIDR_OVERLAP': 'Subnet CIDR {cidrBlock} overlaps {otherCidrBlock} of subnet {relatedId}.',
+  'issue.IP_OUT_OF_SUBNET': 'Private IPv4 address {ipAddress} is not in subnet {subnetCidrBlock}.',
+  'issue.IP_RESERVED':
+    'Private IPv4 address {ipAddress} is reserved in {subnetCidrBlock}: {purpose}.',
+  'issue.IP_DUPLICATE.private': 'Private IPv4 address {ipAddress} is already used by {relatedId}.',
+  'issue.IP_DUPLICATE.public': 'Public IPv4 address {ipAddress} is already used by {relatedId}.',
+  'issue.PUBLIC_IP_INVALID.rfc1918':
+    "Public IPv4 address {ipAddress} is a private address (RFC 1918, {range}), so it can't be a public address.",
+  'issue.PUBLIC_IP_INVALID.rfc6598':
+    "Public IPv4 address {ipAddress} is in the shared address space (RFC 6598, {range}), so it can't be a public address.",
+  'issue.PUBLIC_IP_INVALID.restricted':
+    "Public IPv4 address {ipAddress} is in the restricted range {range}, so it can't be a public address.",
+  'issue.PUBLIC_IP_INVALID.vpc-cidr':
+    "Public IPv4 address {ipAddress} is inside the VPC CIDR {range}, so it can't be a public address.",
+  'issue.VPC_MISMATCH': '{resourceId} is in {vpcId}, but {relatedId} belongs to {otherVpcId}.',
+  'issue.ROUTE_DUPLICATE_DESTINATION':
+    'The route table already has a route to {destinationCidrBlock}.',
+  'issue.ROUTE_DESTINATION_RESERVED':
+    'Destination {destinationCidrBlock} is inside {reservedBlock}, which AWS reserves for its own services.',
+  'issue.LOCAL_ROUTE_CONFLICT':
+    'Destination {destinationCidrBlock} is the VPC CIDR {vpcCidrBlock} or inside it. The local route already covers it.',
+  'issue.IGW_MULTIPLE_ATTACHED': '{vpcId} already has internet gateway {relatedId} attached.',
+  'issue.SG_NAME_INVALID.empty': 'The security group {field} is required.',
+  'issue.SG_NAME_INVALID.too-long':
+    'The security group {field} can have up to {maxLength} characters.',
+  'issue.SG_NAME_INVALID.invalid-characters':
+    'The security group {field} can only use a-z, A-Z, 0-9, spaces and ._-:/()#,@[]+=&;{}!$*',
+  'issue.SG_NAME_INVALID.sg-prefix': 'A security group name can\'t start with "sg-".',
+  'issue.SG_NAME_DUPLICATE': 'A security group named "{name}" already exists in {vpcId}.',
+  'issue.NACL_RULE_NUMBER_DUPLICATE':
+    'Rule number {ruleNumber} is used twice in the {direction} rules.',
+  'issue.QUOTA_EXCEEDED.rules-per-security-group':
+    'The security group has {count} {direction} rules. The default quota is {limit}.',
+  'issue.QUOTA_EXCEEDED.rules-per-network-acl':
+    'The network ACL has {count} {direction} rules. The default quota is {limit}.',
+  'issue.QUOTA_EXCEEDED.security-groups-per-network-interface':
+    'The network interface has {count} security groups. The default quota is {limit}.',
+  'issue.purpose.network': 'network address',
+  'issue.purpose.vpc-router': 'VPC router',
+  'issue.purpose.dns': 'reserved by AWS (DNS)',
+  'issue.purpose.future-use': 'reserved by AWS for future use',
+  'issue.purpose.broadcast': 'broadcast address',
+  'issue.field.name': 'name',
+  'issue.field.description': 'description',
+  'issue.direction.inbound': 'inbound',
+  'issue.direction.outbound': 'outbound',
+
+  'sim.zoneNoPreference': '"No preference" picks the first Availability Zone of the region.',
+  'sim.firstFreeAddress':
+    'Without a chosen address, the simulator picks the first free usable address of the subnet.',
+  'sim.publicPool':
+    'Simulated public IPv4 addresses come from 203.0.113.0/24, a documentation range (RFC 5737).',
+  'sim.subnetNoPreference': '"No preference" picks the first subnet of the VPC.',
+  'sim.launchTime': 'The simulator keeps no launch time.',
+  'sim.amiPlatform': 'The simulator models only the platform of the image: Linux/UNIX or Windows.',
+  'sim.software.title': 'Simulated software',
+  'sim.software.description':
+    'In AWS, software comes from the AMI or user data. The simulator only needs to know which service listens on which port.',
+  'sim.software.none': 'None',
+  'sim.software.webServer': 'Web server (nginx on TCP port 80)',
 } as const;
 
 export type MessageKey = keyof typeof en;

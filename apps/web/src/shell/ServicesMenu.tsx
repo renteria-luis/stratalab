@@ -7,7 +7,6 @@ import type { Service } from '@sim/catalog';
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router';
-import { useT } from '../i18n/useT';
 import { serviceHref, servicesById } from '../routes/appRoutes';
 import { useUi } from '../state/uiStore';
 import {
@@ -19,6 +18,7 @@ import {
   menuViews,
   type MenuGroup,
 } from './menuData';
+import { ct } from '../console/text';
 
 interface ServicesMenuProps {
   /** Element under the top bar that the panel is rendered into. */
@@ -31,7 +31,6 @@ interface ServicesMenuProps {
  * and focus returns to the trigger.
  */
 export function ServicesMenu({ anchor }: ServicesMenuProps) {
-  const { t } = useT();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string>(menuViews[0]?.name ?? '');
@@ -80,19 +79,19 @@ export function ServicesMenu({ anchor }: ServicesMenuProps) {
       id={panelId}
       className="sim-services-panel"
       role="dialog"
-      aria-label={t('menu.dialogLabel')}
+      aria-label={ct('menu.dialogLabel')}
       onKeyDown={onKeyDown}
     >
       <div className="sim-services-groups">
         <GroupList
-          label={t('menu.viewsLabel')}
+          label={ct('menu.viewsLabel')}
           groups={menuViews}
           selected={current?.name}
           onSelect={setSelected}
         />
         <hr />
         <GroupList
-          label={t('menu.categoriesLabel')}
+          label={ct('menu.categoriesLabel')}
           groups={menuCategoryGroups}
           selected={current?.name}
           onSelect={setSelected}
@@ -108,7 +107,7 @@ export function ServicesMenu({ anchor }: ServicesMenuProps) {
           <Button
             variant="icon"
             iconName="close"
-            ariaLabel={t('menu.close')}
+            ariaLabel={ct('menu.close')}
             onClick={() => {
               close(true);
             }}
@@ -132,7 +131,7 @@ export function ServicesMenu({ anchor }: ServicesMenuProps) {
             setOpen((value) => !value);
           }}
         >
-          {t('menu.button')}
+          {ct('menu.button')}
         </Button>
       </span>
       {open && anchor !== null && createPortal(panel, anchor)}
@@ -182,7 +181,6 @@ const byIds = (ids: readonly string[]): Service[] =>
   });
 
 function GroupContent({ group, onOpen }: { group: MenuGroup; onOpen: (service: Service) => void }) {
-  const { t } = useT();
   const recent = useUi((state) => state.recentServiceIds);
   const favorites = useUi((state) => state.favoriteServiceIds);
 
@@ -190,19 +188,22 @@ function GroupContent({ group, onOpen }: { group: MenuGroup; onOpen: (service: S
   switch (group.behavior) {
     case 'recent':
       return recent.length === 0 ? (
-        <EmptyGroup title={t('menu.recent.empty')} hint={t('menu.recent.emptyHint')} />
+        <EmptyGroup title={ct('menu.recent.empty')} hint={ct('menu.recent.emptyHint')} />
       ) : (
         <ServiceList services={byIds(recent)} onOpen={onOpen} />
       );
     case 'favorites':
       return favorites.length === 0 ? (
-        <EmptyGroup title={t('menu.favorites.empty')} hint={t('menu.favorites.emptyHint')} />
+        <EmptyGroup title={ct('menu.favorites.empty')} hint={ct('menu.favorites.emptyHint')} />
       ) : (
         <ServiceList services={byIds(favorites)} onOpen={onOpen} />
       );
     case 'applications':
       return (
-        <EmptyGroup title={t('menu.applications.empty')} hint={t('menu.applications.emptyHint')} />
+        <EmptyGroup
+          title={ct('menu.applications.empty')}
+          hint={ct('menu.applications.emptyHint')}
+        />
       );
     case 'all':
       return <ServiceList services={listedServices} onOpen={onOpen} />;
@@ -229,7 +230,6 @@ function ServiceList({
   services: readonly Service[];
   onOpen: (service: Service) => void;
 }) {
-  const { t } = useT();
   const favorites = useUi((state) => state.favoriteServiceIds);
   const toggleFavorite = useUi((state) => state.toggleFavorite);
   return (
@@ -241,7 +241,7 @@ function ServiceList({
             iconName="star"
             pressedIconName="star-filled"
             pressed={favorites.includes(service.id)}
-            ariaLabel={t('menu.favorite', { name: service.name })}
+            ariaLabel={ct('menu.favorite', { name: service.name })}
             onChange={() => {
               toggleFavorite(service.id);
             }}

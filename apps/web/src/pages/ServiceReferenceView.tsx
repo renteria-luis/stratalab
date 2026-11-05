@@ -12,6 +12,7 @@ import { useNavigate, useParams } from 'react-router';
 import { useT } from '../i18n/useT';
 import { serviceHref, servicesById } from '../routes/appRoutes';
 import { NotFoundPage } from './NotFoundPage';
+import { ct } from '../console/text';
 
 /**
  * Study-mode page for any service (catalog skill, "Three kinds of service"):
@@ -102,7 +103,7 @@ function Notice({ service, hasCard }: { service: Service; hasCard: boolean }) {
             href={service.docsUrl}
             target="_blank"
             external
-            i18nStrings={{ externalIconAriaLabel: t('nav.opensInNewTab') }}
+            i18nStrings={{ externalIconAriaLabel: ct('nav.opensInNewTab') }}
           >
             {t('reference.docsLink')}
           </Button>
@@ -151,7 +152,7 @@ function CardView({ card }: { card: Card }) {
           <ul>
             {card.sources.map((source) => (
               <li key={source.url}>
-                <Link href={source.url} external externalIconAriaLabel={t('nav.opensInNewTab')}>
+                <Link href={source.url} external externalIconAriaLabel={ct('nav.opensInNewTab')}>
                   {source.title}
                 </Link>{' '}
                 ({t('reference.accessedOn', { date: source.accessedOn })})

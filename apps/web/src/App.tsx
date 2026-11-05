@@ -1,19 +1,20 @@
 import { I18nProvider } from '@cloudscape-design/components/i18n';
 import cloudscapeEn from '@cloudscape-design/components/i18n/messages/all.en';
-import cloudscapeEs from '@cloudscape-design/components/i18n/messages/all.es';
 import { useEffect, type ReactNode } from 'react';
-import { useUi } from './state/uiStore';
 
-const CLOUDSCAPE_MESSAGES = [cloudscapeEn, cloudscapeEs];
+const CLOUDSCAPE_MESSAGES = [cloudscapeEn];
 
-/** Cloudscape's own strings follow the UI locale, and so does `<html lang>`. */
+/**
+ * The console is English only (AGENTS.md, "Language"), so Cloudscape's own strings and
+ * `<html lang>` stay English. Simulator text carries `lang` with the UI locale where it
+ * appears (WCAG 3.1.2, language of parts).
+ */
 export function AppProviders({ children }: { children: ReactNode }) {
-  const locale = useUi((state) => state.locale);
   useEffect(() => {
-    document.documentElement.lang = locale;
-  }, [locale]);
+    document.documentElement.lang = 'en';
+  }, []);
   return (
-    <I18nProvider locale={locale} messages={CLOUDSCAPE_MESSAGES}>
+    <I18nProvider locale="en" messages={CLOUDSCAPE_MESSAGES}>
       {children}
     </I18nProvider>
   );
