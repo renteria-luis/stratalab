@@ -74,6 +74,8 @@ export function ResourceTable<T>({
   const currentPage = Math.min(page, pagesCount);
   const pageItems = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
   const selectedItems = items.filter((item) => selectedIds.includes(trackBy(item)));
+  const headerOf = (id: string | undefined) =>
+    columns.find((column) => column.id === id)?.header ?? '';
 
   const columnDefinitions = columns.map((column): TableProps.ColumnDefinition<T> => ({
     id: column.id,
@@ -122,6 +124,10 @@ export function ResourceTable<T>({
         selectionGroupLabel: `${resourceName} selection`,
         allItemsSelectionLabel: () => 'select all',
         itemSelectionLabel: (_data, item) => trackBy(item),
+        activateEditLabel: (column, item) => `Edit ${headerOf(column.id)} of ${trackBy(item)}`,
+        cancelEditLabel: (column) => `Cancel editing ${headerOf(column.id)}`,
+        submitEditLabel: (column) => `Save ${headerOf(column.id)}`,
+        submittingEditText: () => 'Saving',
       }}
       resizableColumns
       wrapLines={false}

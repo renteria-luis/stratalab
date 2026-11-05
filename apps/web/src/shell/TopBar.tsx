@@ -18,6 +18,8 @@ export function TopBar({ servicesMenuAnchor }: { servicesMenuAnchor: HTMLElement
   const { t, locale } = useT();
   const navigate = useNavigate();
   const setLocale = useUi((state) => state.setLocale);
+  const workbenchOpen = useUi((state) => state.workbenchOpen);
+  const setWorkbench = useUi((state) => state.setWorkbench);
 
   return (
     <TopNavigation
@@ -39,6 +41,23 @@ export function TopBar({ servicesMenuAnchor }: { servicesMenuAnchor: HTMLElement
         </div>
       }
       utilities={[
+        {
+          type: 'button',
+          text: t('labs.open'),
+          href: '/labs',
+          onClick: (event) => {
+            event.preventDefault();
+            void navigate('/labs');
+          },
+        },
+        {
+          type: 'button',
+          iconName: 'view-horizontal',
+          text: workbenchOpen ? t('workbench.close') : t('workbench.open'),
+          onClick: () => {
+            setWorkbench(!workbenchOpen);
+          },
+        },
         {
           type: 'menu-dropdown',
           iconName: 'globe',

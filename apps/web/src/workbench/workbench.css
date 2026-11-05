@@ -1,0 +1,35 @@
+.sim-browser__address {
+  inline-size: 420px;
+  max-inline-size: 100%;
+}
+
+.sim-browser__viewport {
+  min-block-size: 220px;
+  border: 1px solid var(--sim-divider);
+  border-radius: 8px;
+  background: var(--sim-bg-container);
+}
+
+.sim-browser__frame {
+  display: block;
+  inline-size: 100%;
+  block-size: 320px;
+  border: 0;
+  border-radius: 8px;
+}
+
+.sim-yaml-editor {
+  border: 1px solid var(--sim-divider);
+  border-radius: 8px;
+  max-block-size: 420px;
+  overflow: auto;
+  font-size: var(--sim-font-size-s);
+}
+
+.sim-yaml-editor .cm-editor {
+  min-block-size: 280px;
+}
+
+.sim-yaml-editor .cm-editor.cm-focused {
+  outline: 2px solid var(--sim-focus);
+}

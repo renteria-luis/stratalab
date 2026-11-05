@@ -11,7 +11,13 @@ import { useT } from '../i18n/useT';
 import { PRODUCT_NAME } from '../product';
 import { navItemHref, servicesById } from '../routes/appRoutes';
 import { isPageHandle, type PageHandle } from '../routes/pageHandle';
+import { LabPanel } from '../labs/LabPanel';
+import { LabSync } from '../labs/LabSync';
+import { useActiveLab } from '../labs/useActiveLab';
+import { labStore, useLabs } from '../state/labStore';
 import { useTopologyStore } from '../state/topologyStore';
+import { TracePlayer } from '../workbench/TracePlayer';
+import { Workbench } from '../workbench/Workbench';
 import { useUi, type StorageProblem } from '../state/uiStore';
 import { AppFooter, DisclaimerBanner } from './Disclaimers';
 import { ConsoleSideNav } from './ConsoleSideNav';
@@ -60,6 +66,13 @@ export function Shell() {
   const storageProblem = useUi((state) => state.storageProblem);
   const dismissStorageProblem = useUi((state) => state.dismissStorageProblem);
   const topologyProblem = useTopologyStore((state) => state.storageProblem);
+  const labProblem = useLabs((state) => state.storageProblem);
+  const dismissLabProblem = useLabs((state) => state.dismissStorageProblem);
+  const lab = useActiveLab();
+  const toolsOpen = useUi((state) => state.labPanelOpen);
+  const setToolsOpen = useUi((state) => state.setLabPanelOpen);
+  const workbenchOpen = useUi((state) => state.workbenchOpen);
+  const setWorkbench = useUi((state) => state.setWorkbench);
   const dismissTopologyProblem = useTopologyStore((state) => state.dismissStorageProblem);
 
   const service = serviceId === undefined ? undefined : servicesById.get(serviceId);
@@ -74,12 +87,19 @@ export function Shell() {
   const pageTitle =
     handle.page === 'home'
       ? ct('home.title')
-      : handle.page === 'console'
-        ? (handle.subPage?.label ?? handle.consolePage.label)
-        : (service?.name ?? t('notFound.title'));
+      : handle.page === 'labs'
+        ? t('labs.title')
+        : handle.page === 'console'
+          ? (handle.subPage?.label ?? handle.consolePage.label)
+          : (service?.name ?? t('notFound.title'));
   useEffect(() => {
     document.title = `${pageTitle} | ${PRODUCT_NAME}`;
   }, [pageTitle]);
+
+  // Lab mode: pages outside the solution path are recorded locally for the review.
+  useEffect(() => {
+    if (lab !== undefined) labStore.getState().recordVisit(location.pathname, lab.relevantRoutes);
+  }, [lab, location.pathname]);
 
   // After client-side navigation, move focus to the new page's heading (WCAG 2.4.3).
   const previousPath = useRef(location.pathname);
@@ -103,6 +123,18 @@ export function Shell() {
             dismissible: true,
             dismissLabel: t('storage.dismiss'),
             onDismiss: dismissStorageProblem,
+          },
+        ]),
+    ...(labProblem === null
+      ? []
+      : [
+          {
+            id: 'lab-storage',
+            type: 'warning' as const,
+            content: t(STORAGE_MESSAGES[labProblem]),
+            dismissible: true,
+            dismissLabel: t('storage.dismiss'),
+            onDismiss: dismissLabProblem,
           },
         ]),
     ...(topologyProblem === null
@@ -142,7 +174,23 @@ export function Shell() {
       <AppLayout
         headerSelector={`#${HEADER_ID}`}
         footerSelector={`#${FOOTER_ID}`}
-        toolsHide
+        toolsHide={lab === undefined}
+        tools={lab && <LabPanel lab={lab} />}
+        toolsOpen={lab !== undefined && toolsOpen}
+        onToolsChange={({ detail }) => {
+          setToolsOpen(detail.open);
+        }}
+        splitPanel={<Workbench />}
+        splitPanelOpen={workbenchOpen}
+        onSplitPanelToggle={({ detail }) => {
+          setWorkbench(detail.open);
+        }}
+        splitPanelPreferences={{ position: 'bottom' }}
+        ariaLabels={{
+          tools: t('lab.panel'),
+          toolsToggle: t('lab.panel'),
+          toolsClose: t('lab.panel'),
+        }}
         navigationHide={nav === undefined}
         navigationOpen={navigationOpen}
         onNavigationChange={({ detail }) => {
@@ -179,6 +227,8 @@ export function Shell() {
         content={<Outlet />}
       />
       <AppFooter id={FOOTER_ID} />
+      <TracePlayer />
+      <LabSync />
     </div>
   );
 }

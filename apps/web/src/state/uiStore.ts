@@ -13,7 +13,7 @@ import { backupKeyFor, createValidatedStorage, type StorageProblem } from './per
  */
 
 export const UI_STORE_KEY = 'sim-ui';
-export const UI_STORE_VERSION = 1;
+export const UI_STORE_VERSION = 2;
 export const RECENT_LIMIT = 10;
 
 const serviceIdList = (max: number) => z.array(z.string().min(1).max(100)).max(max);
@@ -25,23 +25,45 @@ export const homeLayoutItemSchema = z.strictObject({
   columnOffset: z.record(z.string(), z.number().int().min(0).max(12)).optional(),
 });
 
+const pointSchema = z.strictObject({ x: z.number(), y: z.number() });
+
+/** Canvas node positions the learner moved, per topology workspace and node ID. */
+export const canvasLayoutsSchema = z.record(
+  z.string().min(1).max(100),
+  z.record(z.string().min(1).max(100), pointSchema),
+);
+
 export const persistedUiSchema = z.strictObject({
   locale: z.enum(LOCALES),
   recentServiceIds: serviceIdList(RECENT_LIMIT),
   favoriteServiceIds: serviceIdList(1000),
   homeLayout: z.array(homeLayoutItemSchema).max(20).nullable(),
+  canvasLayouts: canvasLayoutsSchema,
 });
+
+export type CanvasLayout = Readonly<Record<string, { readonly x: number; readonly y: number }>>;
 
 export type PersistedUi = z.output<typeof persistedUiSchema>;
 export type HomeLayoutItem = z.output<typeof homeLayoutItemSchema>;
 
 export type { StorageProblem } from './persistence';
 
+export type WorkbenchTab = 'diagram' | 'trace' | 'browser' | 'yaml';
+
 export interface UiState extends PersistedUi {
   readonly hydrated: boolean;
   readonly storageProblem: StorageProblem | null;
   /** "Filter by VPC" of the reproduced consoles. Session only: not persisted. */
   readonly vpcFilter: string | null;
+  /** The workbench split panel. Session only. */
+  readonly workbenchOpen: boolean;
+  readonly workbenchTab: WorkbenchTab;
+  /** The lab panel (AppLayout tools). Session only. */
+  readonly labPanelOpen: boolean;
+  readonly setLabPanelOpen: (open: boolean) => void;
+  readonly setWorkbench: (open: boolean, tab?: WorkbenchTab) => void;
+  readonly moveCanvasNode: (workspaceId: string, nodeId: string, x: number, y: number) => void;
+  readonly setCanvasLayout: (workspaceId: string, layout: CanvasLayout) => void;
   readonly setLocale: (locale: Locale) => void;
   readonly visitService: (serviceId: string) => void;
   readonly toggleFavorite: (serviceId: string) => void;
@@ -51,16 +73,26 @@ export interface UiState extends PersistedUi {
 }
 
 /**
- * Brings stored state from `fromVersion` to the current version. Version 1 is the first
- * one, so there is nothing to convert yet; an unknown version gives `undefined`, which
- * fails validation and is backed up.
+ * Brings stored state from `fromVersion` to the current version. Version 2 added
+ * `canvasLayouts`. An unknown version gives `undefined`, which fails validation and is
+ * backed up.
  */
 export function migrateUiState(state: unknown, fromVersion: number): unknown {
-  return fromVersion === UI_STORE_VERSION ? state : undefined;
+  if (fromVersion === UI_STORE_VERSION) return state;
+  if (fromVersion === 1 && typeof state === 'object' && state !== null) {
+    return { ...state, canvasLayouts: {} };
+  }
+  return undefined;
 }
 
 export function defaultPersistedUi(locale: Locale): PersistedUi {
-  return { locale, recentServiceIds: [], favoriteServiceIds: [], homeLayout: null };
+  return {
+    locale,
+    recentServiceIds: [],
+    favoriteServiceIds: [],
+    homeLayout: null,
+    canvasLayouts: {},
+  };
 }
 
 export function backupKey(date: Date): string {
@@ -89,6 +121,28 @@ export function createUiStore(kv: KeyValueStore, initialLocale: Locale): StoreAp
         hydrated: false,
         storageProblem: null,
         vpcFilter: null,
+        workbenchOpen: false,
+        workbenchTab: 'diagram',
+        labPanelOpen: true,
+        setLabPanelOpen: (open) => {
+          set({ labPanelOpen: open });
+        },
+        setWorkbench: (open, tab) => {
+          set((state) => ({ workbenchOpen: open, workbenchTab: tab ?? state.workbenchTab }));
+        },
+        moveCanvasNode: (workspaceId, nodeId, x, y) => {
+          set((state) => ({
+            canvasLayouts: {
+              ...state.canvasLayouts,
+              [workspaceId]: { ...state.canvasLayouts[workspaceId], [nodeId]: { x, y } },
+            },
+          }));
+        },
+        setCanvasLayout: (workspaceId, layout) => {
+          set((state) => ({
+            canvasLayouts: { ...state.canvasLayouts, [workspaceId]: { ...layout } },
+          }));
+        },
         setLocale: (locale) => {
           set({ locale });
         },
@@ -126,6 +180,7 @@ export function createUiStore(kv: KeyValueStore, initialLocale: Locale): StoreAp
           recentServiceIds: state.recentServiceIds,
           favoriteServiceIds: state.favoriteServiceIds,
           homeLayout: state.homeLayout,
+          canvasLayouts: state.canvasLayouts,
         }),
         // Validation and migration already ran in getItem, so this only runs for a
         // version mismatch that getItem never returns.

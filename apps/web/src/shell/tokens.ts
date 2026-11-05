@@ -28,4 +28,9 @@ export const shellTokenStyle = {
   '--sim-space-xs': tokens.spaceScaledXs,
   '--sim-space-s': tokens.spaceScaledS,
   '--sim-space-m': tokens.spaceScaledM,
+  // Canvas: colorblind-safe blue and orange (AGENTS.md, UI rules); shape and text repeat them.
+  '--sim-canvas-pass': tokens.colorChartsBlue1600,
+  '--sim-canvas-fail': tokens.colorChartsOrange700,
+  '--sim-canvas-fail-text': tokens.colorChartsOrange1000,
+  '--sim-canvas-group-bg': tokens.colorBackgroundContainerContent,
 } as CSSProperties;

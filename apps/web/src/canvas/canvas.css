@@ -1,0 +1,94 @@
+/* Diagram styles. Colors come from Cloudscape tokens (shell/tokens.ts). */
+.sim-diagram {
+  block-size: 420px;
+  inline-size: 100%;
+}
+
+.sim-node {
+  box-sizing: border-box;
+  block-size: 100%;
+  inline-size: 100%;
+  padding: var(--sim-space-xs);
+  border: 1px solid var(--sim-divider);
+  border-radius: 8px;
+  background: var(--sim-bg-container);
+  color: var(--sim-text-body);
+  font-size: var(--sim-font-size-s);
+  line-height: var(--sim-line-height-s);
+}
+
+.sim-node--group {
+  background: transparent;
+}
+
+.sim-node--vpc {
+  border: 2px solid var(--sim-canvas-pass);
+}
+
+.sim-node--subnet {
+  border: 1px solid var(--sim-canvas-pass);
+}
+
+.sim-node--failed {
+  outline: 3px dashed var(--sim-canvas-fail);
+  outline-offset: 2px;
+}
+
+.sim-node__header {
+  display: flex;
+  gap: var(--sim-space-xs);
+  align-items: flex-start;
+}
+
+.sim-node__text {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.sim-node__title {
+  font-weight: var(--sim-font-weight-strong);
+  overflow-wrap: anywhere;
+}
+
+.sim-node__line {
+  color: var(--sim-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.sim-node__failed {
+  display: inline-block;
+  margin-block-start: var(--sim-space-xxs);
+  color: var(--sim-canvas-fail-text);
+  font-weight: var(--sim-font-weight-strong);
+}
+
+/* The packet: centered on its hop, circle forward, diamond on the return path. */
+.sim-packet {
+  position: absolute;
+  inset-block-start: -9px;
+  inset-inline-start: -9px;
+  inline-size: 18px;
+  block-size: 18px;
+  background: var(--sim-canvas-pass);
+  border: 2px solid var(--sim-bg-container);
+  border-radius: 50%;
+  transition: transform 500ms ease-in-out;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.sim-packet--return {
+  border-radius: 2px;
+  rotate: 45deg;
+}
+
+.sim-packet--failed {
+  background: var(--sim-canvas-fail);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sim-packet {
+    transition: none;
+  }
+}

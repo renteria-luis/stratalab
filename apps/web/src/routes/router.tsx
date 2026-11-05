@@ -1,4 +1,5 @@
 import type { RouteObject } from 'react-router';
+import { LabsPage } from '../labs/LabsPage';
 import { ConsoleHome } from '../pages/home/ConsoleHome';
 import { ConsolePageView } from '../pages/ConsolePageView';
 import { NotFoundPage } from '../pages/NotFoundPage';
@@ -40,6 +41,7 @@ export function appRouteObjects(): RouteObject[] {
             handle: handle({ page: 'console', consolePage: parent, subPage: { label: sub.label } }),
           };
         }),
+        { path: '/labs', element: <LabsPage />, handle: handle({ page: 'labs' }) },
         {
           path: `${REFERENCE_PREFIX}/:serviceId`,
           element: <ServiceReferenceView />,

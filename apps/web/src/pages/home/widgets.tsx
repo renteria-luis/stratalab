@@ -9,7 +9,10 @@ import { useNavigate } from 'react-router';
 import { useT } from '../../i18n/useT';
 import { serviceHref, servicesById } from '../../routes/appRoutes';
 import { useUi } from '../../state/uiStore';
+import { LABS } from '@sim/labs';
+import { ConsoleLink } from '../../console/components/ConsoleLink';
 import { FidelityLabel } from '../../console/components/FidelityLabel';
+import { useLabs } from '../../state/labStore';
 import { issueMessage } from '../../i18n/engineText';
 import { useTopology } from '../../state/topologyStore';
 import { ct } from '../../console/text';
@@ -62,9 +65,27 @@ export function RecentlyVisitedWidget() {
   );
 }
 
+/** Labs started in this browser and not completed yet (local progress, lab store). */
 export function LabsInProgressWidget() {
   const { t, locale } = useT();
-  return <EmptyWidget lang={locale} title={t('home.labs.empty')} hint={t('home.labs.emptyHint')} />;
+  const progress = useLabs((state) => state.progress);
+  const inProgress = LABS.filter((lab) => progress[lab.id]?.status === 'in-progress');
+  if (inProgress.length === 0) {
+    return (
+      <EmptyWidget lang={locale} title={t('home.labs.empty')} hint={t('home.labs.emptyHint')} />
+    );
+  }
+  return (
+    <div lang={locale}>
+      <SpaceBetween size="xs">
+        {inProgress.map((lab) => (
+          <ConsoleLink key={lab.id} href="/labs">
+            {lab.title[locale]}
+          </ConsoleLink>
+        ))}
+      </SpaceBetween>
+    </div>
+  );
 }
 
 /** Results of the engine's `validate()` on the active topology, translated as `issue.<code>`. */

@@ -75,3 +75,14 @@ PNG only: Edit routes, Internet gateways list and create, Network ACL tabs and e
 - Console Home "Topology health" and the side navigation "Filter by VPC" read the topology store. The filter lasts for the session only.
 - The P6 shell strings the real console shows moved to `apps/web/src/console/text.ts` (English only). `<html lang>` is `en`; simulator text carries `lang` with the UI locale.
 - `topology/compose.ts` exports `andThen`, not `then`: a module that exports `then` is thenable, so `await import()` of it never resolves.
+
+## Phase C notes (2026-11-05)
+
+- Dependencies installed with exact versions (the table above), so the lockfile can't move to a newer, younger release.
+- Icons: the eight SVGs the canvas uses, copied to `apps/web/src/canvas/icons/` with their sources (`README.md`).
+- Lab mode: our own `/labs` page, a "Labs" and a "Workbench" button in the top bar, and the lab panel in the AppLayout tools area. Check lists only which goals are met; hints appear one at a time on request; the review (hints, traces run, pages off the solution path) appears only once the lab is complete.
+- Workbench: the AppLayout split panel with Diagram, Trace, Browser and YAML tabs, in the sandbox and in labs.
+- Canvas: nodes can be dragged. Moved positions are saved per workspace in the UI store (version 2, migrated from version 1) and travel in the YAML `layout` section.
+- YAML: every explicit tag (even `!!str`), anchor and alias is rejected.
+- Virtual browser: one generic error page for every failure, plus "Trace this request". Browser requests don't count as traces run.
+- Accessibility: axe can't analyze inside the sandboxed iframe (scripts are blocked there), so the lab 1 Playwright test runs axe with the Diagram tab open.

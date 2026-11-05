@@ -1,4 +1,4 @@
-import type { HelperError, Issue } from '@sim/engine';
+import type { HelperError, Issue, QueryIssue, ReasonCode } from '@sim/engine';
 import type { MessageKey, MessageParams } from './translate';
 import type { Translator } from './useT';
 
@@ -98,4 +98,16 @@ export function helperErrorMessage(error: HelperError, { t, tPlural }: Translato
     default:
       return t(`helper.${error.code}`, params);
   }
+}
+
+/** The message of a trace reason code (`reason.<code>`). */
+export function reasonMessage(code: ReasonCode, { t }: Translator): string {
+  return t(`reason.${code}`);
+}
+
+/** A blocked trace lists `validate()` errors and query problems (r0-engine.md 5.3). */
+export function blockedIssueMessage(issue: Issue | QueryIssue, translator: Translator): string {
+  return 'resource' in issue
+    ? issueMessage(issue, translator)
+    : translator.t(`query.${issue.code}`, issue.params);
 }

@@ -15,6 +15,7 @@ export type PageHandle =
       readonly subPage?: ConsoleSubPage;
     }
   | { readonly page: 'reference' }
+  | { readonly page: 'labs' }
   | { readonly page: 'not-found' };
 
 export function isPageHandle(value: unknown): value is PageHandle {
