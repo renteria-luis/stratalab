@@ -5,7 +5,8 @@
   "description": "Pure, deterministic topology engine: schema, CIDR math, validate, trace, deriveStatus.",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./golden": "./golden/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

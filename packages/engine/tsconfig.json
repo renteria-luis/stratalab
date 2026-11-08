@@ -6,5 +6,5 @@
     "lib": ["ES2023"],
     "types": []
   },
-  "include": ["src", "__tests__"]
+  "include": ["src", "golden", "__tests__"]
 }

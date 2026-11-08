@@ -76,11 +76,17 @@ Source: https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.ht
 - Reachability Analyzer analyzes configuration. It doesn't send packets.
 - An internet gateway can't be an intermediate component (`IGW_NAT_REFLECTION`). Split internet flows into two analyses: internet gateway → instance, and instance → internet gateway.
 - For TCP through a transit gateway route table, it analyzes only forward traffic. It can also report `UNIDIRECTIONAL_PATH_ANALYSIS_ONLY` when it couldn't check the reverse path. Run the reverse path as a second analysis.
-- IPv4 only. Billed per analysis.
-- Store its explanation codes next to our expected codes; the golden test compares them one to one.
+- IPv4 only. Billed per analysis. It also accepts an IP address as a destination.
+- It doesn't send packets, so it has no listener check: a golden query must never depend on `NO_LISTENER`. It can't start at a detached internet gateway, so `NO_INTERNET_GATEWAY` can't be golden-tested either.
+- Each analysis has a source and a destination resource, a protocol and a `FilterAtSource` (source and destination address, source and destination port range). With `FilterAtSource` you can't also pass `SourceIp` or `DestinationPort`. Each result has `NetworkPathFound`, forward and return path components and explanation codes.
+- A reply leg sent as its own analysis is a new connection to Reachability Analyzer: the sending side's security group is checked, not skipped.
+- Store its explanation codes next to our expected codes; the golden test compares them one to one: a found path is `REACHED`; otherwise the codes (as a set) must equal the failing hop's codes, and their TRC-04 group gives the verdict. Mapping, fixture format and commands: `docs/specs/p9-golden.md`.
+Fidelity: Exact (API and behavior as documented) · Inferred (how an internet gateway source uses `FilterAtSource`, Q13) · Status: verified 2026-11-05
 
-Sources: https://docs.aws.amazon.com/vpc/latest/reachability/how-reachability-analyzer-works.html · https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html · https://docs.aws.amazon.com/vpc/latest/reachability/additional-detail-codes.html
+Sources: https://docs.aws.amazon.com/vpc/latest/reachability/how-reachability-analyzer-works.html · https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html · https://docs.aws.amazon.com/vpc/latest/reachability/additional-detail-codes.html · https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateNetworkInsightsPath.html · https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_PathRequestFilter.html · https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_NetworkInsightsAnalysis.html
 
 ## Open questions
 
-- Q7: Confirm the TRC-01 order with golden tests for F1 to F3 before R0 ships.
+- Q7: Confirm the TRC-01 order with golden tests for F1 to F3 before R0 ships. Fixtures store forward and return path components for review; the golden test doesn't compare hop order yet. F1 agrees (golden `s1-f1-internet-to-web`, `s3-q1-return-route` 2026-11-05): forward internet gateway → network ACL → security group → network interface → instance; return instance → network interface → security group → network ACL → route table → internet gateway. F2 agrees too (golden `s2-f2-web-to-internet` 2026-11-05): forward instance → network interface → security group → network ACL → route table → internet gateway; return internet gateway → network ACL → security group → network interface → instance. F3 is open (R1).
+- Q12: Answered 2026-11-05 by golden `s5-lab1-initial`: with two stacked faults (security group and missing return route) Reachability Analyzer lists one explanation, the security group (`ENI_SG_RULES_MISMATCH`), like the engine's first failing hop.
+- Q13: Answered 2026-11-05 by golden `s1-f1-internet-to-web`: an internet gateway source accepts `FilterAtSource` with `SourceAddress` and `SourcePortRange`, and the three analyses match the engine.

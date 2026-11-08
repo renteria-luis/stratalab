@@ -172,6 +172,8 @@ export const en = {
   'sim.software.webServer': 'Web server (nginx on TCP port 80)',
   'reason.NO_ROUTE_TO_DESTINATION': 'The route table has no route to the destination.',
   'reason.BAD_STATE_ROUTE': 'The matching route is a blackhole: its target is not available.',
+  'reason.MORE_SPECIFIC_ROUTE':
+    'A more specific route matches and wins, but it is a blackhole, so the traffic is dropped instead of using the less specific route.',
   'reason.IGW_PUBLIC_IP_ASSOCIATION_FOR_EGRESS':
     'The internet gateway drops traffic from an interface that has no public IPv4 address.',
   'reason.IGW_PRIVATE_IP_ASSOCIATION_FOR_INGRESS':

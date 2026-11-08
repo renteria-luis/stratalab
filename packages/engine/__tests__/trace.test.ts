@@ -633,9 +633,11 @@ describe('trace: F2 instance → internet', () => {
       });
     };
     const blackholed = traceBase(change, f2('198.51.100.7'));
+    // The blackhole route shadows the active 0.0.0.0/0 route: Reachability Analyzer reports
+    // MORE_SPECIFIC_ROUTE (RT-08, golden s4-q8-blackhole, Q14).
     expect(blackholed).toMatchObject({
       verdict: 'BROKE_AT_HOP',
-      failure: { direction: 'forward', hopIndex: 2, reasonCodes: ['BAD_STATE_ROUTE'] },
+      failure: { direction: 'forward', hopIndex: 2, reasonCodes: ['MORE_SPECIFIC_ROUTE'] },
       fidelity: 'Inferred',
     });
     expect(lastHop(blackholed)).toMatchObject({

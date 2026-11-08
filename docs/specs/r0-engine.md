@@ -508,20 +508,20 @@ Steps follow TRC-01. Each failure maps to a verdict by TRC-02: routing and gatew
 | --- | ------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | --------------------- |
 | 4   | sg-egress     | skipped, `stateful-response`                                                      | none                                                                                                                                     | SG-01                       | Exact                 |
 | 5   | nacl-outbound | entry for the client's port as destination port                                   | `SUBNET_ACL_RESTRICTION`                                                                                                                 | NACL-03, EPH-01, EPH-02     | Exact                 |
-| 6   | route-lookup  | server subnet's table routes the client IP                                        | `NO_ROUTE_TO_DESTINATION`, `BAD_STATE_ROUTE`                                                                                             | RT-02, RT-04, RT-08, IGW-04 | Inferred (IGW-04, Q1) |
+| 6   | route-lookup  | server subnet's table routes the client IP                                        | `NO_ROUTE_TO_DESTINATION`, `BAD_STATE_ROUTE`, `MORE_SPECIFIC_ROUTE`                                                                      | RT-02, RT-04, RT-08, IGW-04 | Inferred (IGW-04, Q1) |
 | 7   | igw-egress    | source has a public IP; destination not RFC 1918/6598; translate private → public | `IGW_PUBLIC_IP_ASSOCIATION_FOR_EGRESS`, `IGW_DESTINATION_ADDRESS_NOT_IN_RFC1918_EGRESS`, `IGW_DESTINATION_ADDRESS_NOT_IN_RFC6598_EGRESS` | IGW-01, IGW-03              | Exact                 |
 
 **F2 · instance → internet**
 
-| #   | Dir     | Step                                         | Fail code                                    | Rule IDs            | Fidelity                                   |
-| --- | ------- | -------------------------------------------- | -------------------------------------------- | ------------------- | ------------------------------------------ |
-| 0   | forward | sg-egress                                    | `SG_HAS_NO_RULES`, `ENI_SG_RULES_MISMATCH`   | SG-02, SG-03        | Exact                                      |
-| 1   | forward | nacl-outbound                                | `SUBNET_ACL_RESTRICTION`                     | NACL-02             | Exact                                      |
-| 2   | forward | route-lookup                                 | `NO_ROUTE_TO_DESTINATION`, `BAD_STATE_ROUTE` | RT-02, RT-04, RT-08 | Exact (Inferred when a blackhole wins, Q8) |
-| 3   | forward | igw-egress (translate private → public)      | `IGW_PUBLIC_IP_ASSOCIATION_FOR_EGRESS`       | IGW-01              | Exact                                      |
-| 4   | return  | igw-ingress (translate public → private)     | none expected                                | IGW-02              | Inferred (RT-02, Q1)                       |
-| 5   | return  | nacl-inbound, destination port = client port | `SUBNET_ACL_RESTRICTION`                     | NACL-03, EPH-01     | Exact                                      |
-| 6   | return  | sg-ingress, skipped `stateful-response`      | none                                         | SG-01               | Exact                                      |
+| #   | Dir     | Step                                         | Fail code                                                           | Rule IDs            | Fidelity                                   |
+| --- | ------- | -------------------------------------------- | ------------------------------------------------------------------- | ------------------- | ------------------------------------------ |
+| 0   | forward | sg-egress                                    | `SG_HAS_NO_RULES`, `ENI_SG_RULES_MISMATCH`                          | SG-02, SG-03        | Exact                                      |
+| 1   | forward | nacl-outbound                                | `SUBNET_ACL_RESTRICTION`                                            | NACL-02             | Exact                                      |
+| 2   | forward | route-lookup                                 | `NO_ROUTE_TO_DESTINATION`, `BAD_STATE_ROUTE`, `MORE_SPECIFIC_ROUTE` | RT-02, RT-04, RT-08 | Exact (Inferred when a blackhole wins, Q8) |
+| 3   | forward | igw-egress (translate private → public)      | `IGW_PUBLIC_IP_ASSOCIATION_FOR_EGRESS`                              | IGW-01              | Exact                                      |
+| 4   | return  | igw-ingress (translate public → private)     | none expected                                                       | IGW-02              | Inferred (RT-02, Q1)                       |
+| 5   | return  | nacl-inbound, destination port = client port | `SUBNET_ACL_RESTRICTION`                                            | NACL-03, EPH-01     | Exact                                      |
+| 6   | return  | sg-ingress, skipped `stateful-response`      | none                                                                | SG-01               | Exact                                      |
 
 The internet server is outside the model and always answers (Inferred).
 
@@ -545,14 +545,14 @@ Fidelity of F0 hops: Exact, except `host` (Inferred) and the overall order (Infe
 
 ### 5.5 Matching details
 
-- Route lookup: longest prefix match among the derived local route and the stored routes (RT-04). R0 has only static routes and no duplicate destinations, so there are no ties (RT-05, RT-10 don't apply). A matching `blackhole` route fails the hop with `BAD_STATE_ROUTE` (RT-08).
+- Route lookup: longest prefix match among the derived local route and the stored routes (RT-04). R0 has only static routes and no duplicate destinations, so there are no ties (RT-05, RT-10 don't apply). A matching `blackhole` route fails the hop (RT-08): with `MORE_SPECIFIC_ROUTE` when a less specific active route also matches (it shadows that route; golden `s4-q8-blackhole`, Q14), otherwise with `BAD_STATE_ROUTE` (Inferred). The hop's `match` is always the blackhole route.
 - NACL: entries sorted by `ruleNumber`, first match wins; no match means the implicit `*` DENY (`ruleNumber: '*'`). An entry matches when the protocol is `tcp` or `all`, the port is in range (`all` matches any port) and the CIDR contains the remote address (source on inbound, destination on outbound) (NACL-02).
 - Security group: allowed if any rule of any group on the interface matches (SG-03). A CIDR peer matches the remote address. A security group peer matches when the remote address is the private address of an interface that has that group (SG-04); a public or internet address never matches it.
 - `SG_HAS_NO_RULES` when every group on the interface has zero rules in that direction; otherwise `ENI_SG_RULES_MISMATCH` (SG-02).
 
 ### 5.6 Reason codes used in R0
 
-From Reachability Analyzer (TRC-04): `NO_ROUTE_TO_DESTINATION`, `BAD_STATE_ROUTE`, `IGW_PUBLIC_IP_ASSOCIATION_FOR_EGRESS`, `IGW_PRIVATE_IP_ASSOCIATION_FOR_INGRESS`, `IGW_DESTINATION_ADDRESS_NOT_IN_RFC1918_EGRESS`, `IGW_DESTINATION_ADDRESS_NOT_IN_RFC6598_EGRESS`, `IGW_SOURCE_ADDRESS_NOT_IN_RFC1918_INGRESS`, `IGW_SOURCE_ADDRESS_NOT_IN_RFC6598_INGRESS`, `SUBNET_ACL_RESTRICTION`, `ENI_SG_RULES_MISMATCH`, `SG_HAS_NO_RULES`.
+From Reachability Analyzer (TRC-04): `NO_ROUTE_TO_DESTINATION`, `BAD_STATE_ROUTE`, `MORE_SPECIFIC_ROUTE`, `IGW_PUBLIC_IP_ASSOCIATION_FOR_EGRESS`, `IGW_PRIVATE_IP_ASSOCIATION_FOR_INGRESS`, `IGW_DESTINATION_ADDRESS_NOT_IN_RFC1918_EGRESS`, `IGW_DESTINATION_ADDRESS_NOT_IN_RFC6598_EGRESS`, `IGW_SOURCE_ADDRESS_NOT_IN_RFC1918_INGRESS`, `IGW_SOURCE_ADDRESS_NOT_IN_RFC6598_INGRESS`, `SUBNET_ACL_RESTRICTION`, `ENI_SG_RULES_MISMATCH`, `SG_HAS_NO_RULES`.
 
 Our own: `NO_LISTENER`, `NO_INTERNET_GATEWAY`.
 
@@ -671,7 +671,7 @@ CIDR property tests (fast-check) follow the addressing reference (P3).
 | `NACL-04: cross-subnet traffic is checked`                       | second instance in another subnet; the source subnet uses the deny-all NACL | F0 :80                               | `ROUTED_THEN_DROPPED`, hop 1                                                           |
 | `SG-04: security group reference matches private traffic`        | web SG inbound tcp 80 from `sg-app` only                                    | F0 from an app instance              | `REACHED`                                                                              |
 | `SG-04: security group reference never matches internet traffic` | same                                                                        | F1 :80                               | `ROUTED_THEN_DROPPED`, hop 2, `ENI_SG_RULES_MISMATCH`                                  |
-| `RT-04: longest prefix wins`                                     | add 198.51.100.0/24 → a detached IGW                                        | F2 to 198.51.100.7 / to 203.0.113.99 | `BAD_STATE_ROUTE` (Inferred, Q8) / `REACHED`                                           |
+| `RT-04: longest prefix wins`                                     | add 198.51.100.0/24 → a detached IGW                                        | F2 to 198.51.100.7 / to 203.0.113.99 | `MORE_SPECIFIC_ROUTE` (golden, Q14) / `REACHED`                                        |
 | `IGW-06: private internet address is rejected`                   | none                                                                        | web-1 → 10.1.0.5 as internet         | `blocked`, `IGW_EXPECTS_PUBLIC_ADDRESS`                                                |
 | `TRC-04: instances in different VPCs`                            | second VPC with an instance                                                 | F0 across VPCs                       | `blocked`, `DISCONNECTED_VPCS`                                                         |
 | `IGW-06: hairpin through the internet gateway is unsupported`    | second instance with a public IP                                            | instance → instance public           | `blocked`, `UNSUPPORTED_FEATURE`                                                       |
@@ -705,7 +705,7 @@ CIDR property tests (fast-check) follow the addressing reference (P3).
 
 ### 8.6 Golden tests
 
-R0 needs golden fixtures (TRC-06) for F1 and F2 split into two analyses each, plus the IGW-04 and Q8 cases, before R0 ships. The user runs `pnpm golden:capture` (AGENTS.md, "Golden capture").
+R0 needs golden fixtures (TRC-06) for F1 and F2 split into two analyses each, plus the IGW-04 and Q8 cases, before R0 ships. The user runs `pnpm golden:capture` (AGENTS.md, "Golden capture"). Scenarios, mapping and fixture format: `docs/specs/p9-golden.md`.
 
 ## 9. Unsupported in R0
 

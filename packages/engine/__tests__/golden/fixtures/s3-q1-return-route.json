@@ -1,0 +1,444 @@
+{
+  "fixtureVersion": 1,
+  "scenarioId": "s3-q1-return-route",
+  "scenarioHash": "sha256:66af76ae64bbe00aa788728213729f7d5f2ab599a2a9575cb96fa84c7972a1f9",
+  "capturedAt": "2026-11-05",
+  "region": "us-east-1",
+  "analyses": [
+    {
+      "queryId": "igw-to-web-a-80",
+      "status": "succeeded",
+      "networkPathFound": true,
+      "forwardPathComponents": [
+        {
+          "sequenceNumber": 1,
+          "component": {
+            "id": "igw-0000000a",
+            "type": "internet-gateway"
+          },
+          "vpc": "vpc-0a1b2c3d",
+          "inboundHeader": {
+            "protocol": "6",
+            "sourceAddresses": [
+              "198.51.100.7/32"
+            ],
+            "destinationAddresses": [
+              "203.0.113.25/32"
+            ],
+            "sourcePortRanges": [
+              {
+                "from": 32768,
+                "to": 32768
+              }
+            ],
+            "destinationPortRanges": [
+              {
+                "from": 80,
+                "to": 80
+              }
+            ]
+          },
+          "outboundHeader": {
+            "destinationAddresses": [
+              "10.0.1.10/32"
+            ]
+          }
+        },
+        {
+          "sequenceNumber": 2,
+          "component": {
+            "id": "acl-00000001",
+            "type": "network-acl"
+          },
+          "aclRule": {
+            "cidr": "0.0.0.0/0",
+            "egress": false,
+            "protocol": "all",
+            "ruleAction": "allow",
+            "ruleNumber": 100
+          }
+        },
+        {
+          "sequenceNumber": 3,
+          "component": {
+            "id": "sg-0000000a",
+            "type": "security-group"
+          },
+          "securityGroupRule": {
+            "cidr": "0.0.0.0/0",
+            "direction": "ingress",
+            "portRange": {
+              "from": 80,
+              "to": 80
+            },
+            "protocol": "tcp"
+          }
+        },
+        {
+          "sequenceNumber": 4,
+          "component": {
+            "id": "eni-0000000a",
+            "type": "network-interface"
+          },
+          "attachedTo": "i-0000000a",
+          "subnet": "subnet-0000000a",
+          "vpc": "vpc-0a1b2c3d"
+        },
+        {
+          "sequenceNumber": 5,
+          "component": {
+            "id": "i-0000000a",
+            "type": "instance"
+          },
+          "inboundHeader": {
+            "protocol": "6",
+            "sourceAddresses": [
+              "198.51.100.7/32"
+            ],
+            "destinationAddresses": [
+              "10.0.1.10/32"
+            ],
+            "sourcePortRanges": [
+              {
+                "from": 32768,
+                "to": 32768
+              }
+            ],
+            "destinationPortRanges": [
+              {
+                "from": 80,
+                "to": 80
+              }
+            ]
+          }
+        }
+      ],
+      "returnPathComponents": [
+        {
+          "sequenceNumber": 1,
+          "component": {
+            "id": "i-0000000a",
+            "type": "instance"
+          },
+          "outboundHeader": {
+            "protocol": "6",
+            "sourceAddresses": [
+              "10.0.1.10/32"
+            ],
+            "destinationAddresses": [
+              "198.51.100.7/32"
+            ],
+            "sourcePortRanges": [
+              {
+                "from": 80,
+                "to": 80
+              }
+            ],
+            "destinationPortRanges": [
+              {
+                "from": 32768,
+                "to": 32768
+              }
+            ]
+          }
+        },
+        {
+          "sequenceNumber": 2,
+          "component": {
+            "id": "eni-0000000a",
+            "type": "network-interface"
+          },
+          "attachedTo": "i-0000000a",
+          "subnet": "subnet-0000000a",
+          "vpc": "vpc-0a1b2c3d"
+        },
+        {
+          "sequenceNumber": 3,
+          "component": {
+            "id": "sg-0000000a",
+            "type": "security-group"
+          }
+        },
+        {
+          "sequenceNumber": 4,
+          "component": {
+            "id": "acl-00000001",
+            "type": "network-acl"
+          },
+          "aclRule": {
+            "cidr": "0.0.0.0/0",
+            "egress": true,
+            "protocol": "all",
+            "ruleAction": "allow",
+            "ruleNumber": 100
+          }
+        },
+        {
+          "sequenceNumber": 5,
+          "component": {
+            "id": "rtb-00000002",
+            "type": "route-table"
+          },
+          "routeTableRoute": {
+            "destinationCidr": "0.0.0.0/0",
+            "gatewayId": "igw-0000000a",
+            "origin": "createroute",
+            "state": "active"
+          }
+        },
+        {
+          "sequenceNumber": 6,
+          "component": {
+            "id": "igw-0000000a",
+            "type": "internet-gateway"
+          },
+          "vpc": "vpc-0a1b2c3d",
+          "outboundHeader": {
+            "protocol": "6",
+            "sourceAddresses": [
+              "203.0.113.25/32"
+            ],
+            "destinationAddresses": [
+              "198.51.100.7/32"
+            ],
+            "sourcePortRanges": [
+              {
+                "from": 80,
+                "to": 80
+              }
+            ],
+            "destinationPortRanges": [
+              {
+                "from": 32768,
+                "to": 32768
+              }
+            ]
+          }
+        }
+      ],
+      "explanations": []
+    },
+    {
+      "queryId": "igw-to-web-b-80",
+      "status": "succeeded",
+      "networkPathFound": false,
+      "forwardPathComponents": [
+        {
+          "sequenceNumber": 1,
+          "component": {
+            "id": "igw-0000000a",
+            "type": "internet-gateway"
+          },
+          "vpc": "vpc-0a1b2c3d",
+          "inboundHeader": {
+            "protocol": "6",
+            "sourceAddresses": [
+              "198.51.100.7/32"
+            ],
+            "destinationAddresses": [
+              "203.0.113.26/32"
+            ],
+            "sourcePortRanges": [
+              {
+                "from": 32768,
+                "to": 32768
+              }
+            ],
+            "destinationPortRanges": [
+              {
+                "from": 80,
+                "to": 80
+              }
+            ]
+          },
+          "outboundHeader": {
+            "destinationAddresses": [
+              "10.0.2.10/32"
+            ]
+          }
+        },
+        {
+          "sequenceNumber": 2,
+          "component": {
+            "id": "acl-00000001",
+            "type": "network-acl"
+          },
+          "aclRule": {
+            "cidr": "0.0.0.0/0",
+            "egress": false,
+            "protocol": "all",
+            "ruleAction": "allow",
+            "ruleNumber": 100
+          }
+        },
+        {
+          "sequenceNumber": 3,
+          "component": {
+            "id": "sg-0000000a",
+            "type": "security-group"
+          },
+          "securityGroupRule": {
+            "cidr": "0.0.0.0/0",
+            "direction": "ingress",
+            "portRange": {
+              "from": 80,
+              "to": 80
+            },
+            "protocol": "tcp"
+          }
+        },
+        {
+          "sequenceNumber": 4,
+          "component": {
+            "id": "eni-0000000b",
+            "type": "network-interface"
+          },
+          "attachedTo": "i-0000000b",
+          "subnet": "subnet-0000000b",
+          "vpc": "vpc-0a1b2c3d"
+        },
+        {
+          "sequenceNumber": 5,
+          "component": {
+            "id": "i-0000000b",
+            "type": "instance"
+          },
+          "inboundHeader": {
+            "protocol": "6",
+            "sourceAddresses": [
+              "198.51.100.7/32"
+            ],
+            "destinationAddresses": [
+              "10.0.2.10/32"
+            ],
+            "sourcePortRanges": [
+              {
+                "from": 32768,
+                "to": 32768
+              }
+            ],
+            "destinationPortRanges": [
+              {
+                "from": 80,
+                "to": 80
+              }
+            ]
+          }
+        }
+      ],
+      "returnPathComponents": [
+        {
+          "sequenceNumber": 1,
+          "component": {
+            "id": "i-0000000b",
+            "type": "instance"
+          },
+          "outboundHeader": {
+            "protocol": "6",
+            "sourceAddresses": [
+              "10.0.2.10/32"
+            ],
+            "destinationAddresses": [
+              "198.51.100.7/32"
+            ],
+            "sourcePortRanges": [
+              {
+                "from": 80,
+                "to": 80
+              }
+            ],
+            "destinationPortRanges": [
+              {
+                "from": 32768,
+                "to": 32768
+              }
+            ]
+          }
+        },
+        {
+          "sequenceNumber": 2,
+          "component": {
+            "id": "eni-0000000b",
+            "type": "network-interface"
+          },
+          "attachedTo": "i-0000000b",
+          "subnet": "subnet-0000000b",
+          "vpc": "vpc-0a1b2c3d"
+        },
+        {
+          "sequenceNumber": 3,
+          "component": {
+            "id": "sg-0000000a",
+            "type": "security-group"
+          }
+        },
+        {
+          "sequenceNumber": 4,
+          "component": {
+            "id": "acl-00000001",
+            "type": "network-acl"
+          },
+          "aclRule": {
+            "cidr": "0.0.0.0/0",
+            "egress": true,
+            "protocol": "all",
+            "ruleAction": "allow",
+            "ruleNumber": 100
+          }
+        },
+        {
+          "sequenceNumber": 5,
+          "component": {
+            "id": "rtb-00000001",
+            "type": "route-table"
+          },
+          "explanations": [
+            {
+              "explanationCode": "NO_ROUTE_TO_DESTINATION",
+              "routeTable": "rtb-00000001",
+              "vpc": "vpc-0a1b2c3d",
+              "destination": "igw-0000000a"
+            }
+          ]
+        },
+        {
+          "sequenceNumber": 6,
+          "component": {
+            "id": "igw-0000000a",
+            "type": "internet-gateway"
+          },
+          "vpc": "vpc-0a1b2c3d",
+          "outboundHeader": {
+            "protocol": "6",
+            "sourceAddresses": [
+              "203.0.113.26/32"
+            ],
+            "destinationAddresses": [
+              "198.51.100.7/32"
+            ],
+            "sourcePortRanges": [
+              {
+                "from": 80,
+                "to": 80
+              }
+            ],
+            "destinationPortRanges": [
+              {
+                "from": 32768,
+                "to": 32768
+              }
+            ]
+          }
+        }
+      ],
+      "explanations": [
+        {
+          "explanationCode": "NO_ROUTE_TO_DESTINATION",
+          "routeTable": "rtb-00000001",
+          "vpc": "vpc-0a1b2c3d",
+          "destination": "igw-0000000a"
+        }
+      ]
+    }
+  ]
+}

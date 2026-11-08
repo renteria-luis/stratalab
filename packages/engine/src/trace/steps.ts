@@ -165,9 +165,14 @@ export function statefulSgStep(
 }
 
 /**
- * Route lookup in the subnet's route table: longest prefix match (RT-04); a matching
- * blackhole route fails with `BAD_STATE_ROUTE` (RT-08), Inferred when it shadows a less
- * specific active route (Q8). Returns the internet gateway the packet goes to, if any.
+ * Route lookup in the subnet's route table: longest prefix match (RT-04). A matching
+ * blackhole route fails the hop (RT-08): with `MORE_SPECIFIC_ROUTE` when it shadows a less
+ * specific active route, as Reachability Analyzer reports it (golden `s4-q8-blackhole`, Q14;
+ * Inferred, Q8), otherwise with `BAD_STATE_ROUTE`. Returns the internet gateway the packet
+ * goes to, if any.
+ *
+ * Rules: RT-04, RT-08 · https://docs.aws.amazon.com/vpc/latest/userguide/route-tables-priority.html ·
+ * https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
  */
 export function routeStep(options: {
   model: Model;
@@ -203,7 +208,11 @@ export function routeStep(options: {
       ? lowestFidelity([fidelity, 'Inferred'])
       : fidelity;
     return {
-      hop: failed({ ...base, fidelity: blackholeFidelity }, 'BAD_STATE_ROUTE', match),
+      hop: failed(
+        { ...base, fidelity: blackholeFidelity },
+        shadowsActiveRoute ? 'MORE_SPECIFIC_ROUTE' : 'BAD_STATE_ROUTE',
+        match,
+      ),
       internetGatewayId: null,
     };
   }

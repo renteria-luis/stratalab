@@ -13,7 +13,7 @@ export default defineConfig(
     '**/playwright-report/',
     '**/test-results/',
     'docs/console-capture/',
-    'packages/engine/__tests__/golden/',
+    'packages/engine/__tests__/golden/fixtures/',
   ]),
 
   js.configs.recommended,
@@ -44,7 +44,7 @@ export default defineConfig(
   // already type errors through packages/engine/tsconfig.json; these cover what TypeScript
   // cannot see: clock, randomness and UI or platform imports.
   {
-    files: ['packages/engine/src/**/*.ts'],
+    files: ['packages/engine/src/**/*.ts', 'packages/engine/golden/**/*.ts'],
     rules: {
       'no-restricted-imports': [
         'error',
@@ -96,6 +96,42 @@ export default defineConfig(
         {
           patterns: [
             { group: ['node:*'], message: 'packages/catalog/src runs in the browser: no Node.' },
+          ],
+        },
+      ],
+    },
+  },
+
+  // Golden tooling: unit tests never reach AWS. Only src/aws/sdk.ts may import the SDK, and
+  // tests use hand-written fakes of the ports instead (docs/specs/p9-golden.md section 0).
+  {
+    files: ['tools/golden/__tests__/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@aws-sdk/*', '**/aws/sdk', '**/aws/sdk.ts'],
+              message: 'Golden unit tests make no AWS calls: use the fakes in __tests__/fakes.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['tools/golden/src/**/*.ts'],
+    ignores: ['tools/golden/src/aws/sdk.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@aws-sdk/*'],
+              message: 'Only tools/golden/src/aws/sdk.ts talks to AWS (through the ports).',
+            },
           ],
         },
       ],

@@ -3,3 +3,7 @@ packages:
   - packages/*
   - tools/*
   - infra
+
+# tsx works without esbuild's install script (it uses the prebuilt @esbuild/* binary), so it never runs.
+allowBuilds:
+  esbuild: false

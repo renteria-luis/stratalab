@@ -2,13 +2,26 @@
   "name": "@sim/golden",
   "version": "0.0.0",
   "private": true,
-  "description": "Manual golden capture against real Reachability Analyzer. Never run by agents.",
+  "description": "Golden capture against real Reachability Analyzer (docs/specs/p9-golden.md). Manual only; never run by agents.",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "capture": "node ./src/capture.ts"
+    "capture": "tsx ./src/cli/capture.ts",
+    "cleanup": "tsx ./src/cli/cleanup.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cloudformation": "3.1156.0",
+    "@aws-sdk/client-ec2": "3.1156.0",
+    "@aws-sdk/client-sts": "3.1156.0",
+    "@sim/engine": "workspace:*",
+    "aws-cdk-lib": "2.274.0",
+    "constructs": "10.8.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "tsx": "4.23.15"
   }
 }

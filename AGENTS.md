@@ -42,7 +42,10 @@ pnpm test:engine                    # packages/engine only
 pnpm test:e2e                       # Playwright smoke tests
 pnpm typecheck                      # tsc --noEmit in every workspace
 pnpm lint                           # ESLint + Prettier check
-pnpm golden:capture <scenario-id>   # manual only (see "Golden capture")
+pnpm golden:capture --list                               # golden scenarios; no credentials
+pnpm golden:capture <scenario-id> --dry-run              # no credentials, no AWS call
+pnpm golden:capture <scenario-id> --account <id> [--yes] # manual only, costs money (see "Golden capture")
+pnpm golden:cleanup --account <id> [--dry-run] [--yes]   # manual only: deletes leftovers tagged sim:golden=true
 ```
 
 Keep the root `package.json` scripts in sync with this list. Pin Node and pnpm with `engines` and `packageManager`.
@@ -110,7 +113,8 @@ Run `pnpm typecheck` and `pnpm test` before you say a task is done.
 
 ## Golden capture (manual, costs money)
 
-- Agents never run `pnpm golden:capture` or any command that uses AWS credentials. Ask the user to run it.
+- Agents never run `pnpm golden:capture` or `pnpm golden:cleanup` (not even `--dry-run`), `cdk deploy`, `cdk destroy`, `cdk bootstrap` or any command that uses AWS credentials. Ask the user to run them. Tests call the dry-run planner as a function.
+- Scenarios, mapping, fixture format and the capture role's IAM policy: `docs/specs/p9-golden.md` and `tools/golden/iam/capture-policy.json`.
 - Use a dedicated sandbox AWS account with a budget alarm. First check that its plan allows the services (the free plan blocks some).
 - Reachability Analyzer is billed per analysis. NAT gateways, transit gateway attachments and public IPv4 addresses bill per hour. Destroy everything right after each capture.
 

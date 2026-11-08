@@ -15,7 +15,8 @@
     "test:e2e": "pnpm --filter @sim/web test:e2e",
     "typecheck": "tsc -p tsconfig.json && pnpm -r typecheck",
     "lint": "eslint . && prettier --check .",
-    "golden:capture": "pnpm --filter @sim/golden capture"
+    "golden:capture": "pnpm --filter @sim/golden capture",
+    "golden:cleanup": "pnpm --filter @sim/golden cleanup"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

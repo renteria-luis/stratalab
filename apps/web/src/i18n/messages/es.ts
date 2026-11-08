@@ -172,6 +172,8 @@ export const es: Messages = {
   'sim.software.webServer': 'Servidor web (nginx en el puerto TCP 80)',
   'reason.NO_ROUTE_TO_DESTINATION': 'La tabla de rutas no tiene ruta hacia el destino.',
   'reason.BAD_STATE_ROUTE': 'La ruta que coincide es un blackhole: su destino no está disponible.',
+  'reason.MORE_SPECIFIC_ROUTE':
+    'Coincide una ruta más específica y gana, pero es un blackhole, así que el tráfico se descarta en vez de usar la ruta menos específica.',
   'reason.IGW_PUBLIC_IP_ASSOCIATION_FOR_EGRESS':
     'El internet gateway descarta el tráfico de una interfaz sin dirección IPv4 pública.',
   'reason.IGW_PRIVATE_IP_ASSOCIATION_FOR_INGRESS':

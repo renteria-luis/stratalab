@@ -15,6 +15,7 @@ Sources: https://docs.aws.amazon.com/vpc/latest/userguide/subnet-route-tables.ht
 Rule: A subnet route table decides where traffic from that subnet goes.
 Engine: evaluate the source subnet's route table on the way out. Don't evaluate the destination subnet's route table for traffic arriving from an internet gateway (gateway/ingress route tables are Unsupported).
 Fidelity: Exact for the way out · Inferred for "no lookup on arrival" (see Q1) · Status: verified 2026-11-03
+Golden: `s1-f1-internet-to-web`, `s3-q1-return-route` 2026-11-05 agree. Reachability Analyzer lists no route table on the way in from the internet gateway, and the source subnet's route table on the way back.
 Source: https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html
 
 ### RT-03 · Local route
@@ -49,10 +50,12 @@ Fidelity: Exact · Status: verified 2026-11-03 · Exam: ANS (needed in R2)
 Source: https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-route-priority.html
 
 ### RT-08 · Blackhole routes
-Rule: A route's state is `active` or `blackhole`. Blackhole means the target isn't available, for example the gateway isn't attached to the VPC. Reachability Analyzer reports a route that isn't functional as `BAD_STATE_ROUTE`.
+Rule: A route's state is `active` or `blackhole`. Blackhole means the target isn't available, for example the gateway isn't attached to the VPC. Reachability Analyzer reports a route that isn't functional as `BAD_STATE_ROUTE`. `CreateRoute` takes only an internet gateway attached to the VPC, so a route to a detached gateway comes from detaching the gateway after the route exists (and detaching needs no public addresses in the VPC, IGW-07).
 Engine: a route to an internet gateway that isn't attached to the route table's VPC is `blackhole`. Matching traffic is dropped at that route. The route still takes part in longest prefix match, so traffic doesn't fall back to a less specific active route (Inferred, see Q8).
-Fidelity: Exact (state and meaning) · Inferred (selection) · Status: verified 2026-11-04 (state and meaning)
-Sources: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Route.html · https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
+Code: `MORE_SPECIFIC_ROUTE` when the winning blackhole route shadows a less specific active route that also matches ("the specified route can't be used to transmit traffic because there is a more specific route that matches"); `BAD_STATE_ROUTE` when no active route matches (Inferred, not golden-tested).
+Fidelity: Exact (state and meaning) · Inferred (selection) · Status: verified 2026-11-05 (state, meaning and how the state arises)
+Golden: `s4-q8-blackhole` 2026-11-05 agrees with selection and code: instance → 198.51.100.10 with 0.0.0.0/0 → attached igw and 198.51.100.0/24 → detached igw gives `NetworkPathFound: false` with `MORE_SPECIFIC_ROUTE` (attached to the 198.51.100.0/24 route, state `blackhole`). The engine reported `BAD_STATE_ROUTE` until Q14 was decided.
+Sources: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Route.html · https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateRoute.html · https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
 
 ### RT-09 · Public subnet
 Rule: A subnet is public when its route table has a direct route to an internet gateway, and private when it doesn't. Never derive it from the subnet's name. A route to the internet gateway doesn't give internet access by itself: instances also need a public IPv4 address (IGW-01, ADR-10).
@@ -98,7 +101,8 @@ Source: https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.ht
 
 ### IGW-04 · Return path to internet clients
 Rule: The server's reply leaves through its subnet route table, which must send the client's address to the internet gateway (usually 0.0.0.0/0 → igw). Without that route the reply is dropped (`NO_ROUTE_TO_DESTINATION` on the return path) and the connection fails.
-Fidelity: Inferred (from RT-02 and IGW-01) · Status: confirm with a golden test (Q1)
+Fidelity: Inferred (from RT-02 and IGW-01) · Status: confirmed by golden test 2026-11-05 (Q1)
+Golden: `s3-q1-return-route` 2026-11-05 agrees. Gateway → instance whose subnet uses a table with only the local route: `NetworkPathFound: false`, `NO_ROUTE_TO_DESTINATION` at that route table on the return path (destination: the internet gateway).
 Source: https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html
 
 ### IGW-05 · Attachment: one internet gateway per VPC
@@ -156,7 +160,8 @@ Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html
 
 ## Open questions
 
-- Q1: Confirm that traffic arriving from the internet gateway isn't looked up in the destination subnet's route table (RT-02, IGW-04). Golden test: Reachability Analyzer from the internet gateway to an instance, once with and once without the 0.0.0.0/0 → igw route in the instance's subnet.
-- Q8: Confirm that a blackhole route still wins longest prefix match over a less specific active route, and decide whether a subnet whose only internet gateway route is blackhole counts as public (RT-08, RT-09). Golden test: 0.0.0.0/0 → attached igw plus 198.51.100.0/24 → a detached igw, then analyze instance → 198.51.100.10.
-- Q11: Can an instance get an auto-assigned public IPv4 address at launch in a VPC with no attached internet gateway (IGW-07, ADR-10)? IGW-07 forbids detaching while public addresses exist, so the console path to "detached gateway + public address" (used by the RT-08 and IGW-05 trace tests) may only exist through launch. No Reachability Analyzer cost: the user launches one instance in the sandbox account and terminates it.
-- Q10: What happens to internet traffic aimed at an instance's public IPv4 address when the VPC has no attached internet gateway, and can that state exist at all (detaching an internet gateway while public addresses are mapped)? The engine uses `NO_INTERNET_GATEWAY` until the docs or a capture answer it (IGW-05).
+- Q1: Answered 2026-11-05 by golden `s3-q1-return-route`: no route table lookup on arrival, and without the route back the return path fails with `NO_ROUTE_TO_DESTINATION`, as the engine models it. Original question: confirm that traffic arriving from the internet gateway isn't looked up in the destination subnet's route table (RT-02, IGW-04). Golden test: Reachability Analyzer from the internet gateway to an instance, once with and once without the 0.0.0.0/0 → igw route in the instance's subnet (scenario `s3-q1-return-route`, `docs/specs/p9-golden.md`).
+- Q14: Decided 2026-11-05 (user): golden `s4-q8-blackhole` reports `MORE_SPECIFIC_ROUTE` when a blackhole route beats a less specific active route, so the engine uses it in that case and keeps `BAD_STATE_ROUTE` (Inferred) when no other route matches (RT-08). Still open: confirm the `BAD_STATE_ROUTE` case with a golden scenario whose only internet route is blackhole.
+- Q8: Selection answered 2026-11-05 by golden `s4-q8-blackhole` (the blackhole route wins; see Q14 for the code). Still open: whether a subnet whose only internet gateway route is blackhole counts as public. Original question: confirm that a blackhole route still wins longest prefix match over a less specific active route, and decide whether a subnet whose only internet gateway route is blackhole counts as public (RT-08, RT-09). Golden test: 0.0.0.0/0 → attached igw plus 198.51.100.0/24 → a detached igw, then analyze instance → 198.51.100.10 (scenario `s4-q8-blackhole`, built in three stages because of RT-08 and IGW-07).
+- Q11: Can an instance get an auto-assigned public IPv4 address at launch in a VPC with no attached internet gateway (IGW-07, ADR-10)? IGW-07 forbids detaching while public addresses exist, so the console path to "detached gateway + public address" (used by the RT-08 and IGW-05 trace tests) may only exist through launch. No Reachability Analyzer cost: the user launches one instance in the sandbox account and terminates it (steps: `docs/specs/p9-golden.md` section 3). Associating an Elastic IP address needs an attached internet gateway (EC2 error `Gateway.NotAttached`), so only auto-assignment is open.
+- Q10: What happens to internet traffic aimed at an instance's public IPv4 address when the VPC has no attached internet gateway, and can that state exist at all (detaching an internet gateway while public addresses are mapped)? The engine uses `NO_INTERNET_GATEWAY` until the docs or a capture answer it (IGW-05). Manual steps: `docs/specs/p9-golden.md` section 3.
