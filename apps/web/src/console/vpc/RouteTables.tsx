@@ -149,7 +149,7 @@ export function RouteTables() {
       />
       <DetailsPanel
         title={current === null ? null : titleOf(current.id, current.name)}
-        emptyText="Select a route table above"
+        emptyText="Select a route table"
         tabs={
           current === null || currentStatus === undefined
             ? []

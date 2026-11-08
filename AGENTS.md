@@ -118,6 +118,17 @@ Run `pnpm typecheck` and `pnpm test` before you say a task is done.
 - Use a dedicated sandbox AWS account with a budget alarm. First check that its plan allows the services (the free plan blocks some).
 - Reachability Analyzer is billed per analysis. NAT gateways, transit gateway attachments and public IPv4 addresses bill per hour. Destroy everything right after each capture.
 
+## AWS console access for agents (read-only)
+
+The only exception to "agents never touch AWS". Approved by the user on 2026-11-05.
+
+- Agents may browse the AWS Management Console in a browser to read pages, for example to capture console labels for `docs/console-capture/` or to check how a page looks.
+- Only as the IAM user `claude`, which has only the AWS managed policy `ReadOnlyAccess`. Its sign-in URL, user name and password are in `.env.aws-console` (local, gitignored). Never write them anywhere else, never commit them, never show the password in output.
+- Never sign in as root or as any other user. Never use these credentials with the AWS CLI or an SDK, and never create access keys for this user.
+- Never submit a form that creates, changes or deletes anything. Opening a "Create" or "Edit" page to read it is fine; cancel out of it. Read-only access should block changes anyway; don't rely on it.
+- Page text goes to `docs/console-capture/<YYYY-MM-DD>/` as `.txt` files (gitignored). Screenshots only when the text isn't enough, and small. Never transcribe the account ID, user names or other account data into the repository.
+- Sign out when done.
+
 ## Workflow
 
 - If Gentle AI is installed, follow its ODD protocol. This file adds project rules on top of it.

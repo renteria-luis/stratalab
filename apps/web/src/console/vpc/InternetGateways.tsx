@@ -1,6 +1,8 @@
+import Alert from '@cloudscape-design/components/alert';
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
+import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import FormField from '@cloudscape-design/components/form-field';
 import Header from '@cloudscape-design/components/header';
 import Input from '@cloudscape-design/components/input';
@@ -20,7 +22,7 @@ import { useNavigate, useParams } from 'react-router';
 import { useTopology } from '../../state/topologyStore';
 import { ActionsDropdown } from '../components/Actions';
 import { ChangeErrors } from '../components/ChangeErrors';
-import { DetailsPanel } from '../components/DetailsPanel';
+import { DetailsPanel, UnsupportedNotice } from '../components/DetailsPanel';
 import { failureOf, type ChangeFailure } from '../components/failure';
 import { FormPage } from '../components/FormPage';
 import { NotFoundResource } from '../components/NotFoundResource';
@@ -34,8 +36,10 @@ import { applyChange, useStatus, useTopologyReady, useVpcFiltered } from '../dat
 
 /**
  * VPC console › Internet gateways, Create internet gateway, Attach to VPC and Detach from
- * VPC. Only a screenshot of these pages exists; labels follow the AWS docs procedures
- * (VPC_Internet_Gateway.html, delete-igw.html). Rules: IGW-05 (one per VPC), IGW-07 (detach).
+ * VPC. Labels from the captures (2026-11-05) `vpc-virtual_private_cloud-internet_gateways*.txt`.
+ * Detach from VPC, the "Detached" state and the empty list aren't captured (the account has
+ * one attached gateway); they follow the AWS docs procedures (VPC_Internet_Gateway.html,
+ * delete-igw.html). Rules: IGW-05 (one per VPC), IGW-07 (detach).
  */
 
 const LIST = '/vpc/internet-gateways';
@@ -193,6 +197,7 @@ export function CreateInternetGatewayPage() {
   return (
     <FormPage
       title="Create internet gateway"
+      description="An internet gateway is a virtual router that connects a VPC to the internet. To create a new internet gateway specify the name for the gateway below."
       cancelHref={LIST}
       submitLabel="Create internet gateway"
       failure={failure}
@@ -205,7 +210,7 @@ export function CreateInternetGatewayPage() {
     >
       <Container header={<Header variant="h2">Internet gateway settings</Header>}>
         <FormField
-          label="Name tag"
+          label="Name tag - optional"
           description="Creates a tag with a key of 'Name' and a value that you specify."
         >
           <Input
@@ -228,6 +233,7 @@ export function CreateInternetGatewayPage() {
 
 export function AttachInternetGateway() {
   const { internetGatewayId = '' } = useParams();
+  const navigate = useNavigate();
   const topology = useTopology();
   const status = useStatus();
   const gateway = topology.internetGateways.find((igw) => igw.id === internetGatewayId);
@@ -255,26 +261,56 @@ export function AttachInternetGateway() {
         );
       }}
     >
-      <Container header={<Header variant="h2">VPC</Header>}>
-        <FormField
-          label="Available VPCs"
-          description="Attach the internet gateway to this VPC."
-          errorText={submitted && vpcId === null ? 'Choose a VPC.' : undefined}
+      {available.length === 0 && (
+        <Alert
+          type="info"
+          action={
+            <Button
+              formAction="none"
+              onClick={() => {
+                void navigate('/vpc/create-vpc');
+              }}
+            >
+              Create VPC
+            </Button>
+          }
         >
-          <Select
-            selectedOption={vpcId === null ? null : { value: vpcId, label: vpcId }}
-            options={available.map((vpc) => ({
-              value: vpc.id,
-              label: vpc.id,
-              description: vpc.name,
-            }))}
-            placeholder="Select a VPC"
-            empty="No VPCs without an internet gateway"
-            onChange={({ detail }) => {
-              setVpcId(detail.selectedOption.value ?? null);
-            }}
-          />
-        </FormField>
+          You do not have any VPCs. You need a VPC in order to attach an internet gateway.
+        </Alert>
+      )}
+      <Container
+        header={
+          <Header
+            variant="h2"
+            description="Attach an internet gateway to a VPC to enable the VPC to communicate with the internet. Specify the VPC to attach below."
+          >
+            VPC
+          </Header>
+        }
+      >
+        <SpaceBetween size="l">
+          <FormField
+            label="Available VPCs"
+            description="Attach the internet gateway to this VPC."
+            errorText={submitted && vpcId === null ? 'Choose a VPC.' : undefined}
+          >
+            <Select
+              selectedOption={vpcId === null ? null : { value: vpcId, label: vpcId }}
+              options={available.map((vpc) => ({
+                value: vpc.id,
+                label: vpc.id,
+                description: vpc.name,
+              }))}
+              placeholder="Select a VPC"
+              onChange={({ detail }) => {
+                setVpcId(detail.selectedOption.value ?? null);
+              }}
+            />
+          </FormField>
+          <ExpandableSection headerText="AWS Command Line Interface command">
+            <UnsupportedNotice />
+          </ExpandableSection>
+        </SpaceBetween>
       </Container>
     </FormPage>
   );

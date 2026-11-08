@@ -20,3 +20,6 @@ docs/console-capture/
 # OS and editor noise
 .DS_Store
 *.log
+
+# Browser tool snapshots (may show AWS console pages): local only
+.playwright-mcp/

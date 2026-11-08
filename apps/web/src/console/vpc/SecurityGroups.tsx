@@ -39,10 +39,16 @@ import {
 /**
  * Security groups, shared by the VPC console and the EC2 console (`base` is the list path).
  * The create page follows the capture
- * `vpc-security-security_groups-create_security_group.txt` (2026-11-03); the list and the
- * rule pages follow the AWS docs (security-group-rules.html) until a text capture exists.
- * Rules: SG-02 to SG-06.
+ * `vpc-security-security_groups-create_security_group.txt` (2026-11-03); the list, the
+ * details tabs and the rule pages follow `vpc-security-security_groups*.txt` and
+ * `ec2-network_and_security-security_groups.txt` (2026-11-05). The inbound 0.0.0.0/0 warning
+ * isn't captured, so only the outbound one is shown. Rules: SG-02 to SG-06.
  */
+
+/** "1 Permission entry" is captured; the plural for other counts is Inferred. */
+function permissionEntries(count: number): string {
+  return count === 1 ? '1 Permission entry' : `${String(count)} Permission entries`;
+}
 
 const OPEN_WARNING =
   'Rules with destination of 0.0.0.0/0 or ::/0 allow your instances to send traffic to any IPv4 or IPv6 address. We recommend setting security group rules to be more restrictive and to only allow traffic to specific known IP addresses.';
@@ -67,12 +73,12 @@ export function SecurityGroups({ base }: { base: string }) {
     {
       id: 'inbound',
       header: 'Inbound rules count',
-      value: (group) => `${String(group.inboundRules.length)} Permission entries`,
+      value: (group) => permissionEntries(group.inboundRules.length),
     },
     {
       id: 'outbound',
       header: 'Outbound rules count',
-      value: (group) => `${String(group.outboundRules.length)} Permission entries`,
+      value: (group) => permissionEntries(group.outboundRules.length),
     },
   ];
 
@@ -128,8 +134,21 @@ export function SecurityGroups({ base }: { base: string }) {
                   },
                 },
                 { id: 'tags', text: 'Manage tags', supported: false },
+                { id: 'stale', text: 'Manage stale rules', supported: false },
                 { id: 'copy', text: 'Copy to new security group', supported: false },
+                { id: 'share', text: 'Share security group', supported: false },
                 { id: 'delete', text: 'Delete security groups', supported: false },
+              ]}
+            />
+            <ActionsDropdown
+              label="Export security groups to CSV"
+              actions={[
+                { id: 'export', text: 'Export security groups to CSV', supported: false },
+                {
+                  id: 'export-rules',
+                  text: 'Export security groups inbound/outbound rules to CSV',
+                  supported: false,
+                },
               ]}
             />
             <Button variant="primary" onClick={create}>
@@ -145,7 +164,7 @@ export function SecurityGroups({ base }: { base: string }) {
       />
       <DetailsPanel
         title={current === null ? null : `${current.id} - ${current.name}`}
-        emptyText="Select a security group above"
+        emptyText="Select a security group"
         tabs={
           current === null
             ? []
@@ -164,11 +183,11 @@ export function SecurityGroups({ base }: { base: string }) {
                         { label: 'Owner', value: OWNER_ID },
                         {
                           label: 'Inbound rules count',
-                          value: `${String(current.inboundRules.length)} Permission entries`,
+                          value: permissionEntries(current.inboundRules.length),
                         },
                         {
                           label: 'Outbound rules count',
-                          value: `${String(current.outboundRules.length)} Permission entries`,
+                          value: permissionEntries(current.outboundRules.length),
                         },
                       ]}
                     />
@@ -214,6 +233,9 @@ export function SecurityGroups({ base }: { base: string }) {
                     />
                   ),
                 },
+                unsupportedTab('sharing', 'Sharing'),
+                unsupportedTab('vpc-associations', 'VPC associations'),
+                unsupportedTab('related', 'Related resources - new'),
                 unsupportedTab('tags', 'Tags'),
               ]
         }
@@ -372,6 +394,11 @@ export function EditSecurityGroupRules({
   return (
     <FormPage
       title={title}
+      description={
+        direction === 'inbound'
+          ? "Inbound rules control the incoming traffic that's allowed to reach the instance."
+          : "Outbound rules control the outgoing traffic that's allowed to leave the instance."
+      }
       cancelHref={base}
       submitLabel="Save rules"
       failure={failure}
@@ -396,14 +423,19 @@ export function EditSecurityGroupRules({
           </Header>
         }
       >
-        <SgRulesEditor
-          rows={rows}
-          onChange={setRows}
-          direction={direction}
-          groups={groups}
-          showErrors={submitted}
-          emptyText={`This security group has no ${direction} rules.`}
-        />
+        <SpaceBetween size="m">
+          <SgRulesEditor
+            rows={rows}
+            onChange={setRows}
+            direction={direction}
+            groups={groups}
+            showErrors={submitted}
+            emptyText={`This security group has no ${direction} rules.`}
+          />
+          {direction === 'outbound' && rows.some((row) => row.peer.trim() === '0.0.0.0/0') && (
+            <Alert type="warning">{OPEN_WARNING}</Alert>
+          )}
+        </SpaceBetween>
       </Container>
     </FormPage>
   );

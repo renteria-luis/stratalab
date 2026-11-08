@@ -16,7 +16,7 @@ export function DetailsPanel({
 }: {
   title: string | null;
   tabs: readonly TabsProps.Tab[];
-  /** Shown when not exactly one resource is selected, for example "Select a VPC above". */
+  /** Shown when not exactly one resource is selected, for example "Select a VPC" (captured 2026-11-05). */
   emptyText: string;
 }) {
   if (title === null) {

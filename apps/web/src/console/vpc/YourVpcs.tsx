@@ -104,7 +104,7 @@ export function YourVpcs() {
       />
       <DetailsPanel
         title={current === null ? null : titleOf(current.id, current.name)}
-        emptyText="Select a VPC above"
+        emptyText="Select a VPC"
         tabs={
           current === null
             ? []

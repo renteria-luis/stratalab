@@ -107,13 +107,13 @@ export const SUB_PAGES: readonly SubPageRoute[] = [
   {
     path: '/vpc/subnets/:subnetId/edit-route-table-association',
     parentPath: '/vpc/subnets',
-    label: 'Edit route table association',
+    label: 'Replace route table',
     Component: EditSubnetRouteTable,
   },
   {
     path: '/vpc/subnets/:subnetId/edit-network-acl-association',
     parentPath: '/vpc/subnets',
-    label: 'Edit network ACL association',
+    label: 'Replace network ACL',
     Component: EditSubnetNetworkAcl,
   },
   {

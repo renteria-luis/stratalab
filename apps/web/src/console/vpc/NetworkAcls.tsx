@@ -1,3 +1,4 @@
+import Alert from '@cloudscape-design/components/alert';
 import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
 import FormField from '@cloudscape-design/components/form-field';
@@ -6,6 +7,7 @@ import Input from '@cloudscape-design/components/input';
 import KeyValuePairs from '@cloudscape-design/components/key-value-pairs';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Table from '@cloudscape-design/components/table';
+import TokenGroup from '@cloudscape-design/components/token-group';
 import {
   associateNetworkAcl,
   createNetworkAcl,
@@ -23,6 +25,7 @@ import { useUi } from '../../state/uiStore';
 import { andThen } from '../../topology/compose';
 import { ActionsDropdown } from '../components/Actions';
 import { DetailsPanel } from '../components/DetailsPanel';
+import { FidelityLabel } from '../components/FidelityLabel';
 import { FormPage } from '../components/FormPage';
 import { NotFoundResource } from '../components/NotFoundResource';
 import { NaclEntriesEditor } from '../components/RuleEditors';
@@ -38,11 +41,17 @@ import { applyChange, useStatus, useTopologyReady, useVpcFiltered } from '../dat
 import { hasErrors, naclEntryOf, naclRowErrors, naclRowOf, type NaclEntryRow } from '../ruleRows';
 
 /**
- * VPC console › Network ACLs and its forms. Only screenshots of these pages exist; labels
- * follow the AWS docs procedures (vpc-network-acls.html, create-network-acl.html,
+ * VPC console › Network ACLs and its forms. Labels from the captures (2026-11-05)
+ * `vpc-security-network_acls*.txt`; the empty list and validation messages aren't captured
+ * and follow the AWS docs procedures (vpc-network-acls.html, create-network-acl.html,
  * nacl-rules.html). Rules: NACL-01 (associations), NACL-02 (order, `*`), NACL-05 (defaults),
  * NACL-08 (unique rule numbers).
  */
+
+const DEFAULT_ACL_RULES_NOTICE =
+  "You're editing the VPC's default network ACL. All subnets share this ACL's rules unless they are associated with a custom ACL of their own.";
+const DEFAULT_ACL_ASSOCIATIONS_NOTICE =
+  "This is the default network ACL for this VPC. You can't disassociate its subnets using this page. Instead, edit the subnet associations from the network ACL page.";
 
 const LIST = '/vpc/network-acls';
 
@@ -169,7 +178,7 @@ export function NetworkAcls() {
       />
       <DetailsPanel
         title={current === null ? null : titleOf(current.id, current.name)}
-        emptyText="Select a network ACL above"
+        emptyText="Select a network ACL"
         tabs={
           current === null
             ? []
@@ -283,6 +292,7 @@ export function CreateNetworkAclPage() {
   return (
     <FormPage
       title="Create network ACL"
+      description="A network ACL is an optional layer of security that acts as a firewall for controlling traffic in and out of a subnet."
       cancelHref={LIST}
       submitLabel="Create network ACL"
       failure={failure}
@@ -297,7 +307,10 @@ export function CreateNetworkAclPage() {
     >
       <Container header={<Header variant="h2">Network ACL settings</Header>}>
         <SpaceBetween size="l">
-          <FormField label="Name - optional">
+          <FormField
+            label="Name - optional"
+            description="Creates a tag with a key of 'Name' and a value that you specify."
+          >
             <Input
               value={name}
               onChange={({ detail }) => {
@@ -307,16 +320,18 @@ export function CreateNetworkAclPage() {
           </FormField>
           <FormField
             label="VPC"
+            description="VPC to use for this network ACL."
             errorText={submitted && vpcId === null ? 'Choose a VPC.' : undefined}
           >
             <VpcSelect value={vpcId} onChange={setVpcId} />
           </FormField>
         </SpaceBetween>
       </Container>
+      {/* This page writes these three texts without a final period (captured). */}
       <TagsUnsupported
-        emptyText="No tags associated with the resource."
-        addLabel="Add new tag"
-        remainingText="You can add 50 more tags."
+        emptyText="No tags associated with the resource"
+        addLabel="Add tag"
+        remainingText="You can add 50 more tags"
       />
     </FormPage>
   );
@@ -336,11 +351,25 @@ export function EditNetworkAclRules({ direction }: { direction: 'inbound' | 'out
     return <NotFoundResource id={networkAclId} backHref={LIST} backLabel="Network ACLs" />;
   }
   const title = direction === 'inbound' ? 'Edit inbound rules' : 'Edit outbound rules';
+  const isDefault = topology.vpcs.some((vpc) => vpc.defaultNetworkAclId === acl.id);
   return (
     <FormPage
       title={title}
+      description={
+        direction === 'inbound'
+          ? "Inbound rules control the incoming traffic that's allowed to reach the VPC."
+          : "Outbound rules control the outgoing traffic that's allowed to leave the VPC."
+      }
       cancelHref={LIST}
       submitLabel="Save changes"
+      extraActions={
+        <SpaceBetween direction="horizontal" size="xxs" alignItems="center">
+          <Button formAction="none" disabled>
+            Preview changes
+          </Button>
+          <FidelityLabel fidelity="Unsupported" />
+        </SpaceBetween>
+      }
       failure={failure}
       onSubmit={() => {
         setSubmitted(true);
@@ -359,17 +388,28 @@ export function EditNetworkAclRules({ direction }: { direction: 'inbound' | 'out
         }
       >
         <SpaceBetween size="l">
+          {isDefault && <Alert type="info">{DEFAULT_ACL_RULES_NOTICE}</Alert>}
           <NaclEntriesEditor
             rows={rows}
             onChange={setRows}
             direction={direction}
             showErrors={submitted}
           />
-          <NaclEntriesTable
-            direction={direction}
-            entries={[]}
-            header={<Header variant="h3">Default rule</Header>}
-          />
+          <Button
+            formAction="none"
+            onClick={() => {
+              // Rows with a rule number that isn't a number keep their place at the end.
+              const order = (row: NaclEntryRow) => {
+                const value = Number(row.ruleNumber);
+                return Number.isFinite(value) ? value : Number.MAX_SAFE_INTEGER;
+              };
+              setRows(rows.toSorted((a, b) => order(a) - order(b)));
+            }}
+          >
+            Sort by rule number
+          </Button>
+          {/* The `*` rule, which can't be edited (NACL-02). */}
+          <NaclEntriesTable direction={direction} entries={[]} />
         </SpaceBetween>
       </Container>
     </FormPage>
@@ -395,6 +435,7 @@ export function EditNetworkAclAssociations() {
   return (
     <FormPage
       title="Edit subnet associations"
+      description="Change which subnets are associated with this network ACL."
       cancelHref={LIST}
       submitLabel="Save changes"
       failure={failure}
@@ -417,8 +458,13 @@ export function EditNetworkAclAssociations() {
         );
       }}
     >
+      {acl.id === defaultAclId && <Alert type="info">{DEFAULT_ACL_ASSOCIATIONS_NOTICE}</Alert>}
       <Table<Subnet>
-        header={<Header counter={`(${String(subnets.length)})`}>Available subnets</Header>}
+        header={
+          <Header counter={`(${String(checked.length)}/${String(subnets.length)})`}>
+            Available subnets
+          </Header>
+        }
         items={subnets}
         trackBy="id"
         selectionType="multi"
@@ -440,9 +486,20 @@ export function EditNetworkAclAssociations() {
             header: 'Associated with',
             cell: (subnet) => status.subnets[subnet.id]?.networkAclId ?? DASH,
           },
+          // The console shows "use1-az1 (us-east-1a)"; R0 doesn't model zone IDs.
+          { id: 'az', header: 'Availability Zone', cell: (subnet) => subnet.availabilityZone },
           { id: 'ipv4', header: 'IPv4 CIDR', cell: (subnet) => subnet.cidrBlock },
+          { id: 'ipv6', header: 'IPv6 CIDR', cell: () => DASH },
         ]}
       />
+      <Container header={<Header variant="h2">Selected subnets</Header>}>
+        <TokenGroup
+          items={checked.map((subnet) => ({ label: subnet.id }))}
+          onDismiss={({ detail }) => {
+            setChecked(checked.filter((_, index) => index !== detail.itemIndex));
+          }}
+        />
+      </Container>
     </FormPage>
   );
 }

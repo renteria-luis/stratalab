@@ -113,7 +113,7 @@ export function Subnets() {
                 { id: 'ipv6', text: 'Edit IPv6 CIDRs', supported: false },
                 {
                   id: 'edit-acl',
-                  text: 'Edit network ACL association',
+                  text: 'Replace network ACL',
                   supported: true,
                   disabled: currentId === null,
                   onClick: () => {
@@ -122,7 +122,7 @@ export function Subnets() {
                 },
                 {
                   id: 'edit-rtb',
-                  text: 'Edit route table association',
+                  text: 'Replace route table',
                   supported: true,
                   disabled: currentId === null,
                   onClick: () => {
@@ -148,7 +148,7 @@ export function Subnets() {
       />
       <DetailsPanel
         title={current === null ? null : titleOf(current.id, current.name)}
-        emptyText="Select a subnet above"
+        emptyText="Select a subnet"
         tabs={
           current === null || currentStatus === undefined
             ? []

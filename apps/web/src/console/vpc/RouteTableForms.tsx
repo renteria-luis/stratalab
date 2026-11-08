@@ -1,5 +1,6 @@
 import AttributeEditor from '@cloudscape-design/components/attribute-editor';
 import Box from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
 import FormField from '@cloudscape-design/components/form-field';
 import Header from '@cloudscape-design/components/header';
@@ -21,19 +22,28 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 import { useUi } from '../../state/uiStore';
 import { useTopology } from '../../state/topologyStore';
+import { FidelityLabel } from '../components/FidelityLabel';
 import { FormPage } from '../components/FormPage';
 import { NotFoundResource } from '../components/NotFoundResource';
 import { TagsUnsupported } from '../components/TagsUnsupported';
 import { useChange } from '../components/useChange';
 import { DASH, orDash } from '../components/values';
 import { VpcSelect } from '../components/VpcSelect';
+import { useStatus } from '../data';
 import { andThen } from '../../topology/compose';
 
 /**
- * Route table forms. No capture of these pages exists yet; labels follow the AWS docs
- * procedures (create-vpc-route-table.html, WorkWithRouteTables.html).
+ * Route table forms. Labels from the captures (2026-11-05)
+ * `vpc-virtual_private_cloud-route_tables-create_route_table.txt`,
+ * `vpc-virtual_private_cloud-route_tables-selection-routes_tab-edit_routes.txt` and
+ * `vpc-virtual_private_cloud-route_tables-selection-subnet_associations_tab-edit_subnet_associations.txt`.
+ * Validation messages aren't captured (they need a failed submit); they follow the docs.
  * Rules: RT-12 (create), RT-03, RT-04, RT-11 (routes), RT-01 (associations).
  */
+
+/** The Edit routes page writes origins without spaces, unlike the Routes tab (captured). */
+const EDIT_ORIGIN = { CreateRouteTable: 'CreateRouteTable', CreateRoute: 'CreateRoute' } as const;
+const STATE_LABEL = { active: 'Active', blackhole: 'Blackhole' } as const;
 
 const LIST = '/vpc/route-tables';
 
@@ -47,6 +57,7 @@ export function CreateRouteTablePage() {
   return (
     <FormPage
       title="Create route table"
+      description="A route table specifies how packets are forwarded between the subnets within your VPC, the internet, and your VPN connection."
       cancelHref={LIST}
       submitLabel="Create route table"
       failure={failure}
@@ -61,7 +72,10 @@ export function CreateRouteTablePage() {
     >
       <Container header={<Header variant="h2">Route table settings</Header>}>
         <SpaceBetween size="l">
-          <FormField label="Name - optional">
+          <FormField
+            label="Name - optional"
+            description="Create a tag with a key of 'Name' and a value that you specify."
+          >
             <Input
               value={name}
               onChange={({ detail }) => {
@@ -71,6 +85,7 @@ export function CreateRouteTablePage() {
           </FormField>
           <FormField
             label="VPC"
+            description="The VPC to use for this route table."
             errorText={submitted && vpcId === null ? 'Choose a VPC.' : undefined}
           >
             <VpcSelect value={vpcId} onChange={setVpcId} />
@@ -96,6 +111,7 @@ export function EditRoutes() {
   const topology = useTopology();
   const table = topology.routeTables.find((candidate) => candidate.id === routeTableId);
   const vpc = topology.vpcs.find((candidate) => candidate.id === table?.vpcId);
+  const savedRoutes = useStatus().routeTables[routeTableId]?.routes ?? [];
   const [rows, setRows] = useState<RouteRow[]>(
     (table?.routes ?? []).map((route) => ({
       destination: route.destinationCidrBlock,
@@ -120,6 +136,14 @@ export function EditRoutes() {
       title="Edit routes"
       cancelHref={LIST}
       submitLabel="Save changes"
+      extraActions={
+        <SpaceBetween direction="horizontal" size="xxs" alignItems="center">
+          <Button formAction="none" disabled>
+            Preview
+          </Button>
+          <FidelityLabel fidelity="Unsupported" />
+        </SpaceBetween>
+      }
       failure={failure}
       onSubmit={() => {
         setSubmitted(true);
@@ -152,6 +176,7 @@ export function EditRoutes() {
               { id: 'target', header: 'Target', cell: () => 'local' },
               { id: 'status', header: 'Status', cell: () => 'Active' },
               { id: 'propagated', header: 'Propagated', cell: () => 'No' },
+              { id: 'origin', header: 'Route Origin', cell: () => EDIT_ORIGIN.CreateRouteTable },
             ]}
           />
           <AttributeEditor<RouteRow>
@@ -216,6 +241,22 @@ export function EditRoutes() {
                   />
                 ),
               },
+              // Read-only columns of a saved route; a row added on this page has none yet
+              // (shown as "–", Inferred: the capture shows saved routes only).
+              ...(['Status', 'Propagated', 'Route Origin'] as const).map((label) => ({
+                label,
+                control: (row: RouteRow) => {
+                  const saved = savedRoutes.find(
+                    (route) =>
+                      route.destinationCidrBlock === row.destination.trim() &&
+                      route.target === row.internetGatewayId,
+                  );
+                  if (saved === undefined) return DASH;
+                  if (label === 'Status') return STATE_LABEL[saved.state];
+                  if (label === 'Propagated') return 'No';
+                  return EDIT_ORIGIN[saved.origin];
+                },
+              })),
             ]}
           />
         </SpaceBetween>

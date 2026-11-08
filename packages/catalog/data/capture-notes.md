@@ -73,3 +73,16 @@ Out of scope (listed for completeness): AWS Copilot, AWS Wavelength, AWS Applica
 ## Open
 
 - Side navigation for other consoles (IAM and Systems Manager are R1) needs new captures.
+
+## Capture of 2026-11-05 (page text, agent with the read-only user)
+
+Taken by the agent with the read-only console user (AGENTS.md, "AWS console access for agents (read-only)"), region us-east-1, default VPC only. Page text only, in `docs/console-capture/2026-11-05/` (29 files). Account ID replaced by `<account-id>`.
+
+- Covers what `docs/specs/p7-lab1.md` listed as missing: Create route table, Edit routes, Edit subnet associations (route table and network ACL), Internet gateways list, details, create and Attach to VPC, Create network ACL, network ACL details tabs and Edit inbound/outbound rules, Edit subnet settings, security group list, details tabs and Edit inbound/outbound rules, and the EC2 Security Groups page.
+- `vpc-side_navigation.txt` has the full VPC side navigation as text, which fills the gap between "Container associations" and "Verified Access trust providers" noted above.
+- New since 2026-11-03: the VPC side navigation shows "Carrier gateways" under "Virtual private cloud"; `nav/vpc.json` doesn't have it yet.
+- Attach to VPC with no detached VPC shows: "You do not have any VPCs. You need a VPC in order to attach an internet gateway".
+- Instance pages, captured the same day with the user's admin session for that session only (the user watched): one t3.micro `sim-capture-temp` launched in the default VPC with the `default` security group and no key pair, then terminated. Files: launch success page, instance details tabs (Details, Status and alarms, Monitoring, Security, Networking, Storage, Tags), the Terminate (delete) instance dialog, and the Instance state and Actions menu items (`ec2-instances-instances-selection-menus.txt`).
+- Same day, read-only user: the subnet Actions pages "Replace route table" (`…-subnets-selection-replace_route_table.txt`, browser title "Modify route table") and "Replace network ACL" (`…-replace_network_acl.txt`, browser title "Edit network ACL").
+- Console differences between the two capture dates (2026-11-03 in us-east-2, 2026-11-05 in us-east-1), probably a staged rollout: subnet Actions "Edit network ACL association" / "Edit route table association" became "Replace network ACL" / "Replace route table"; the Subnets table gained "Internet access" ("Yes (public)" for the default subnets) and "Network border group"; the empty details panel says "Select a VPC" instead of "Select a VPC above" (the internet gateways page still says "… above"). The app follows 2026-11-05.
+- Open: the "Internet access" value of a private subnet isn't captured (every default subnet is public), so the app doesn't show that column yet. Neither are the subnet details tabs (Route table, Network ACL) nor their buttons.
