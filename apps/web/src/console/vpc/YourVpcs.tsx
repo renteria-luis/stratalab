@@ -1,13 +1,14 @@
 import Button from '@cloudscape-design/components/button';
-import KeyValuePairs from '@cloudscape-design/components/key-value-pairs';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { setNameTag, type Vpc } from '@sim/engine';
 import { useNavigate } from 'react-router';
 import { useTopology } from '../../state/topologyStore';
 import { ActionsDropdown } from '../components/Actions';
+import { ColumnPairs } from '../components/ColumnPairs';
 import { ConsoleLink } from '../components/ConsoleLink';
 import { DetailsPanel } from '../components/DetailsPanel';
 import { ResourceTable, type ResourceColumn } from '../components/ResourceTable';
+import { unsupportedTab } from '../components/unsupportedTab';
 import { single, useSelection } from '../components/useSelection';
 import { DASH, OWNER_ID, orDash, titleOf } from '../components/values';
 import { applyChange, useTopologyReady, useVpcFiltered } from '../data';
@@ -15,8 +16,10 @@ import { applyChange, useTopologyReady, useVpcFiltered } from '../data';
 /**
  * VPC console › Your VPCs. Columns, actions and labels from the capture
  * `vpc-virtual_private_cloud-your_vpcs.txt` (2026-11-03). Encryption controls, Block Public
- * Access, IPv6, DHCP options and tenancy are not modeled: their cells show "–" or the
- * captured default.
+ * Access, IPv6, DHCP options, DNS settings and tenancy are not modeled: their cells show "–"
+ * or the captured default. Details tab fields, their column grouping and the tab list from
+ * `vpc-virtual_private_cloud-your_vpcs-delete_success.txt` (2026-11-06, split panel); the
+ * grouping is Inferred from the page text order (the encryption fields end columns 1 and 2).
  */
 export function YourVpcs() {
   const topology = useTopology();
@@ -113,24 +116,45 @@ export function YourVpcs() {
                   id: 'details',
                   label: 'Details',
                   content: (
-                    <KeyValuePairs
-                      columns={4}
-                      items={[
-                        { label: 'VPC ID', value: current.id },
-                        { label: 'State', value: 'Available' },
-                        { label: 'Block Public Access', value: 'Off' },
-                        { label: 'DHCP option set', value: DASH },
-                        { label: 'Main route table', value: current.mainRouteTableId },
-                        { label: 'Main network ACL', value: current.defaultNetworkAclId },
-                        { label: 'Default VPC', value: 'No' },
-                        { label: 'IPv4 CIDR', value: current.cidrBlock },
-                        { label: 'IPv6 CIDR', value: DASH },
-                        { label: 'Tenancy', value: 'default' },
-                        { label: 'Owner ID', value: OWNER_ID },
+                    <ColumnPairs
+                      columns={[
+                        [
+                          ['VPC ID', current.id],
+                          ['DNS resolution', 'Enabled'],
+                          ['Main network ACL', current.defaultNetworkAclId],
+                          ['IPv6 CIDR (Network border group)', DASH],
+                          ['Encryption control ID', DASH],
+                        ],
+                        [
+                          ['State', 'Available'],
+                          ['Tenancy', 'default'],
+                          ['Default VPC', 'No'],
+                          ['Network Address Usage metrics', 'Disabled'],
+                          ['Encryption control mode', DASH],
+                        ],
+                        [
+                          ['Block Public Access', 'Off'],
+                          ['DHCP option set', DASH],
+                          ['IPv4 CIDR', current.cidrBlock],
+                          ['Route 53 Resolver DNS Firewall rule groups', DASH],
+                        ],
+                        [
+                          // Disabled is the captured default of a VPC that isn't the default VPC.
+                          ['DNS hostnames', 'Disabled'],
+                          ['Main route table', current.mainRouteTableId],
+                          ['IPv6 pool', DASH],
+                          ['Owner ID', OWNER_ID],
+                        ],
                       ]}
                     />
                   ),
                 },
+                unsupportedTab('resource-map', 'Resource map'),
+                unsupportedTab('cidrs', 'CIDRs'),
+                unsupportedTab('flow-logs', 'Flow logs'),
+                unsupportedTab('tags', 'Tags'),
+                unsupportedTab('related-resources', 'Related resources'),
+                unsupportedTab('integrations', 'Integrations'),
               ]
         }
       />

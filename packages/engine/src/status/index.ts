@@ -63,8 +63,8 @@ export interface Status {
  * - RT-01 main table and associations: https://docs.aws.amazon.com/vpc/latest/userguide/subnet-route-tables.html
  * - RT-03 local route: https://docs.aws.amazon.com/vpc/latest/userguide/route-tables-priority.html
  * - RT-08 blackhole state: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Route.html
- * - RT-09 public subnet (an active route to an internet gateway; blackhole-only is private,
- *   Inferred, Q8): https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html
+ * - RT-09 public subnet (any route to an internet gateway, active or blackhole, as the console
+ *   shows; docs/specs/q8-public-subnet.md): https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html
  * - NACL-01 default network ACL: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
  * - IGW-05 attachment: https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html
  * - ADR-04 five reserved addresses per subnet: https://docs.aws.amazon.com/vpc/latest/userguide/subnet-sizing.html
@@ -90,7 +90,8 @@ export function deriveStatus(topology: Topology): Status {
     const { table, association } = routeTableOf(model, subnet);
     const { acl, association: aclAssociation } = networkAclOf(model, subnet);
     const routes = routesByTable.get(table.id) ?? [];
-    const isPublic = routes.some((route) => route.target !== 'local' && route.state === 'active');
+    // R0 routes target only `local` or an internet gateway, so any non-local route counts.
+    const isPublic = routes.some((route) => route.target !== 'local');
     const interfaces = topology.instances.filter(
       (instance) => instance.primaryNetworkInterface.subnetId === subnet.id,
     ).length;

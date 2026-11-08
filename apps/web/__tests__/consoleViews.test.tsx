@@ -157,6 +157,71 @@ describe('console views', () => {
     expect(after.instances[0]?.runningServices).toMatchObject([{ port: 80, name: 'nginx' }]);
   });
 
+  it('ADR-10: instance details show the auto-assigned address, the group rules and the interface', async () => {
+    const base = lab();
+    const launched = ok(
+      launchInstance(base.topology, { subnetId: base.subnetId, platform: 'linux', name: 'web-1' }),
+    );
+    seed(launched.topology);
+    renderApp('/ec2/instances');
+    await screen.findByRole('heading', { level: 1, name: /Instances/ });
+    page().findTable()?.findRowSelectionArea(1)?.click();
+
+    const instanceId = launched.topology.instances[0]?.id ?? '';
+    expect(await screen.findByText(`Instance summary for ${instanceId} (web-1)`)).toBeDefined();
+    expect(screen.getByText('203.0.113.1 [Public IP]')).toBeDefined();
+    expect(screen.getByText('RunInstances')).toBeDefined();
+
+    page().findTabs()?.findTabLinkById('security')?.click();
+    expect(await screen.findByText('Security details')).toBeDefined();
+    expect(screen.getByText('Inbound rules')).toBeDefined();
+
+    page().findTabs()?.findTabLinkById('networking')?.click();
+    // Table headers render twice (the sticky copy), so count instead of expecting one.
+    expect((await screen.findAllByText('Network Interfaces')).length).toBeGreaterThan(0);
+    expect(
+      screen.getByText('No Elastic IP addresses are associated with this instance'),
+    ).toBeDefined();
+
+    page().findTabs()?.findTabLinkById('tags')?.click();
+    await screen.findByRole('button', { name: 'Manage tags' });
+    const tagsTab = page().findTabs()?.findTabContent()?.getElement();
+    expect(tagsTab && within(tagsTab).getAllByText('web-1').length).toBeGreaterThan(0);
+  });
+
+  it('RT-09: Subnets shows Internet access and the captured details, column by column', async () => {
+    const { topology, subnetId } = lab();
+    seed(topology);
+    renderApp('/vpc/subnets');
+    await screen.findByText('10.0.1.0/24');
+    expect(screen.getAllByText('No (private)').length).toBeGreaterThan(0);
+    page().findTable()?.findRowSelectionArea(1)?.click();
+
+    await screen.findByText('Subnet ARN');
+    const tab = page().findTabs()?.findTabContent()?.getElement();
+    // One nested list per column; each starts with the column's first captured label.
+    const groups = [...(tab?.querySelectorAll('dl dl') ?? [])].map(
+      (group) => group.querySelector('dt')?.textContent,
+    );
+    expect(groups).toEqual(['Subnet ID', 'Subnet ARN', 'State', 'Block Public Access']);
+    expect(screen.getByText(`arn:aws:ec2:us-east-1:000000000000:subnet/${subnetId}`)).toBeDefined();
+    expect(screen.getByText('Hostname type')).toBeDefined();
+  });
+
+  it('RT-01: VPC details show the captured fields column by column', async () => {
+    seed(lab().topology);
+    renderApp('/vpc/your-vpcs');
+    await screen.findByText('10.0.0.0/16');
+    page().findTable()?.findRowSelectionArea(1)?.click();
+
+    await screen.findByText('Network Address Usage metrics');
+    const tab = page().findTabs()?.findTabContent()?.getElement();
+    const groups = [...(tab?.querySelectorAll('dl dl') ?? [])].map(
+      (group) => group.querySelector('dt')?.textContent,
+    );
+    expect(groups).toEqual(['VPC ID', 'State', 'Block Public Access', 'DNS hostnames']);
+  });
+
   it('SHELL: Filter by VPC lists the topology VPCs and filters the subnets', async () => {
     const first = lab();
     const second = ok(createVpc(first.topology, { cidrBlock: '10.1.0.0/16', name: 'other' }));

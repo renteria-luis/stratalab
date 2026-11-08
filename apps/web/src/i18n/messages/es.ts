@@ -164,6 +164,9 @@ export const es: Messages = {
     'Las IPv4 públicas simuladas salen de 203.0.113.0/24, un rango de documentación (RFC 5737).',
   'sim.subnetNoPreference': '"No preference" elige la primera subred de la VPC.',
   'sim.launchTime': 'El simulador no guarda la hora de lanzamiento.',
+  'sim.instanceDefaults':
+    'El simulador no modela la AMI, el tipo de instancia, los nombres DNS, las opciones de metadatos ni la reserva, así que esos campos muestran "–". Los ajustes que no modela muestran el valor por defecto de la consola para una instancia nueva.',
+  'sim.dnsNotModeled': 'El simulador no modela los nombres DNS, así que estos campos muestran "–".',
   'sim.amiPlatform': 'El simulador solo modela la plataforma de la imagen: Linux/UNIX o Windows.',
   'sim.software.title': 'Software simulado',
   'sim.software.description':

@@ -13,7 +13,8 @@ const STATE_LABEL = { active: 'Active', blackhole: 'Blackhole' } as const;
  * state). Columns and values from the capture
  * `vpc-virtual_private_cloud-route_tables-selection-routes_tab.txt` (2026-11-03 and
  * 2026-11-05). `columns="destination-target"` is the preview on the subnet's Replace route
- * table page (`vpc-virtual_private_cloud-subnets-selection-replace_route_table.txt`).
+ * table page (`vpc-virtual_private_cloud-subnets-selection-replace_route_table.txt`) and the
+ * subnet's Route table tab (`vpc-virtual_private_cloud-subnets-selection-route_table_tab.txt`).
  */
 export function RoutesTable({
   routes,

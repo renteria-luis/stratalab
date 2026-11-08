@@ -164,6 +164,9 @@ export const en = {
     'Simulated public IPv4 addresses come from 203.0.113.0/24, a documentation range (RFC 5737).',
   'sim.subnetNoPreference': '"No preference" picks the first subnet of the VPC.',
   'sim.launchTime': 'The simulator keeps no launch time.',
+  'sim.instanceDefaults':
+    'The simulator doesn\'t model the AMI, the instance type, DNS hostnames, metadata options or the reservation, so those fields show "–". Settings it doesn\'t model show the console default for a new instance.',
+  'sim.dnsNotModeled': 'The simulator doesn\'t model DNS hostnames, so these fields show "–".',
   'sim.amiPlatform': 'The simulator models only the platform of the image: Linux/UNIX or Windows.',
   'sim.software.title': 'Simulated software',
   'sim.software.description':

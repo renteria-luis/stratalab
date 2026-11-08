@@ -4,7 +4,6 @@ import Container from '@cloudscape-design/components/container';
 import FormField from '@cloudscape-design/components/form-field';
 import Header from '@cloudscape-design/components/header';
 import Input from '@cloudscape-design/components/input';
-import KeyValuePairs from '@cloudscape-design/components/key-value-pairs';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Table from '@cloudscape-design/components/table';
 import TokenGroup from '@cloudscape-design/components/token-group';
@@ -24,6 +23,7 @@ import { useTopology } from '../../state/topologyStore';
 import { useUi } from '../../state/uiStore';
 import { andThen } from '../../topology/compose';
 import { ActionsDropdown } from '../components/Actions';
+import { ColumnPairs } from '../components/ColumnPairs';
 import { DetailsPanel } from '../components/DetailsPanel';
 import { FidelityLabel } from '../components/FidelityLabel';
 import { FormPage } from '../components/FormPage';
@@ -68,6 +68,11 @@ export function NetworkAcls() {
     topology.vpcs.some((vpc) => vpc.defaultNetworkAclId === acl.id);
   const associated = (acl: NetworkAcl) =>
     topology.subnets.filter((subnet) => status.subnets[subnet.id]?.networkAclId === acl.id);
+  // "6 Subnets", as captured for the list and the Details tab (2026-11-05); other counts Inferred.
+  const associatedText = (acl: NetworkAcl) => {
+    const count = associated(acl).length;
+    return count === 0 ? DASH : `${String(count)} Subnets`;
+  };
 
   const columns: ResourceColumn<NetworkAcl>[] = [
     {
@@ -82,10 +87,7 @@ export function NetworkAcls() {
     {
       id: 'associated',
       header: 'Associated with',
-      value: (acl) => {
-        const subnets = associated(acl);
-        return subnets.length === 0 ? DASH : `${String(subnets.length)} Subnets`;
-      },
+      value: associatedText,
     },
     { id: 'default', header: 'Default', value: (acl) => yesNo(isDefault(acl)) },
     { id: 'vpc', header: 'VPC ID', value: (acl) => acl.vpcId },
@@ -187,21 +189,15 @@ export function NetworkAcls() {
                   id: 'details',
                   label: 'Details',
                   content: (
-                    <KeyValuePairs
-                      columns={4}
-                      items={[
-                        { label: 'Network ACL ID', value: current.id },
-                        {
-                          label: 'Associated with',
-                          value: orDash(
-                            associated(current)
-                              .map((subnet) => subnet.id)
-                              .join(', '),
-                          ),
-                        },
-                        { label: 'Default', value: yesNo(isDefault(current)) },
-                        { label: 'VPC ID', value: current.vpcId },
-                        { label: 'Owner', value: OWNER_ID },
+                    <ColumnPairs
+                      columns={[
+                        [
+                          ['Network ACL ID', current.id],
+                          ['Owner', OWNER_ID],
+                        ],
+                        [['Associated with', associatedText(current)]],
+                        [['Default', yesNo(isDefault(current))]],
+                        [['VPC ID', current.vpcId]],
                       ]}
                     />
                   ),

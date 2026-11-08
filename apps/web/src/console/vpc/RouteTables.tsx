@@ -1,7 +1,6 @@
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Header from '@cloudscape-design/components/header';
-import KeyValuePairs from '@cloudscape-design/components/key-value-pairs';
 import Modal from '@cloudscape-design/components/modal';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Table from '@cloudscape-design/components/table';
@@ -10,6 +9,7 @@ import { useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router';
 import { useTopology } from '../../state/topologyStore';
 import { ActionsDropdown } from '../components/Actions';
+import { ColumnPairs } from '../components/ColumnPairs';
 import { ChangeErrors } from '../components/ChangeErrors';
 import { DetailsPanel } from '../components/DetailsPanel';
 import { failureOf, type ChangeFailure } from '../components/failure';
@@ -17,7 +17,7 @@ import { ResourceTable, type ResourceColumn } from '../components/ResourceTable'
 import { RoutesTable } from '../components/RoutesTable';
 import { unsupportedTab } from '../components/unsupportedTab';
 import { single, useSelection } from '../components/useSelection';
-import { DASH, OWNER_ID, orDash, titleOf, yesNo } from '../components/values';
+import { DASH, OWNER_ID, idAndName, orDash, titleOf, yesNo } from '../components/values';
 import { applyChange, useStatus, useTopologyReady, useVpcFiltered } from '../data';
 
 /**
@@ -38,6 +38,7 @@ export function RouteTables() {
   const current = topology.routeTables.find((table) => table.id === currentId) ?? null;
   const currentStatus = current === null ? undefined : status.routeTables[current.id];
 
+  const vpcName = (id: string) => topology.vpcs.find((vpc) => vpc.id === id)?.name;
   const explicitSubnets = (table: RouteTable) =>
     topology.subnets.filter((subnet) => subnet.routeTableId === table.id);
 
@@ -158,18 +159,23 @@ export function RouteTables() {
                   id: 'details',
                   label: 'Details',
                   content: (
-                    <KeyValuePairs
-                      columns={4}
-                      items={[
-                        { label: 'Route table ID', value: current.id },
-                        { label: 'Main', value: yesNo(currentStatus.main) },
-                        {
-                          label: 'Explicit subnet associations',
-                          value: orDash(explicit.map((subnet) => subnet.id).join(', ')),
-                        },
-                        { label: 'Edge associations', value: DASH },
-                        { label: 'VPC', value: current.vpcId },
-                        { label: 'Owner ID', value: OWNER_ID },
+                    <ColumnPairs
+                      columns={[
+                        [
+                          ['Route table ID', current.id],
+                          ['VPC', idAndName(current.vpcId, vpcName(current.vpcId))],
+                        ],
+                        [
+                          ['Main', yesNo(currentStatus.main)],
+                          ['Owner ID', OWNER_ID],
+                        ],
+                        [
+                          [
+                            'Explicit subnet associations',
+                            orDash(explicit.map((subnet) => subnet.id).join(', ')),
+                          ],
+                        ],
+                        [['Edge associations', DASH]],
                       ]}
                     />
                   ),

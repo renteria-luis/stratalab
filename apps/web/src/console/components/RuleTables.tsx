@@ -6,8 +6,8 @@ import { DASH, orDash } from './values';
 
 /**
  * Network ACL entries in rule-number order, then the implicit `*` deny (NACL-02).
- * Columns follow the AWS docs procedures; no text capture of this tab exists yet
- * (docs/specs/p7-lab1.md, missing captures).
+ * Columns from the captures `vpc-security-network_acls-selection-inbound_rules_tab.txt`
+ * (2026-11-05) and `vpc-virtual_private_cloud-subnets-selection-network_acl_tab.txt` (2026-11-06).
  */
 export function NaclEntriesTable({
   entries,

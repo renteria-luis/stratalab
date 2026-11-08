@@ -6,7 +6,6 @@ import ExpandableSection from '@cloudscape-design/components/expandable-section'
 import FormField from '@cloudscape-design/components/form-field';
 import Header from '@cloudscape-design/components/header';
 import Input from '@cloudscape-design/components/input';
-import KeyValuePairs from '@cloudscape-design/components/key-value-pairs';
 import Modal from '@cloudscape-design/components/modal';
 import Select from '@cloudscape-design/components/select';
 import SpaceBetween from '@cloudscape-design/components/space-between';
@@ -22,6 +21,7 @@ import { useNavigate, useParams } from 'react-router';
 import { useTopology } from '../../state/topologyStore';
 import { ActionsDropdown } from '../components/Actions';
 import { ChangeErrors } from '../components/ChangeErrors';
+import { ColumnPairs } from '../components/ColumnPairs';
 import { DetailsPanel, UnsupportedNotice } from '../components/DetailsPanel';
 import { failureOf, type ChangeFailure } from '../components/failure';
 import { FormPage } from '../components/FormPage';
@@ -138,13 +138,12 @@ export function InternetGateways() {
                   id: 'details',
                   label: 'Details',
                   content: (
-                    <KeyValuePairs
-                      columns={4}
-                      items={[
-                        { label: 'Internet gateway ID', value: current.id },
-                        { label: 'State', value: stateOf(current) },
-                        { label: 'VPC ID', value: orDash(current.attachedVpcId) },
-                        { label: 'Owner', value: OWNER_ID },
+                    <ColumnPairs
+                      columns={[
+                        [['Internet gateway ID', current.id]],
+                        [['State', stateOf(current)]],
+                        [['VPC ID', orDash(current.attachedVpcId)]],
+                        [['Owner', OWNER_ID]],
                       ]}
                     />
                   ),

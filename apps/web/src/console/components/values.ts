@@ -20,6 +20,11 @@ export function arn(region: string, type: string, id: string): string {
   return `arn:aws:ec2:${region}:${OWNER_ID}:${type}/${id}`;
 }
 
+/** Table cell of a related resource: "id | name", or the ID alone (captured 2026-11-06). */
+export function idAndName(id: string, name: string | undefined): string {
+  return name === undefined ? id : `${id} | ${name}`;
+}
+
 /** Details panel title: "id / name", or the ID alone. */
 export function titleOf(id: string, name: string | undefined): string {
   return name === undefined ? id : `${id} / ${name}`;

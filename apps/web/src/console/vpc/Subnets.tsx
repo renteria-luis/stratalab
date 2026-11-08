@@ -1,25 +1,31 @@
 import Button from '@cloudscape-design/components/button';
 import Header from '@cloudscape-design/components/header';
-import KeyValuePairs from '@cloudscape-design/components/key-value-pairs';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { setNameTag, type Subnet } from '@sim/engine';
 import { useNavigate } from 'react-router';
 import { useTopology } from '../../state/topologyStore';
 import { ActionsDropdown } from '../components/Actions';
+import { ColumnPairs } from '../components/ColumnPairs';
 import { DetailsPanel } from '../components/DetailsPanel';
 import { ResourceTable, type ResourceColumn } from '../components/ResourceTable';
 import { RoutesTable } from '../components/RoutesTable';
 import { NaclEntriesTable } from '../components/RuleTables';
 import { unsupportedTab } from '../components/unsupportedTab';
 import { single, useSelection } from '../components/useSelection';
-import { DASH, OWNER_ID, arn, orDash, titleOf, yesNo } from '../components/values';
+import { DASH, OWNER_ID, arn, idAndName, orDash, titleOf, yesNo } from '../components/values';
 import { applyChange, useStatus, useTopologyReady, useVpcFiltered } from '../data';
 
 /**
- * VPC console › Subnets. Columns, actions, tabs and detail fields from the capture
- * `vpc-virtual_private_cloud-subnets.txt` (2026-11-03). Zone IDs, IPv6, customer-owned
- * pools, reservations and DNS settings are not modeled.
- * Associations: RT-01, NACL-01. Available addresses: ADR-04.
+ * VPC console › Subnets. Columns and actions from the capture
+ * `vpc-virtual_private_cloud-subnets.txt` (2026-11-05); "Internet access" values, the
+ * "id | name" cells and the Route table and Network ACL tabs from the 2026-11-06 captures
+ * (`…-subnets-private.txt`, `…-subnets-public_and_private.txt`,
+ * `…-subnets-selection-route_table_tab.txt`, `…-subnets-selection-network_acl_tab.txt`).
+ * Details tab fields and their column order from
+ * `…-subnets-selection-private-details_tab.txt` (2026-11-06); settings R0 doesn't model show
+ * the captured value of a new subnet. Zone IDs, IPv6, customer-owned pools, reservations and
+ * DNS settings are not modeled.
+ * Associations: RT-01, NACL-01. Internet access: RT-09. Available addresses: ADR-04.
  */
 export function Subnets() {
   const topology = useTopology();
@@ -32,7 +38,19 @@ export function Subnets() {
   const current = topology.subnets.find((subnet) => subnet.id === currentId) ?? null;
   const currentStatus = current === null ? undefined : status.subnets[current.id];
 
-  const routeTableOf = (subnet: Subnet) => status.subnets[subnet.id]?.routeTableId ?? DASH;
+  const routeTableOf = (subnet: Subnet) => {
+    const id = status.subnets[subnet.id]?.routeTableId;
+    if (id === undefined) return DASH;
+    return idAndName(id, topology.routeTables.find((table) => table.id === id)?.name);
+  };
+  const vpcOf = (subnet: Subnet) =>
+    idAndName(subnet.vpcId, topology.vpcs.find((vpc) => vpc.id === subnet.vpcId)?.name);
+  // "Yes (public)" also when the only internet gateway route is blackhole, as captured (RT-09).
+  const internetAccessOf = (subnet: Subnet) => {
+    const type = status.subnets[subnet.id]?.type;
+    if (type === undefined) return DASH;
+    return type === 'public' ? 'Yes (public)' : 'No (private)';
+  };
   const aclOf = (subnet: Subnet) => status.subnets[subnet.id]?.networkAclId ?? DASH;
 
   const columns: ResourceColumn<Subnet>[] = [
@@ -46,7 +64,7 @@ export function Subnets() {
     },
     { id: 'id', header: 'Subnet ID', value: (subnet) => subnet.id },
     { id: 'state', header: 'State', value: () => 'Available' },
-    { id: 'vpc', header: 'VPC', value: (subnet) => subnet.vpcId },
+    { id: 'vpc', header: 'VPC', value: vpcOf },
     { id: 'bpa', header: 'Block Public Access', value: () => 'Off' },
     { id: 'ipv4', header: 'IPv4 CIDR', value: (subnet) => subnet.cidrBlock },
     { id: 'ipv6', header: 'IPv6 CIDR', value: () => DASH },
@@ -57,7 +75,10 @@ export function Subnets() {
       value: (subnet) => String(status.subnets[subnet.id]?.availableIpv4Count ?? DASH),
     },
     { id: 'az', header: 'Availability Zone', value: (subnet) => subnet.availabilityZone },
+    // R0 has no Local Zones, so the border group is the region, as captured.
+    { id: 'border-group', header: 'Network border group', value: () => topology.region },
     { id: 'route-table', header: 'Route table', value: routeTableOf },
+    { id: 'internet-access', header: 'Internet access', value: internetAccessOf },
     { id: 'network-acl', header: 'Network ACL', value: aclOf },
     { id: 'default', header: 'Default subnet', value: () => 'No' },
     {
@@ -157,30 +178,43 @@ export function Subnets() {
                   id: 'details',
                   label: 'Details',
                   content: (
-                    <KeyValuePairs
-                      columns={4}
-                      items={[
-                        { label: 'Subnet ID', value: current.id },
-                        { label: 'IPv4 CIDR', value: current.cidrBlock },
-                        { label: 'Availability Zone', value: current.availabilityZone },
-                        { label: 'Default subnet', value: 'No' },
-                        { label: 'Subnet ARN', value: arn(topology.region, 'subnet', current.id) },
-                        {
-                          label: 'Available IPv4 addresses',
-                          value: currentStatus.availableIpv4Count,
-                        },
-                        { label: 'VPC', value: current.vpcId },
-                        {
-                          label: 'Auto-assign public IPv4 address',
-                          value: yesNo(current.mapPublicIpOnLaunch),
-                        },
-                        { label: 'Owner', value: OWNER_ID },
-                        { label: 'State', value: 'Available' },
-                        { label: 'IPv6 CIDR', value: DASH },
-                        { label: 'Route table', value: currentStatus.routeTableId },
-                        { label: 'Auto-assign IPv6 address', value: 'No' },
-                        { label: 'Block Public Access', value: 'Off' },
-                        { label: 'Network ACL', value: currentStatus.networkAclId },
+                    <ColumnPairs
+                      columns={[
+                        [
+                          ['Subnet ID', current.id],
+                          ['IPv4 CIDR', current.cidrBlock],
+                          ['Availability Zone', current.availabilityZone],
+                          ['Network ACL', currentStatus.networkAclId],
+                          ['Auto-assign customer-owned IPv4 address', 'No'],
+                          ['IPv6 CIDR reservations', DASH],
+                          ['Resource name DNS AAAA record', 'Disabled'],
+                        ],
+                        [
+                          ['Subnet ARN', arn(topology.region, 'subnet', current.id)],
+                          ['Available IPv4 addresses', currentStatus.availableIpv4Count],
+                          ['Network border group', topology.region],
+                          ['Default subnet', 'No'],
+                          ['Customer-owned IPv4 pool', DASH],
+                          ['IPv6-only', 'No'],
+                          ['DNS64', 'Disabled'],
+                        ],
+                        [
+                          ['State', 'Available'],
+                          ['IPv6 CIDR', DASH],
+                          ['VPC', vpcOf(current)],
+                          ['Auto-assign public IPv4 address', yesNo(current.mapPublicIpOnLaunch)],
+                          ['Outpost ID', DASH],
+                          ['Hostname type', 'IP name'],
+                          ['Owner', OWNER_ID],
+                        ],
+                        [
+                          ['Block Public Access', 'Off'],
+                          ['IPv6 CIDR association ID', DASH],
+                          ['Route table', routeTableOf(current)],
+                          ['Auto-assign IPv6 address', 'No'],
+                          ['IPv4 CIDR reservations', DASH],
+                          ['Resource name DNS A record', 'Disabled'],
+                        ],
                       ]}
                     />
                   ),
@@ -190,59 +224,113 @@ export function Subnets() {
                   id: 'route-table',
                   label: 'Route table',
                   content: (
-                    <RoutesTable
-                      routes={routeTable?.routes ?? []}
-                      header={
-                        <Header
-                          variant="h3"
-                          actions={
+                    <SpaceBetween size="m">
+                      <Header
+                        variant="h3"
+                        actions={
+                          <SpaceBetween direction="horizontal" size="xs">
+                            <Button
+                              onClick={() => {
+                                void navigate(
+                                  `/vpc/route-tables/${currentStatus.routeTableId}/edit-routes`,
+                                );
+                              }}
+                            >
+                              Edit routes
+                            </Button>
                             <Button
                               onClick={() => {
                                 go('edit-route-table-association');
                               }}
                             >
-                              Edit route table association
+                              Replace route table
                             </Button>
-                          }
-                        >
-                          {`Route table: ${currentStatus.routeTableId}`}
-                        </Header>
-                      }
-                    />
+                          </SpaceBetween>
+                        }
+                      >
+                        {`Route table: ${currentStatus.routeTableId}`}
+                      </Header>
+                      <RoutesTable
+                        routes={routeTable?.routes ?? []}
+                        columns="destination-target"
+                        header={
+                          <Header
+                            variant="h3"
+                            counter={`(${String(routeTable?.routes.length ?? 0)})`}
+                          >
+                            Routes
+                          </Header>
+                        }
+                      />
+                    </SpaceBetween>
                   ),
                 },
                 {
                   id: 'network-acl',
                   label: 'Network ACL',
                   content: (
-                    <SpaceBetween size="l">
-                      <NaclEntriesTable
-                        direction="inbound"
-                        entries={acl?.inboundEntries ?? []}
-                        header={
-                          <Header
-                            variant="h3"
-                            actions={
-                              <Button
-                                onClick={() => {
-                                  go('edit-network-acl-association');
-                                }}
-                              >
-                                Edit network ACL association
-                              </Button>
-                            }
+                    <SpaceBetween size="m">
+                      <Header
+                        variant="h3"
+                        actions={
+                          <Button
+                            onClick={() => {
+                              go('edit-network-acl-association');
+                            }}
                           >
-                            {`Network ACL: ${currentStatus.networkAclId}`}
-                          </Header>
+                            Replace network ACL
+                          </Button>
                         }
-                      />
-                      <NaclEntriesTable direction="outbound" entries={acl?.outboundEntries ?? []} />
+                        // Captured for a subnet on the default network ACL only; the text
+                        // for an explicit association isn't captured, so none is shown.
+                        description={
+                          currentStatus.networkAclAssociation === 'default'
+                            ? "This subnet uses the VPC's default network ACL."
+                            : undefined
+                        }
+                      >
+                        {`Network ACL: ${currentStatus.networkAclId}`}
+                      </Header>
+                      {(['inbound', 'outbound'] as const).map((direction) => {
+                        const entries =
+                          (direction === 'inbound' ? acl?.inboundEntries : acl?.outboundEntries) ??
+                          [];
+                        const label = direction === 'inbound' ? 'Inbound' : 'Outbound';
+                        return (
+                          <NaclEntriesTable
+                            key={direction}
+                            direction={direction}
+                            entries={entries}
+                            header={
+                              <Header
+                                variant="h3"
+                                // The count includes the `*` rule, as captured ("Inbound rules (2)").
+                                counter={`(${String(entries.length + 1)})`}
+                                actions={
+                                  <Button
+                                    onClick={() => {
+                                      void navigate(
+                                        `/vpc/network-acls/${currentStatus.networkAclId}/edit-${direction}-rules`,
+                                      );
+                                    }}
+                                  >
+                                    {`Edit ${direction} rules`}
+                                  </Button>
+                                }
+                              >
+                                {`${label} rules`}
+                              </Header>
+                            }
+                          />
+                        );
+                      })}
                     </SpaceBetween>
                   ),
                 },
                 unsupportedTab('cidr-reservations', 'CIDR reservations'),
                 unsupportedTab('sharing', 'Sharing'),
                 unsupportedTab('tags', 'Tags'),
+                unsupportedTab('related-resources', 'Related resources'),
               ]
         }
       />

@@ -78,11 +78,11 @@ describe('deriveStatus', () => {
     expect(status.subnets['subnet-0000000b']?.type).toBe('private');
   });
 
-  it('RT-09: a subnet whose only IGW route is blackhole is private (Inferred, Q8)', () => {
+  it('RT-09: a subnet whose only IGW route is blackhole is public, as the console shows (Q8)', () => {
     const status = statusFor((input) => {
       delete at(input.internetGateways, 0).attachedVpcId;
     });
-    expect(status.subnets['subnet-0000000a']?.type).toBe('private');
+    expect(status.subnets['subnet-0000000a']?.type).toBe('public');
     expect(status.routeTables['rtb-00000002']?.routes[1]).toEqual({
       destinationCidrBlock: '0.0.0.0/0',
       target: 'igw-0000000a',
@@ -100,6 +100,15 @@ describe('deriveStatus', () => {
     });
     expect(status.routeTables['rtb-00000002']?.routes[1]?.state).toBe('blackhole');
     expect(status.vpcs['vpc-0000000b']).toEqual({ internetGatewayId: 'igw-0000000a' });
+  });
+
+  it('RT-09: a route to an internet gateway of another VPC still makes the subnet public (Inferred, Q8)', () => {
+    const status = statusFor((input) => {
+      addOtherVpc(input);
+      at(input.internetGateways, 0).attachedVpcId = 'vpc-0000000b';
+    });
+    expect(status.routeTables['rtb-00000002']?.routes[1]?.state).toBe('blackhole');
+    expect(status.subnets['subnet-0000000a']?.type).toBe('public');
   });
 
   it('RT-01: implicit and explicit associations to the main table', () => {

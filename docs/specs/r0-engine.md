@@ -598,7 +598,7 @@ type Status = {
 };
 ```
 
-- `public` means at least one `active` route to an internet gateway (RT-09; blackhole case Inferred, Q8).
+- `public` means at least one route to an internet gateway, active or blackhole, as the console shows (RT-09, decided 2026-11-06 in `q8-public-subnet.md`).
 - SSM managed status is R1 (SSM-01 to SSM-05).
 
 ## 7. Fidelity summary
@@ -611,7 +611,7 @@ type Status = {
 | Main route table and associations                  | Exact                                      | RT-01                      |
 | Local route, longest prefix match                  | Exact                                      | RT-03, RT-04               |
 | Blackhole state                                    | Exact (selection Inferred)                 | RT-08, Q8                  |
-| Public subnet                                      | Exact                                      | RT-09                      |
+| Public subnet                                      | Exact (blackhole via another VPC Inferred) | RT-09, Q8                  |
 | Internet gateway translation and checks            | Exact                                      | IGW-01..03, IGW-05, IGW-06 |
 | No route lookup on arrival, return through the IGW | Inferred                                   | RT-02, IGW-04, Q1          |
 | No attached IGW for inbound internet traffic       | Inferred                                   | IGW-05, Q10                |
@@ -681,7 +681,8 @@ CIDR property tests (fast-check) follow the addressing reference (P3).
 ### 8.4 deriveStatus
 
 - `RT-09: a subnet with an active route to an IGW is public; without one it is private`.
-- `RT-09: a subnet whose only IGW route is blackhole is private` (Inferred, Q8).
+- `RT-09: a subnet whose only IGW route is blackhole is public, as the console shows (Q8)`.
+- `RT-09: a route to an internet gateway of another VPC still makes the subnet public (Inferred, Q8)`.
 - `RT-01: implicit and explicit associations to the main table`.
 - `RT-03: every route table lists the local route first with origin CreateRouteTable`.
 - `ADR-04: available IPv4 count of a /24 with one instance is 250`.
@@ -750,7 +751,7 @@ New rules added from the same pages: ADR-09, ADR-10, RT-11, IGW-06, SG-06, SG-07
 
 ## 11. Open questions and decisions to confirm
 
-Open questions (skill files): Q1, Q8 and Q11 (routing), Q3 (filtering, R1), Q7 (trace order), Q9 (addressing), Q10 (no attached internet gateway).
+Open questions (skill files): Q1 and Q11 (routing; Q8 answered 2026-11-06), Q3 (filtering, R1), Q7 (trace order), Q9 (addressing), Q10 (no attached internet gateway).
 
 Helper decisions (P7, confirmed 2026-11-04): deterministic IDs as in section 3.8; first free private address; public pool 203.0.113.0/24; `<region>a` for "No preference"; "Simulated software" at launch; `newErrors` rejects changes; console deletion deferred.
 

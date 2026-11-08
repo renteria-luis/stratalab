@@ -1,32 +1,33 @@
 import Button from '@cloudscape-design/components/button';
 import ButtonDropdown from '@cloudscape-design/components/button-dropdown';
-import KeyValuePairs from '@cloudscape-design/components/key-value-pairs';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import StatusIndicator from '@cloudscape-design/components/status-indicator';
-import Table from '@cloudscape-design/components/table';
 import { setNameTag, type Instance } from '@sim/engine';
 import { useNavigate } from 'react-router';
 import { useT } from '../../i18n/useT';
 import { useTopology } from '../../state/topologyStore';
 import { ActionsDropdown } from '../components/Actions';
 import { DetailsPanel } from '../components/DetailsPanel';
-import { FidelityLabel } from '../components/FidelityLabel';
-import { LabelWithFidelity } from '../components/FormHelpers';
 import { ResourceTable, type ResourceColumn } from '../components/ResourceTable';
 import { unsupportedTab } from '../components/unsupportedTab';
 import { single, useSelection } from '../components/useSelection';
-import { DASH, OWNER_ID, orDash, titleOf } from '../components/values';
+import { DASH, orDash, titleOf } from '../components/values';
 import { applyChange, useTopologyReady } from '../data';
+import {
+  InstanceDetailsTab,
+  InstanceNetworkingTab,
+  InstanceSecurityTab,
+  InstanceTagsTab,
+} from './InstanceDetails';
+import { PLATFORM_DETAILS } from './platform';
 
 /**
  * EC2 console › Instances. Columns, buttons, empty state and the Actions menu from the
  * capture `ec2-instances-instances.txt` (2026-11-03). Every R0 instance is running
  * (r0-engine.md 3.7); instance types, key pairs, monitoring and launch time aren't modeled.
  * "Platform details" values: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/billing-info-fields.html
- * The details tabs follow the AWS docs until a capture of them exists.
+ * Details tabs: `InstanceDetails.tsx` (captures of 2026-11-05).
  */
-
-const PLATFORM_DETAILS = { linux: 'Linux/UNIX', windows: 'Windows' } as const;
 
 export function Instances() {
   const { t } = useT();
@@ -234,108 +235,26 @@ export function Instances() {
                 {
                   id: 'details',
                   label: 'Details',
-                  content: (
-                    <KeyValuePairs
-                      columns={3}
-                      items={[
-                        { label: 'Instance ID', value: current.id },
-                        { label: 'Public IPv4 address', value: orDash(publicAddress(current)) },
-                        {
-                          label: 'Private IPv4 addresses',
-                          value: current.primaryNetworkInterface.privateIpAddress,
-                        },
-                        {
-                          label: 'Instance state',
-                          value: <StatusIndicator type="success">Running</StatusIndicator>,
-                        },
-                        { label: 'Platform details', value: PLATFORM_DETAILS[current.platform] },
-                        {
-                          label: 'Launch time',
-                          value: (
-                            <LabelWithFidelity
-                              label={DASH}
-                              badge={
-                                <FidelityLabel fidelity="Unsupported" note={t('sim.launchTime')} />
-                              }
-                            />
-                          ),
-                        },
-                        { label: 'Owner', value: OWNER_ID },
-                      ]}
-                    />
-                  ),
+                  content: <InstanceDetailsTab topology={topology} instance={current} />,
                 },
                 unsupportedTab('status', 'Status and alarms'),
                 unsupportedTab('monitoring', 'Monitoring'),
                 {
                   id: 'security',
                   label: 'Security',
-                  content: (
-                    <KeyValuePairs
-                      columns={2}
-                      items={[
-                        {
-                          label: 'Security groups',
-                          value: current.primaryNetworkInterface.securityGroupIds
-                            .map((id) => `${id} (${groupName(id)})`)
-                            .join(', '),
-                        },
-                        { label: 'IAM Role', value: DASH },
-                      ]}
-                    />
-                  ),
+                  content: <InstanceSecurityTab topology={topology} instance={current} />,
                 },
                 {
                   id: 'networking',
                   label: 'Networking',
-                  content: (
-                    <SpaceBetween size="l">
-                      <KeyValuePairs
-                        columns={3}
-                        items={[
-                          { label: 'Public IPv4 address', value: orDash(publicAddress(current)) },
-                          {
-                            label: 'Private IPv4 addresses',
-                            value: current.primaryNetworkInterface.privateIpAddress,
-                          },
-                          {
-                            label: 'VPC ID',
-                            value: orDash(
-                              topology.subnets.find(
-                                (subnet) => subnet.id === current.primaryNetworkInterface.subnetId,
-                              )?.vpcId,
-                            ),
-                          },
-                          { label: 'Subnet ID', value: current.primaryNetworkInterface.subnetId },
-                          { label: 'Availability Zone', value: zoneOf(current) },
-                          { label: 'Elastic IP addresses', value: orDash(elasticIp(current)) },
-                        ]}
-                      />
-                      <Table
-                        variant="embedded"
-                        header="Network interfaces"
-                        items={[current.primaryNetworkInterface]}
-                        trackBy="id"
-                        columnDefinitions={[
-                          { id: 'id', header: 'Interface ID', cell: (eni) => eni.id },
-                          { id: 'subnet', header: 'Subnet ID', cell: (eni) => eni.subnetId },
-                          {
-                            id: 'private',
-                            header: 'Private IPv4 address',
-                            cell: (eni) => eni.privateIpAddress,
-                          },
-                          {
-                            id: 'public',
-                            header: 'Public IPv4 address',
-                            cell: (eni) => orDash(eni.publicIp?.address),
-                          },
-                        ]}
-                      />
-                    </SpaceBetween>
-                  ),
+                  content: <InstanceNetworkingTab topology={topology} instance={current} />,
                 },
                 unsupportedTab('storage', 'Storage'),
-                unsupportedTab('tags', 'Tags'),
+                {
+                  id: 'tags',
+                  label: 'Tags',
+                  content: <InstanceTagsTab instance={current} />,
+                },
               ]
         }
       />
