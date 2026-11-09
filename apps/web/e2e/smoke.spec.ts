@@ -26,7 +26,9 @@ test('SMOKE: the app opens straight into Console Home', async ({ page }) => {
   await expectNoWcagViolations(page);
 });
 
-test('SMOKE: Alt+S, search "macie", open it and see the reference notice', async ({ page }) => {
+test('SMOKE: Alt+S, search "macie", open it and see the reference notice and card', async ({
+  page,
+}) => {
   await page.goto('/');
   await expect(
     page.getByRole('heading', { level: 1, name: CONSOLE_TEXT['home.title'] }),
@@ -40,7 +42,8 @@ test('SMOKE: Alt+S, search "macie", open it and see the reference notice', async
   await expect(page).toHaveURL(/\/reference\/macie$/);
   await expect(page.getByRole('heading', { level: 1, name: 'Amazon Macie' })).toBeVisible();
   await expect(page.getByText(en['reference.notice'])).toBeVisible();
-  await expect(page.getByText(en['reference.noCard'])).toBeVisible();
+  // Macie has a reference card since batch 2 (2026-11-06).
+  await expect(page.getByRole('heading', { name: en['reference.card'] })).toBeVisible();
   await expectNoWcagViolations(page);
 });
 

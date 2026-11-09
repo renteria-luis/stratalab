@@ -1,0 +1,79 @@
+{
+  "serviceId": "cognito",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html",
+      "title": "What is Amazon Cognito?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html",
+      "title": "User pool feature plans",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html",
+      "title": "What is IAM Identity Center?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "An identity platform for web and mobile apps that acts as a user directory, an authentication server and an authorization service. User pools sign users in, also through providers such as Google, Facebook or an enterprise directory, and identity pools exchange tokens for temporary AWS credentials.",
+    "examCues": [
+      "Add sign-up and sign-in to a mobile or web app → Cognito (user pool)",
+      "Let the users of an app sign in with Google or Facebook → Cognito",
+      "Give app users temporary AWS credentials to reach services such as S3 → Cognito (identity pool)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iam-identity-center",
+        "difference": "IAM Identity Center gives your workforce access to AWS accounts and applications; Cognito handles the users of the apps you build."
+      },
+      {
+        "serviceId": "iam",
+        "difference": "IAM manages identities that work inside your AWS accounts; Cognito manages your app's end users and can map them to IAM roles."
+      }
+    ],
+    "pricingModel": "User pools are billed mainly per monthly active user, at a rate set by the pool's feature plan (Lite, Essentials or Plus). Users from SAML or OIDC providers and machine-to-machine authorization add their own charges.",
+    "sharedResponsibility": {
+      "aws": [
+        "Hosts the user directory and issues the tokens",
+        "Exchanges trusted tokens for temporary, limited AWS credentials in identity pools"
+      ],
+      "customer": [
+        "Configures sign-in options, providers and security settings such as MFA",
+        "Gives identity pool roles only the AWS permissions the app needs"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Una plataforma de identidad para apps web y móviles que funciona como directorio de usuarios, servidor de autenticación y servicio de autorización. Los user pools inician la sesión de los usuarios, también con proveedores como Google, Facebook o un directorio empresarial, y los identity pools cambian tokens por credenciales temporales de AWS.",
+    "examCues": [
+      "Agregar registro e inicio de sesión a una app móvil o web → Cognito (user pool)",
+      "Permitir que los usuarios de una app inicien sesión con Google o Facebook → Cognito",
+      "Dar a los usuarios de una app credenciales temporales de AWS para llegar a servicios como S3 → Cognito (identity pool)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iam-identity-center",
+        "difference": "IAM Identity Center da a tu personal acceso a cuentas y aplicaciones de AWS; Cognito maneja a los usuarios de las apps que construyes."
+      },
+      {
+        "serviceId": "iam",
+        "difference": "IAM administra identidades que trabajan dentro de tus cuentas de AWS; Cognito administra a los usuarios finales de tu app y puede asignarles roles de IAM."
+      }
+    ],
+    "pricingModel": "Los user pools se cobran sobre todo por usuario activo al mes, con una tarifa que fija el feature plan del pool (Lite, Essentials o Plus). Los usuarios de proveedores SAML u OIDC y la autorización entre máquinas suman sus propios cargos.",
+    "sharedResponsibility": {
+      "aws": [
+        "Aloja el directorio de usuarios y emite los tokens",
+        "Cambia tokens de confianza por credenciales de AWS temporales y limitadas en los identity pools"
+      ],
+      "customer": [
+        "Configura las opciones de inicio de sesión, los proveedores y la seguridad, como MFA",
+        "Da a los roles del identity pool solo los permisos de AWS que la app necesita"
+      ]
+    }
+  }
+}

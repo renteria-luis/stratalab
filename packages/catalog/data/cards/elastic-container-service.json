@@ -1,0 +1,84 @@
+{
+  "serviceId": "elastic-container-service",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html",
+      "title": "What is Amazon Elastic Container Service?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/usage-reports.html",
+      "title": "Amazon ECS usage reports",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+      "title": "What is AWS Lambda?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html",
+      "title": "What is Amazon EKS?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed container orchestration service that deploys, manages and scales containerized applications. Containers run on EC2 instances that you manage, on ECS Managed Instances, or on AWS Fargate, the serverless option where you don't manage servers.",
+    "examCues": [
+      "Run Docker containers on AWS without managing a control plane → Elastic Container Service",
+      "Run containers without managing servers or planning capacity → Elastic Container Service (AWS Fargate)",
+      "Choose between your own EC2 instances and a serverless engine for the same containers → Elastic Container Service"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "elastic-kubernetes-service",
+        "difference": "EKS runs Kubernetes clusters; ECS is AWS's own container orchestrator, with no Kubernetes to manage."
+      },
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda runs function code in response to events; ECS runs and scales your container images."
+      }
+    ],
+    "pricingModel": "On Fargate you pay for the vCPU and memory that your tasks use; with EC2 capacity you pay for the instances, not per task.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the orchestration and schedules your tasks",
+        "With Fargate, provides and maintains the servers that run your tasks"
+      ],
+      "customer": [
+        "Builds and secures the container images",
+        "Chooses EC2, Managed Instances or Fargate, and manages the EC2 instances when it chooses them"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio totalmente administrado de orquestación de contenedores que despliega, administra y escala aplicaciones en contenedores. Los contenedores corren en instancias EC2 que tú administras, en ECS Managed Instances o en AWS Fargate, la opción serverless donde no administras servidores.",
+    "examCues": [
+      "Ejecutar contenedores Docker en AWS sin administrar un plano de control → Elastic Container Service",
+      "Ejecutar contenedores sin administrar servidores ni planear capacidad → Elastic Container Service (AWS Fargate)",
+      "Elegir entre tus propias instancias EC2 y un motor serverless para los mismos contenedores → Elastic Container Service"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "elastic-kubernetes-service",
+        "difference": "EKS ejecuta clústeres de Kubernetes; ECS es el orquestador de contenedores propio de AWS, sin Kubernetes que administrar."
+      },
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda ejecuta código de funciones en respuesta a eventos; ECS ejecuta y escala tus imágenes de contenedor."
+      }
+    ],
+    "pricingModel": "En Fargate pagas por la vCPU y la memoria que usan tus tareas; con capacidad de EC2 pagas por las instancias, no por tarea.",
+    "sharedResponsibility": {
+      "aws": [
+        "Ejecuta la orquestación y programa tus tareas",
+        "Con Fargate, aporta y mantiene los servidores que ejecutan tus tareas"
+      ],
+      "customer": [
+        "Construye y protege las imágenes de contenedor",
+        "Elige EC2, Managed Instances o Fargate, y administra las instancias EC2 cuando las elige"
+      ]
+    }
+  }
+}

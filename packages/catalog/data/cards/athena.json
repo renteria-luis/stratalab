@@ -1,0 +1,72 @@
+{
+  "serviceId": "athena",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/athena/latest/ug/what-is.html",
+      "title": "What is Amazon Athena?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/redshift/latest/mgmt/welcome.html",
+      "title": "What is Amazon Redshift?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A serverless, interactive query service that analyzes data directly in Amazon S3 with standard SQL. It can also run Apache Spark applications without resources to plan or manage.",
+    "examCues": [
+      "Run ad-hoc SQL queries on log files stored in S3 without loading them anywhere → Athena",
+      "Analyze data in S3 with no servers to manage, paying per query → Athena"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "redshift",
+        "difference": "Redshift is a managed data warehouse you load data into; Athena queries data where it already sits in S3."
+      },
+      {
+        "serviceId": "s3",
+        "difference": "S3 stores the data; Athena reads it there to answer SQL queries."
+      }
+    ],
+    "pricingModel": "You pay only for the queries you run; there is no infrastructure to set up.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs and scales the query engine, running queries in parallel",
+        "Keeps the service serverless, with nothing to provision"
+      ],
+      "customer": [
+        "Organizes the data in S3 and defines the tables that describe it",
+        "Controls access to the data and to the query results"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de consultas interactivas y serverless que analiza datos directamente en Amazon S3 con SQL estándar. También puede ejecutar aplicaciones de Apache Spark sin recursos que planear ni administrar.",
+    "examCues": [
+      "Ejecutar consultas SQL puntuales sobre archivos de log guardados en S3 sin cargarlos en otro lugar → Athena",
+      "Analizar datos en S3 sin servidores que administrar, pagando por consulta → Athena"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "redshift",
+        "difference": "Redshift es un data warehouse administrado al que cargas los datos; Athena consulta los datos donde ya están, en S3."
+      },
+      {
+        "serviceId": "s3",
+        "difference": "S3 guarda los datos; Athena los lee ahí para responder consultas SQL."
+      }
+    ],
+    "pricingModel": "Pagas solo por las consultas que ejecutas; no hay infraestructura que configurar.",
+    "sharedResponsibility": {
+      "aws": [
+        "Ejecuta y escala el motor de consultas, con consultas en paralelo",
+        "Mantiene el servicio serverless, sin nada que aprovisionar"
+      ],
+      "customer": [
+        "Organiza los datos en S3 y define las tablas que los describen",
+        "Controla el acceso a los datos y a los resultados de las consultas"
+      ]
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "serviceId": "support",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/awssupport/latest/user/getting-started.html",
+      "title": "Getting started with AWS Support",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/awssupport/latest/user/support-plans-eos.html",
+      "title": "Developer, Business, and Enterprise On-Ramp end of support",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/awssupport/latest/user/case-management.html",
+      "title": "Case management",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html",
+      "title": "AWS Trusted Advisor",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Gives you help from AWS experts through support cases, plus tools such as Trusted Advisor, with paid plans that add faster response times and more guidance. All plans, including Basic, include customer service, documentation, technical papers and forums at all hours.",
+    "examCues": [
+      "Get a first response in under 15 minutes when a business-critical system is down → AWS Support (Enterprise Support)",
+      "Open technical cases with response-time targets for production problems → AWS Support (Business Support+ or higher)",
+      "A designated technical account manager (TAM) → AWS Support (Enterprise Support)",
+      "A question names the Developer, Business or Enterprise On-Ramp plan → AWS Support (plans that end on January 1, 2027, outside AWS GovCloud (US))"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor runs automated best-practice checks; AWS Support is the help from AWS staff, and your plan decides how many Trusted Advisor checks you get."
+      },
+      {
+        "serviceId": "health-dashboard",
+        "difference": "AWS Health tells you about AWS events that affect your resources; AWS Support is where you open cases and get help."
+      }
+    ],
+    "pricingModel": "Paid plans charge a monthly fee with a minimum per account; higher plans cost more and add faster response-time targets and more guidance.",
+    "sharedResponsibility": {
+      "aws": [
+        "Answers cases within the response-time targets of your plan and severity",
+        "Provides Trusted Advisor checks; the full set needs Business Support+, Enterprise Support or Unified Operations"
+      ],
+      "customer": [
+        "Chooses a plan that matches how critical its workloads are",
+        "Opens cases with the right severity and the details AWS needs",
+        "Plans the move away from Developer or Business Support before they end on January 1, 2027"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Te da ayuda de expertos de AWS mediante casos de soporte y herramientas como Trusted Advisor, con planes de pago que agregan tiempos de respuesta más rápidos y más acompañamiento. Todos los planes, incluido Basic, incluyen atención al cliente, documentación, documentos técnicos y foros a toda hora.",
+    "examCues": [
+      "Recibir una primera respuesta en menos de 15 minutos cuando un sistema crítico para el negocio está caído → AWS Support (Enterprise Support)",
+      "Abrir casos técnicos con tiempos de respuesta objetivo para problemas en producción → AWS Support (Business Support+ o superior)",
+      "Un technical account manager (TAM) asignado → AWS Support (Enterprise Support)",
+      "Una pregunta menciona el plan Developer, Business o Enterprise On-Ramp → AWS Support (planes que terminan el 1 de enero de 2027, fuera de AWS GovCloud (US))"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor ejecuta revisiones automáticas de buenas prácticas; AWS Support es la ayuda del personal de AWS, y tu plan decide cuántas revisiones de Trusted Advisor tienes."
+      },
+      {
+        "serviceId": "health-dashboard",
+        "difference": "AWS Health te avisa de eventos de AWS que afectan tus recursos; AWS Support es donde abres casos y recibes ayuda."
+      }
+    ],
+    "pricingModel": "Los planes de pago cobran una tarifa mensual con un mínimo por cuenta; los planes más altos cuestan más y agregan tiempos de respuesta más rápidos y más acompañamiento.",
+    "sharedResponsibility": {
+      "aws": [
+        "Responde los casos dentro de los tiempos objetivo de tu plan y de la severidad",
+        "Ofrece las revisiones de Trusted Advisor; el conjunto completo requiere Business Support+, Enterprise Support o Unified Operations"
+      ],
+      "customer": [
+        "Elige un plan acorde a lo críticas que son sus cargas de trabajo",
+        "Abre casos con la severidad correcta y los datos que AWS necesita",
+        "Planea dejar Developer o Business Support antes de que terminen el 1 de enero de 2027"
+      ]
+    }
+  }
+}

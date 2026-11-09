@@ -1,0 +1,79 @@
+{
+  "serviceId": "inspector",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/inspector/latest/user/what-is-inspector.html",
+      "title": "What is Amazon Inspector?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/inspector/latest/user/usage.html",
+      "title": "Monitoring Usage and Cost in Amazon Inspector",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html",
+      "title": "What is Amazon GuardDuty?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A vulnerability management service that automatically discovers EC2 instances, container images in Amazon ECR and Lambda functions and keeps scanning them. It reports software vulnerabilities and unintended network exposure as findings.",
+    "examCues": [
+      "Keep checking EC2 instances for software with known vulnerabilities → Inspector",
+      "Scan the container images stored in ECR → Inspector",
+      "Find EC2 instances reachable over the network in ways you didn't intend → Inspector (network exposure)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "guardduty",
+        "difference": "GuardDuty detects threats in account and network activity; Inspector finds weaknesses in the software and network settings of your workloads."
+      },
+      {
+        "serviceId": "config",
+        "difference": "Config checks resource settings against rules; Inspector looks for known software vulnerabilities inside instances, images and functions."
+      }
+    ],
+    "pricingModel": "You pay for what it scans, by scan type; the console shows your usage and a projected monthly cost, and some scan types start with a free trial.",
+    "sharedResponsibility": {
+      "aws": [
+        "Discovers eligible resources and rescans them without scheduled jobs",
+        "Creates a finding for each vulnerability or exposure it detects"
+      ],
+      "customer": [
+        "Activates Inspector for one account or for the whole organization",
+        "Patches software and fixes the exposures that findings report"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de gestión de vulnerabilidades que descubre de forma automática instancias EC2, imágenes de contenedor en Amazon ECR y funciones Lambda, y las sigue escaneando. Reporta como hallazgos las vulnerabilidades de software y la exposición de red no intencional.",
+    "examCues": [
+      "Revisar de forma continua las instancias EC2 en busca de software con vulnerabilidades conocidas → Inspector",
+      "Escanear las imágenes de contenedor guardadas en ECR → Inspector",
+      "Encontrar instancias EC2 alcanzables por la red de formas que no buscabas → Inspector (exposición de red)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "guardduty",
+        "difference": "GuardDuty detecta amenazas en la actividad de la cuenta y de la red; Inspector encuentra debilidades en el software y la configuración de red de tus cargas de trabajo."
+      },
+      {
+        "serviceId": "config",
+        "difference": "Config revisa la configuración de los recursos contra reglas; Inspector busca vulnerabilidades de software conocidas dentro de instancias, imágenes y funciones."
+      }
+    ],
+    "pricingModel": "Pagas por lo que escanea, según el tipo de escaneo; la consola muestra tu uso y un costo mensual proyectado, y algunos tipos de escaneo empiezan con una prueba gratis.",
+    "sharedResponsibility": {
+      "aws": [
+        "Descubre los recursos elegibles y los vuelve a escanear sin tareas programadas",
+        "Crea un hallazgo por cada vulnerabilidad o exposición que detecta"
+      ],
+      "customer": [
+        "Activa Inspector para una cuenta o para toda la organización",
+        "Aplica parches y corrige las exposiciones que reportan los hallazgos"
+      ]
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "serviceId": "redshift",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/redshift/latest/mgmt/welcome.html",
+      "title": "What is Amazon Redshift?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/athena/latest/ug/what-is.html",
+      "title": "What is Amazon Athena?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html",
+      "title": "What is Amazon Relational Database Service (Amazon RDS)?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/redshift/latest/mgmt/purchase-reserved-node-instance.html",
+      "title": "Reserved nodes",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed, petabyte-scale data warehouse that runs SQL queries for analytics and business intelligence. Redshift Serverless provisions and scales capacity automatically and doesn't charge while the warehouse is idle.",
+    "examCues": [
+      "Run complex SQL analytics over large amounts of structured data → Redshift",
+      "A data warehouse behind business intelligence dashboards → Redshift",
+      "Analytics with unpredictable demand and no warehouse to size in advance → Redshift (Redshift Serverless)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "aurora-and-rds",
+        "difference": "RDS and Aurora are relational databases for applications; Redshift is a data warehouse built for analytics over large datasets."
+      },
+      {
+        "serviceId": "athena",
+        "difference": "Athena queries data where it sits in S3; Redshift loads data into a managed warehouse."
+      }
+    ],
+    "pricingModel": "With Redshift Serverless you pay only for what you use and nothing while the warehouse is idle. Provisioned clusters bill each running compute node by the hour, and reserved nodes cost less than on-demand nodes.",
+    "sharedResponsibility": {
+      "aws": [
+        "Manages the warehouse and, with Serverless, provisions and scales its capacity",
+        "Runs queries with the SQL-based tools and BI applications you already use"
+      ],
+      "customer": ["Loads and models the data", "Controls who can access the data"]
+    }
+  },
+  "es": {
+    "summary": "Un data warehouse totalmente administrado y a escala de petabytes que ejecuta consultas SQL para análisis e inteligencia de negocios. Redshift Serverless aprovisiona y escala la capacidad de forma automática y no cobra mientras el warehouse está inactivo.",
+    "examCues": [
+      "Ejecutar análisis SQL complejos sobre grandes cantidades de datos estructurados → Redshift",
+      "Un data warehouse detrás de dashboards de inteligencia de negocios → Redshift",
+      "Análisis con demanda impredecible y sin warehouse que dimensionar de antemano → Redshift (Redshift Serverless)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "aurora-and-rds",
+        "difference": "RDS y Aurora son bases relacionales para aplicaciones; Redshift es un data warehouse hecho para análisis sobre grandes volúmenes de datos."
+      },
+      {
+        "serviceId": "athena",
+        "difference": "Athena consulta los datos donde están en S3; Redshift carga los datos en un warehouse administrado."
+      }
+    ],
+    "pricingModel": "Con Redshift Serverless pagas solo lo que usas y nada mientras el warehouse está inactivo. Los clústeres aprovisionados cobran por hora cada nodo de cómputo en ejecución, y los reserved nodes cuestan menos que los on-demand.",
+    "sharedResponsibility": {
+      "aws": [
+        "Administra el warehouse y, con Serverless, aprovisiona y escala su capacidad",
+        "Ejecuta consultas con las herramientas SQL y aplicaciones de BI que ya usas"
+      ],
+      "customer": ["Carga y modela los datos", "Controla quién puede acceder a los datos"]
+    }
+  }
+}

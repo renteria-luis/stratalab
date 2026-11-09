@@ -1,0 +1,84 @@
+{
+  "serviceId": "guardduty",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html",
+      "title": "What is Amazon GuardDuty?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-pricing.html",
+      "title": "Pricing in GuardDuty",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/inspector/latest/user/what-is-inspector.html",
+      "title": "What is Amazon Inspector?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html",
+      "title": "What is Amazon Macie?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A threat detection service that continuously analyzes data such as CloudTrail management events, VPC flow logs and DNS logs to find suspicious activity in your AWS environment. It uses threat intelligence and machine learning to report findings such as compromised credentials or cryptomining.",
+    "examCues": [
+      "Detect EC2 instances that mine cryptocurrency or contact known malicious IP addresses → GuardDuty",
+      "Find signs that AWS credentials were stolen and misused → GuardDuty",
+      "Turn on threat detection without setting up the log sources yourself → GuardDuty"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "inspector",
+        "difference": "Inspector scans workloads for software vulnerabilities and network exposure; GuardDuty watches activity for threats."
+      },
+      {
+        "serviceId": "macie",
+        "difference": "Macie finds sensitive data in S3; GuardDuty detects malicious or unauthorized activity."
+      }
+    ],
+    "pricingModel": "The first time you use it in a Region you get a 30-day free trial there; after that you pay for your usage of each protection plan.",
+    "sharedResponsibility": {
+      "aws": [
+        "Reads the foundational data sources on its own once enabled",
+        "Maintains the threat intelligence and machine learning models it uses"
+      ],
+      "customer": [
+        "Turns GuardDuty on in each account and Region it wants covered",
+        "Reviews the findings and responds to them"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de detección de amenazas que analiza de forma continua datos como los eventos de administración de CloudTrail, los VPC flow logs y los logs de DNS para encontrar actividad sospechosa en tu entorno de AWS. Usa inteligencia de amenazas y machine learning para reportar hallazgos como credenciales comprometidas o minería de criptomonedas.",
+    "examCues": [
+      "Detectar instancias EC2 que minan criptomonedas o contactan direcciones IP maliciosas conocidas → GuardDuty",
+      "Encontrar señales de que robaron y usaron mal credenciales de AWS → GuardDuty",
+      "Activar la detección de amenazas sin configurar tú las fuentes de logs → GuardDuty"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "inspector",
+        "difference": "Inspector escanea cargas de trabajo en busca de vulnerabilidades de software y exposición de red; GuardDuty vigila la actividad en busca de amenazas."
+      },
+      {
+        "serviceId": "macie",
+        "difference": "Macie encuentra datos sensibles en S3; GuardDuty detecta actividad maliciosa o no autorizada."
+      }
+    ],
+    "pricingModel": "La primera vez que lo usas en una región tienes una prueba gratis de 30 días ahí; después pagas por el uso de cada plan de protección.",
+    "sharedResponsibility": {
+      "aws": [
+        "Lee por su cuenta las fuentes de datos básicas una vez activado",
+        "Mantiene la inteligencia de amenazas y los modelos de machine learning que usa"
+      ],
+      "customer": [
+        "Activa GuardDuty en cada cuenta y región que quiere cubrir",
+        "Revisa los hallazgos y responde a ellos"
+      ]
+    }
+  }
+}

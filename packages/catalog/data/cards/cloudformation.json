@@ -1,0 +1,79 @@
+{
+  "serviceId": "cloudformation",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html",
+      "title": "What is CloudFormation?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html",
+      "title": "What is AWS Elastic Beanstalk?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-concepts.html",
+      "title": "CloudFormation registry concepts",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Lets you describe AWS resources in a template and creates them for you as a stack, working out the order and dependencies. Deleting the stack deletes its resources, so a whole environment is managed as one unit.",
+    "examCues": [
+      "Create the same environment again in another Region from one definition → CloudFormation",
+      "Infrastructure as code kept in version control like source code → CloudFormation",
+      "Remove every resource of a test environment in one step → CloudFormation (delete the stack)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "elastic-beanstalk",
+        "difference": "Elastic Beanstalk deploys a web application and manages its environment for you; CloudFormation creates whatever resources you describe in a template."
+      },
+      {
+        "serviceId": "systems-manager",
+        "difference": "Systems Manager operates nodes that already exist; CloudFormation provisions the resources in the first place."
+      }
+    ],
+    "pricingModel": "You pay for the AWS resources your stacks create, billed by each service as usual. Stacks that use private or activated third-party extensions can add charges for running those extensions.",
+    "sharedResponsibility": {
+      "aws": [
+        "Creates, updates and deletes the stack's resources in dependency order",
+        "Shows the state of each stack and its resources"
+      ],
+      "customer": [
+        "Writes and tests the templates",
+        "Keeps templates in version control and reviews changes before updating a stack"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Te permite describir recursos de AWS en una plantilla y los crea por ti como un stack, resolviendo el orden y las dependencias. Al borrar el stack se borran sus recursos, así que un entorno completo se administra como una sola unidad.",
+    "examCues": [
+      "Crear el mismo entorno otra vez en otra región a partir de una sola definición → CloudFormation",
+      "Infraestructura como código guardada en control de versiones como el código fuente → CloudFormation",
+      "Quitar todos los recursos de un entorno de pruebas en un solo paso → CloudFormation (borrar el stack)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "elastic-beanstalk",
+        "difference": "Elastic Beanstalk despliega una aplicación web y administra su entorno por ti; CloudFormation crea los recursos que describas en una plantilla."
+      },
+      {
+        "serviceId": "systems-manager",
+        "difference": "Systems Manager opera nodos que ya existen; CloudFormation es lo que crea los recursos."
+      }
+    ],
+    "pricingModel": "Pagas por los recursos de AWS que crean tus stacks, cobrados por cada servicio como siempre. Los stacks que usan extensiones privadas o de terceros activadas pueden sumar cargos por ejecutar esas extensiones.",
+    "sharedResponsibility": {
+      "aws": [
+        "Crea, actualiza y borra los recursos del stack en el orden de sus dependencias",
+        "Muestra el estado de cada stack y de sus recursos"
+      ],
+      "customer": [
+        "Escribe y prueba las plantillas",
+        "Guarda las plantillas en control de versiones y revisa los cambios antes de actualizar un stack"
+      ]
+    }
+  }
+}

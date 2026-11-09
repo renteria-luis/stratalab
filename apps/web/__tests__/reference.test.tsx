@@ -6,12 +6,12 @@ import { renderApp } from './renderApp';
 
 describe('ServiceReferenceView', () => {
   it('SHELL: a nav-only service with docsUrl shows the notice, "No card yet" and the docs link', async () => {
-    renderApp('/reference/macie');
-    expect(await screen.findByRole('heading', { level: 1, name: 'Amazon Macie' })).toBeDefined();
+    renderApp('/reference/detective');
+    expect(await screen.findByRole('heading', { level: 1, name: 'Detective' })).toBeDefined();
     expect(screen.getByText(en['reference.notice'])).toBeDefined();
     expect(screen.getByText(en['reference.noCard'])).toBeDefined();
     const docs = screen.getByRole('link', { name: new RegExp(en['reference.docsLink']) });
-    expect(docs.getAttribute('href')).toBe('https://docs.aws.amazon.com/macie/');
+    expect(docs.getAttribute('href')).toBe('https://docs.aws.amazon.com/detective/');
   });
 
   it('SHELL: a nav-only service without docsUrl shows no docs link', async () => {

@@ -1,0 +1,79 @@
+{
+  "serviceId": "iam-identity-center",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html",
+      "title": "What is IAM Identity Center?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+      "title": "Security best practices in IAM",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html",
+      "title": "What is IAM?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Connects your workforce users to AWS accounts and to AWS managed applications from one place. You can sync users and groups from your existing identity provider or create them directly in IAM Identity Center.",
+    "examCues": [
+      "Employees need one sign-in for many AWS accounts in an organization → IAM Identity Center",
+      "Use the company's existing identity provider to sign in to AWS → IAM Identity Center",
+      "Give people temporary access to accounts instead of long-term IAM user keys → IAM Identity Center"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iam",
+        "difference": "IAM defines users, roles and policies inside an account; IAM Identity Center is the recommended place to manage workforce access across accounts."
+      },
+      {
+        "serviceId": "cognito",
+        "difference": "Cognito handles the end users of the apps you build; IAM Identity Center handles your own employees' access to AWS."
+      }
+    ],
+    "pricingModel": "IAM Identity Center is offered at no additional charge.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provides one point of federation for AWS accounts and AWS managed applications",
+        "Gives users temporary credentials for the accounts they are assigned"
+      ],
+      "customer": [
+        "Connects the identity source or creates the users and groups",
+        "Assigns each user and group only the access it needs"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Conecta a los usuarios de tu personal con las cuentas de AWS y con las aplicaciones administradas por AWS desde un solo lugar. Puedes sincronizar usuarios y grupos desde tu proveedor de identidad actual o crearlos directamente en IAM Identity Center.",
+    "examCues": [
+      "Los empleados necesitan un solo inicio de sesión para muchas cuentas de AWS de una organización → IAM Identity Center",
+      "Usar el proveedor de identidad que ya tiene la empresa para entrar a AWS → IAM Identity Center",
+      "Dar a las personas acceso temporal a las cuentas en lugar de access keys de usuarios IAM de largo plazo → IAM Identity Center"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iam",
+        "difference": "IAM define usuarios, roles y políticas dentro de una cuenta; IAM Identity Center es el lugar recomendado para administrar el acceso del personal a varias cuentas."
+      },
+      {
+        "serviceId": "cognito",
+        "difference": "Cognito maneja a los usuarios finales de las apps que construyes; IAM Identity Center maneja el acceso de tus propios empleados a AWS."
+      }
+    ],
+    "pricingModel": "IAM Identity Center no tiene cargo adicional.",
+    "sharedResponsibility": {
+      "aws": [
+        "Ofrece un solo punto de federación para cuentas de AWS y aplicaciones administradas por AWS",
+        "Da a los usuarios credenciales temporales para las cuentas que tienen asignadas"
+      ],
+      "customer": [
+        "Conecta la fuente de identidad o crea los usuarios y grupos",
+        "Asigna a cada usuario y grupo solo el acceso que necesita"
+      ]
+    }
+  }
+}

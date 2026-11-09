@@ -1,0 +1,74 @@
+{
+  "serviceId": "health-dashboard",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/health/latest/ug/what-is-aws-health.html",
+      "title": "What is AWS Health?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html",
+      "title": "What is Amazon CloudWatch?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Shows how events at AWS, such as service issues or planned activities, affect your accounts and resources, with guidance to help you troubleshoot. The AWS Health Dashboard needs no setup and is available to all customers.",
+    "examCues": [
+      "Find out whether an AWS service problem is affecting your resources → AWS Health Dashboard",
+      "Learn about scheduled AWS activities that will affect your resources → AWS Health Dashboard",
+      "Send AWS Health events automatically to other tools → AWS Health Dashboard (events through EventBridge)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch monitors metrics and logs from your own resources and applications; AWS Health reports AWS events that affect them."
+      },
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor recommends improvements to your setup; AWS Health tells you about events and changes on the AWS side."
+      }
+    ],
+    "pricingModel": "The AWS Health Dashboard and AWS Health events through EventBridge have no additional cost. The AWS Health API needs Business Support+, Enterprise Support or Unified Operations.",
+    "sharedResponsibility": {
+      "aws": [
+        "Publishes events about service and resource changes and planned activities",
+        "Keeps the dashboard ready with no setup"
+      ],
+      "customer": [
+        "Watches the events that affect its resources and prepares for planned activities",
+        "Sends events to the right teams, for example with EventBridge"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Muestra cómo los eventos de AWS, como problemas de un servicio o actividades planificadas, afectan tus cuentas y recursos, con guías para ayudarte a resolverlos. El AWS Health Dashboard no necesita configuración y está disponible para todos los clientes.",
+    "examCues": [
+      "Saber si un problema de un servicio de AWS está afectando tus recursos → AWS Health Dashboard",
+      "Enterarte de actividades programadas de AWS que afectarán tus recursos → AWS Health Dashboard",
+      "Enviar los eventos de AWS Health de forma automática a otras herramientas → AWS Health Dashboard (eventos por EventBridge)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch monitorea métricas y logs de tus propios recursos y aplicaciones; AWS Health reporta los eventos de AWS que los afectan."
+      },
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor recomienda mejoras a tu configuración; AWS Health te informa de eventos y cambios del lado de AWS."
+      }
+    ],
+    "pricingModel": "El AWS Health Dashboard y los eventos de AWS Health por EventBridge no tienen costo adicional. La AWS Health API requiere Business Support+, Enterprise Support o Unified Operations.",
+    "sharedResponsibility": {
+      "aws": [
+        "Publica eventos sobre cambios en servicios y recursos y sobre actividades planificadas",
+        "Mantiene el dashboard listo sin configuración"
+      ],
+      "customer": [
+        "Sigue los eventos que afectan sus recursos y se prepara para las actividades planificadas",
+        "Envía los eventos a los equipos correctos, por ejemplo con EventBridge"
+      ]
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "serviceId": "trusted-advisor",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html",
+      "title": "AWS Trusted Advisor",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor-check-reference.html",
+      "title": "AWS Trusted Advisor check reference",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Inspects your AWS environment and recommends ways to save money, improve availability and performance, and close security gaps. Its checks are grouped into cost optimization, performance, security, fault tolerance, service limits and operational excellence.",
+    "examCues": [
+      "Find ways to lower the cost of what runs in your account → Trusted Advisor (cost optimization checks)",
+      "Check whether the root user has MFA or security groups leave specific ports open to everyone → Trusted Advisor (security checks)",
+      "See which service quotas are close to their limit → Trusted Advisor (service limits)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "config",
+        "difference": "AWS Config records configuration history and evaluates rules you choose; Trusted Advisor runs AWS's own best-practice checks."
+      },
+      {
+        "serviceId": "support",
+        "difference": "Your AWS Support plan decides how many checks you get; Trusted Advisor is the tool that runs them."
+      }
+    ],
+    "pricingModel": "Trusted Advisor comes with your AWS Support plan. Basic and Developer Support include all service limits checks and a few security and fault tolerance checks; the full set needs Business Support+, Enterprise Support or Unified Operations.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the checks against your resources and publishes the recommendations",
+        "Maintains the checks based on best practices from serving many customers"
+      ],
+      "customer": [
+        "Reviews the recommendations and decides which ones to act on",
+        "Refreshes Security checks manually when on the Basic Support plan"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Revisa tu entorno de AWS y recomienda formas de ahorrar dinero, mejorar la disponibilidad y el rendimiento, y cerrar brechas de seguridad. Sus revisiones se agrupan en optimización de costos, rendimiento, seguridad, tolerancia a fallos, límites de servicio y excelencia operativa.",
+    "examCues": [
+      "Encontrar formas de bajar el costo de lo que corre en tu cuenta → Trusted Advisor (revisiones de optimización de costos)",
+      "Revisar si el usuario root tiene MFA o si los security groups dejan puertos específicos abiertos a todo el mundo → Trusted Advisor (revisiones de seguridad)",
+      "Ver qué cuotas de servicio están cerca de su límite → Trusted Advisor (service limits)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "config",
+        "difference": "AWS Config guarda el historial de configuración y evalúa reglas que tú eliges; Trusted Advisor ejecuta revisiones de buenas prácticas propias de AWS."
+      },
+      {
+        "serviceId": "support",
+        "difference": "Tu plan de AWS Support decide cuántas revisiones tienes; Trusted Advisor es la herramienta que las ejecuta."
+      }
+    ],
+    "pricingModel": "Trusted Advisor viene con tu plan de AWS Support. Basic y Developer Support incluyen todas las revisiones de service limits y algunas de seguridad y tolerancia a fallos; el conjunto completo requiere Business Support+, Enterprise Support o Unified Operations.",
+    "sharedResponsibility": {
+      "aws": [
+        "Ejecuta las revisiones sobre tus recursos y publica las recomendaciones",
+        "Mantiene las revisiones según buenas prácticas aprendidas con muchos clientes"
+      ],
+      "customer": [
+        "Revisa las recomendaciones y decide cuáles aplicar",
+        "Actualiza a mano las revisiones de seguridad cuando está en el plan Basic Support"
+      ]
+    }
+  }
+}

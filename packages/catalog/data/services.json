@@ -57,7 +57,7 @@
       "name": "Lightsail",
       "category": "Compute",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": false
@@ -96,7 +96,7 @@
       "name": "Elastic Beanstalk",
       "category": "Compute",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -186,7 +186,7 @@
       "name": "Elastic Container Service",
       "category": "Containers",
       "aliases": ["Amazon ECS"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -292,7 +292,7 @@
       "name": "Storage Gateway",
       "category": "Storage",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1007,7 +1007,7 @@
       "name": "Support",
       "category": "Customer Enablement",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": false
@@ -1097,7 +1097,7 @@
       "name": "CloudFormation",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1110,7 +1110,7 @@
       "name": "AWS Config",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1149,7 +1149,7 @@
       "name": "Trusted Advisor",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": false
@@ -1175,7 +1175,7 @@
       "name": "AWS Well-Architected Tool",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1304,7 +1304,7 @@
       "name": "AWS Health Dashboard",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1936,7 +1936,7 @@
       "name": "Athena",
       "category": "Analytics",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1949,7 +1949,7 @@
       "name": "Amazon Redshift",
       "category": "Analytics",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2194,7 +2194,7 @@
       "name": "Cognito",
       "category": "Security, Identity, & Compliance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2207,7 +2207,7 @@
       "name": "Secrets Manager",
       "category": "Security, Identity, & Compliance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2220,7 +2220,7 @@
       "name": "GuardDuty",
       "category": "Security, Identity, & Compliance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2233,7 +2233,7 @@
       "name": "Amazon Inspector",
       "category": "Security, Identity, & Compliance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2246,7 +2246,7 @@
       "name": "Amazon Macie",
       "category": "Security, Identity, & Compliance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2259,7 +2259,7 @@
       "name": "IAM Identity Center",
       "category": "Security, Identity, & Compliance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2337,7 +2337,7 @@
       "name": "AWS Artifact",
       "category": "Security, Identity, & Compliance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true

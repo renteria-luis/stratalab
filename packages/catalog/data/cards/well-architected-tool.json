@@ -1,0 +1,79 @@
+{
+  "serviceId": "well-architected-tool",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/userguide/getting-started.html",
+      "title": "Getting started with AWS Well-Architected Tool",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/userguide/tool.html",
+      "title": "What is AWS Well-Architected Tool?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/whitepapers/latest/how-aws-pricing-works/abstract-and-introduction.html",
+      "title": "How AWS Pricing Works",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Helps you review a workload against the AWS Well-Architected Framework by answering questions for each of its six pillars. You define and document the workload and can save milestones of its current state.",
+    "examCues": [
+      "Review an architecture against AWS best practices for reliability, security and cost → Well-Architected Tool",
+      "Operational excellence, security, reliability, performance efficiency, cost optimization and sustainability → the six pillars the tool reviews",
+      "Record the state of a workload review to compare it later → Well-Architected Tool (milestones)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor checks your resources automatically; the Well-Architected Tool guides a question-based review of a workload's design."
+      },
+      {
+        "serviceId": "config",
+        "difference": "Config evaluates resource settings against rules; the Well-Architected Tool reviews how a workload is designed and operated."
+      }
+    ],
+    "pricingModel": "The tool has no charge of its own; you pay for the AWS resources that your workloads use.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provides the questions and best practices for each pillar",
+        "Can show related Trusted Advisor checks when you turn that support on"
+      ],
+      "customer": [
+        "Defines the workload and answers the review questions",
+        "Plans and makes the improvements, and saves milestones to track progress"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Te ayuda a revisar una carga de trabajo contra el AWS Well-Architected Framework respondiendo preguntas de cada uno de sus seis pilares. Defines y documentas la carga de trabajo y puedes guardar milestones de su estado actual.",
+    "examCues": [
+      "Revisar una arquitectura contra las buenas prácticas de AWS en confiabilidad, seguridad y costo → Well-Architected Tool",
+      "Excelencia operativa, seguridad, confiabilidad, eficiencia de rendimiento, optimización de costos y sostenibilidad → los seis pilares que revisa la herramienta",
+      "Guardar el estado de la revisión de una carga de trabajo para compararlo después → Well-Architected Tool (milestones)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor revisa tus recursos de forma automática; la Well-Architected Tool guía una revisión con preguntas sobre el diseño de una carga de trabajo."
+      },
+      {
+        "serviceId": "config",
+        "difference": "Config evalúa la configuración de los recursos contra reglas; la Well-Architected Tool revisa cómo se diseña y opera una carga de trabajo."
+      }
+    ],
+    "pricingModel": "La herramienta no tiene cargo propio; pagas por los recursos de AWS que usan tus cargas de trabajo.",
+    "sharedResponsibility": {
+      "aws": [
+        "Aporta las preguntas y buenas prácticas de cada pilar",
+        "Puede mostrar revisiones relacionadas de Trusted Advisor cuando activas ese soporte"
+      ],
+      "customer": [
+        "Define la carga de trabajo y responde las preguntas de la revisión",
+        "Planea y hace las mejoras, y guarda milestones para seguir el avance"
+      ]
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "serviceId": "elastic-beanstalk",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html",
+      "title": "What is AWS Elastic Beanstalk?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html",
+      "title": "What is CloudFormation?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+      "title": "What is AWS Lambda?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Deploys web applications for you: you upload the code, and Elastic Beanstalk provisions EC2 instances or an EKS cluster, sets up load balancing and health monitoring, and scales the environment. It supports Go, Java, .NET, Node.js, PHP, Python, Ruby and Docker containers.",
+    "examCues": [
+      "Developers want to deploy a web app without managing the servers, load balancer or scaling → Elastic Beanstalk",
+      "Run a Java, Python or Node.js web application on AWS by uploading the code → Elastic Beanstalk",
+      "A web environment plus a worker environment for background jobs → Elastic Beanstalk"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudformation",
+        "difference": "CloudFormation creates any resources you describe in a template; Elastic Beanstalk sets up and runs the environment for a web application."
+      },
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda runs function code in response to events; Elastic Beanstalk runs your whole web application on EC2 instances or EKS that it manages."
+      }
+    ],
+    "pricingModel": "There is no additional charge for Elastic Beanstalk; you pay for the AWS resources it creates to run your application.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provisions the instances or cluster, load balancing, health monitoring and scaling",
+        "Builds the platform version you choose when you deploy"
+      ],
+      "customer": [
+        "Writes the application code and chooses the platform",
+        "Configures the environment, such as instance types and scaling settings"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Despliega aplicaciones web por ti: subes el código y Elastic Beanstalk crea instancias EC2 o un clúster de EKS, configura el balanceo de carga y el monitoreo de salud, y escala el entorno. Soporta Go, Java, .NET, Node.js, PHP, Python, Ruby y contenedores Docker.",
+    "examCues": [
+      "Los desarrolladores quieren desplegar una app web sin administrar servidores, load balancer ni escalado → Elastic Beanstalk",
+      "Ejecutar en AWS una aplicación web en Java, Python o Node.js subiendo el código → Elastic Beanstalk",
+      "Un entorno web más un entorno worker para tareas en segundo plano → Elastic Beanstalk"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudformation",
+        "difference": "CloudFormation crea los recursos que describas en una plantilla; Elastic Beanstalk monta y opera el entorno de una aplicación web."
+      },
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda ejecuta código de funciones en respuesta a eventos; Elastic Beanstalk ejecuta tu aplicación web completa en instancias EC2 o en EKS que él administra."
+      }
+    ],
+    "pricingModel": "Elastic Beanstalk no tiene cargo adicional; pagas por los recursos de AWS que crea para ejecutar tu aplicación.",
+    "sharedResponsibility": {
+      "aws": [
+        "Crea las instancias o el clúster, el balanceo de carga, el monitoreo de salud y el escalado",
+        "Prepara la versión de plataforma que elijas al desplegar"
+      ],
+      "customer": [
+        "Escribe el código de la aplicación y elige la plataforma",
+        "Configura el entorno, como los tipos de instancia y el escalado"
+      ]
+    }
+  }
+}

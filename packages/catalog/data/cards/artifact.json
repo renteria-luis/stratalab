@@ -1,0 +1,74 @@
+{
+  "serviceId": "artifact",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/artifact/latest/ug/what-is-aws-artifact.html",
+      "title": "What is AWS Artifact?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html",
+      "title": "What Is AWS Config?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Provides on-demand downloads of AWS security and compliance documents, such as ISO certifications, PCI reports and SOC reports. You can also review, accept and track agreements with AWS for one account or for your organization.",
+    "examCues": [
+      "An auditor asks for AWS's SOC or ISO compliance reports → Artifact",
+      "Review and accept an agreement with AWS for all accounts in an organization → Artifact",
+      "Check the security documents of a vendor that sells on AWS Marketplace → Artifact"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "config",
+        "difference": "Config shows whether your own resources follow your rules; Artifact gives you AWS's own compliance documents."
+      },
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor checks your account against best practices; Artifact provides reports about the AWS infrastructure."
+      }
+    ],
+    "pricingModel": "Artifact documents and agreements are free of charge.",
+    "sharedResponsibility": {
+      "aws": [
+        "Publishes reports and certifications about the security of its infrastructure and services",
+        "Keeps the agreements you accept and their status"
+      ],
+      "customer": [
+        "Creates or obtains the documents that show its own company's compliance",
+        "Submits the downloaded documents to its auditors or regulators when they ask for them"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Ofrece descargas a pedido de documentos de seguridad y cumplimiento de AWS, como certificaciones ISO, reportes PCI y reportes SOC. También puedes revisar, aceptar y seguir acuerdos con AWS para una cuenta o para tu organización.",
+    "examCues": [
+      "Un auditor pide los reportes de cumplimiento SOC o ISO de AWS → Artifact",
+      "Revisar y aceptar un acuerdo con AWS para todas las cuentas de una organización → Artifact",
+      "Revisar los documentos de seguridad de un proveedor que vende en AWS Marketplace → Artifact"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "config",
+        "difference": "Config muestra si tus propios recursos siguen tus reglas; Artifact te da los documentos de cumplimiento de AWS."
+      },
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor revisa tu cuenta contra buenas prácticas; Artifact entrega reportes sobre la infraestructura de AWS."
+      }
+    ],
+    "pricingModel": "Los documentos y acuerdos de Artifact son gratis.",
+    "sharedResponsibility": {
+      "aws": [
+        "Publica reportes y certificaciones sobre la seguridad de su infraestructura y servicios",
+        "Guarda los acuerdos que aceptas y su estado"
+      ],
+      "customer": [
+        "Crea u obtiene los documentos que muestran el cumplimiento de su propia empresa",
+        "Entrega los documentos descargados a sus auditores o reguladores cuando los piden"
+      ]
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "serviceId": "macie",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html",
+      "title": "What is Amazon Macie?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html",
+      "title": "What is Amazon GuardDuty?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A data security service that uses machine learning and pattern matching to discover sensitive data in Amazon S3. It also keeps an inventory of your S3 buckets and alerts you to risks such as a bucket that becomes publicly accessible.",
+    "examCues": [
+      "Find personal or financial data stored in S3 buckets → Macie",
+      "Get alerted when an S3 bucket becomes publicly accessible → Macie",
+      "Check S3 data for privacy compliance without reviewing objects by hand → Macie"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "guardduty",
+        "difference": "GuardDuty detects malicious activity in your account; Macie finds and reports sensitive data in S3."
+      },
+      {
+        "serviceId": "inspector",
+        "difference": "Inspector scans compute workloads for software vulnerabilities; Macie looks at the data stored in S3."
+      }
+    ],
+    "pricingModel": "You pay for evaluating and monitoring your S3 buckets and for the objects it monitors or analyzes for sensitive data. The first time you enable it you get a 30-day free trial of bucket monitoring.",
+    "sharedResponsibility": {
+      "aws": [
+        "Evaluates bucket security and access control and runs the detection",
+        "Provides built-in criteria for common types of sensitive data"
+      ],
+      "customer": [
+        "Chooses which buckets and objects to analyze and can add custom criteria",
+        "Reviews findings and fixes exposed data"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de seguridad de datos que usa machine learning y coincidencia de patrones para descubrir datos sensibles en Amazon S3. También mantiene un inventario de tus buckets de S3 y te avisa de riesgos como un bucket que pasa a ser público.",
+    "examCues": [
+      "Encontrar datos personales o financieros guardados en buckets de S3 → Macie",
+      "Recibir un aviso cuando un bucket de S3 pasa a ser accesible públicamente → Macie",
+      "Revisar datos de S3 por cumplimiento de privacidad sin revisar objetos a mano → Macie"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "guardduty",
+        "difference": "GuardDuty detecta actividad maliciosa en tu cuenta; Macie encuentra y reporta datos sensibles en S3."
+      },
+      {
+        "serviceId": "inspector",
+        "difference": "Inspector escanea cargas de cómputo en busca de vulnerabilidades de software; Macie revisa los datos guardados en S3."
+      }
+    ],
+    "pricingModel": "Pagas por evaluar y monitorear tus buckets de S3 y por los objetos que monitorea o analiza en busca de datos sensibles. La primera vez que lo activas tienes una prueba gratis de 30 días del monitoreo de buckets.",
+    "sharedResponsibility": {
+      "aws": [
+        "Evalúa la seguridad y el control de acceso de los buckets y ejecuta la detección",
+        "Ofrece criterios incluidos para tipos comunes de datos sensibles"
+      ],
+      "customer": [
+        "Elige qué buckets y objetos analizar y puede agregar criterios propios",
+        "Revisa los hallazgos y corrige los datos expuestos"
+      ]
+    }
+  }
+}

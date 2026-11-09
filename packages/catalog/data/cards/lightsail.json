@@ -1,0 +1,67 @@
+{
+  "serviceId": "lightsail",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html",
+      "title": "What is Amazon Lightsail?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A simple way to build websites and web applications on AWS that bundles virtual private servers, containers, managed databases, a CDN, load balancers, storage, static IP addresses and DNS. Its resources come at a low, predictable monthly price.",
+    "examCues": [
+      "Launch a WordPress site quickly with a predictable monthly bill → Lightsail",
+      "Someone new to AWS needs a simple virtual server for a small website → Lightsail"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "ec2",
+        "difference": "EC2 gives you many instance types and full control of networking and scaling; Lightsail bundles a simpler server with storage and networking at a predictable monthly price."
+      },
+      {
+        "serviceId": "elastic-beanstalk",
+        "difference": "Elastic Beanstalk deploys and scales an application on EC2 or EKS for you; Lightsail gives you ready-made servers and services to manage yourself."
+      }
+    ],
+    "pricingModel": "Each bundle has a low, predictable monthly price for the resources it includes.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the infrastructure behind each Lightsail resource",
+        "Offers ready-made images with an operating system or an application stack"
+      ],
+      "customer": [
+        "Manages the operating system and the applications on its instances",
+        "Sets the instance firewall rules by source IP address, port and protocol"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Una forma simple de crear sitios y aplicaciones web en AWS que agrupa servidores privados virtuales, contenedores, bases de datos administradas, una CDN, load balancers, almacenamiento, direcciones IP estáticas y DNS. Sus recursos tienen un precio mensual bajo y predecible.",
+    "examCues": [
+      "Lanzar rápido un sitio WordPress con una factura mensual predecible → Lightsail",
+      "Alguien nuevo en AWS necesita un servidor virtual simple para un sitio pequeño → Lightsail"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "ec2",
+        "difference": "EC2 te da muchos tipos de instancia y control total de la red y el escalado; Lightsail agrupa un servidor más simple con almacenamiento y red a un precio mensual predecible."
+      },
+      {
+        "serviceId": "elastic-beanstalk",
+        "difference": "Elastic Beanstalk despliega y escala por ti una aplicación en EC2 o EKS; Lightsail te da servidores y servicios listos que administras tú."
+      }
+    ],
+    "pricingModel": "Cada paquete tiene un precio mensual bajo y predecible por los recursos que incluye.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera la infraestructura detrás de cada recurso de Lightsail",
+        "Ofrece imágenes listas con un sistema operativo o un conjunto de aplicaciones"
+      ],
+      "customer": [
+        "Administra el sistema operativo y las aplicaciones de sus instancias",
+        "Define las reglas del firewall de la instancia por IP de origen, puerto y protocolo"
+      ]
+    }
+  }
+}

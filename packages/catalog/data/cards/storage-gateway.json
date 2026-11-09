@@ -1,0 +1,79 @@
+{
+  "serviceId": "storage-gateway",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/storagegateway/latest/tgw/WhatIsStorageGateway.html",
+      "title": "What is Tape Gateway?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/filegateway/latest/files3/what-is-file-s3.html",
+      "title": "What is Amazon S3 File Gateway",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html",
+      "title": "What is Amazon Elastic File System?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Connects on-premises applications to AWS storage through a gateway that runs as a virtual machine, a hardware appliance or an EC2 instance. Its types are S3 File Gateway and FSx File Gateway for files, Volume Gateway for block volumes and Tape Gateway for virtual tapes.",
+    "examCues": [
+      "On-premises servers keep using NFS or SMB file shares while the files are stored in S3 → Storage Gateway (S3 File Gateway)",
+      "Replace physical backup tapes with virtual tapes archived in S3 Glacier → Storage Gateway (Tape Gateway)",
+      "Hybrid storage with a local cache for low-latency access to data kept in AWS → Storage Gateway"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "s3",
+        "difference": "S3 is the object storage itself; Storage Gateway lets on-premises applications use it through file, volume or tape interfaces."
+      },
+      {
+        "serviceId": "efs",
+        "difference": "EFS is a file system for compute in AWS; Storage Gateway gives on-premises applications access to AWS storage."
+      }
+    ],
+    "pricingModel": "Data that a gateway keeps in AWS is billed by the service that holds it, such as S3 for the files of an S3 File Gateway, and Storage Gateway has its own pricing on top.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the gateway service and keeps the data in AWS storage",
+        "Moves data between the gateway and AWS"
+      ],
+      "customer": [
+        "Deploys and maintains the gateway virtual machine or appliance on premises",
+        "Sizes the local cache and connects its applications to the gateway"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Conecta aplicaciones on-premises con el almacenamiento de AWS mediante un gateway que corre como máquina virtual, como appliance físico o como instancia EC2. Sus tipos son S3 File Gateway y FSx File Gateway para archivos, Volume Gateway para volúmenes en bloques y Tape Gateway para cintas virtuales.",
+    "examCues": [
+      "Los servidores on-premises siguen usando file shares NFS o SMB mientras los archivos se guardan en S3 → Storage Gateway (S3 File Gateway)",
+      "Reemplazar cintas de backup físicas por cintas virtuales archivadas en S3 Glacier → Storage Gateway (Tape Gateway)",
+      "Almacenamiento híbrido con caché local para acceder con baja latencia a datos guardados en AWS → Storage Gateway"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "s3",
+        "difference": "S3 es el almacenamiento de objetos en sí; Storage Gateway permite que las aplicaciones on-premises lo usen con interfaces de archivos, volúmenes o cintas."
+      },
+      {
+        "serviceId": "efs",
+        "difference": "EFS es un sistema de archivos para cómputo en AWS; Storage Gateway da a las aplicaciones on-premises acceso al almacenamiento de AWS."
+      }
+    ],
+    "pricingModel": "Los datos que un gateway guarda en AWS los cobra el servicio que los almacena, como S3 para los archivos de un S3 File Gateway, y Storage Gateway tiene además su propia tarifa.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera el servicio del gateway y guarda los datos en el almacenamiento de AWS",
+        "Mueve los datos entre el gateway y AWS"
+      ],
+      "customer": [
+        "Despliega y mantiene on-premises la máquina virtual o el appliance del gateway",
+        "Dimensiona la caché local y conecta sus aplicaciones al gateway"
+      ]
+    }
+  }
+}

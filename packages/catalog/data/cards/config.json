@@ -1,0 +1,79 @@
+{
+  "serviceId": "config",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html",
+      "title": "What Is AWS Config?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/controltower/latest/userguide/config-costs.html",
+      "title": "Manage AWS Config costs in AWS Control Tower",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html",
+      "title": "What Is AWS CloudTrail?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Records the configuration of your AWS resources, how they relate to each other and how both change over time. Config rules evaluate those settings and flag resources that don't comply.",
+    "examCues": [
+      "See which ports a security group allowed on a past date → Config",
+      "Flag resources whose settings break your company's rules → Config (Config rules)",
+      "Show auditors the configuration history of your resources → Config"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudtrail",
+        "difference": "CloudTrail records the actions and API calls that changed resources; Config records the resulting configuration and its history."
+      },
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor runs AWS's best-practice checks; Config evaluates rules that you choose or write."
+      }
+    ],
+    "pricingModel": "You pay for each configuration item it records, that is, each recorded change to a resource in each Region where it records.",
+    "sharedResponsibility": {
+      "aws": [
+        "Records configuration items for the resource types you choose",
+        "Evaluates rules as resources are created, changed or deleted, and sends notifications"
+      ],
+      "customer": [
+        "Chooses which resource types to record and provides the S3 bucket for the history",
+        "Picks or writes the rules and fixes resources that don't comply"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Registra la configuración de tus recursos de AWS, cómo se relacionan entre sí y cómo cambian ambas cosas con el tiempo. Las Config rules evalúan esa configuración y marcan los recursos que no cumplen.",
+    "examCues": [
+      "Ver qué puertos permitía un security group en una fecha pasada → Config",
+      "Marcar los recursos cuya configuración rompe las reglas de tu empresa → Config (Config rules)",
+      "Mostrar a los auditores el historial de configuración de tus recursos → Config"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudtrail",
+        "difference": "CloudTrail registra las acciones y llamadas a la API que cambiaron los recursos; Config registra la configuración resultante y su historial."
+      },
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor ejecuta revisiones de buenas prácticas de AWS; Config evalúa reglas que tú eliges o escribes."
+      }
+    ],
+    "pricingModel": "Pagas por cada configuration item que registra, es decir, cada cambio registrado de un recurso en cada región donde registra.",
+    "sharedResponsibility": {
+      "aws": [
+        "Registra configuration items de los tipos de recurso que elijas",
+        "Evalúa las reglas cuando los recursos se crean, cambian o borran, y envía notificaciones"
+      ],
+      "customer": [
+        "Elige qué tipos de recurso registrar y aporta el bucket de S3 para el historial",
+        "Elige o escribe las reglas y corrige los recursos que no cumplen"
+      ]
+    }
+  }
+}
