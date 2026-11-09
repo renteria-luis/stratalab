@@ -1,26 +1,26 @@
 {
   "serviceId": "billing-and-cost-management",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html",
       "title": "Use AWS Billing and Cost Management for AWS",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html",
       "title": "Analyzing your costs and usage with AWS Cost Explorer",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html",
       "title": "Managing your costs with AWS Budgets",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html",
       "title": "AWS Trusted Advisor",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {

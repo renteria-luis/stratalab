@@ -1,16 +1,16 @@
 {
   "serviceId": "direct-connect",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/directconnect/latest/UserGuide/Welcome.html",
       "title": "What is Direct Connect?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html",
       "title": "What is AWS Site-to-Site VPN?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {

@@ -1,31 +1,31 @@
 {
   "serviceId": "key-management-service",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html",
       "title": "AWS Key Management Service",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html",
       "title": "AWS KMS keys",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html",
       "title": "Rotate AWS KMS keys",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/introduction.html",
       "title": "What is AWS CloudHSM?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
       "title": "What is AWS Secrets Manager?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {
@@ -38,7 +38,7 @@
     "notToConfuseWith": [
       {
         "serviceId": "cloudhsm",
-        "difference": "CloudHSM gives you single-tenant HSMs in the AWS Cloud over which you have complete control; KMS is a managed service that you call to use and manage keys."
+        "difference": "CloudHSM gives you HSMs in the AWS Cloud over which you have complete control; KMS is a managed service that you call to use and manage keys."
       },
       {
         "serviceId": "secrets-manager",
@@ -68,7 +68,7 @@
     "notToConfuseWith": [
       {
         "serviceId": "cloudhsm",
-        "difference": "CloudHSM te da HSMs de un solo inquilino en la nube de AWS sobre los que tienes control total; KMS es un servicio administrado al que llamas para usar y administrar llaves."
+        "difference": "CloudHSM te da HSMs en la nube de AWS sobre los que tienes control total; KMS es un servicio administrado al que llamas para usar y administrar llaves."
       },
       {
         "serviceId": "secrets-manager",

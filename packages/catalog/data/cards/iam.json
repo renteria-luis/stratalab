@@ -1,26 +1,26 @@
 {
   "serviceId": "iam",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html",
       "title": "What is IAM?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2.html",
       "title": "Use an IAM role to grant permissions to applications running on Amazon EC2 instances",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
       "title": "Security best practices in IAM",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
       "title": "Service control policies (SCPs)",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {

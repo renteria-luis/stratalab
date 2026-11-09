@@ -1,16 +1,16 @@
 {
   "serviceId": "api-gateway",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
       "title": "What is Amazon API Gateway?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/whitepapers/latest/security-overview-amazon-api-gateway/about-amazon-api-gateway.html",
       "title": "About Amazon API Gateway",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/security.html",
@@ -20,7 +20,7 @@
     {
       "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
       "title": "What is AWS Lambda?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {

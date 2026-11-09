@@ -1,26 +1,26 @@
 {
   "serviceId": "organizations",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html",
       "title": "What is AWS Organizations?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/organizations/latest/userguide/pricing.html",
       "title": "Billing and pricing for AWS Organizations",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
       "title": "Service control policies (SCPs)",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html",
       "title": "What Is AWS Control Tower?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {

@@ -1,31 +1,31 @@
 {
   "serviceId": "systems-manager",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html",
       "title": "What is AWS Systems Manager?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html",
       "title": "AWS Systems Manager Session Manager",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html",
       "title": "Choosing parameter tiers in Parameter Store",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
       "title": "What is AWS Secrets Manager?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html",
       "title": "What is CloudFormation?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {

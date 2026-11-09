@@ -1,26 +1,31 @@
 {
   "serviceId": "route-53",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html",
       "title": "What is Amazon Route 53?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Route53Pricing.html",
       "title": "Amazon Route 53 pricing and billing",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
       "title": "What is Amazon CloudFront?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html",
       "title": "What is AWS Global Accelerator?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html",
+      "title": "Choosing a routing policy",
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {

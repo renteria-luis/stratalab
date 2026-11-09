@@ -1,26 +1,26 @@
 {
   "serviceId": "waf-and-shield",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/waf/latest/developerguide/what-is-aws-waf.html",
       "title": "What are AWS WAF, AWS Shield Advanced, AWS Shield network security director and AWS Firewall Manager?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/waf/latest/developerguide/ddos-standard-summary.html",
       "title": "AWS Shield Standard overview",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/waf/latest/developerguide/ddos-advanced-summary-deciding.html",
       "title": "Deciding whether to subscribe to AWS Shield Advanced and apply additional protections",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/amplify/latest/userguide/waf-pricing.html",
       "title": "Firewall pricing for Amplify applications",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html",

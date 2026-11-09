@@ -1,21 +1,21 @@
 {
   "serviceId": "dynamodb",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
       "title": "What is Amazon DynamoDB?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/capacity-mode.html",
       "title": "DynamoDB throughput capacity",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html",
       "title": "What is Amazon Relational Database Service (Amazon RDS)?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {

@@ -1,26 +1,31 @@
 {
   "serviceId": "cloudtrail",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html",
       "title": "What Is AWS CloudTrail?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html",
       "title": "What Is AWS Config?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html",
       "title": "What is Amazon CloudWatch?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_billing.html",
       "title": "Analyzing, optimizing, and reducing CloudWatch costs",
       "accessedOn": "2026-11-05"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html",
+      "title": "Logging data events",
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {

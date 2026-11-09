@@ -1,26 +1,26 @@
 {
   "serviceId": "lambda",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
       "title": "What is AWS Lambda?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html",
       "title": "Lambda Event Function runtimes",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/optimize-costs-microsoft-workloads/net-serverless.html",
       "title": "Consider serverless .NET",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
       "title": "What is Amazon API Gateway?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {
@@ -37,10 +37,10 @@
       },
       {
         "serviceId": "api-gateway",
-        "difference": "API Gateway is the HTTP front door; Lambda runs the code behind it."
+        "difference": "API Gateway creates and publishes the HTTP API that clients call; Lambda runs the code behind it."
       }
     ],
-    "pricingModel": "You pay per use: the number of requests and how long your code runs with the memory you assign. There are no upfront commitments.",
+    "pricingModel": "You pay only for what runs: the number of requests and how long your code runs, scaled by the memory you assign.",
     "sharedResponsibility": {
       "aws": [
         "Manages servers, capacity, scaling and infrastructure patching",
@@ -67,10 +67,10 @@
       },
       {
         "serviceId": "api-gateway",
-        "difference": "API Gateway es la puerta de entrada HTTP; Lambda ejecuta el código que está detrás."
+        "difference": "API Gateway crea y publica la API HTTP que llaman los clientes; Lambda ejecuta el código que está detrás."
       }
     ],
-    "pricingModel": "Pagas por uso: la cantidad de solicitudes y cuánto tiempo corre tu código con la memoria que le asignas. No hay compromisos por adelantado.",
+    "pricingModel": "Pagas solo lo que se ejecuta: la cantidad de solicitudes y cuánto tiempo corre tu código, según la memoria que le asignas.",
     "sharedResponsibility": {
       "aws": [
         "Administra los servidores, la capacidad, el escalado y los parches de la infraestructura",

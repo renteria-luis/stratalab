@@ -1,31 +1,31 @@
 {
   "serviceId": "efs",
-  "status": "to-verify",
+  "status": "verified 2026-11-06",
   "sources": [
     {
       "url": "https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html",
       "title": "What is Amazon Elastic File System?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/efs/latest/ug/metered-sizes.html",
       "title": "How Amazon EFS reports file system and object sizes",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/efs/latest/ug/lifecycle-management-efs.html",
       "title": "Managing storage lifecycle",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
       "title": "What is Amazon S3?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     },
     {
       "url": "https://docs.aws.amazon.com/ebs/latest/userguide/what-is-ebs.html",
       "title": "What is Amazon Elastic Block Store?",
-      "accessedOn": "2026-11-05"
+      "accessedOn": "2026-11-06"
     }
   ],
   "en": {
