@@ -1,0 +1,72 @@
+{
+  "serviceId": "resource-access-manager",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/ram/latest/userguide/what-is.html",
+      "title": "What is AWS Resource Access Manager?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html",
+      "title": "What is AWS Organizations?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Lets you share supported resources securely with other AWS accounts, with your whole organization or some of its organizational units, and for some resource types with IAM roles and users. You create a resource once and other accounts can use it.",
+    "examCues": [
+      "Create a resource once and let several accounts use it instead of copying it into each → Resource Access Manager",
+      "Make a resource usable by every account in an organization or an organizational unit → Resource Access Manager"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "organizations",
+        "difference": "Organizations groups and governs accounts; Resource Access Manager shares individual resources between them."
+      },
+      {
+        "serviceId": "iam",
+        "difference": "IAM controls who can act inside an account; Resource Access Manager makes a resource available to other accounts."
+      }
+    ],
+    "pricingModel": "There is no additional charge for using Resource Access Manager or for sharing resources; each shared resource is billed as its own service bills it.",
+    "sharedResponsibility": {
+      "aws": [
+        "Makes the shared resources available to the accounts you choose",
+        "Offers AWS managed permissions for the shared resources"
+      ],
+      "customer": [
+        "Chooses what to share and with whom",
+        "Uses least-privilege permissions for each share"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Te permite compartir de forma segura recursos compatibles con otras cuentas de AWS, con toda tu organización o con algunas de sus organizational units, y en algunos tipos de recurso con roles y usuarios de IAM. Creas un recurso una vez y otras cuentas pueden usarlo.",
+    "examCues": [
+      "Crear un recurso una vez y dejar que varias cuentas lo usen en lugar de copiarlo en cada una → Resource Access Manager",
+      "Hacer que un recurso pueda usarse en todas las cuentas de una organización o de una organizational unit → Resource Access Manager"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "organizations",
+        "difference": "Organizations agrupa y gobierna las cuentas; Resource Access Manager comparte recursos individuales entre ellas."
+      },
+      {
+        "serviceId": "iam",
+        "difference": "IAM controla quién puede actuar dentro de una cuenta; Resource Access Manager hace que un recurso esté disponible para otras cuentas."
+      }
+    ],
+    "pricingModel": "Usar Resource Access Manager y compartir recursos no tiene cargo adicional; cada recurso compartido se cobra como lo cobra su propio servicio.",
+    "sharedResponsibility": {
+      "aws": [
+        "Pone los recursos compartidos a disposición de las cuentas que elijas",
+        "Ofrece permisos administrados por AWS para los recursos compartidos"
+      ],
+      "customer": [
+        "Elige qué compartir y con quién",
+        "Usa permisos de mínimo privilegio en cada recurso compartido"
+      ]
+    }
+  }
+}

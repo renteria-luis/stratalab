@@ -1,0 +1,71 @@
+{
+  "serviceId": "polly",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/polly/latest/dg/what-is.html",
+      "title": "What Is Amazon Polly?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/transcribe/latest/dg/what-is.html",
+      "title": "What is Amazon Transcribe?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/translate/latest/dg/what-is.html",
+      "title": "What is Amazon Translate?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A service that turns text into lifelike speech in many languages and voices, with generative, long-form, neural and standard voice options. Applications such as newsreaders, e-learning platforms and accessibility tools use it to speak.",
+    "examCues": [
+      "Read articles aloud in an app with a natural voice → Polly",
+      "Add spoken audio to an e-learning course or an accessibility tool → Polly"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "transcribe",
+        "difference": "Transcribe turns speech into text; Polly turns text into speech."
+      },
+      {
+        "serviceId": "translate",
+        "difference": "Translate converts text from one language to another; Polly speaks text aloud."
+      }
+    ],
+    "pricingModel": "You pay only for the text you synthesize, and you can cache and replay the generated speech at no additional cost.",
+    "sharedResponsibility": {
+      "aws": ["Runs the text-to-speech models and voices"],
+      "customer": [
+        "Chooses the voice and checks the text it sends",
+        "Stores and reuses the generated audio when it needs it again"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio que convierte texto en voz natural en muchos idiomas y voces, con opciones de voz generative, long-form, neural y standard. Aplicaciones como lectores de noticias, plataformas de e-learning y herramientas de accesibilidad lo usan para hablar.",
+    "examCues": [
+      "Leer artículos en voz alta en una app con una voz natural → Polly",
+      "Agregar audio hablado a un curso de e-learning o a una herramienta de accesibilidad → Polly"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "transcribe",
+        "difference": "Transcribe convierte voz en texto; Polly convierte texto en voz."
+      },
+      {
+        "serviceId": "translate",
+        "difference": "Translate convierte texto de un idioma a otro; Polly lee el texto en voz alta."
+      }
+    ],
+    "pricingModel": "Pagas solo por el texto que sintetizas, y puedes guardar y volver a reproducir la voz generada sin costo adicional.",
+    "sharedResponsibility": {
+      "aws": ["Opera los modelos y las voces de texto a voz"],
+      "customer": [
+        "Elige la voz y revisa el texto que envía",
+        "Guarda y reutiliza el audio generado cuando lo necesita otra vez"
+      ]
+    }
+  }
+}

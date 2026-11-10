@@ -1,0 +1,67 @@
+{
+  "serviceId": "cloudhsm",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/introduction.html",
+      "title": "What is AWS CloudHSM?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/pricing.html",
+      "title": "Pricing for AWS CloudHSM",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html",
+      "title": "AWS Key Management Service",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Gives you hardware security modules (HSMs) in the AWS Cloud over which you have complete control, for cryptographic operations and secure key storage. AWS automates HSM management such as backups, provisioning, configuration and maintenance.",
+    "examCues": [
+      "A regulation requires keys in HSMs that only you control → CloudHSM",
+      "Run cryptographic operations with FIPS validated keys and algorithms on dedicated hardware you manage → CloudHSM (FIPS mode)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "key-management-service",
+        "difference": "KMS is a managed service that you call to create and use keys, protected by HSMs that AWS operates; CloudHSM gives you HSMs that you control."
+      }
+    ],
+    "pricingModel": "You pay an hourly fee for each active HSM, with no upfront costs.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provides the HSM hardware and automates backups, provisioning, configuration and maintenance"
+      ],
+      "customer": [
+        "Controls the HSMs, their users and the keys inside them",
+        "Chooses the cluster mode, FIPS or non-FIPS"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Te da hardware security modules (HSM) en la nube de AWS sobre los que tienes control total, para operaciones criptográficas y guardar llaves de forma segura. AWS automatiza la administración de los HSM, como backups, aprovisionamiento, configuración y mantenimiento.",
+    "examCues": [
+      "Una regulación exige llaves en HSM que solo tú controlas → CloudHSM",
+      "Ejecutar operaciones criptográficas con llaves y algoritmos validados FIPS en hardware dedicado que administras → CloudHSM (modo FIPS)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "key-management-service",
+        "difference": "KMS es un servicio administrado al que llamas para crear y usar llaves, protegidas por HSM que opera AWS; CloudHSM te da HSM que tú controlas."
+      }
+    ],
+    "pricingModel": "Pagas una tarifa por hora por cada HSM activo, sin costos por adelantado.",
+    "sharedResponsibility": {
+      "aws": [
+        "Aporta el hardware HSM y automatiza backups, aprovisionamiento, configuración y mantenimiento"
+      ],
+      "customer": [
+        "Controla los HSM, sus usuarios y las llaves que contienen",
+        "Elige el modo del clúster, FIPS o non-FIPS"
+      ]
+    }
+  }
+}

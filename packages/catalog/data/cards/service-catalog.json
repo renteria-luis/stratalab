@@ -1,0 +1,71 @@
+{
+  "serviceId": "service-catalog",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html",
+      "title": "What Is Service Catalog?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://aws.amazon.com/servicecatalog/pricing/",
+      "title": "AWS Service Catalog pricing",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html",
+      "title": "What is CloudFormation?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Lets an organization create and manage catalogs of IT services approved for use on AWS, from machine images and databases to complete multi-tier architectures. End users launch only the approved products, within the constraints the organization sets.",
+    "examCues": [
+      "Let developers launch only approved, pre-configured products on their own → Service Catalog",
+      "Standardize what can be launched, where and with which instance types → Service Catalog (portfolios and constraints)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudformation",
+        "difference": "CloudFormation creates resources from a template; Service Catalog offers approved products, often built from templates, to the users you allow."
+      },
+      {
+        "serviceId": "marketplace",
+        "difference": "AWS Marketplace sells third-party software; Service Catalog lists the products your own organization approves."
+      }
+    ],
+    "pricingModel": "You pay per API call made by your account, and the first 1,000 calls per account, Region and month are free; launching products counts as API calls.",
+    "sharedResponsibility": {
+      "aws": ["Runs the catalog and launches the products users choose"],
+      "customer": [
+        "Builds the products and portfolios and sets their constraints",
+        "Grants access to each portfolio through IAM"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Permite a una organización crear y administrar catálogos de servicios de TI aprobados para usar en AWS, desde imágenes de máquina y bases de datos hasta arquitecturas completas de varias capas. Los usuarios finales lanzan solo los productos aprobados, dentro de las restricciones que fija la organización.",
+    "examCues": [
+      "Permitir que los desarrolladores lancen por su cuenta solo productos aprobados y preconfigurados → Service Catalog",
+      "Estandarizar qué se puede lanzar, dónde y con qué tipos de instancia → Service Catalog (portfolios y restricciones)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudformation",
+        "difference": "CloudFormation crea recursos a partir de una plantilla; Service Catalog ofrece productos aprobados, a menudo hechos con plantillas, a los usuarios que permitas."
+      },
+      {
+        "serviceId": "marketplace",
+        "difference": "AWS Marketplace vende software de terceros; Service Catalog lista los productos que aprueba tu propia organización."
+      }
+    ],
+    "pricingModel": "Pagas por llamada a la API que hace tu cuenta, y las primeras 1,000 llamadas por cuenta, región y mes son gratis; lanzar productos cuenta como llamadas a la API.",
+    "sharedResponsibility": {
+      "aws": ["Opera el catálogo y lanza los productos que eligen los usuarios"],
+      "customer": [
+        "Construye los productos y portfolios y define sus restricciones",
+        "Da acceso a cada portfolio mediante IAM"
+      ]
+    }
+  }
+}

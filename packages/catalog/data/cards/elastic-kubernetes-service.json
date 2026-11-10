@@ -1,0 +1,74 @@
+{
+  "serviceId": "elastic-kubernetes-service",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html",
+      "title": "What is Amazon EKS?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html",
+      "title": "What is Amazon Elastic Container Service?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed Kubernetes service: AWS runs the Kubernetes control plane of your clusters, and EKS Auto Mode can manage the worker nodes too. Clusters run in the AWS Cloud and, with EKS Anywhere or Hybrid Nodes, in your own data centers.",
+    "examCues": [
+      "Run Kubernetes on AWS without operating the control plane → Elastic Kubernetes Service",
+      "Move existing Kubernetes workloads to AWS and keep using Kubernetes tools → Elastic Kubernetes Service",
+      "Let AWS also provision, scale and patch the nodes of a Kubernetes cluster → Elastic Kubernetes Service (EKS Auto Mode)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "elastic-container-service",
+        "difference": "ECS is AWS's own container orchestrator; EKS runs standard Kubernetes clusters."
+      },
+      {
+        "serviceId": "elastic-container-registry",
+        "difference": "ECR stores the container images; EKS runs the containers made from them."
+      }
+    ],
+    "pricingModel": "You pay per cluster, plus the AWS resources that run your worker nodes, such as EC2 instances, EBS volumes and public IPv4 addresses. EKS Auto Mode and Hybrid Nodes have their own charges.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs and scales the Kubernetes control plane",
+        "With EKS Auto Mode, provisions, scales and patches the nodes"
+      ],
+      "customer": [
+        "Deploys and secures its workloads and container images",
+        "Manages the worker nodes when not using EKS Auto Mode"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de Kubernetes totalmente administrado: AWS ejecuta el plano de control de Kubernetes de tus clústeres, y EKS Auto Mode puede administrar también los nodos worker. Los clústeres corren en la nube de AWS y, con EKS Anywhere o Hybrid Nodes, en tus propios centros de datos.",
+    "examCues": [
+      "Ejecutar Kubernetes en AWS sin operar el plano de control → Elastic Kubernetes Service",
+      "Llevar cargas de trabajo de Kubernetes a AWS y seguir usando herramientas de Kubernetes → Elastic Kubernetes Service",
+      "Dejar que AWS también aprovisione, escale y parche los nodos de un clúster de Kubernetes → Elastic Kubernetes Service (EKS Auto Mode)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "elastic-container-service",
+        "difference": "ECS es el orquestador de contenedores propio de AWS; EKS ejecuta clústeres de Kubernetes estándar."
+      },
+      {
+        "serviceId": "elastic-container-registry",
+        "difference": "ECR guarda las imágenes de contenedor; EKS ejecuta los contenedores creados a partir de ellas."
+      }
+    ],
+    "pricingModel": "Pagas por clúster, más los recursos de AWS que ejecutan tus nodos worker, como instancias EC2, volúmenes EBS y direcciones IPv4 públicas. EKS Auto Mode y Hybrid Nodes tienen sus propios cargos.",
+    "sharedResponsibility": {
+      "aws": [
+        "Ejecuta y escala el plano de control de Kubernetes",
+        "Con EKS Auto Mode, aprovisiona, escala y parcha los nodos"
+      ],
+      "customer": [
+        "Despliega y protege sus cargas de trabajo e imágenes de contenedor",
+        "Administra los nodos worker cuando no usa EKS Auto Mode"
+      ]
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "serviceId": "outposts",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/outposts/latest/userguide/what-is-outposts.html",
+      "title": "What is AWS Outposts?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/outposts/latest/server-userguide/order-outpost-capacity.html",
+      "title": "Create an Outpost and order Outpost capacity",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/storagegateway/latest/tgw/WhatIsStorageGateway.html",
+      "title": "What is Tape Gateway?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed service that brings AWS infrastructure, services, APIs and tools to your own site. An Outpost is a pool of AWS compute and storage capacity at your location that AWS operates as part of an AWS Region.",
+    "examCues": [
+      "Run AWS services on premises for low latency or local data processing → Outposts",
+      "Use the same AWS APIs and tools for workloads that must stay in your own data center → Outposts",
+      "Launch EC2 instances, EBS volumes, ECS clusters or RDS instances in a subnet on your premises → Outposts"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "storage-gateway",
+        "difference": "Storage Gateway connects on-premises applications to storage in AWS; Outposts places AWS compute and storage at your site."
+      },
+      {
+        "serviceId": "direct-connect",
+        "difference": "Direct Connect is a dedicated network link to AWS; Outposts is AWS infrastructure installed at your site."
+      }
+    ],
+    "pricingModel": "You order capacity for a contract term and pay all upfront, partially upfront or nothing upfront; longer terms cost less overall, and the price includes delivery, infrastructure maintenance and software patches.",
+    "sharedResponsibility": {
+      "aws": [
+        "Operates, monitors and manages the Outpost capacity as part of a Region",
+        "Provides the Outpost equipment"
+      ],
+      "customer": [
+        "Provides a site that meets the facility, networking and power requirements",
+        "Manages the workloads and the subnets it creates on the Outpost",
+        "Has an Enterprise Support or Unified Operations plan, which ordering Outposts servers requires"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio totalmente administrado que lleva la infraestructura, los servicios, las APIs y las herramientas de AWS a tu propio sitio. Un Outpost es un conjunto de capacidad de cómputo y almacenamiento de AWS en tu ubicación que AWS opera como parte de una región de AWS.",
+    "examCues": [
+      "Ejecutar servicios de AWS on-premises por baja latencia o procesamiento local de datos → Outposts",
+      "Usar las mismas APIs y herramientas de AWS para cargas que deben quedarse en tu propio centro de datos → Outposts",
+      "Lanzar instancias EC2, volúmenes EBS, clústeres de ECS o instancias RDS en una subred de tus instalaciones → Outposts"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "storage-gateway",
+        "difference": "Storage Gateway conecta aplicaciones on-premises con almacenamiento en AWS; Outposts pone cómputo y almacenamiento de AWS en tu sitio."
+      },
+      {
+        "serviceId": "direct-connect",
+        "difference": "Direct Connect es un enlace de red dedicado hacia AWS; Outposts es infraestructura de AWS instalada en tu sitio."
+      }
+    ],
+    "pricingModel": "Pides capacidad por un plazo de contrato y pagas todo por adelantado, una parte por adelantado o nada por adelantado; los plazos más largos cuestan menos en total, y el precio incluye la entrega, el mantenimiento de la infraestructura y los parches de software.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera, monitorea y administra la capacidad del Outpost como parte de una región",
+        "Aporta el equipo del Outpost"
+      ],
+      "customer": [
+        "Aporta un sitio que cumple los requisitos de instalaciones, red y energía",
+        "Administra las cargas de trabajo y las subredes que crea en el Outpost",
+        "Tiene un plan Enterprise Support o Unified Operations, que se necesita para pedir Outposts servers"
+      ]
+    }
+  }
+}

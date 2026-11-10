@@ -1,0 +1,72 @@
+{
+  "serviceId": "detective",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/detective/latest/userguide/what-is-detective.html",
+      "title": "What is Amazon Detective?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html",
+      "title": "What is Amazon GuardDuty?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Helps you investigate security findings and suspicious activity and find their root cause. It collects log data from your AWS resources on its own and uses machine learning, statistics and graph analysis to build visualizations with up to a year of history.",
+    "examCues": [
+      "Investigate a GuardDuty finding to see what happened before and after it → Detective",
+      "Find the root cause and scope of suspicious activity in an account → Detective"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "guardduty",
+        "difference": "GuardDuty detects threats and creates findings; Detective helps you investigate them."
+      },
+      {
+        "serviceId": "inspector",
+        "difference": "Inspector finds software vulnerabilities in workloads; Detective analyzes activity to explain a finding."
+      }
+    ],
+    "pricingModel": "Detective charges a tiered flat rate per GB of data it ingests, whatever the source. The first time you enable it you get a 30-day free trial.",
+    "sharedResponsibility": {
+      "aws": [
+        "Collects the log data and builds the behavior graph",
+        "Links changes in activity to GuardDuty findings"
+      ],
+      "customer": [
+        "Turns Detective on for its accounts",
+        "Runs the investigations and acts on what it finds"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Te ayuda a investigar hallazgos de seguridad y actividad sospechosa y a encontrar su causa raíz. Recolecta por su cuenta datos de logs de tus recursos de AWS y usa machine learning, estadística y análisis de grafos para armar visualizaciones con hasta un año de historial.",
+    "examCues": [
+      "Investigar un hallazgo de GuardDuty para ver qué pasó antes y después → Detective",
+      "Encontrar la causa raíz y el alcance de una actividad sospechosa en una cuenta → Detective"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "guardduty",
+        "difference": "GuardDuty detecta amenazas y crea hallazgos; Detective te ayuda a investigarlos."
+      },
+      {
+        "serviceId": "inspector",
+        "difference": "Inspector encuentra vulnerabilidades de software en las cargas de trabajo; Detective analiza la actividad para explicar un hallazgo."
+      }
+    ],
+    "pricingModel": "Detective cobra una tarifa fija escalonada por GB de datos que ingiere, sin importar el origen. La primera vez que lo activas tienes una prueba gratis de 30 días.",
+    "sharedResponsibility": {
+      "aws": [
+        "Recolecta los datos de logs y arma el behavior graph",
+        "Relaciona los cambios de actividad con los hallazgos de GuardDuty"
+      ],
+      "customer": [
+        "Activa Detective en sus cuentas",
+        "Hace las investigaciones y actúa según lo que encuentra"
+      ]
+    }
+  }
+}

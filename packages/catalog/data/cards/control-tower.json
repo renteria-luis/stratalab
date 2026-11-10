@@ -1,0 +1,79 @@
+{
+  "serviceId": "control-tower",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html",
+      "title": "What Is AWS Control Tower?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/controltower/latest/userguide/config-costs.html",
+      "title": "Manage AWS Config costs in AWS Control Tower",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html",
+      "title": "What is AWS Organizations?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Sets up and governs a multi-account AWS environment that follows prescriptive best practices, called a landing zone. It orchestrates services such as AWS Organizations, Service Catalog and IAM Identity Center, and applies controls, also called guardrails, to keep accounts from drifting.",
+    "examCues": [
+      "Set up a well-governed multi-account environment quickly → Control Tower (landing zone)",
+      "Give teams new AWS accounts from templates that already follow company standards → Control Tower (Account Factory)",
+      "Apply controls, also called guardrails, across many accounts to keep them from drifting → Control Tower (controls)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "organizations",
+        "difference": "Organizations is the account and policy service; Control Tower builds on it to set up and govern a landing zone for you."
+      },
+      {
+        "serviceId": "config",
+        "difference": "Config records and evaluates resource configurations; Control Tower uses services like Config to apply its controls."
+      }
+    ],
+    "pricingModel": "Control Tower adds no additional cost; you pay for the services it sets up, such as AWS Config, which bills for each configuration item it records.",
+    "sharedResponsibility": {
+      "aws": [
+        "Builds the landing zone and manages the resources it sets up",
+        "Applies the controls you enable to help keep accounts from drifting"
+      ],
+      "customer": [
+        "Chooses which controls to enable and which accounts to enroll",
+        "Keeps account changes within the landing zone's standards"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Monta y gobierna un entorno de AWS con varias cuentas que sigue buenas prácticas prescriptivas, llamado landing zone. Orquesta servicios como AWS Organizations, Service Catalog e IAM Identity Center, y aplica controles, también llamados guardrails, para que las cuentas no se desvíen.",
+    "examCues": [
+      "Montar rápido un entorno multicuenta bien gobernado → Control Tower (landing zone)",
+      "Dar a los equipos cuentas de AWS nuevas desde plantillas que ya siguen los estándares de la empresa → Control Tower (Account Factory)",
+      "Aplicar controles, también llamados guardrails, en muchas cuentas para que no se desvíen → Control Tower (controles)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "organizations",
+        "difference": "Organizations es el servicio de cuentas y políticas; Control Tower se apoya en él para montar y gobernar una landing zone por ti."
+      },
+      {
+        "serviceId": "config",
+        "difference": "Config registra y evalúa la configuración de los recursos; Control Tower usa servicios como Config para aplicar sus controles."
+      }
+    ],
+    "pricingModel": "Control Tower no agrega costo; pagas por los servicios que configura, como AWS Config, que cobra por cada configuration item que registra.",
+    "sharedResponsibility": {
+      "aws": [
+        "Arma la landing zone y administra los recursos que configura",
+        "Aplica los controles que activas para ayudar a que las cuentas no se desvíen"
+      ],
+      "customer": [
+        "Elige qué controles activar y qué cuentas inscribir",
+        "Mantiene los cambios de las cuentas dentro de los estándares de la landing zone"
+      ]
+    }
+  }
+}

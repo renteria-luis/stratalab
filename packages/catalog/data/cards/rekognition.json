@@ -1,0 +1,74 @@
+{
+  "serviceId": "rekognition",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/rekognition/latest/dg/what-is.html",
+      "title": "What is Amazon Rekognition?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://aws.amazon.com/rekognition/pricing/",
+      "title": "Amazon Rekognition pricing",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "An image and video analysis service that adds computer vision to your applications with no machine learning expertise needed. It detects objects, scenes, text and unsafe content, and detects, analyzes and compares faces in images and videos.",
+    "examCues": [
+      "Detect and compare faces to verify a user's identity → Rekognition",
+      "Find unsafe or inappropriate content in uploaded images or videos → Rekognition",
+      "Label objects and scenes in a media library so it can be searched → Rekognition"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "sagemaker-ai",
+        "difference": "SageMaker AI is for building, training and deploying your own models; Rekognition gives ready-made image and video analysis through an API."
+      },
+      {
+        "serviceId": "transcribe",
+        "difference": "Transcribe turns speech into text; Rekognition analyzes images and video."
+      }
+    ],
+    "pricingModel": "You pay for what you analyze, such as each image analyzed and each minute of video processed, plus stored face metadata and training and inference time for custom models. There is a free tier to get started.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs and improves the deep learning models behind the API",
+        "Scales to analyze large numbers of images and videos"
+      ],
+      "customer": [
+        "Decides what images and videos to send and how to use the results",
+        "Manages its face collections and the data it stores"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de análisis de imágenes y video que agrega visión por computadora a tus aplicaciones sin necesitar experiencia en machine learning. Detecta objetos, escenas, texto y contenido no seguro, y detecta, analiza y compara rostros en imágenes y videos.",
+    "examCues": [
+      "Detectar y comparar rostros para verificar la identidad de un usuario → Rekognition",
+      "Encontrar contenido no seguro o inapropiado en imágenes o videos subidos → Rekognition",
+      "Etiquetar objetos y escenas de una biblioteca de medios para poder buscarla → Rekognition"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "sagemaker-ai",
+        "difference": "SageMaker AI sirve para construir, entrenar y desplegar tus propios modelos; Rekognition da análisis de imágenes y video listo para usar mediante una API."
+      },
+      {
+        "serviceId": "transcribe",
+        "difference": "Transcribe convierte voz en texto; Rekognition analiza imágenes y video."
+      }
+    ],
+    "pricingModel": "Pagas por lo que analizas, como cada imagen analizada y cada minuto de video procesado, más los metadatos de rostros guardados y el tiempo de entrenamiento e inferencia de los modelos personalizados. Hay un free tier para empezar.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera y mejora los modelos de deep learning detrás de la API",
+        "Escala para analizar grandes cantidades de imágenes y videos"
+      ],
+      "customer": [
+        "Decide qué imágenes y videos enviar y cómo usar los resultados",
+        "Administra sus face collections y los datos que guarda"
+      ]
+    }
+  }
+}

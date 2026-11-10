@@ -1,0 +1,84 @@
+{
+  "serviceId": "sagemaker-ai",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html",
+      "title": "What is Amazon SageMaker AI?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-text-classification-setup.html",
+      "title": "Understanding SageMaker AI costs",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/rekognition/latest/dg/what-is.html",
+      "title": "What is Amazon Rekognition?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/comprehend/latest/dg/what-is.html",
+      "title": "What is Amazon Comprehend?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed machine learning service where data scientists and developers build, train and deploy ML models into a production-ready hosted environment. It provides managed algorithms and also supports your own algorithms and frameworks.",
+    "examCues": [
+      "Build, train and deploy a custom machine learning model without managing servers → SageMaker AI",
+      "Host a trained model behind an endpoint that applications call → SageMaker AI",
+      "A question uses the older name Amazon SageMaker → SageMaker AI (renamed on December 3, 2024)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "rekognition",
+        "difference": "Rekognition gives ready-made image and video analysis; SageMaker AI is for building and running your own models."
+      },
+      {
+        "serviceId": "comprehend",
+        "difference": "Comprehend offers ready-made natural language analysis; SageMaker AI lets you build your own models for any task."
+      }
+    ],
+    "pricingModel": "You pay for the resources you use, such as endpoint hosting by instance type and duration, notebook runtime and S3 storage for datasets and models. Some usage is covered by the AWS Free Tier.",
+    "sharedResponsibility": {
+      "aws": [
+        "Manages the infrastructure for training and hosting",
+        "Provides managed algorithms and the ML tools in its user interface"
+      ],
+      "customer": [
+        "Prepares the data and chooses or writes the algorithms",
+        "Chooses instance types and shuts down endpoints that aren't needed"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de machine learning totalmente administrado donde científicos de datos y desarrolladores construyen, entrenan y despliegan modelos de ML en un entorno alojado listo para producción. Ofrece algoritmos administrados y también acepta tus propios algoritmos y frameworks.",
+    "examCues": [
+      "Construir, entrenar y desplegar un modelo de machine learning propio sin administrar servidores → SageMaker AI",
+      "Alojar un modelo entrenado detrás de un endpoint que llaman las aplicaciones → SageMaker AI",
+      "Una pregunta usa el nombre anterior Amazon SageMaker → SageMaker AI (renombrado el 3 de diciembre de 2024)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "rekognition",
+        "difference": "Rekognition da análisis de imágenes y video listo para usar; SageMaker AI sirve para construir y ejecutar tus propios modelos."
+      },
+      {
+        "serviceId": "comprehend",
+        "difference": "Comprehend ofrece análisis de lenguaje natural listo para usar; SageMaker AI te permite construir tus propios modelos para cualquier tarea."
+      }
+    ],
+    "pricingModel": "Pagas por los recursos que usas, como el hosting de endpoints según el tipo de instancia y la duración, el tiempo de los notebooks y el almacenamiento en S3 de datos y modelos. Parte del uso lo cubre el AWS Free Tier.",
+    "sharedResponsibility": {
+      "aws": [
+        "Administra la infraestructura de entrenamiento y hosting",
+        "Ofrece algoritmos administrados y las herramientas de ML en su interfaz"
+      ],
+      "customer": [
+        "Prepara los datos y elige o escribe los algoritmos",
+        "Elige los tipos de instancia y apaga los endpoints que no necesita"
+      ]
+    }
+  }
+}

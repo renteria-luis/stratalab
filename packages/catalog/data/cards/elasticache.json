@@ -1,0 +1,79 @@
+{
+  "serviceId": "elasticache",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html",
+      "title": "What is Amazon ElastiCache?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.corecomponents.html",
+      "title": "How ElastiCache works",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html",
+      "title": "What is Amazon Relational Database Service (Amazon RDS)?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A managed in-memory data store and cache that works with the Valkey, Memcached and Redis OSS engines. You can create a serverless cache with no capacity to plan, or a node-based cluster where you choose the nodes.",
+    "examCues": [
+      "Cache frequent database queries in memory to cut response times → ElastiCache",
+      "Choose between Valkey, Memcached and Redis OSS for a managed in-memory cache → ElastiCache",
+      "Add a cache without planning capacity or managing nodes → ElastiCache (ElastiCache Serverless)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "aurora-and-rds",
+        "difference": "RDS and Aurora store your data durably in relational databases; ElastiCache keeps frequently used data in memory in front of them."
+      },
+      {
+        "serviceId": "dynamodb",
+        "difference": "DynamoDB is a NoSQL database for your data; ElastiCache is an in-memory store mainly used as a cache."
+      }
+    ],
+    "pricingModel": "Serverless caches charge for data stored, in GB-hours, and for compute in ElastiCache Processing Units (ECPUs); node-based clusters charge per hour for each node.",
+    "sharedResponsibility": {
+      "aws": [
+        "Manages hardware provisioning, monitoring, node replacement and software patching",
+        "With Serverless, monitors usage and scales the cache"
+      ],
+      "customer": [
+        "Chooses the engine and, for node-based clusters, the node type, number and Availability Zones",
+        "Decides what to cache and when cached data expires"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un almacén de datos en memoria y caché administrado que funciona con los motores Valkey, Memcached y Redis OSS. Puedes crear una caché serverless sin capacidad que planear, o un clúster basado en nodos donde eliges los nodos.",
+    "examCues": [
+      "Guardar en memoria las consultas frecuentes a la base de datos para bajar los tiempos de respuesta → ElastiCache",
+      "Elegir entre Valkey, Memcached y Redis OSS para una caché en memoria administrada → ElastiCache",
+      "Agregar una caché sin planear capacidad ni administrar nodos → ElastiCache (ElastiCache Serverless)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "aurora-and-rds",
+        "difference": "RDS y Aurora guardan tus datos de forma duradera en bases relacionales; ElastiCache mantiene en memoria, delante de ellas, los datos más usados."
+      },
+      {
+        "serviceId": "dynamodb",
+        "difference": "DynamoDB es una base NoSQL para tus datos; ElastiCache es un almacén en memoria que se usa sobre todo como caché."
+      }
+    ],
+    "pricingModel": "Las cachés serverless cobran por los datos guardados, en GB-hora, y por el cómputo en ElastiCache Processing Units (ECPU); los clústeres basados en nodos cobran por hora cada nodo.",
+    "sharedResponsibility": {
+      "aws": [
+        "Se encarga del aprovisionamiento de hardware, el monitoreo, el reemplazo de nodos y los parches de software",
+        "Con Serverless, monitorea el uso y escala la caché"
+      ],
+      "customer": [
+        "Elige el motor y, en clústeres basados en nodos, el tipo, la cantidad y las Availability Zones de los nodos",
+        "Decide qué guardar en caché y cuándo vencen esos datos"
+      ]
+    }
+  }
+}

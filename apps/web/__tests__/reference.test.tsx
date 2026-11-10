@@ -5,13 +5,14 @@ import { en } from '../src/i18n/messages/en';
 import { renderApp } from './renderApp';
 
 describe('ServiceReferenceView', () => {
+  // Braket is outside both exams, so it stays nav-only as card batches grow.
   it('SHELL: a nav-only service with docsUrl shows the notice, "No card yet" and the docs link', async () => {
-    renderApp('/reference/detective');
-    expect(await screen.findByRole('heading', { level: 1, name: 'Detective' })).toBeDefined();
+    renderApp('/reference/braket');
+    expect(await screen.findByRole('heading', { level: 1, name: 'Amazon Braket' })).toBeDefined();
     expect(screen.getByText(en['reference.notice'])).toBeDefined();
     expect(screen.getByText(en['reference.noCard'])).toBeDefined();
     const docs = screen.getByRole('link', { name: new RegExp(en['reference.docsLink']) });
-    expect(docs.getAttribute('href')).toBe('https://docs.aws.amazon.com/detective/');
+    expect(docs.getAttribute('href')).toBe('https://docs.aws.amazon.com/braket/');
   });
 
   it('SHELL: a nav-only service without docsUrl shows no docs link', async () => {

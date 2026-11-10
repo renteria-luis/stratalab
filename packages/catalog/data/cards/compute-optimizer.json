@@ -1,0 +1,79 @@
+{
+  "serviceId": "compute-optimizer",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html",
+      "title": "What is AWS Compute Optimizer?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/compute-optimizer/latest/ug/enhanced-infrastructure-metrics.html",
+      "title": "Enhanced infrastructure metrics",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html",
+      "title": "AWS Trusted Advisor",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Analyzes the configuration and utilization metrics of your AWS resources to recommend the right size and to find idle resources. It covers resources such as EC2 instances, Auto Scaling groups, EBS volumes, Lambda functions, ECS services on Fargate and RDS databases.",
+    "examCues": [
+      "Find EC2 instances that are too large for their workload and get a smaller type to switch to → Compute Optimizer",
+      "Find idle resources to stop or delete → Compute Optimizer",
+      "Get rightsizing recommendations for Lambda functions and EBS volumes → Compute Optimizer"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor runs broad best-practice checks across cost, security and more; Compute Optimizer gives detailed rightsizing recommendations from utilization metrics."
+      },
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch collects the metrics; Compute Optimizer analyzes them to recommend resource sizes."
+      }
+    ],
+    "pricingModel": "You opt in to start the analysis. Enhanced infrastructure metrics, which extend the lookback period to up to 93 days for some resources, is a paid option.",
+    "sharedResponsibility": {
+      "aws": [
+        "Analyzes metrics and generates findings and recommendations",
+        "Shows projected utilization for each recommendation"
+      ],
+      "customer": [
+        "Opts in its accounts or its organization",
+        "Decides which recommendations to apply and makes the changes"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Analiza la configuración y las métricas de uso de tus recursos de AWS para recomendar el tamaño correcto y encontrar recursos inactivos. Cubre recursos como instancias EC2, Auto Scaling groups, volúmenes EBS, funciones Lambda, servicios de ECS en Fargate y bases de datos RDS.",
+    "examCues": [
+      "Encontrar instancias EC2 demasiado grandes para su carga y obtener un tipo más chico al que cambiar → Compute Optimizer",
+      "Encontrar recursos inactivos para detenerlos o borrarlos → Compute Optimizer",
+      "Obtener recomendaciones de tamaño para funciones Lambda y volúmenes EBS → Compute Optimizer"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor hace revisiones amplias de buenas prácticas de costo, seguridad y más; Compute Optimizer da recomendaciones detalladas de tamaño a partir de métricas de uso."
+      },
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch recolecta las métricas; Compute Optimizer las analiza para recomendar el tamaño de los recursos."
+      }
+    ],
+    "pricingModel": "Te inscribes (opt in) para que empiece el análisis. Enhanced infrastructure metrics, que extiende el período analizado hasta 93 días en algunos recursos, es una opción de pago.",
+    "sharedResponsibility": {
+      "aws": [
+        "Analiza las métricas y genera hallazgos y recomendaciones",
+        "Muestra el uso proyectado de cada recomendación"
+      ],
+      "customer": [
+        "Inscribe sus cuentas o su organización",
+        "Decide qué recomendaciones aplicar y hace los cambios"
+      ]
+    }
+  }
+}

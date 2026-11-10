@@ -1,0 +1,74 @@
+{
+  "serviceId": "workspaces",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/workspaces/latest/adminguide/amazon-workspaces.html",
+      "title": "What is Amazon WorkSpaces?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html",
+      "title": "What is Amazon Lightsail?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Provides virtual cloud desktops, called WorkSpaces, running Windows or Linux, so you don't buy and deploy desktop hardware. Users reach their desktop from many devices or a web browser.",
+    "examCues": [
+      "Give remote employees a secure cloud desktop instead of a company laptop → WorkSpaces",
+      "Add or remove desktops quickly as staff changes → WorkSpaces",
+      "Persistent personal desktops versus non-persistent shared ones → WorkSpaces Personal or WorkSpaces Pools"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "ec2",
+        "difference": "EC2 gives you servers to run applications; WorkSpaces gives people complete desktops to work on."
+      },
+      {
+        "serviceId": "lightsail",
+        "difference": "Lightsail offers simple servers for websites; WorkSpaces offers desktops for end users."
+      }
+    ],
+    "pricingModel": "You choose monthly or hourly billing for each WorkSpace.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the desktop infrastructure",
+        "Encrypts data at rest with KMS when you turn it on"
+      ],
+      "customer": [
+        "Manages users, directories and access, for example with MFA and allowed IP addresses",
+        "Manages the applications and licenses on the desktops"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Ofrece escritorios virtuales en la nube, llamados WorkSpaces, con Windows o Linux, para que no compres ni despliegues hardware de escritorio. Los usuarios entran a su escritorio desde muchos dispositivos o desde un navegador web.",
+    "examCues": [
+      "Dar a empleados remotos un escritorio seguro en la nube en lugar de una laptop de la empresa → WorkSpaces",
+      "Agregar o quitar escritorios rápido cuando cambia el personal → WorkSpaces",
+      "Escritorios personales persistentes frente a escritorios compartidos no persistentes → WorkSpaces Personal o WorkSpaces Pools"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "ec2",
+        "difference": "EC2 te da servidores para ejecutar aplicaciones; WorkSpaces da a las personas escritorios completos para trabajar."
+      },
+      {
+        "serviceId": "lightsail",
+        "difference": "Lightsail ofrece servidores simples para sitios web; WorkSpaces ofrece escritorios para usuarios finales."
+      }
+    ],
+    "pricingModel": "Eliges cobro mensual o por hora para cada WorkSpace.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera la infraestructura de los escritorios",
+        "Cifra los datos en reposo con KMS cuando lo activas"
+      ],
+      "customer": [
+        "Administra usuarios, directorios y acceso, por ejemplo con MFA y direcciones IP permitidas",
+        "Administra las aplicaciones y licencias de los escritorios"
+      ]
+    }
+  }
+}

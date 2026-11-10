@@ -1,0 +1,91 @@
+{
+  "serviceId": "certificate-manager",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html",
+      "title": "What is AWS Certificate Manager?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
+      "title": "What is AWS Secrets Manager?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html",
+      "title": "AWS Key Management Service",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/acm/latest/userguide/acm-services.html",
+      "title": "Managed automation with integrated services",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/acm/latest/userguide/domain-ownership-validation.html",
+      "title": "Validate domain ownership for AWS Certificate Manager public certificates",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Creates, stores and renews public and private SSL/TLS certificates that protect your AWS websites and applications. You can issue certificates in ACM or import third-party ones, including wildcard certificates for many subdomains.",
+    "examCues": [
+      "Get a free public TLS certificate for a load balancer or a CloudFront distribution → Certificate Manager",
+      "Stop renewing HTTPS certificates by hand → Certificate Manager",
+      "Protect every subdomain of a domain with one certificate → Certificate Manager (wildcard certificate)",
+      "Use an ACM certificate on a CloudFront distribution → Certificate Manager (request or import it in US East (N. Virginia))"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "key-management-service",
+        "difference": "KMS manages encryption keys for your data; ACM manages the TLS certificates that secure connections."
+      },
+      {
+        "serviceId": "secrets-manager",
+        "difference": "Secrets Manager stores secrets such as passwords; AWS recommends ACM for certificates and their private keys."
+      }
+    ],
+    "pricingModel": "There is no additional charge for the SSL/TLS certificates you manage with ACM; you pay for the AWS resources that run your website or application.",
+    "sharedResponsibility": {
+      "aws": [
+        "Issues, stores and renews certificates for integrated AWS services",
+        "Protects the certificates' private keys"
+      ],
+      "customer": [
+        "Proves it owns or controls each domain of a public certificate, by DNS, email or HTTP validation",
+        "Attaches certificates to the right resources and renews imported ones"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Crea, guarda y renueva certificados SSL/TLS públicos y privados que protegen tus sitios y aplicaciones en AWS. Puedes emitir certificados en ACM o importar los de terceros, incluidos certificados wildcard para muchos subdominios.",
+    "examCues": [
+      "Obtener un certificado TLS público gratis para un load balancer o una distribución de CloudFront → Certificate Manager",
+      "Dejar de renovar a mano los certificados HTTPS → Certificate Manager",
+      "Proteger todos los subdominios de un dominio con un solo certificado → Certificate Manager (certificado wildcard)",
+      "Usar un certificado de ACM en una distribución de CloudFront → Certificate Manager (pedirlo o importarlo en US East (N. Virginia))"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "key-management-service",
+        "difference": "KMS administra llaves de cifrado para tus datos; ACM administra los certificados TLS que protegen las conexiones."
+      },
+      {
+        "serviceId": "secrets-manager",
+        "difference": "Secrets Manager guarda secretos como contraseñas; AWS recomienda ACM para los certificados y sus llaves privadas."
+      }
+    ],
+    "pricingModel": "Los certificados SSL/TLS que administras con ACM no tienen cargo adicional; pagas por los recursos de AWS que ejecutan tu sitio o aplicación.",
+    "sharedResponsibility": {
+      "aws": [
+        "Emite, guarda y renueva certificados para los servicios de AWS integrados",
+        "Protege las llaves privadas de los certificados"
+      ],
+      "customer": [
+        "Demuestra que es dueño o controla cada dominio de un certificado público, con validación por DNS, email o HTTP",
+        "Asigna los certificados a los recursos correctos y renueva los importados"
+      ]
+    }
+  }
+}

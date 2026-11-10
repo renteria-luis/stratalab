@@ -1,0 +1,79 @@
+{
+  "serviceId": "eventbridge",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html",
+      "title": "What Is Amazon EventBridge?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-custom-bus-what-is.html",
+      "title": "What is the EventBridge Custom Event Bus?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/sns/latest/dg/welcome.html",
+      "title": "What is Amazon SNS?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A serverless service that connects application components through events, for event-driven applications. Event buses route events from AWS services, your applications and third-party software to many targets, and pipes connect one source to one target.",
+    "examCues": [
+      "Run an action automatically when an AWS service sends an event → EventBridge",
+      "Route events from many applications and SaaS partners to the right consumers → EventBridge (event bus)",
+      "Connect one event source to one target point to point → EventBridge (pipes)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-notification-service",
+        "difference": "SNS pushes messages from a topic to its subscribers; EventBridge routes events to targets based on what each event contains."
+      },
+      {
+        "serviceId": "simple-queue-service",
+        "difference": "SQS holds messages in a queue until a consumer receives them; EventBridge routes events as they happen."
+      }
+    ],
+    "pricingModel": "On the Custom Event Bus you pay for the events you publish, the deliveries to subscribers and retention.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the event buses and pipes and scales them",
+        "Delivers matching events to their targets"
+      ],
+      "customer": [
+        "Defines which events go to which targets",
+        "Builds targets that handle the events they receive"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio serverless que conecta componentes de aplicaciones mediante eventos, para aplicaciones basadas en eventos. Los event buses dirigen eventos de servicios de AWS, de tus aplicaciones y de software de terceros a muchos destinos, y los pipes conectan un origen con un destino.",
+    "examCues": [
+      "Ejecutar una acción automática cuando un servicio de AWS envía un evento → EventBridge",
+      "Dirigir eventos de muchas aplicaciones y partners SaaS a los consumidores correctos → EventBridge (event bus)",
+      "Conectar un origen de eventos con un destino, punto a punto → EventBridge (pipes)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-notification-service",
+        "difference": "SNS envía los mensajes de un topic a sus suscriptores; EventBridge dirige los eventos a destinos según lo que contiene cada evento."
+      },
+      {
+        "serviceId": "simple-queue-service",
+        "difference": "SQS guarda los mensajes en una cola hasta que un consumidor los recibe; EventBridge dirige los eventos en el momento en que ocurren."
+      }
+    ],
+    "pricingModel": "En el Custom Event Bus pagas por los eventos que publicas, las entregas a los suscriptores y la retención.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera y escala los event buses y los pipes",
+        "Entrega los eventos que coinciden a sus destinos"
+      ],
+      "customer": [
+        "Define qué eventos van a qué destinos",
+        "Construye destinos que manejen los eventos que reciben"
+      ]
+    }
+  }
+}

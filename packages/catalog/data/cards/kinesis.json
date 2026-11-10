@@ -1,0 +1,84 @@
+{
+  "serviceId": "kinesis",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/streams/latest/dev/introduction.html",
+      "title": "What is Amazon Kinesis Data Streams?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html",
+      "title": "Choose the right mode to stream in",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://aws.amazon.com/kinesis/data-streams/pricing/",
+      "title": "Amazon Kinesis Data Streams pricing",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/sns/latest/dg/welcome.html",
+      "title": "What is Amazon SNS?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Kinesis Data Streams collects and processes large streams of data records in real time, such as application logs, clickstreams or market data feeds. It belongs to the Kinesis streaming platform with Firehose and Kinesis Video Streams.",
+    "examCues": [
+      "Ingest clickstream or log data continuously and process it within seconds → Kinesis (Data Streams)",
+      "Feed real-time dashboards and alerts from streaming data → Kinesis (Data Streams)",
+      "Several applications read the same stream of records independently → Kinesis (Data Streams)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-queue-service",
+        "difference": "SQS queues messages for consumers to process and delete; Kinesis keeps a stream of records that several applications can read."
+      },
+      {
+        "serviceId": "data-firehose",
+        "difference": "Firehose delivers streaming data to destinations; Kinesis Data Streams lets you build your own real-time processing applications."
+      }
+    ],
+    "pricingModel": "On-demand modes charge for the data you write and read, and On-demand Standard adds an hourly charge per stream; provisioned mode charges per shard hour plus PUT payload units. Longer retention costs extra.",
+    "sharedResponsibility": {
+      "aws": [
+        "Stores records across the stream's capacity and, in on-demand modes, manages the shards",
+        "Scales on-demand streams with the traffic"
+      ],
+      "customer": [
+        "Chooses the capacity mode and, in provisioned mode, the number of shards",
+        "Writes the producer and consumer applications"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Kinesis Data Streams recolecta y procesa en tiempo real grandes flujos de registros de datos, como logs de aplicaciones, clickstreams o feeds de datos de mercado. Forma parte de la plataforma de streaming Kinesis junto con Firehose y Kinesis Video Streams.",
+    "examCues": [
+      "Ingerir sin parar datos de clickstream o de logs y procesarlos en segundos → Kinesis (Data Streams)",
+      "Alimentar dashboards y alertas en tiempo real con datos en streaming → Kinesis (Data Streams)",
+      "Varias aplicaciones leen el mismo flujo de registros de forma independiente → Kinesis (Data Streams)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-queue-service",
+        "difference": "SQS pone mensajes en una cola para que los consumidores los procesen y borren; Kinesis mantiene un flujo de registros que varias aplicaciones pueden leer."
+      },
+      {
+        "serviceId": "data-firehose",
+        "difference": "Firehose entrega datos en streaming a destinos; Kinesis Data Streams te permite construir tus propias aplicaciones de procesamiento en tiempo real."
+      }
+    ],
+    "pricingModel": "Los modos on-demand cobran por los datos que escribes y lees, y On-demand Standard suma un cargo por hora por stream; el modo provisioned cobra por hora de shard más PUT payload units. La retención más larga cuesta aparte.",
+    "sharedResponsibility": {
+      "aws": [
+        "Guarda los registros en la capacidad del stream y, en los modos on-demand, administra los shards",
+        "Escala los streams on-demand según el tráfico"
+      ],
+      "customer": [
+        "Elige el modo de capacidad y, en modo provisioned, la cantidad de shards",
+        "Escribe las aplicaciones productoras y consumidoras"
+      ]
+    }
+  }
+}

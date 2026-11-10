@@ -1,0 +1,74 @@
+{
+  "serviceId": "elastic-container-registry",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html",
+      "title": "What is Amazon Elastic Container Registry?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/inspector/latest/user/what-is-inspector.html",
+      "title": "What is Amazon Inspector?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A managed container image registry for Docker and OCI images, with private repositories controlled by IAM and public repositories through ECR Public. Lifecycle policies clean up unused images and image scanning finds software vulnerabilities.",
+    "examCues": [
+      "Store private Docker images close to ECS or EKS → Elastic Container Registry",
+      "Scan each new container image for vulnerabilities when it is pushed → Elastic Container Registry (scan on push)",
+      "Delete old, unused images from a repository automatically → Elastic Container Registry (lifecycle policies)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "elastic-container-service",
+        "difference": "ECS runs containers; ECR stores the images they start from."
+      },
+      {
+        "serviceId": "inspector",
+        "difference": "Inspector continuously scans workloads, including ECR images; ECR is the registry that stores the images."
+      }
+    ],
+    "pricingModel": "You pay for the data stored in your repositories, for data transfer when images are pushed and pulled, and for image actions you opt in to, such as signing and replication.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the registry and stores the images",
+        "Scans images when scanning is configured"
+      ],
+      "customer": [
+        "Controls who can push and pull with IAM and repository permissions",
+        "Sets lifecycle policies and fixes the vulnerabilities that scans report"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un registro administrado de imágenes de contenedor Docker y OCI, con repositorios privados controlados por IAM y repositorios públicos con ECR Public. Las lifecycle policies limpian las imágenes sin uso y el escaneo de imágenes encuentra vulnerabilidades de software.",
+    "examCues": [
+      "Guardar imágenes Docker privadas cerca de ECS o EKS → Elastic Container Registry",
+      "Escanear cada imagen de contenedor nueva en busca de vulnerabilidades al subirla → Elastic Container Registry (scan on push)",
+      "Borrar de forma automática las imágenes viejas sin uso de un repositorio → Elastic Container Registry (lifecycle policies)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "elastic-container-service",
+        "difference": "ECS ejecuta contenedores; ECR guarda las imágenes desde las que arrancan."
+      },
+      {
+        "serviceId": "inspector",
+        "difference": "Inspector escanea de forma continua las cargas de trabajo, incluidas las imágenes de ECR; ECR es el registro que guarda las imágenes."
+      }
+    ],
+    "pricingModel": "Pagas por los datos guardados en tus repositorios, por la transferencia de datos al subir y bajar imágenes y por las acciones sobre imágenes que actives, como la firma y la replicación.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera el registro y guarda las imágenes",
+        "Escanea las imágenes cuando el escaneo está configurado"
+      ],
+      "customer": [
+        "Controla quién puede subir y bajar imágenes con IAM y permisos del repositorio",
+        "Define lifecycle policies y corrige las vulnerabilidades que reportan los escaneos"
+      ]
+    }
+  }
+}

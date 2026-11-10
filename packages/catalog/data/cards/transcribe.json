@@ -1,0 +1,71 @@
+{
+  "serviceId": "transcribe",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/transcribe/latest/dg/what-is.html",
+      "title": "What is Amazon Transcribe?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/polly/latest/dg/what-is.html",
+      "title": "What Is Amazon Polly?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "An automatic speech recognition service that uses machine learning to convert audio to text. It transcribes live audio streams or media files stored in Amazon S3, and can identify speakers and filter content for privacy.",
+    "examCues": [
+      "Turn recorded customer calls into text → Transcribe",
+      "Add live captions or speech-to-text to an application → Transcribe (streaming)",
+      "Remove personal information from transcripts → Transcribe (PII redaction)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "polly",
+        "difference": "Polly turns text into speech; Transcribe turns speech into text."
+      },
+      {
+        "serviceId": "rekognition",
+        "difference": "Rekognition analyzes images and video; Transcribe works with audio."
+      }
+    ],
+    "pricingModel": "Pay as you go for the seconds of audio you transcribe, billed monthly in 1-second increments with no minimum; features such as PII redaction and custom language models cost extra.",
+    "sharedResponsibility": {
+      "aws": ["Runs the speech recognition models", "Transcribes streaming audio and files in S3"],
+      "customer": [
+        "Chooses the language options and customizations",
+        "Protects the audio and the transcripts it stores"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de reconocimiento automático de voz que usa machine learning para convertir audio en texto. Transcribe audio en vivo o archivos guardados en Amazon S3, y puede identificar a quién habla y filtrar contenido por privacidad.",
+    "examCues": [
+      "Convertir en texto las llamadas grabadas de clientes → Transcribe",
+      "Agregar subtítulos en vivo o voz a texto a una aplicación → Transcribe (streaming)",
+      "Quitar información personal de las transcripciones → Transcribe (PII redaction)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "polly",
+        "difference": "Polly convierte texto en voz; Transcribe convierte voz en texto."
+      },
+      {
+        "serviceId": "rekognition",
+        "difference": "Rekognition analiza imágenes y video; Transcribe trabaja con audio."
+      }
+    ],
+    "pricingModel": "Pagas según uses por los segundos de audio que transcribes, con cobro mensual en incrementos de 1 segundo y sin mínimo; funciones como PII redaction y los modelos de lenguaje personalizados cuestan aparte.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera los modelos de reconocimiento de voz",
+        "Transcribe audio en streaming y archivos en S3"
+      ],
+      "customer": [
+        "Elige las opciones de idioma y las personalizaciones",
+        "Protege el audio y las transcripciones que guarda"
+      ]
+    }
+  }
+}

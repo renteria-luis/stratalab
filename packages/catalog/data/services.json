@@ -122,7 +122,7 @@
       "name": "AWS Outposts",
       "category": "Compute",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -199,7 +199,7 @@
       "name": "Elastic Kubernetes Service",
       "category": "Containers",
       "aliases": ["Amazon EKS"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -225,7 +225,7 @@
       "name": "Elastic Container Registry",
       "category": "Containers",
       "aliases": ["Amazon ECR"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -305,7 +305,7 @@
       "name": "AWS Backup",
       "category": "Storage",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -358,7 +358,7 @@
       "name": "ElastiCache",
       "category": "Database",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -515,7 +515,7 @@
       "name": "Database Migration Service",
       "category": "Migration & Transfer",
       "aliases": ["AWS DMS"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1123,7 +1123,7 @@
       "name": "Service Catalog",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1162,7 +1162,7 @@
       "name": "Control Tower",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1214,7 +1214,7 @@
       "name": "AWS Compute Optimizer",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1562,7 +1562,7 @@
       "name": "Amazon SageMaker AI",
       "category": "Machine Learning",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1679,7 +1679,7 @@
       "name": "Amazon Polly",
       "category": "Machine Learning",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1692,7 +1692,7 @@
       "name": "Amazon Rekognition",
       "category": "Machine Learning",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1718,7 +1718,7 @@
       "name": "Amazon Transcribe",
       "category": "Machine Learning",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1988,7 +1988,7 @@
       "name": "Kinesis",
       "category": "Analytics",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2181,7 +2181,7 @@
       "name": "Resource Access Manager",
       "category": "Security, Identity, & Compliance",
       "aliases": ["AWS RAM"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2272,7 +2272,7 @@
       "name": "Certificate Manager",
       "category": "Security, Identity, & Compliance",
       "aliases": ["ACM"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2298,7 +2298,7 @@
       "name": "CloudHSM",
       "category": "Security, Identity, & Compliance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2350,7 +2350,7 @@
       "name": "Detective",
       "category": "Security, Identity, & Compliance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2752,7 +2752,7 @@
       "name": "Amazon EventBridge",
       "category": "Application Integration",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2933,7 +2933,7 @@
       "name": "WorkSpaces",
       "category": "End User Computing",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": false

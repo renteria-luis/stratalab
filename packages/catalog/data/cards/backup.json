@@ -1,0 +1,74 @@
+{
+  "serviceId": "backup",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/aws-backup/latest/devguide/whatisbackup.html",
+      "title": "What is AWS Backup?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/ebs/latest/userguide/what-is-ebs.html",
+      "title": "What is Amazon Elastic Block Store?",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed service that centralizes and automates data protection across AWS services, in the cloud and on premises. You define backup plans once and apply them to your resources instead of scripting backups service by service.",
+    "examCues": [
+      "Back up resources of several AWS services from one place with one policy → AWS Backup",
+      "Enforce a company-wide backup schedule and retention period → AWS Backup (backup plans)",
+      "Stop writing custom backup scripts for each service → AWS Backup"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "storage-gateway",
+        "difference": "Storage Gateway connects on-premises applications to AWS storage; AWS Backup manages backup schedules and retention across services."
+      },
+      {
+        "serviceId": "s3",
+        "difference": "S3 is a place to store data; AWS Backup decides when and how resources are backed up and keeps the recovery points."
+      }
+    ],
+    "pricingModel": "You pay for backup storage, data restored, restore testing, cross-Region data transfer and AWS Backup Audit Manager.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the backups on the schedules of your backup plans",
+        "Shows backups and backup activity in one console"
+      ],
+      "customer": [
+        "Defines backup plans, retention and which resources they cover",
+        "Tests restores and protects access to the backups"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio totalmente administrado que centraliza y automatiza la protección de datos de los servicios de AWS, en la nube y on-premises. Defines los backup plans una vez y los aplicas a tus recursos, en lugar de programar backups servicio por servicio.",
+    "examCues": [
+      "Respaldar recursos de varios servicios de AWS desde un solo lugar con una sola política → AWS Backup",
+      "Imponer en toda la empresa un calendario de backups y un período de retención → AWS Backup (backup plans)",
+      "Dejar de escribir scripts de backup propios para cada servicio → AWS Backup"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "storage-gateway",
+        "difference": "Storage Gateway conecta aplicaciones on-premises con el almacenamiento de AWS; AWS Backup administra calendarios y retención de backups en varios servicios."
+      },
+      {
+        "serviceId": "s3",
+        "difference": "S3 es un lugar para guardar datos; AWS Backup decide cuándo y cómo se respaldan los recursos y guarda los puntos de recuperación."
+      }
+    ],
+    "pricingModel": "Pagas por el almacenamiento de backups, los datos restaurados, las pruebas de restauración, la transferencia de datos entre regiones y AWS Backup Audit Manager.",
+    "sharedResponsibility": {
+      "aws": [
+        "Ejecuta los backups según los calendarios de tus backup plans",
+        "Muestra los backups y su actividad en una sola consola"
+      ],
+      "customer": [
+        "Define los backup plans, la retención y qué recursos cubren",
+        "Prueba las restauraciones y protege el acceso a los backups"
+      ]
+    }
+  }
+}

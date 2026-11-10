@@ -1,0 +1,74 @@
+{
+  "serviceId": "database-migration-service",
+  "status": "verified 2026-11-06",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html",
+      "title": "What is AWS Database Migration Service?",
+      "accessedOn": "2026-11-06"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_BestPractices.html",
+      "title": "Best practices for AWS Database Migration Service",
+      "accessedOn": "2026-11-06"
+    }
+  ],
+  "en": {
+    "summary": "Migrates relational databases, data warehouses, NoSQL databases and other data stores into AWS, or between cloud and on-premises setups. It can do one-time migrations or keep replicating ongoing changes, and DMS Schema Conversion or the AWS Schema Conversion Tool converts schemas for a different engine.",
+    "examCues": [
+      "Move an on-premises database to AWS while the source stays in use → Database Migration Service (ongoing replication)",
+      "Migrate to a different database engine → Database Migration Service (with schema conversion)",
+      "Keep a source and a target database in sync during a migration → Database Migration Service"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "aurora-and-rds",
+        "difference": "RDS and Aurora are where a database can run; DMS moves the data into them."
+      },
+      {
+        "serviceId": "storage-gateway",
+        "difference": "Storage Gateway gives on-premises applications access to AWS storage; DMS migrates databases."
+      }
+    ],
+    "pricingModel": "You pay for your replication instances and any additional log storage; inbound data transfer is free.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the replication software on a server in the AWS Cloud",
+        "Creates target tables and primary keys if they don't exist"
+      ],
+      "customer": [
+        "Sets up the source and target connections and the migration tasks",
+        "Converts schemas when changing engines and tests the migrated database"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Migra bases de datos relacionales, data warehouses, bases NoSQL y otros almacenes de datos hacia AWS, o entre combinaciones de nube y on-premises. Puede hacer migraciones de una sola vez o seguir replicando los cambios, y DMS Schema Conversion o la AWS Schema Conversion Tool convierten los esquemas para otro motor.",
+    "examCues": [
+      "Mover una base de datos on-premises a AWS mientras el origen sigue en uso → Database Migration Service (replicación continua)",
+      "Migrar a otro motor de base de datos → Database Migration Service (con conversión de esquemas)",
+      "Mantener sincronizadas una base de origen y una de destino durante una migración → Database Migration Service"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "aurora-and-rds",
+        "difference": "RDS y Aurora son donde puede correr una base de datos; DMS mueve los datos hacia ellas."
+      },
+      {
+        "serviceId": "storage-gateway",
+        "difference": "Storage Gateway da a las aplicaciones on-premises acceso al almacenamiento de AWS; DMS migra bases de datos."
+      }
+    ],
+    "pricingModel": "Pagas por tus replication instances y por el almacenamiento de logs adicional; la transferencia de datos de entrada es gratis.",
+    "sharedResponsibility": {
+      "aws": [
+        "Ejecuta el software de replicación en un servidor en la nube de AWS",
+        "Crea las tablas de destino y sus primary keys si no existen"
+      ],
+      "customer": [
+        "Configura las conexiones de origen y destino y las tareas de migración",
+        "Convierte los esquemas cuando cambia de motor y prueba la base migrada"
+      ]
+    }
+  }
+}
