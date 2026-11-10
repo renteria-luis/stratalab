@@ -1,0 +1,70 @@
+{
+  "serviceId": "prometheus",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/prometheus/latest/userguide/what-is-Amazon-Managed-Service-Prometheus.html",
+      "title": "What is Amazon Managed Service for Prometheus?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/prometheus/pricing/",
+      "title": "Amazon Managed Service for Prometheus pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A serverless monitoring service compatible with Prometheus for metrics from container environments, such as Amazon EKS and self-managed Kubernetes. It uses the same Prometheus data model and PromQL query language, and scales ingestion, storage and queries automatically.",
+    "examCues": [
+      "Monitor metrics from EKS or Kubernetes clusters with PromQL without running Prometheus servers → Managed Service for Prometheus",
+      "Keep container metrics in a highly available store that replicates data across three Availability Zones → Managed Service for Prometheus"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "grafana",
+        "difference": "Managed Grafana shows dashboards; Managed Service for Prometheus collects, stores and queries the metrics behind them."
+      },
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch is the AWS monitoring service for metrics, logs and alarms across AWS resources; Managed Service for Prometheus uses the open-source Prometheus data model and PromQL."
+      }
+    ],
+    "pricingModel": "You pay for the metric samples ingested, the metrics stored and the query samples processed, plus the hours and samples of the managed collector if you use it. A free tier covers some ingestion, queries and storage.",
+    "sharedResponsibility": {
+      "aws": [
+        "Scales ingestion, storage and queries, and replicates data across three Availability Zones"
+      ],
+      "customer": [
+        "Chooses which metrics to send and how long to keep them",
+        "Writes the queries and alerting rules and controls access to the workspace"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de monitoreo serverless compatible con Prometheus para métricas de entornos de contenedores, como Amazon EKS y Kubernetes autoadministrado. Usa el mismo modelo de datos de Prometheus y el lenguaje de consultas PromQL, y escala la ingesta, el almacenamiento y las consultas de forma automática.",
+    "examCues": [
+      "Monitorear métricas de clústeres de EKS o Kubernetes con PromQL sin operar servidores de Prometheus → Managed Service for Prometheus",
+      "Guardar métricas de contenedores en un almacén de alta disponibilidad que replica los datos en tres Availability Zones → Managed Service for Prometheus"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "grafana",
+        "difference": "Managed Grafana muestra dashboards; Managed Service for Prometheus recopila, guarda y consulta las métricas que hay detrás."
+      },
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch es el servicio de monitoreo de AWS para métricas, logs y alarmas de los recursos de AWS; Managed Service for Prometheus usa el modelo de datos open source de Prometheus y PromQL."
+      }
+    ],
+    "pricingModel": "Pagas por las muestras de métricas ingeridas, las métricas guardadas y las muestras procesadas por consultas, más las horas y muestras del recolector administrado si lo usas. Un free tier cubre parte de la ingesta, las consultas y el almacenamiento.",
+    "sharedResponsibility": {
+      "aws": [
+        "Escala la ingesta, el almacenamiento y las consultas, y replica los datos en tres Availability Zones"
+      ],
+      "customer": [
+        "Elige qué métricas enviar y cuánto tiempo guardarlas",
+        "Escribe las consultas y las reglas de alerta y controla el acceso al workspace"
+      ]
+    }
+  }
+}

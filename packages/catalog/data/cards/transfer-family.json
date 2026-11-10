@@ -1,0 +1,73 @@
+{
+  "serviceId": "transfer-family",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/transfer/latest/userguide/what-is-aws-transfer-family.html",
+      "title": "What is AWS Transfer Family?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/aws-transfer-family/pricing/",
+      "title": "AWS Transfer Family pricing",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/datasync/faqs/",
+      "title": "AWS DataSync FAQs",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed service that transfers files into and out of Amazon S3 or Amazon EFS over SFTP, FTPS, FTP and AS2, or through a web browser. Customers and partners keep their existing clients and settings, and you run no file transfer server infrastructure.",
+    "examCues": [
+      "Partners upload files over SFTP and the files must land in S3, with no SFTP server to manage → Transfer Family",
+      "Move an existing FTP or FTPS workflow to AWS without changing the clients that partners use → Transfer Family",
+      "Exchange business-to-business files with trading partners over AS2 → Transfer Family"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "datasync",
+        "difference": "DataSync copies large data sets between storage systems and AWS for migration or replication; Transfer Family gives users and partners an SFTP, FTPS, FTP or AS2 endpoint."
+      },
+      {
+        "serviceId": "storage-gateway",
+        "difference": "Storage Gateway connects on-premises applications to AWS storage through a local gateway; Transfer Family accepts file transfers over standard protocols."
+      }
+    ],
+    "pricingModel": "You pay per hour for each protocol enabled on a server endpoint, and per GB uploaded and downloaded over SFTP, FTPS or FTP. AS2 is billed per message and web apps per unit-hour, and S3 or EFS storage is billed separately.",
+    "sharedResponsibility": {
+      "aws": ["Runs, scales and maintains the file transfer servers"],
+      "customer": [
+        "Creates users, sets their access and chooses the identity provider",
+        "Chooses which protocols to enable and protects the stored files"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio totalmente administrado que transfiere archivos hacia y desde Amazon S3 o Amazon EFS por SFTP, FTPS, FTP y AS2, o desde un navegador web. Clientes y socios mantienen sus clientes de transferencia y configuraciones actuales, y tú no operas servidores de transferencia de archivos.",
+    "examCues": [
+      "Los socios suben archivos por SFTP y los archivos deben llegar a S3, sin un servidor SFTP que administrar → Transfer Family",
+      "Mover un flujo de trabajo existente de FTP o FTPS a AWS sin cambiar los clientes que usan los socios → Transfer Family",
+      "Intercambiar archivos entre empresas (B2B) con socios comerciales por AS2 → Transfer Family"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "datasync",
+        "difference": "DataSync copia grandes conjuntos de datos entre sistemas de almacenamiento y AWS para migrar o replicar; Transfer Family da a usuarios y socios un endpoint SFTP, FTPS, FTP o AS2."
+      },
+      {
+        "serviceId": "storage-gateway",
+        "difference": "Storage Gateway conecta aplicaciones on-premises con el almacenamiento de AWS a través de un gateway local; Transfer Family recibe transferencias de archivos por protocolos estándar."
+      }
+    ],
+    "pricingModel": "Pagas por hora por cada protocolo habilitado en un endpoint de servidor, y por GB subido y descargado por SFTP, FTPS o FTP. AS2 se cobra por mensaje y las web apps por unidad-hora, y el almacenamiento en S3 o EFS se cobra aparte.",
+    "sharedResponsibility": {
+      "aws": ["Opera, escala y mantiene los servidores de transferencia de archivos"],
+      "customer": [
+        "Crea usuarios, define su acceso y elige el proveedor de identidad",
+        "Elige qué protocolos habilitar y protege los archivos guardados"
+      ]
+    }
+  }
+}

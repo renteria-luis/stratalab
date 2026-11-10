@@ -1,0 +1,77 @@
+{
+  "serviceId": "snow-family",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/snowball/latest/developer-guide/whatisedge.html",
+      "title": "What is Snowball Edge?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html",
+      "title": "AWS Snowball Edge availability change",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/snowball/pricing/",
+      "title": "AWS Snowball pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Rugged Snowball Edge devices with on-board storage and compute that are shipped to your site to move large amounts of data into or out of Amazon S3 without the internet, or to process data at the edge. AWS no longer offers Snow Family devices to new customers and points them to DataSync, AWS Data Transfer Terminal or AWS Outposts.",
+    "examCues": [
+      "Move many terabytes to AWS when the network is too slow, by copying the data onto a device and shipping it → Snow Family",
+      "Run compute and storage on a rugged device at an edge site, then ship the data back to AWS → Snow Family"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "datasync",
+        "difference": "DataSync moves data online over the network; Snow Family devices carry the data physically through a carrier."
+      },
+      {
+        "serviceId": "outposts",
+        "difference": "Outposts installs AWS infrastructure at your site as part of a Region; Snowball Edge is a portable device for data transfer and edge jobs."
+      }
+    ],
+    "pricingModel": "You pay a service fee per job that includes a set number of days on site, a fee for each extra day, and shipping. Importing data into S3 has no data transfer charge but exporting from S3 does, and some devices also have monthly or committed upfront options.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provides, ships and monitors the device, and enforces encryption of the data on it",
+        "Replaces a device that has an irreparable issue"
+      ],
+      "customer": [
+        "Copies the data onto the device and ships it back",
+        "Keeps the device safe on site and controls access to the data"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Dispositivos Snowball Edge robustos, con almacenamiento y cómputo integrados, que se envían a tu sitio para mover grandes cantidades de datos hacia o desde Amazon S3 sin internet, o para procesar datos en el edge. AWS ya no ofrece dispositivos de Snow Family a clientes nuevos y los dirige a DataSync, AWS Data Transfer Terminal o AWS Outposts.",
+    "examCues": [
+      "Mover muchos terabytes a AWS cuando la red es demasiado lenta, copiando los datos en un dispositivo y enviándolo → Snow Family",
+      "Ejecutar cómputo y almacenamiento en un dispositivo robusto en un sitio edge y luego enviar los datos de vuelta a AWS → Snow Family"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "datasync",
+        "difference": "DataSync mueve datos en línea por la red; los dispositivos de Snow Family llevan los datos físicamente con una empresa de transporte."
+      },
+      {
+        "serviceId": "outposts",
+        "difference": "Outposts instala infraestructura de AWS en tu sitio como parte de una Región; Snowball Edge es un dispositivo portátil para transferir datos y para trabajos en el edge."
+      }
+    ],
+    "pricingModel": "Pagas una tarifa de servicio por trabajo que incluye un número fijo de días en sitio, una tarifa por cada día extra y el envío. Importar datos a S3 no tiene cargo de transferencia de datos pero exportar desde S3 sí, y algunos dispositivos también tienen opciones mensuales o con pago anticipado comprometido.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provee, envía y monitorea el dispositivo, y obliga a cifrar los datos que contiene",
+        "Reemplaza un dispositivo que tiene una falla irreparable"
+      ],
+      "customer": [
+        "Copia los datos al dispositivo y lo envía de vuelta",
+        "Mantiene seguro el dispositivo en sitio y controla el acceso a los datos"
+      ]
+    }
+  }
+}

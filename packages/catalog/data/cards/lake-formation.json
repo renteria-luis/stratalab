@@ -1,0 +1,68 @@
+{
+  "serviceId": "lake-formation",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/lake-formation/latest/dg/what-is-lake-formation.html",
+      "title": "What is AWS Lake Formation?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/lake-formation/pricing/",
+      "title": "AWS Lake Formation pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Centrally governs, secures and shares data in a data lake on Amazon S3 and its metadata in the AWS Glue Data Catalog. Its own permissions model adds fine-grained access at the column, row and cell level, enforced in services such as Athena, Redshift Spectrum, EMR and Glue.",
+    "examCues": [
+      "Let analysts see only some columns or rows of data lake tables → Lake Formation",
+      "Share data lake tables with other AWS accounts with fine-grained permissions → Lake Formation",
+      "Manage data lake permissions in one place with simple grant and revoke, like a relational database → Lake Formation"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "glue",
+        "difference": "Glue runs ETL jobs and holds the Data Catalog; Lake Formation adds fine-grained permissions and sharing on top of that catalog."
+      },
+      {
+        "serviceId": "iam",
+        "difference": "IAM policies allow or deny actions on AWS resources such as S3 buckets; Lake Formation adds permissions on databases, tables, columns, rows and cells."
+      }
+    ],
+    "pricingModel": "Lake Formation permissions are free. You pay for the services that store and process the data, such as S3 and the Glue Data Catalog, and for some features, such as the bytes its Storage API scans.",
+    "sharedResponsibility": {
+      "aws": ["Enforces the permissions in the integrated analytics services"],
+      "customer": [
+        "Grants and revokes permissions on databases, tables, columns, rows and cells",
+        "Decides which data to share with other accounts"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Gobierna, protege y comparte de forma centralizada los datos de un data lake en Amazon S3 y sus metadatos en el AWS Glue Data Catalog. Su propio modelo de permisos agrega acceso detallado a nivel de columna, fila y celda, que se aplica en servicios como Athena, Redshift Spectrum, EMR y Glue.",
+    "examCues": [
+      "Permitir que los analistas vean solo algunas columnas o filas de las tablas del data lake → Lake Formation",
+      "Compartir tablas del data lake con otras cuentas de AWS con permisos detallados → Lake Formation",
+      "Administrar los permisos del data lake en un solo lugar con grant y revoke simples, como en una base de datos relacional → Lake Formation"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "glue",
+        "difference": "Glue ejecuta trabajos ETL y contiene el Data Catalog; Lake Formation agrega permisos detallados y uso compartido sobre ese catálogo."
+      },
+      {
+        "serviceId": "iam",
+        "difference": "Las políticas de IAM permiten o niegan acciones sobre recursos de AWS como buckets de S3; Lake Formation agrega permisos sobre bases de datos, tablas, columnas, filas y celdas."
+      }
+    ],
+    "pricingModel": "Los permisos de Lake Formation no tienen costo. Pagas por los servicios que guardan y procesan los datos, como S3 y el Glue Data Catalog, y por algunas funciones, como los bytes que escanea su Storage API.",
+    "sharedResponsibility": {
+      "aws": ["Aplica los permisos en los servicios de analítica integrados"],
+      "customer": [
+        "Otorga y revoca permisos sobre bases de datos, tablas, columnas, filas y celdas",
+        "Decide qué datos compartir con otras cuentas"
+      ]
+    }
+  }
+}

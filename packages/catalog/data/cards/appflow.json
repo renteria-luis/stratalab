@@ -1,0 +1,82 @@
+{
+  "serviceId": "appflow",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/appflow/latest/userguide/what-is-appflow.html",
+      "title": "What is Amazon AppFlow?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/appflow/latest/userguide/flow-triggers.html",
+      "title": "Flow triggers",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/appflow/latest/userguide/data-protection.html",
+      "title": "Data protection in Amazon AppFlow",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/appflow/pricing/",
+      "title": "Amazon AppFlow pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed integration service that moves data between software as a service (SaaS) applications, such as Salesforce or Zendesk, and AWS services, such as Amazon S3 and Amazon Redshift. Flows run on demand, on a schedule or when an event happens, and you build them without writing code.",
+    "examCues": [
+      "Copy Salesforce records into Redshift or S3 on a schedule without writing integration code → AppFlow",
+      "Keep data in sync between a SaaS application and AWS, transferred privately over AWS PrivateLink → AppFlow"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "glue",
+        "difference": "Glue is a general data integration service with ETL jobs and a Data Catalog; AppFlow moves data from SaaS applications in flows you configure without code."
+      },
+      {
+        "serviceId": "datasync",
+        "difference": "DataSync copies files and objects between storage systems; AppFlow transfers records between SaaS applications and AWS."
+      }
+    ],
+    "pricingModel": "You pay for each flow run, including runs that only check for new data, and for the volume of data processed. Requests and storage in other services, such as S3, and AWS KMS keys are billed separately.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the flows and encrypts the data at rest and in transit",
+        "Stores the connection credentials, encrypted, in AWS Secrets Manager"
+      ],
+      "customer": [
+        "Connects the SaaS accounts and chooses which data each flow moves",
+        "Chooses an AWS managed or customer managed KMS key and grants the IAM permissions flows need"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de integración totalmente administrado que mueve datos entre aplicaciones de software como servicio (SaaS), como Salesforce o Zendesk, y servicios de AWS, como Amazon S3 y Amazon Redshift. Los flujos se ejecutan a pedido, con una programación o cuando ocurre un evento, y los creas sin escribir código.",
+    "examCues": [
+      "Copiar registros de Salesforce a Redshift o S3 con una programación sin escribir código de integración → AppFlow",
+      "Mantener datos sincronizados entre una aplicación SaaS y AWS, transferidos de forma privada por AWS PrivateLink → AppFlow"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "glue",
+        "difference": "Glue es un servicio general de integración de datos con trabajos ETL y un Data Catalog; AppFlow mueve datos de aplicaciones SaaS en flujos que configuras sin código."
+      },
+      {
+        "serviceId": "datasync",
+        "difference": "DataSync copia archivos y objetos entre sistemas de almacenamiento; AppFlow transfiere registros entre aplicaciones SaaS y AWS."
+      }
+    ],
+    "pricingModel": "Pagas por cada ejecución de flujo, incluidas las que solo revisan si hay datos nuevos, y por el volumen de datos procesados. Las solicitudes y el almacenamiento en otros servicios, como S3, y las claves de AWS KMS se cobran aparte.",
+    "sharedResponsibility": {
+      "aws": [
+        "Ejecuta los flujos y cifra los datos en reposo y en tránsito",
+        "Guarda las credenciales de conexión, cifradas, en AWS Secrets Manager"
+      ],
+      "customer": [
+        "Conecta las cuentas SaaS y elige qué datos mueve cada flujo",
+        "Elige una clave de KMS administrada por AWS o por el cliente y otorga los permisos de IAM que necesitan los flujos"
+      ]
+    }
+  }
+}

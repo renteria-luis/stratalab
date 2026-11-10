@@ -1,0 +1,66 @@
+{
+  "serviceId": "device-farm",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/welcome.html",
+      "title": "What is AWS Device Farm?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/device-farm/pricing/",
+      "title": "AWS Device Farm pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "An app testing service that runs your Android, iOS and web apps on real phones and tablets hosted by AWS. You can run automated tests on many devices in parallel or control a device remotely from your web browser.",
+    "examCues": [
+      "Test a mobile app on many real Android and iOS devices at once without buying the devices → Device Farm",
+      "Reproduce a bug on a specific phone model by using a real device from the browser → Device Farm"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "codebuild",
+        "difference": "CodeBuild compiles code and runs unit tests on build servers; Device Farm runs app tests on real phones and tablets."
+      },
+      {
+        "serviceId": "amplify",
+        "difference": "Amplify builds, deploys and hosts web apps; Device Farm tests apps on real devices."
+      }
+    ],
+    "pricingModel": "You pay per device minute for automated tests and remote sessions, or a flat monthly fee per unmetered device slot. Private devices are a monthly subscription, and a one-time free trial of device minutes may be offered.",
+    "sharedResponsibility": {
+      "aws": ["Hosts and maintains the physical devices and the test hosts"],
+      "customer": [
+        "Writes the tests and chooses the devices to test on",
+        "Protects the app and the test data it uploads"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de pruebas de aplicaciones que ejecuta tus apps Android, iOS y web en teléfonos y tabletas reales alojados por AWS. Puedes ejecutar pruebas automatizadas en muchos dispositivos en paralelo o controlar un dispositivo de forma remota desde tu navegador web.",
+    "examCues": [
+      "Probar una app móvil en muchos dispositivos Android e iOS reales a la vez sin comprar los dispositivos → Device Farm",
+      "Reproducir un error en un modelo de teléfono específico usando un dispositivo real desde el navegador → Device Farm"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "codebuild",
+        "difference": "CodeBuild compila código y ejecuta pruebas unitarias en servidores de compilación; Device Farm ejecuta pruebas de apps en teléfonos y tabletas reales."
+      },
+      {
+        "serviceId": "amplify",
+        "difference": "Amplify compila, despliega y aloja apps web; Device Farm prueba apps en dispositivos reales."
+      }
+    ],
+    "pricingModel": "Pagas por minuto de dispositivo en pruebas automatizadas y sesiones remotas, o una tarifa mensual fija por cada espacio de dispositivo sin medición. Los dispositivos privados son una suscripción mensual, y puede haber una prueba gratuita única de minutos de dispositivo.",
+    "sharedResponsibility": {
+      "aws": ["Aloja y mantiene los dispositivos físicos y los hosts de prueba"],
+      "customer": [
+        "Escribe las pruebas y elige los dispositivos donde probar",
+        "Protege la app y los datos de prueba que sube"
+      ]
+    }
+  }
+}

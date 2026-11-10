@@ -1,0 +1,73 @@
+{
+  "serviceId": "serverless-application-repository",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/serverlessrepo/latest/devguide/what-is-serverlessrepo.html",
+      "title": "What Is the AWS Serverless Application Repository?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-how-to-consume.html",
+      "title": "How to Deploy Applications",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/serverless/serverlessrepo/",
+      "title": "AWS Serverless Application Repository",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A repository where developers find, deploy and publish serverless applications, shared publicly or privately within a team or organization. Each application is its code plus an AWS SAM template, and you can browse and deploy applications from the Lambda console.",
+    "examCues": [
+      "Deploy a ready-made serverless application, such as a data-processing backend, instead of building it from scratch → Serverless Application Repository",
+      "Publish a serverless application so other teams in the organization can find and deploy it → Serverless Application Repository"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda runs your function code; the Serverless Application Repository stores packaged serverless applications that you find and deploy."
+      },
+      {
+        "serviceId": "marketplace",
+        "difference": "AWS Marketplace sells third-party software, data and services through your AWS bill; the Serverless Application Repository shares serverless applications at no additional charge."
+      }
+    ],
+    "pricingModel": "There is no additional charge for the repository. You pay for the AWS resources that the applications you deploy use.",
+    "sharedResponsibility": {
+      "aws": ["Hosts the repository and lets you browse, search and deploy published applications"],
+      "customer": [
+        "Reviews an application's permissions, AWS SAM template and readme before deploying it, and acknowledges any custom IAM roles it creates",
+        "Chooses whether the applications it publishes are public or shared privately"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un repositorio donde los desarrolladores encuentran, despliegan y publican aplicaciones serverless, compartidas de forma pública o privada dentro de un equipo u organización. Cada aplicación es su código más una plantilla de AWS SAM, y puedes explorar y desplegar aplicaciones desde la consola de Lambda.",
+    "examCues": [
+      "Desplegar una aplicación serverless ya hecha, como un backend de procesamiento de datos, en lugar de crearla desde cero → Serverless Application Repository",
+      "Publicar una aplicación serverless para que otros equipos de la organización la encuentren y la desplieguen → Serverless Application Repository"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda ejecuta el código de tus funciones; el Serverless Application Repository guarda aplicaciones serverless empaquetadas que encuentras y despliegas."
+      },
+      {
+        "serviceId": "marketplace",
+        "difference": "AWS Marketplace vende software, datos y servicios de terceros a través de tu factura de AWS; el Serverless Application Repository comparte aplicaciones serverless sin cargo adicional."
+      }
+    ],
+    "pricingModel": "El repositorio no tiene cargo adicional. Pagas por los recursos de AWS que usan las aplicaciones que despliegas.",
+    "sharedResponsibility": {
+      "aws": [
+        "Aloja el repositorio y te permite explorar, buscar y desplegar las aplicaciones publicadas"
+      ],
+      "customer": [
+        "Revisa los permisos, la plantilla de AWS SAM y el readme de una aplicación antes de desplegarla, y acepta los roles de IAM personalizados que crea",
+        "Elige si las aplicaciones que publica son públicas o se comparten de forma privada"
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "serviceId": "datasync",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html",
+      "title": "What is AWS DataSync?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html",
+      "title": "Scheduling when your AWS DataSync task runs",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/datasync/faqs/",
+      "title": "AWS DataSync FAQs",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/datasync/pricing/",
+      "title": "AWS DataSync pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "An online transfer service that copies file and object data between on-premises storage, other clouds and AWS storage services such as S3, EFS and FSx. It automates the transfer, encrypts and validates the data, and uses a purpose-built network protocol to move it faster.",
+    "examCues": [
+      "Migrate a large NFS or SMB file share from on-premises to S3, EFS or FSx over the network → DataSync",
+      "Copy data between on-premises storage and AWS on a schedule, with integrity checks → DataSync",
+      "Move cold on-premises data directly into an S3 Glacier storage class → DataSync"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "snow-family",
+        "difference": "Snow Family devices carry data physically through a carrier; DataSync moves it over the network."
+      },
+      {
+        "serviceId": "transfer-family",
+        "difference": "Transfer Family gives users and partners an SFTP, FTPS, FTP or AS2 endpoint; DataSync copies data sets between storage systems."
+      },
+      {
+        "serviceId": "storage-gateway",
+        "difference": "Storage Gateway gives on-premises applications ongoing low-latency access to data in AWS; DataSync migrates or copies the data."
+      }
+    ],
+    "pricingModel": "You pay a flat fee per GB transferred, plus a fee per task execution in Enhanced mode. The storage services it reads and writes, and data transfer between Regions or out of AWS, are billed separately.",
+    "sharedResponsibility": {
+      "aws": ["Runs the transfer service and encrypts and validates the data it moves"],
+      "customer": [
+        "Deploys the DataSync agent next to on-premises storage when the transfer needs one",
+        "Sets up the source and destination locations, the permissions and the schedule"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de transferencia en línea que copia datos de archivos y objetos entre almacenamiento on-premises, otras nubes y servicios de almacenamiento de AWS como S3, EFS y FSx. Automatiza la transferencia, cifra y valida los datos, y usa un protocolo de red diseñado para moverlos más rápido.",
+    "examCues": [
+      "Migrar un recurso compartido NFS o SMB grande desde on-premises a S3, EFS o FSx por la red → DataSync",
+      "Copiar datos entre almacenamiento on-premises y AWS con una programación, con comprobaciones de integridad → DataSync",
+      "Mover datos fríos de on-premises directamente a una clase de almacenamiento S3 Glacier → DataSync"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "snow-family",
+        "difference": "Los dispositivos de Snow Family llevan los datos físicamente con una empresa de transporte; DataSync los mueve por la red."
+      },
+      {
+        "serviceId": "transfer-family",
+        "difference": "Transfer Family da a usuarios y socios un endpoint SFTP, FTPS, FTP o AS2; DataSync copia conjuntos de datos entre sistemas de almacenamiento."
+      },
+      {
+        "serviceId": "storage-gateway",
+        "difference": "Storage Gateway da a las aplicaciones on-premises acceso continuo y de baja latencia a los datos en AWS; DataSync migra o copia los datos."
+      }
+    ],
+    "pricingModel": "Pagas una tarifa fija por GB transferido, más una tarifa por ejecución de tarea en modo Enhanced. Los servicios de almacenamiento que lee y escribe, y la transferencia de datos entre Regiones o fuera de AWS, se cobran aparte.",
+    "sharedResponsibility": {
+      "aws": ["Opera el servicio de transferencia y cifra y valida los datos que mueve"],
+      "customer": [
+        "Despliega el agente de DataSync junto al almacenamiento on-premises cuando la transferencia lo necesita",
+        "Configura las ubicaciones de origen y destino, los permisos y la programación"
+      ]
+    }
+  }
+}

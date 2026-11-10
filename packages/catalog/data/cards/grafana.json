@@ -1,0 +1,74 @@
+{
+  "serviceId": "grafana",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/grafana/latest/userguide/what-is-Amazon-Managed-Service-Grafana.html",
+      "title": "What is Amazon Managed Grafana?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/grafana/pricing/",
+      "title": "Amazon Managed Grafana pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed Grafana service for querying, correlating and visualizing operational metrics, logs and traces from many sources in dashboards. AWS provisions, scales and maintains the Grafana servers, called workspaces, which connect to sources such as CloudWatch, X-Ray and Amazon Managed Service for Prometheus.",
+    "examCues": [
+      "Build Grafana dashboards over operational data from several AWS and third-party sources without running Grafana servers → Managed Grafana",
+      "Show Prometheus metrics from container workloads together with CloudWatch data in one dashboard → Managed Grafana"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch collects metrics and logs and has its own alarms and dashboards; Managed Grafana visualizes data from CloudWatch and many other sources."
+      },
+      {
+        "serviceId": "prometheus",
+        "difference": "Managed Service for Prometheus stores and queries container metrics; Managed Grafana shows them in dashboards."
+      },
+      {
+        "serviceId": "quick",
+        "difference": "Amazon Quick Sight builds business intelligence dashboards; Managed Grafana is for operational metrics, logs and traces."
+      }
+    ],
+    "pricingModel": "You pay per active user per workspace each month, with separate rates for editor or administrator users and for viewer users. Users who don't sign in or call the API during the month aren't billed, and a free trial is available.",
+    "sharedResponsibility": {
+      "aws": ["Provisions, sets up, scales and maintains the Grafana servers"],
+      "customer": [
+        "Builds the dashboards and alerts",
+        "Manages user sign-in through IAM Identity Center or a SAML identity provider, and grants data source permissions"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de Grafana totalmente administrado para consultar, correlacionar y visualizar métricas, logs y trazas operativas de muchas fuentes en dashboards. AWS aprovisiona, escala y mantiene los servidores de Grafana, llamados workspaces, que se conectan a fuentes como CloudWatch, X-Ray y Amazon Managed Service for Prometheus.",
+    "examCues": [
+      "Crear dashboards de Grafana sobre datos operativos de varias fuentes de AWS y de terceros sin operar servidores de Grafana → Managed Grafana",
+      "Mostrar métricas de Prometheus de cargas de trabajo en contenedores junto con datos de CloudWatch en un solo dashboard → Managed Grafana"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch recopila métricas y logs y tiene sus propias alarmas y dashboards; Managed Grafana visualiza datos de CloudWatch y de muchas otras fuentes."
+      },
+      {
+        "serviceId": "prometheus",
+        "difference": "Managed Service for Prometheus guarda y consulta métricas de contenedores; Managed Grafana las muestra en dashboards."
+      },
+      {
+        "serviceId": "quick",
+        "difference": "Amazon Quick Sight crea dashboards de inteligencia de negocios; Managed Grafana es para métricas, logs y trazas operativas."
+      }
+    ],
+    "pricingModel": "Pagas por usuario activo por workspace cada mes, con tarifas distintas para usuarios editores o administradores y para usuarios de solo lectura. Los usuarios que no inician sesión ni llaman a la API durante el mes no se cobran, y hay una prueba gratuita.",
+    "sharedResponsibility": {
+      "aws": ["Aprovisiona, configura, escala y mantiene los servidores de Grafana"],
+      "customer": [
+        "Crea los dashboards y las alertas",
+        "Administra el inicio de sesión de usuarios con IAM Identity Center o un proveedor de identidad SAML, y otorga los permisos sobre las fuentes de datos"
+      ]
+    }
+  }
+}

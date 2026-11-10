@@ -1,0 +1,68 @@
+{
+  "serviceId": "msk",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/msk/latest/developerguide/what-is-msk.html",
+      "title": "Welcome to the Amazon MSK Developer Guide",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/msk/pricing/",
+      "title": "Amazon MSK pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed service for building and running applications that use Apache Kafka to process streaming data. It runs open-source Kafka versions, so existing applications, tools and plugins work without code changes, and MSK Serverless also removes the need to manage cluster capacity.",
+    "examCues": [
+      "Move an existing Apache Kafka workload to AWS without changing application code → MSK",
+      "Run Kafka for streaming data without managing brokers or cluster capacity → MSK Serverless"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "kinesis",
+        "difference": "Kinesis Data Streams is an AWS streaming service with its own API; MSK runs open-source Apache Kafka."
+      },
+      {
+        "serviceId": "mq",
+        "difference": "Amazon MQ runs ActiveMQ and RabbitMQ message brokers; MSK runs Apache Kafka for streaming data."
+      }
+    ],
+    "pricingModel": "Provisioned clusters are billed per broker-hour and for storage. Serverless clusters are billed per cluster-hour, per partition-hour and per GB written and read, and MSK Connect and MSK Replicator have their own hourly and per-GB charges.",
+    "sharedResponsibility": {
+      "aws": ["Creates, updates and deletes clusters and manages the cluster metadata nodes"],
+      "customer": [
+        "Chooses the number and size of brokers, or uses MSK Serverless",
+        "Creates topics, writes the producer and consumer applications and controls access to the cluster"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio totalmente administrado para crear y ejecutar aplicaciones que usan Apache Kafka para procesar datos en streaming. Ejecuta versiones open source de Kafka, así que las aplicaciones, herramientas y plugins existentes funcionan sin cambios de código, y MSK Serverless además elimina la necesidad de administrar la capacidad del clúster.",
+    "examCues": [
+      "Mover una carga de trabajo existente de Apache Kafka a AWS sin cambiar el código de la aplicación → MSK",
+      "Ejecutar Kafka para datos en streaming sin administrar brokers ni la capacidad del clúster → MSK Serverless"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "kinesis",
+        "difference": "Kinesis Data Streams es un servicio de streaming de AWS con su propia API; MSK ejecuta Apache Kafka open source."
+      },
+      {
+        "serviceId": "mq",
+        "difference": "Amazon MQ ejecuta brokers de mensajes ActiveMQ y RabbitMQ; MSK ejecuta Apache Kafka para datos en streaming."
+      }
+    ],
+    "pricingModel": "Los clústeres provisionados se cobran por hora de broker y por almacenamiento. Los clústeres Serverless se cobran por hora de clúster, por hora de partición y por GB escrito y leído, y MSK Connect y MSK Replicator tienen sus propios cargos por hora y por GB.",
+    "sharedResponsibility": {
+      "aws": [
+        "Crea, actualiza y elimina clústeres y administra los nodos de metadatos del clúster"
+      ],
+      "customer": [
+        "Elige la cantidad y el tamaño de los brokers, o usa MSK Serverless",
+        "Crea los topics, escribe las aplicaciones productoras y consumidoras y controla el acceso al clúster"
+      ]
+    }
+  }
+}

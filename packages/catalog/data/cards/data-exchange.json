@@ -1,0 +1,70 @@
+{
+  "serviceId": "data-exchange",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/data-exchange/latest/userguide/what-is.html",
+      "title": "What is AWS Data Exchange?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/data-exchange/pricing/",
+      "title": "AWS Data Exchange pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Helps organizations share and manage access to data at scale: senders grant data sets to other AWS accounts, and receivers track their data grants and AWS Marketplace data subscriptions in one place. Data sets can be files, APIs, Amazon Redshift data or data in Amazon S3.",
+    "examCues": [
+      "Find and subscribe to third-party data products and analyze them with AWS services → Data Exchange",
+      "Give another organization's AWS account access to a data set for a set time without building a delivery system → Data Exchange"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "marketplace",
+        "difference": "AWS Marketplace is the catalog where software, services and data products are sold; Data Exchange delivers the data sets and manages who can access them."
+      },
+      {
+        "serviceId": "lake-formation",
+        "difference": "Lake Formation governs access to data in your own data lake with fine-grained permissions; Data Exchange manages data entitlements between organizations, including paid data products."
+      }
+    ],
+    "pricingModel": "Receivers pay for the data products they subscribe to, according to each product's pricing, and for the AWS services they use with the data. Senders pay per hour for each active data grant and for file storage, and AWS Marketplace charges a fulfillment fee on new subscription revenue.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the data delivery and entitlement system and reviews Marketplace data products against its guidelines"
+      ],
+      "customer": [
+        "Senders choose what data to share, with whom and for how long",
+        "Receivers control how they store, use and protect the data"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Ayuda a las organizaciones a compartir datos y administrar el acceso a ellos a escala: los emisores otorgan conjuntos de datos a otras cuentas de AWS, y los receptores siguen sus data grants y sus suscripciones de datos de AWS Marketplace en un solo lugar. Los conjuntos de datos pueden ser archivos, APIs, datos de Amazon Redshift o datos en Amazon S3.",
+    "examCues": [
+      "Encontrar productos de datos de terceros, suscribirse y analizarlos con servicios de AWS → Data Exchange",
+      "Dar a la cuenta de AWS de otra organización acceso a un conjunto de datos por un tiempo definido sin construir un sistema de entrega → Data Exchange"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "marketplace",
+        "difference": "AWS Marketplace es el catálogo donde se venden software, servicios y productos de datos; Data Exchange entrega los conjuntos de datos y administra quién puede acceder a ellos."
+      },
+      {
+        "serviceId": "lake-formation",
+        "difference": "Lake Formation controla el acceso a los datos de tu propio data lake con permisos detallados; Data Exchange administra los derechos sobre datos entre organizaciones, incluidos productos de datos de pago."
+      }
+    ],
+    "pricingModel": "Los receptores pagan por los productos de datos a los que se suscriben, según el precio de cada producto, y por los servicios de AWS que usan con los datos. Los emisores pagan por hora por cada data grant activo y por el almacenamiento de archivos, y AWS Marketplace cobra una tarifa de gestión sobre los ingresos de suscripciones nuevas.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera el sistema de entrega de datos y de derechos de acceso, y revisa los productos de datos de Marketplace según sus lineamientos"
+      ],
+      "customer": [
+        "Los emisores eligen qué datos compartir, con quién y por cuánto tiempo",
+        "Los receptores controlan cómo guardan, usan y protegen los datos"
+      ]
+    }
+  }
+}

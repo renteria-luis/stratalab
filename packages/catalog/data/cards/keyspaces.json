@@ -1,0 +1,72 @@
+{
+  "serviceId": "keyspaces",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/keyspaces/latest/devguide/what-is-keyspaces.html",
+      "title": "What is Amazon Keyspaces (for Apache Cassandra)?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/keyspaces/pricing/",
+      "title": "Amazon Keyspaces pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A serverless, managed database compatible with Apache Cassandra, so you can run existing Cassandra workloads with the same application code and developer tools. You don't manage servers or install software, and tables scale up and down with application traffic.",
+    "examCues": [
+      "Move an existing Apache Cassandra workload to a managed AWS service without changing the application code → Keyspaces",
+      "A wide-column NoSQL database queried with Cassandra Query Language (CQL), with no servers to manage → Keyspaces"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "dynamodb",
+        "difference": "DynamoDB is a key-value and document database with its own API; Keyspaces is compatible with Apache Cassandra and its query language, CQL."
+      },
+      {
+        "serviceId": "documentdb",
+        "difference": "DocumentDB is compatible with MongoDB; Keyspaces is compatible with Apache Cassandra."
+      }
+    ],
+    "pricingModel": "You pay for reads and writes, either per request (on-demand) or for the capacity you provision per second, plus table storage, point-in-time recovery and restores. A free tier covers some requests and storage for the first three months.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provisions, patches and manages the servers and the Cassandra-compatible software",
+        "Scales tables up and down with traffic"
+      ],
+      "customer": [
+        "Designs the keyspaces, tables and queries",
+        "Chooses the capacity mode and controls who can access the data"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Una base de datos serverless y administrada compatible con Apache Cassandra, así que puedes ejecutar cargas de trabajo de Cassandra existentes con el mismo código de aplicación y las mismas herramientas de desarrollo. No administras servidores ni instalas software, y las tablas escalan hacia arriba y hacia abajo con el tráfico de la aplicación.",
+    "examCues": [
+      "Mover una carga de trabajo existente de Apache Cassandra a un servicio administrado de AWS sin cambiar el código de la aplicación → Keyspaces",
+      "Una base de datos NoSQL de columnas anchas que se consulta con Cassandra Query Language (CQL), sin servidores que administrar → Keyspaces"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "dynamodb",
+        "difference": "DynamoDB es una base de datos clave-valor y de documentos con su propia API; Keyspaces es compatible con Apache Cassandra y su lenguaje de consultas, CQL."
+      },
+      {
+        "serviceId": "documentdb",
+        "difference": "DocumentDB es compatible con MongoDB; Keyspaces es compatible con Apache Cassandra."
+      }
+    ],
+    "pricingModel": "Pagas por lecturas y escrituras, ya sea por solicitud (on-demand) o por la capacidad que aprovisionas por segundo, más el almacenamiento de las tablas, la recuperación a un punto en el tiempo y las restauraciones. Un free tier cubre parte de las solicitudes y del almacenamiento durante los primeros tres meses.",
+    "sharedResponsibility": {
+      "aws": [
+        "Aprovisiona, aplica parches y administra los servidores y el software compatible con Cassandra",
+        "Escala las tablas hacia arriba y hacia abajo según el tráfico"
+      ],
+      "customer": [
+        "Diseña los keyspaces, las tablas y las consultas",
+        "Elige el modo de capacidad y controla quién puede acceder a los datos"
+      ]
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "serviceId": "kinesis-video-streams",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/what-is-kinesis-video.html",
+      "title": "What is Amazon Kinesis Video Streams?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/kinesis/video-streams/pricing/",
+      "title": "Amazon Kinesis Video Streams pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed service that streams live video from devices such as cameras, phones and drones to AWS, for real-time viewing and processing or for batch video analytics. It can also store the media for a retention period you set, encrypted at rest and indexed by time.",
+    "examCues": [
+      "Ingest live video from many security cameras into AWS for real-time processing → Kinesis Video Streams",
+      "Keep camera video for a set retention period and replay or analyze it later by timestamp → Kinesis Video Streams"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "kinesis",
+        "difference": "Kinesis Data Streams carries data records such as logs and clickstreams; Kinesis Video Streams carries video and other time-serialized media."
+      },
+      {
+        "serviceId": "rekognition",
+        "difference": "Rekognition analyzes images and video to detect objects, faces and more; Kinesis Video Streams ingests and stores the video."
+      }
+    ],
+    "pricingModel": "You pay for the data you ingest, consume and store, per GB or per fragment depending on the storage tier. WebRTC signaling channels, signaling messages and relayed streaming minutes are billed separately.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provides the infrastructure that ingests and stores the video and encrypts it at rest"
+      ],
+      "customer": [
+        "Sets up the devices that send video and chooses the retention period",
+        "Builds the applications that process the video and controls who can view it"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio totalmente administrado que transmite video en vivo desde dispositivos como cámaras, teléfonos y drones hacia AWS, para verlo y procesarlo en tiempo real o para analítica de video por lotes. También puede guardar el contenido durante un periodo de retención que tú defines, cifrado en reposo e indexado por tiempo.",
+    "examCues": [
+      "Ingerir video en vivo de muchas cámaras de seguridad en AWS para procesarlo en tiempo real → Kinesis Video Streams",
+      "Guardar el video de cámaras durante un periodo de retención y reproducirlo o analizarlo después por marca de tiempo → Kinesis Video Streams"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "kinesis",
+        "difference": "Kinesis Data Streams transporta registros de datos como logs y clickstreams; Kinesis Video Streams transporta video y otro contenido ordenado en el tiempo."
+      },
+      {
+        "serviceId": "rekognition",
+        "difference": "Rekognition analiza imágenes y video para detectar objetos, rostros y más; Kinesis Video Streams ingiere y guarda el video."
+      }
+    ],
+    "pricingModel": "Pagas por los datos que ingieres, consumes y guardas, por GB o por fragmento según el nivel de almacenamiento. Los canales de señalización WebRTC, los mensajes de señalización y los minutos de streaming retransmitido se cobran aparte.",
+    "sharedResponsibility": {
+      "aws": ["Provee la infraestructura que ingiere y guarda el video y lo cifra en reposo"],
+      "customer": [
+        "Configura los dispositivos que envían video y elige el periodo de retención",
+        "Crea las aplicaciones que procesan el video y controla quién puede verlo"
+      ]
+    }
+  }
+}

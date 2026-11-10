@@ -1,0 +1,75 @@
+{
+  "serviceId": "proton",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/proton/latest/userguide/Welcome.html",
+      "title": "What is AWS Proton?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/proton/latest/userguide/proton-end-of-support.html",
+      "title": "AWS Proton Service Deprecation and Migration Guide",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/proton/pricing/",
+      "title": "AWS Proton pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A deployment service where platform teams publish versioned infrastructure as code templates and developers pick one to provision infrastructure, a CI/CD pipeline and their serverless or container application. AWS ended support on October 7, 2026, so the Proton console and resources can no longer be accessed, but infrastructure already deployed stays in place.",
+    "examCues": [
+      "A platform team gives developers standard, versioned templates for container or serverless deployments → Proton",
+      "Find every service that uses an outdated template version and upgrade it → Proton"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudformation",
+        "difference": "CloudFormation creates resources from a template; Proton added self-service templates, environments and pipelines on top of CloudFormation or Terraform."
+      },
+      {
+        "serviceId": "service-catalog",
+        "difference": "Service Catalog offers approved products of any kind to end users; Proton focused on deploying applications into standard environments."
+      }
+    ],
+    "pricingModel": "There is no additional charge for Proton. You pay for the AWS resources you create to store and run your applications.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provisions the infrastructure and pipeline a template defines and deploys the code into it"
+      ],
+      "customer": [
+        "Platform teams write and version the environment and service templates",
+        "Moves its delivery pipelines to another tool, because support ended on October 7, 2026"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de despliegue donde los equipos de plataforma publican plantillas versionadas de infraestructura como código y los desarrolladores eligen una para aprovisionar la infraestructura, un pipeline de CI/CD y su aplicación serverless o en contenedores. AWS terminó el soporte el 7 de octubre de 2026, así que ya no se puede acceder a la consola ni a los recursos de Proton, pero la infraestructura ya desplegada se mantiene.",
+    "examCues": [
+      "Un equipo de plataforma da a los desarrolladores plantillas estándar y versionadas para despliegues de contenedores o serverless → Proton",
+      "Encontrar cada servicio que usa una versión desactualizada de la plantilla y actualizarlo → Proton"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudformation",
+        "difference": "CloudFormation crea recursos a partir de una plantilla; Proton agregaba plantillas de autoservicio, entornos y pipelines sobre CloudFormation o Terraform."
+      },
+      {
+        "serviceId": "service-catalog",
+        "difference": "Service Catalog ofrece productos aprobados de cualquier tipo a los usuarios finales; Proton se centraba en desplegar aplicaciones en entornos estándar."
+      }
+    ],
+    "pricingModel": "Proton no tiene cargo adicional. Pagas por los recursos de AWS que creas para guardar y ejecutar tus aplicaciones.",
+    "sharedResponsibility": {
+      "aws": [
+        "Aprovisiona la infraestructura y el pipeline que define una plantilla y despliega el código en ella"
+      ],
+      "customer": [
+        "Los equipos de plataforma escriben y versionan las plantillas de entorno y de servicio",
+        "Mueve sus pipelines de entrega a otra herramienta, porque el soporte terminó el 7 de octubre de 2026"
+      ]
+    }
+  }
+}

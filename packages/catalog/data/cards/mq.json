@@ -1,0 +1,75 @@
+{
+  "serviceId": "mq",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/welcome.html",
+      "title": "What is Amazon MQ?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/amazon-mq/faqs/",
+      "title": "Amazon MQ FAQs",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/amazon-mq/pricing/",
+      "title": "Amazon MQ pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A managed message broker service for Apache ActiveMQ Classic and RabbitMQ that handles the setup, operation and maintenance of the brokers. It supports industry-standard APIs and protocols such as JMS, AMQP, MQTT and STOMP, so you can move existing brokers without rewriting messaging code.",
+    "examCues": [
+      "Migrate an application that uses ActiveMQ or RabbitMQ to AWS without rewriting its messaging code → Amazon MQ",
+      "Applications need a managed message broker that uses JMS, AMQP, MQTT or STOMP → Amazon MQ"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-queue-service",
+        "difference": "SQS is an AWS message queue with its own API; Amazon MQ runs ActiveMQ or RabbitMQ brokers that use industry-standard protocols."
+      },
+      {
+        "serviceId": "msk",
+        "difference": "MSK runs Apache Kafka for streaming data; Amazon MQ runs ActiveMQ and RabbitMQ message brokers."
+      }
+    ],
+    "pricingModel": "You pay per broker-hour, based on the instance size and the deployment type (single-instance, active/standby or cluster), and for storage per GB-month. Standard data transfer charges apply, including traffic between brokers in different Availability Zones.",
+    "sharedResponsibility": {
+      "aws": [
+        "Sets up and maintains the brokers and applies version upgrades during your maintenance window"
+      ],
+      "customer": [
+        "Chooses the broker engine, instance size and deployment type",
+        "Controls network and user access to the brokers and writes the applications that send and receive messages"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio administrado de brokers de mensajes para Apache ActiveMQ Classic y RabbitMQ que se encarga de la configuración, la operación y el mantenimiento de los brokers. Soporta APIs y protocolos estándar de la industria como JMS, AMQP, MQTT y STOMP, así que puedes mover brokers existentes sin reescribir el código de mensajería.",
+    "examCues": [
+      "Migrar a AWS una aplicación que usa ActiveMQ o RabbitMQ sin reescribir su código de mensajería → Amazon MQ",
+      "Las aplicaciones necesitan un broker de mensajes administrado que use JMS, AMQP, MQTT o STOMP → Amazon MQ"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-queue-service",
+        "difference": "SQS es una cola de mensajes de AWS con su propia API; Amazon MQ ejecuta brokers ActiveMQ o RabbitMQ que usan protocolos estándar de la industria."
+      },
+      {
+        "serviceId": "msk",
+        "difference": "MSK ejecuta Apache Kafka para datos en streaming; Amazon MQ ejecuta brokers de mensajes ActiveMQ y RabbitMQ."
+      }
+    ],
+    "pricingModel": "Pagas por hora de broker, según el tamaño de instancia y el tipo de despliegue (instancia única, activo/en espera o clúster), y por almacenamiento por GB-mes. Se aplican los cargos estándar de transferencia de datos, incluido el tráfico entre brokers en distintas Availability Zones.",
+    "sharedResponsibility": {
+      "aws": [
+        "Configura y mantiene los brokers y aplica las actualizaciones de versión durante tu ventana de mantenimiento"
+      ],
+      "customer": [
+        "Elige el motor del broker, el tamaño de instancia y el tipo de despliegue",
+        "Controla el acceso de red y de usuarios a los brokers y escribe las aplicaciones que envían y reciben mensajes"
+      ]
+    }
+  }
+}

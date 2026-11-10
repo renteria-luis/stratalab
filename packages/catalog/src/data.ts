@@ -1,5 +1,6 @@
 import amplifyCardJson from '../data/cards/amplify.json';
 import apiGatewayCardJson from '../data/cards/api-gateway.json';
+import appflowCardJson from '../data/cards/appflow.json';
 import applicationDiscoveryServiceCardJson from '../data/cards/application-discovery-service.json';
 import artifactCardJson from '../data/cards/artifact.json';
 import athenaCardJson from '../data/cards/athena.json';
@@ -22,8 +23,11 @@ import computeOptimizerCardJson from '../data/cards/compute-optimizer.json';
 import configCardJson from '../data/cards/config.json';
 import connectCustomerCardJson from '../data/cards/connect-customer.json';
 import controlTowerCardJson from '../data/cards/control-tower.json';
+import dataExchangeCardJson from '../data/cards/data-exchange.json';
 import databaseMigrationServiceCardJson from '../data/cards/database-migration-service.json';
+import datasyncCardJson from '../data/cards/datasync.json';
 import detectiveCardJson from '../data/cards/detective.json';
+import deviceFarmCardJson from '../data/cards/device-farm.json';
 import directConnectCardJson from '../data/cards/direct-connect.json';
 import directoryServiceCardJson from '../data/cards/directory-service.json';
 import documentdbCardJson from '../data/cards/documentdb.json';
@@ -41,6 +45,7 @@ import firewallManagerCardJson from '../data/cards/firewall-manager.json';
 import fsxCardJson from '../data/cards/fsx.json';
 import globalAcceleratorCardJson from '../data/cards/global-accelerator.json';
 import glueCardJson from '../data/cards/glue.json';
+import grafanaCardJson from '../data/cards/grafana.json';
 import guarddutyCardJson from '../data/cards/guardduty.json';
 import healthDashboardCardJson from '../data/cards/health-dashboard.json';
 import iamCardJson from '../data/cards/iam.json';
@@ -48,7 +53,10 @@ import iamIdentityCenterCardJson from '../data/cards/iam-identity-center.json';
 import inspectorCardJson from '../data/cards/inspector.json';
 import iotCoreCardJson from '../data/cards/iot-core.json';
 import keyManagementServiceCardJson from '../data/cards/key-management-service.json';
+import keyspacesCardJson from '../data/cards/keyspaces.json';
 import kinesisCardJson from '../data/cards/kinesis.json';
+import kinesisVideoStreamsCardJson from '../data/cards/kinesis-video-streams.json';
+import lakeFormationCardJson from '../data/cards/lake-formation.json';
 import lambdaCardJson from '../data/cards/lambda.json';
 import lexCardJson from '../data/cards/lex.json';
 import licenseManagerCardJson from '../data/cards/license-manager.json';
@@ -56,11 +64,15 @@ import lightsailCardJson from '../data/cards/lightsail.json';
 import macieCardJson from '../data/cards/macie.json';
 import marketplaceCardJson from '../data/cards/marketplace.json';
 import migrationHubCardJson from '../data/cards/migration-hub.json';
+import mqCardJson from '../data/cards/mq.json';
+import mskCardJson from '../data/cards/msk.json';
 import neptuneCardJson from '../data/cards/neptune.json';
 import opensearchServiceCardJson from '../data/cards/opensearch-service.json';
 import organizationsCardJson from '../data/cards/organizations.json';
 import outpostsCardJson from '../data/cards/outposts.json';
 import pollyCardJson from '../data/cards/polly.json';
+import prometheusCardJson from '../data/cards/prometheus.json';
+import protonCardJson from '../data/cards/proton.json';
 import qCardJson from '../data/cards/q.json';
 import quickCardJson from '../data/cards/quick.json';
 import redshiftCardJson from '../data/cards/redshift.json';
@@ -72,17 +84,20 @@ import s3GlacierCardJson from '../data/cards/s3-glacier.json';
 import sagemakerAiCardJson from '../data/cards/sagemaker-ai.json';
 import secretsManagerCardJson from '../data/cards/secrets-manager.json';
 import securityHubCardJson from '../data/cards/security-hub.json';
+import serverlessApplicationRepositoryCardJson from '../data/cards/serverless-application-repository.json';
 import serviceCatalogCardJson from '../data/cards/service-catalog.json';
 import serviceQuotasCardJson from '../data/cards/service-quotas.json';
 import simpleEmailServiceCardJson from '../data/cards/simple-email-service.json';
 import simpleNotificationServiceCardJson from '../data/cards/simple-notification-service.json';
 import simpleQueueServiceCardJson from '../data/cards/simple-queue-service.json';
+import snowFamilyCardJson from '../data/cards/snow-family.json';
 import stepFunctionsCardJson from '../data/cards/step-functions.json';
 import storageGatewayCardJson from '../data/cards/storage-gateway.json';
 import supportCardJson from '../data/cards/support.json';
 import systemsManagerCardJson from '../data/cards/systems-manager.json';
 import textractCardJson from '../data/cards/textract.json';
 import transcribeCardJson from '../data/cards/transcribe.json';
+import transferFamilyCardJson from '../data/cards/transfer-family.json';
 import transformMgnCardJson from '../data/cards/transform-mgn.json';
 import translateCardJson from '../data/cards/translate.json';
 import trustedAdvisorCardJson from '../data/cards/trusted-advisor.json';
@@ -123,10 +138,11 @@ export const consoleNavs: Readonly<Record<string, ConsoleNav>> = {
   vpc: consoleNavSchema.parse(vpcNavJson),
 };
 
-/** Reference cards (data/cards/<serviceId>.json), batches 1 to 5 of P8. */
+/** Reference cards (data/cards/<serviceId>.json), batches 1 to 6 of P8. */
 export const cards: readonly Card[] = [
   amplifyCardJson,
   apiGatewayCardJson,
+  appflowCardJson,
   applicationDiscoveryServiceCardJson,
   artifactCardJson,
   athenaCardJson,
@@ -149,8 +165,11 @@ export const cards: readonly Card[] = [
   configCardJson,
   connectCustomerCardJson,
   controlTowerCardJson,
+  dataExchangeCardJson,
   databaseMigrationServiceCardJson,
+  datasyncCardJson,
   detectiveCardJson,
+  deviceFarmCardJson,
   directConnectCardJson,
   directoryServiceCardJson,
   documentdbCardJson,
@@ -168,6 +187,7 @@ export const cards: readonly Card[] = [
   fsxCardJson,
   globalAcceleratorCardJson,
   glueCardJson,
+  grafanaCardJson,
   guarddutyCardJson,
   healthDashboardCardJson,
   iamCardJson,
@@ -175,7 +195,10 @@ export const cards: readonly Card[] = [
   inspectorCardJson,
   iotCoreCardJson,
   keyManagementServiceCardJson,
+  keyspacesCardJson,
   kinesisCardJson,
+  kinesisVideoStreamsCardJson,
+  lakeFormationCardJson,
   lambdaCardJson,
   lexCardJson,
   licenseManagerCardJson,
@@ -183,11 +206,15 @@ export const cards: readonly Card[] = [
   macieCardJson,
   marketplaceCardJson,
   migrationHubCardJson,
+  mqCardJson,
+  mskCardJson,
   neptuneCardJson,
   opensearchServiceCardJson,
   organizationsCardJson,
   outpostsCardJson,
   pollyCardJson,
+  prometheusCardJson,
+  protonCardJson,
   qCardJson,
   quickCardJson,
   redshiftCardJson,
@@ -199,17 +226,20 @@ export const cards: readonly Card[] = [
   sagemakerAiCardJson,
   secretsManagerCardJson,
   securityHubCardJson,
+  serverlessApplicationRepositoryCardJson,
   serviceCatalogCardJson,
   serviceQuotasCardJson,
   simpleEmailServiceCardJson,
   simpleNotificationServiceCardJson,
   simpleQueueServiceCardJson,
+  snowFamilyCardJson,
   stepFunctionsCardJson,
   storageGatewayCardJson,
   supportCardJson,
   systemsManagerCardJson,
   textractCardJson,
   transcribeCardJson,
+  transferFamilyCardJson,
   transformMgnCardJson,
   translateCardJson,
   trustedAdvisorCardJson,
