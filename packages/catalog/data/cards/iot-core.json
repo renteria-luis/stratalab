@@ -1,0 +1,83 @@
+{
+  "serviceId": "iot-core",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html",
+      "title": "What is AWS IoT?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html",
+      "title": "Rules for AWS IoT",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html",
+      "title": "X.509 client certificates",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/iot-core/pricing/",
+      "title": "AWS IoT Core pricing",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html",
+      "title": "What is AWS IoT Greengrass?",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Connects IoT devices to AWS cloud services and to other devices. Its message broker supports MQTT, MQTT over WebSockets and HTTPS, and rules send device data to services such as DynamoDB, S3, Lambda or Kinesis.",
+    "examCues": [
+      "Connect sensors and other devices to AWS and collect the messages they send → IoT Core",
+      "Devices publish and subscribe to messages over MQTT → IoT Core (message broker)",
+      "Write device data to DynamoDB or S3 as it arrives → IoT Core (rules)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iot-greengrass",
+        "difference": "IoT Greengrass runs software on the devices themselves so they can act on data locally; IoT Core is the cloud service that devices connect to."
+      },
+      {
+        "serviceId": "kinesis",
+        "difference": "Kinesis collects and processes large data streams such as logs or clickstreams; IoT Core connects devices and handles their messages."
+      }
+    ],
+    "pricingModel": "Each part is billed separately: connection time in one-minute steps, messages sent, Device Shadow and registry operations, and each rule evaluation and rule action.",
+    "sharedResponsibility": {
+      "aws": ["Runs and scales the message broker, the device registry and the rules engine"],
+      "customer": [
+        "Gives each device its own X.509 certificate and rotates certificates before they expire",
+        "Secures the software and hardware of its devices"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Conecta dispositivos IoT con los servicios en la nube de AWS y con otros dispositivos. Su message broker soporta MQTT, MQTT sobre WebSockets y HTTPS, y las reglas envían los datos de los dispositivos a servicios como DynamoDB, S3, Lambda o Kinesis.",
+    "examCues": [
+      "Conectar sensores y otros dispositivos a AWS y recolectar los mensajes que envían → IoT Core",
+      "Dispositivos que publican y se suscriben a mensajes por MQTT → IoT Core (message broker)",
+      "Guardar en DynamoDB o S3 los datos de los dispositivos en cuanto llegan → IoT Core (rules)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iot-greengrass",
+        "difference": "IoT Greengrass ejecuta software en los propios dispositivos para que actúen sobre los datos de forma local; IoT Core es el servicio en la nube al que se conectan los dispositivos."
+      },
+      {
+        "serviceId": "kinesis",
+        "difference": "Kinesis recolecta y procesa grandes flujos de datos como logs o clickstreams; IoT Core conecta dispositivos y maneja sus mensajes."
+      }
+    ],
+    "pricingModel": "Cada parte se cobra por separado: el tiempo de conexión en pasos de un minuto, los mensajes enviados, las operaciones de Device Shadow y del registro, y cada evaluación y acción de una regla.",
+    "sharedResponsibility": {
+      "aws": ["Opera y escala el message broker, el registro de dispositivos y el motor de reglas"],
+      "customer": [
+        "Da a cada dispositivo su propio certificado X.509 y rota los certificados antes de que venzan",
+        "Protege el software y el hardware de sus dispositivos"
+      ]
+    }
+  }
+}

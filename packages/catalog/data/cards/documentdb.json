@@ -1,0 +1,72 @@
+{
+  "serviceId": "documentdb",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/documentdb/latest/devguide/what-is.html",
+      "title": "What is Amazon DocumentDB (with MongoDB compatibility)",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/documentdb/pricing/",
+      "title": "Amazon DocumentDB pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed document database compatible with MongoDB, so you can keep the same application code, drivers and tools. Storage grows automatically, and up to 15 replicas in other Availability Zones serve reads and take over if the primary instance fails.",
+    "examCues": [
+      "Move a MongoDB workload to a managed AWS database without changing the application code → DocumentDB",
+      "Store and query JSON documents with your existing MongoDB drivers and tools → DocumentDB"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "dynamodb",
+        "difference": "DynamoDB is a serverless key-value and document database; choose DocumentDB when the application already uses MongoDB code, drivers and tools."
+      },
+      {
+        "serviceId": "neptune",
+        "difference": "Neptune is a graph database for highly connected data; DocumentDB stores JSON documents."
+      }
+    ],
+    "pricingModel": "You pay for instances by the second (with a 10-minute minimum), storage per GB-month and backup storage beyond your cluster's storage. I/O is billed per request on the Standard configuration and included on I/O-Optimized; Elastic Clusters bill for vCPUs and storage instead.",
+    "sharedResponsibility": {
+      "aws": [
+        "Monitors the cluster and restarts or fails over failed instances",
+        "Grows storage automatically and keeps backups for point-in-time recovery"
+      ],
+      "customer": [
+        "Chooses instance sizes and how many replicas to run",
+        "Isolates the cluster in a VPC and controls network access"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Una base de datos de documentos totalmente administrada y compatible con MongoDB, así que puedes mantener el mismo código de aplicación, drivers y herramientas. El almacenamiento crece solo, y hasta 15 réplicas en otras Availability Zones atienden lecturas y toman el control si falla la instancia principal.",
+    "examCues": [
+      "Llevar una carga de MongoDB a una base de datos administrada de AWS sin cambiar el código de la aplicación → DocumentDB",
+      "Guardar y consultar documentos JSON con tus drivers y herramientas de MongoDB actuales → DocumentDB"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "dynamodb",
+        "difference": "DynamoDB es una base de datos serverless key-value y de documentos; elige DocumentDB cuando la aplicación ya usa código, drivers y herramientas de MongoDB."
+      },
+      {
+        "serviceId": "neptune",
+        "difference": "Neptune es una base de datos de grafos para datos muy conectados; DocumentDB guarda documentos JSON."
+      }
+    ],
+    "pricingModel": "Pagas por las instancias por segundo (con un mínimo de 10 minutos), el almacenamiento por GB-mes y el almacenamiento de backups que supera el del clúster. El I/O se cobra por solicitud en la configuración Standard y viene incluido en I/O-Optimized; los Elastic Clusters cobran por vCPU y almacenamiento.",
+    "sharedResponsibility": {
+      "aws": [
+        "Monitorea el clúster y reinicia las instancias que fallan o hace failover",
+        "Hace crecer el almacenamiento de forma automática y guarda backups para recuperar a un punto en el tiempo"
+      ],
+      "customer": [
+        "Elige el tamaño de las instancias y cuántas réplicas usar",
+        "Aísla el clúster en una VPC y controla el acceso de red"
+      ]
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "serviceId": "glue",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html",
+      "title": "What is AWS Glue?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/glue/pricing/",
+      "title": "AWS Glue pricing",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/glue/latest/dg/worker-types.html",
+      "title": "AWS Glue worker types",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A serverless data integration service that discovers, prepares, moves and combines data from many sources for analytics, machine learning and applications. Crawlers fill a central Data Catalog, and ETL jobs extract, transform and load data into data lakes.",
+    "examCues": [
+      "Clean and transform data with serverless ETL jobs before analysis → Glue",
+      "Find the schema of data in S3 automatically and register it in a catalog → Glue (crawlers and Data Catalog)",
+      "One central metadata catalog that Athena, EMR and Redshift Spectrum can query → Glue Data Catalog"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "athena",
+        "difference": "Athena runs SQL queries on data in S3; Glue prepares, transforms and catalogs the data, and Athena can query what the Data Catalog describes."
+      },
+      {
+        "serviceId": "database-migration-service",
+        "difference": "DMS migrates and replicates databases into AWS; Glue transforms and combines data for analytics."
+      }
+    ],
+    "pricingModel": "ETL jobs and crawlers have an hourly rate per DPU (data processing unit), billed by the second. The Data Catalog has a monthly fee for stored objects and requests, with a free allowance each month.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provisions and scales the infrastructure that runs jobs and crawlers",
+        "Provides built-in high availability"
+      ],
+      "customer": [
+        "Writes the transformations and checks the data quality",
+        "Controls access to the databases, tables and data sources"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio serverless de integración de datos que descubre, prepara, mueve y combina datos de muchas fuentes para analítica, machine learning y aplicaciones. Los crawlers llenan un Data Catalog central, y los trabajos de ETL extraen, transforman y cargan datos en data lakes.",
+    "examCues": [
+      "Limpiar y transformar datos con trabajos de ETL serverless antes de analizarlos → Glue",
+      "Encontrar el esquema de los datos en S3 de forma automática y registrarlo en un catálogo → Glue (crawlers y Data Catalog)",
+      "Un catálogo central de metadatos que Athena, EMR y Redshift Spectrum pueden consultar → Glue Data Catalog"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "athena",
+        "difference": "Athena ejecuta consultas SQL sobre datos en S3; Glue prepara, transforma y cataloga los datos, y Athena puede consultar lo que describe el Data Catalog."
+      },
+      {
+        "serviceId": "database-migration-service",
+        "difference": "DMS migra y replica bases de datos hacia AWS; Glue transforma y combina datos para analítica."
+      }
+    ],
+    "pricingModel": "Los trabajos de ETL y los crawlers tienen una tarifa por hora por DPU (data processing unit), cobrada por segundo. El Data Catalog tiene una tarifa mensual por objetos guardados y solicitudes, con una cantidad gratis cada mes.",
+    "sharedResponsibility": {
+      "aws": [
+        "Crea y escala la infraestructura que ejecuta los trabajos y los crawlers",
+        "Ofrece alta disponibilidad integrada"
+      ],
+      "customer": [
+        "Escribe las transformaciones y revisa la calidad de los datos",
+        "Controla el acceso a las bases de datos, tablas y fuentes de datos"
+      ]
+    }
+  }
+}

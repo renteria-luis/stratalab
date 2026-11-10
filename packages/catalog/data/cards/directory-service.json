@@ -1,0 +1,76 @@
+{
+  "serviceId": "directory-service",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/what_is.html",
+      "title": "What is AWS Directory Service?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/directoryservice/pricing/",
+      "title": "AWS Directory Service pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Gives you several ways to use Microsoft Active Directory with AWS services. AWS Managed Microsoft AD is a real Active Directory managed by AWS, AD Connector forwards sign-in requests to your existing on-premises directory, and Simple AD is a basic Active Directory-compatible directory.",
+    "examCues": [
+      "Run Active Directory-aware applications, such as SharePoint or SQL Server, in AWS with a managed directory → AWS Managed Microsoft AD",
+      "Users sign in to WorkSpaces with their existing on-premises Active Directory accounts → AD Connector",
+      "A trust between an on-premises Active Directory and a directory in AWS → AWS Managed Microsoft AD"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iam-identity-center",
+        "difference": "IAM Identity Center connects workforce users to AWS accounts and applications; Directory Service runs or connects the Microsoft Active Directory that holds users, groups and devices."
+      },
+      {
+        "serviceId": "cognito",
+        "difference": "Cognito signs in the users of your web and mobile apps; Directory Service is for Active Directory and LDAP workloads."
+      },
+      {
+        "serviceId": "iam",
+        "difference": "IAM controls who can do what with AWS resources; Directory Service manages Windows users, groups and devices in Active Directory."
+      }
+    ],
+    "pricingModel": "You pay by the hour for each directory, based on its type and edition, plus each domain controller beyond the two created by default and each additional account you share a directory with.",
+    "sharedResponsibility": {
+      "aws": ["Runs and monitors the managed directory and takes daily snapshots"],
+      "customer": [
+        "Adds users and groups and manages Group Policy",
+        "Sets up trusts, MFA and the network connection to on-premises"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Te da varias formas de usar Microsoft Active Directory con servicios de AWS. AWS Managed Microsoft AD es un Active Directory real administrado por AWS, AD Connector reenvía las solicitudes de inicio de sesión a tu directorio on-premises actual, y Simple AD es un directorio básico compatible con Active Directory.",
+    "examCues": [
+      "Ejecutar aplicaciones que dependen de Active Directory, como SharePoint o SQL Server, en AWS con un directorio administrado → AWS Managed Microsoft AD",
+      "Los usuarios inician sesión en WorkSpaces con sus cuentas actuales del Active Directory on-premises → AD Connector",
+      "Una relación de confianza (trust) entre un Active Directory on-premises y un directorio en AWS → AWS Managed Microsoft AD"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "iam-identity-center",
+        "difference": "IAM Identity Center conecta a los usuarios del personal con cuentas y aplicaciones de AWS; Directory Service ejecuta o conecta el Microsoft Active Directory que guarda usuarios, grupos y dispositivos."
+      },
+      {
+        "serviceId": "cognito",
+        "difference": "Cognito inicia la sesión de los usuarios de tus apps web y móviles; Directory Service es para cargas de Active Directory y LDAP."
+      },
+      {
+        "serviceId": "iam",
+        "difference": "IAM controla quién puede hacer qué con los recursos de AWS; Directory Service administra usuarios, grupos y dispositivos de Windows en Active Directory."
+      }
+    ],
+    "pricingModel": "Pagas por hora por cada directorio, según su tipo y edición, más cada domain controller por encima de los dos que se crean por defecto y cada cuenta adicional con la que compartes un directorio.",
+    "sharedResponsibility": {
+      "aws": ["Opera y monitorea el directorio administrado y toma snapshots diarios"],
+      "customer": [
+        "Agrega usuarios y grupos y administra las Group Policy",
+        "Configura los trusts, el MFA y la conexión de red con on-premises"
+      ]
+    }
+  }
+}

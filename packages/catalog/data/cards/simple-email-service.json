@@ -1,0 +1,65 @@
+{
+  "serviceId": "simple-email-service",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/ses/latest/dg/Welcome.html",
+      "title": "What is Amazon SES?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/ses/pricing/",
+      "title": "Amazon SES pricing",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/sns/latest/dg/welcome.html",
+      "title": "What is Amazon SNS?",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "An email platform for sending and receiving email with your own email addresses and domains, without managing email servers. Use it for marketing email, transactional email such as order confirmations, and newsletters.",
+    "examCues": [
+      "Send order confirmations and other transactional emails from an application → SES",
+      "Send marketing offers or newsletters to many customers → SES",
+      "Receive incoming email and act on it, for example to create support tickets → SES (email receiving)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-notification-service",
+        "difference": "SNS delivers notifications from a topic to its subscribers, and email is one option; SES is a full email platform that sends and receives email from your own domains."
+      }
+    ],
+    "pricingModel": "You pay for the emails you send (per recipient) and receive, plus attachment data and dedicated IP addresses. Optional features, such as deliverability tools, have their own charges.",
+    "sharedResponsibility": {
+      "aws": ["Runs and scales the email sending and receiving infrastructure"],
+      "customer": [
+        "Verifies the domains and addresses it sends from and sets up authentication such as DKIM",
+        "Sends only wanted email and handles bounces and complaints"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Una plataforma de email para enviar y recibir correos con tus propias direcciones y dominios, sin administrar servidores de correo. Úsala para emails de marketing, emails transaccionales como confirmaciones de pedidos, y newsletters.",
+    "examCues": [
+      "Enviar confirmaciones de pedidos y otros emails transaccionales desde una aplicación → SES",
+      "Enviar ofertas de marketing o newsletters a muchos clientes → SES",
+      "Recibir emails entrantes y actuar sobre ellos, por ejemplo para crear tickets de soporte → SES (recepción de email)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "simple-notification-service",
+        "difference": "SNS entrega notificaciones de un topic a sus suscriptores, y el email es una de las opciones; SES es una plataforma de email completa que envía y recibe correos desde tus propios dominios."
+      }
+    ],
+    "pricingModel": "Pagas por los emails que envías (por destinatario) y recibes, más los datos de los adjuntos y las direcciones IP dedicadas. Las funciones opcionales, como las herramientas de entregabilidad, tienen sus propios cargos.",
+    "sharedResponsibility": {
+      "aws": ["Opera y escala la infraestructura de envío y recepción de email"],
+      "customer": [
+        "Verifica los dominios y direcciones desde los que envía y configura la autenticación, como DKIM",
+        "Envía solo correos deseados y maneja los rebotes y las quejas"
+      ]
+    }
+  }
+}

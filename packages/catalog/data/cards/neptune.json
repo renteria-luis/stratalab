@@ -1,0 +1,82 @@
+{
+  "serviceId": "neptune",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/neptune/latest/userguide/intro.html",
+      "title": "What Is Amazon Neptune?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/neptune/pricing/",
+      "title": "Amazon Neptune pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed graph database for highly connected data, optimized to store billions of relationships and query them in milliseconds. It supports the Gremlin, openCypher and SPARQL query languages.",
+    "examCues": [
+      "A social network or recommendation engine that follows the relationships between people and items → Neptune",
+      "Find fraud patterns in highly connected data → Neptune",
+      "A knowledge graph queried with SPARQL or Gremlin → Neptune"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "aurora-and-rds",
+        "difference": "Aurora and RDS store data in relational tables; Neptune stores data as a graph of items and the relationships between them."
+      },
+      {
+        "serviceId": "dynamodb",
+        "difference": "DynamoDB is a key-value and document database; Neptune is built to query relationships across connected data."
+      },
+      {
+        "serviceId": "documentdb",
+        "difference": "DocumentDB stores JSON documents with MongoDB compatibility; Neptune stores graphs."
+      }
+    ],
+    "pricingModel": "You pay for DB instance hours or for serverless capacity used per second, storage per GB-month, I/O requests on the Standard configuration, backup storage beyond the included amount and data transfer.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provisions hardware, patches the software and runs backups",
+        "Replicates data across Availability Zones"
+      ],
+      "customer": [
+        "Designs the graph data model and the queries",
+        "Configures network access, encryption and read replicas"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Una base de datos de grafos totalmente administrada para datos muy conectados, optimizada para guardar miles de millones de relaciones y consultarlas en milisegundos. Soporta los lenguajes de consulta Gremlin, openCypher y SPARQL.",
+    "examCues": [
+      "Una red social o un motor de recomendaciones que sigue las relaciones entre personas y productos → Neptune",
+      "Encontrar patrones de fraude en datos muy conectados → Neptune",
+      "Un knowledge graph que se consulta con SPARQL o Gremlin → Neptune"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "aurora-and-rds",
+        "difference": "Aurora y RDS guardan los datos en tablas relacionales; Neptune guarda los datos como un grafo de elementos y las relaciones entre ellos."
+      },
+      {
+        "serviceId": "dynamodb",
+        "difference": "DynamoDB es una base de datos key-value y de documentos; Neptune está hecha para consultar relaciones entre datos conectados."
+      },
+      {
+        "serviceId": "documentdb",
+        "difference": "DocumentDB guarda documentos JSON con compatibilidad con MongoDB; Neptune guarda grafos."
+      }
+    ],
+    "pricingModel": "Pagas por horas de instancia de base de datos o por la capacidad serverless usada por segundo, el almacenamiento por GB-mes, las solicitudes de I/O en la configuración Standard, el almacenamiento de backups que supera lo incluido y la transferencia de datos.",
+    "sharedResponsibility": {
+      "aws": [
+        "Aprovisiona el hardware, aplica parches al software y hace los backups",
+        "Replica los datos entre Availability Zones"
+      ],
+      "customer": [
+        "Diseña el modelo de datos del grafo y las consultas",
+        "Configura el acceso de red, el cifrado y las réplicas de lectura"
+      ]
+    }
+  }
+}

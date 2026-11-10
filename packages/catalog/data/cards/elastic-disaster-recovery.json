@@ -1,0 +1,73 @@
+{
+  "serviceId": "elastic-disaster-recovery",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html",
+      "title": "What is Elastic Disaster Recovery?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/disaster-recovery/pricing/",
+      "title": "AWS Elastic Disaster Recovery pricing",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/mgn/latest/ug/what-is-mgn.html",
+      "title": "What Is AWS Transform MGN?",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Reduces downtime and data loss by continuously replicating on-premises or cloud servers to a low-cost staging area in your AWS account. To recover, it launches the servers on AWS within minutes, from their latest state or from an earlier point in time.",
+    "examCues": [
+      "Recover on-premises servers on AWS within minutes after an outage → Elastic Disaster Recovery",
+      "Disaster recovery with continuous replication, low-cost storage and minimal compute until you need it → Elastic Disaster Recovery",
+      "Run recovery drills without disrupting the source servers → Elastic Disaster Recovery"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "backup",
+        "difference": "AWS Backup schedules and keeps backups of AWS resources; Elastic Disaster Recovery replicates whole servers continuously and launches them on AWS to recover."
+      },
+      {
+        "serviceId": "transform-mgn",
+        "difference": "AWS Transform MGN replicates servers to move them to AWS for good; Elastic Disaster Recovery keeps replicating so you can recover on AWS and later fail back."
+      }
+    ],
+    "pricingModel": "You pay an hourly fee for each source server you replicate. You also pay for the AWS resources it uses in your account, such as EBS storage and snapshots for the staging area and EC2 for replication servers and for drill or recovery instances.",
+    "sharedResponsibility": {
+      "aws": ["Runs the replication and converts servers to boot and run on AWS"],
+      "customer": [
+        "Sets up replication on the source servers and configures launch settings",
+        "Runs regular recovery drills and decides when to fail back"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Reduce el tiempo de inactividad y la pérdida de datos replicando de forma continua servidores on-premises o en la nube hacia un área de staging de bajo costo en tu cuenta de AWS. Para recuperar, lanza los servidores en AWS en minutos, desde su estado más reciente o desde un punto anterior en el tiempo.",
+    "examCues": [
+      "Recuperar servidores on-premises en AWS en minutos después de una caída → Elastic Disaster Recovery",
+      "Recuperación ante desastres con replicación continua, almacenamiento barato y cómputo mínimo hasta que lo necesites → Elastic Disaster Recovery",
+      "Hacer simulacros de recuperación sin afectar los servidores de origen → Elastic Disaster Recovery"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "backup",
+        "difference": "AWS Backup programa y guarda backups de recursos de AWS; Elastic Disaster Recovery replica servidores completos de forma continua y los lanza en AWS para recuperar."
+      },
+      {
+        "serviceId": "transform-mgn",
+        "difference": "AWS Transform MGN replica servidores para moverlos a AWS de forma definitiva; Elastic Disaster Recovery sigue replicando para que puedas recuperar en AWS y después volver al sitio original."
+      }
+    ],
+    "pricingModel": "Pagas una tarifa por hora por cada servidor de origen que replicas. También pagas por los recursos de AWS que usa en tu cuenta, como almacenamiento EBS y snapshots para el área de staging, y EC2 para los servidores de replicación y para las instancias de simulacro o de recuperación.",
+    "sharedResponsibility": {
+      "aws": ["Opera la replicación y convierte los servidores para que arranquen y corran en AWS"],
+      "customer": [
+        "Configura la replicación en los servidores de origen y los ajustes de lanzamiento",
+        "Hace simulacros de recuperación periódicos y decide cuándo volver al sitio original"
+      ]
+    }
+  }
+}

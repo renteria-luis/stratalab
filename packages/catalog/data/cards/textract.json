@@ -1,0 +1,74 @@
+{
+  "serviceId": "textract",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/textract/latest/dg/what-is.html",
+      "title": "What is Amazon Textract?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/textract/pricing/",
+      "title": "Amazon Textract pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Extracts typed and handwritten text, forms and tables from documents in image and PDF files, with no machine learning expertise needed. Specialized APIs process invoices and receipts, identity documents and mortgage loan packages.",
+    "examCues": [
+      "Pull the data from scanned forms or tables into a database automatically → Textract",
+      "Read typed and handwritten text from images and PDFs of documents → Textract",
+      "Process invoices and receipts without manual data entry → Textract (AnalyzeExpense)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "rekognition",
+        "difference": "Rekognition analyzes images and videos for objects, faces and scenes; Textract is built to read documents and keep the structure of forms and tables."
+      },
+      {
+        "serviceId": "comprehend",
+        "difference": "Comprehend analyzes the meaning of text; Textract gets the text out of documents first."
+      }
+    ],
+    "pricingModel": "You pay per page processed. The rate depends on the API and features you use, such as plain text detection, forms, tables or queries, and it drops at higher monthly volumes.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs and improves the document analysis models",
+        "Scales to process large numbers of documents"
+      ],
+      "customer": [
+        "Controls access to the documents and to the extracted data",
+        "Checks extracted values before business decisions depend on them"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Extrae texto escrito a máquina y a mano, formularios y tablas de documentos en archivos de imagen y PDF, sin necesitar experiencia en machine learning. APIs especializadas procesan facturas y recibos, documentos de identidad y paquetes de préstamos hipotecarios.",
+    "examCues": [
+      "Pasar los datos de formularios o tablas escaneados a una base de datos de forma automática → Textract",
+      "Leer texto escrito a máquina y a mano en imágenes y PDFs de documentos → Textract",
+      "Procesar facturas y recibos sin captura manual de datos → Textract (AnalyzeExpense)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "rekognition",
+        "difference": "Rekognition analiza imágenes y videos en busca de objetos, rostros y escenas; Textract está hecho para leer documentos y conservar la estructura de formularios y tablas."
+      },
+      {
+        "serviceId": "comprehend",
+        "difference": "Comprehend analiza el significado de un texto; Textract primero saca el texto de los documentos."
+      }
+    ],
+    "pricingModel": "Pagas por página procesada. La tarifa depende de la API y las funciones que uses, como detección de texto simple, formularios, tablas o consultas, y baja con volúmenes mensuales más altos.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera y mejora los modelos de análisis de documentos",
+        "Escala para procesar grandes cantidades de documentos"
+      ],
+      "customer": [
+        "Controla el acceso a los documentos y a los datos extraídos",
+        "Revisa los valores extraídos antes de que las decisiones del negocio dependan de ellos"
+      ]
+    }
+  }
+}

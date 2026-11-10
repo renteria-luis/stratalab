@@ -1,0 +1,54 @@
+{
+  "serviceId": "service-quotas",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html",
+      "title": "What is Service Quotas?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/servicequotas/latest/userguide/automatic-management.html",
+      "title": "Service Quotas Automatic Management",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Shows your quotas, also called limits, for AWS services in one place: the maximum number of resources, actions and items in your account or Region. You can request increases for adjustable quotas and see how much of each quota you use.",
+    "examCues": [
+      "Your account needs more VPCs in a Region than the default quota allows → Service Quotas (request a quota increase)",
+      "Get notified before a quota runs out → Service Quotas (Automatic Management)",
+      "See the default and applied values of a service's quotas in one place → Service Quotas"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Trusted Advisor's service limits checks flag quotas that are close to their limit, among many other checks; Service Quotas is where you see every quota and request increases."
+      }
+    ],
+    "pricingModel": "The Service Quotas user guide lists no fee for viewing quotas or requesting increases. A higher quota lets you use more of a service, and you pay for that use in that service.",
+    "sharedResponsibility": {
+      "aws": ["Sets the default quotas and reviews increase requests"],
+      "customer": ["Watches usage and requests increases before a quota blocks growth"]
+    }
+  },
+  "es": {
+    "summary": "Muestra en un solo lugar tus cuotas, también llamadas límites, de los servicios de AWS: la cantidad máxima de recursos, acciones y elementos en tu cuenta o región. Puedes pedir aumentos de las cuotas ajustables y ver cuánto usas de cada una.",
+    "examCues": [
+      "Tu cuenta necesita más VPCs en una región de las que permite la cuota por defecto → Service Quotas (pedir un aumento de cuota)",
+      "Recibir un aviso antes de que se acabe una cuota → Service Quotas (Automatic Management)",
+      "Ver en un solo lugar los valores por defecto y aplicados de las cuotas de un servicio → Service Quotas"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "trusted-advisor",
+        "difference": "Las revisiones de service limits de Trusted Advisor marcan las cuotas cercanas a su límite, entre muchas otras revisiones; Service Quotas es donde ves todas las cuotas y pides aumentos."
+      }
+    ],
+    "pricingModel": "La guía de usuario de Service Quotas no indica ninguna tarifa por ver las cuotas ni por pedir aumentos. Una cuota más alta te deja usar más de un servicio, y pagas ese uso en ese servicio.",
+    "sharedResponsibility": {
+      "aws": ["Define las cuotas por defecto y revisa las solicitudes de aumento"],
+      "customer": ["Vigila el uso y pide aumentos antes de que una cuota frene el crecimiento"]
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "serviceId": "step-functions",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html",
+      "title": "What is Step Functions?",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Builds workflows, called state machines, that run a series of steps to orchestrate AWS services and microservices, automate processes and create data and machine learning pipelines. The console shows each workflow visually so you can check the state of every step.",
+    "examCues": [
+      "Coordinate several Lambda functions and AWS services in a defined sequence → Step Functions",
+      "A long-running, auditable process that waits for a human approval → Step Functions (Standard workflow)",
+      "High-volume event processing, such as streaming or IoT data ingestion → Step Functions (Express workflow)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "eventbridge",
+        "difference": "EventBridge routes events to targets as they happen; Step Functions runs a defined sequence of steps and tracks the state of each one."
+      },
+      {
+        "serviceId": "simple-queue-service",
+        "difference": "SQS holds messages in a queue between components; Step Functions decides the order of the work and follows it to the end."
+      },
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda runs one piece of code; Step Functions connects many steps, often Lambda functions, into a workflow."
+      }
+    ],
+    "pricingModel": "Standard workflows are priced by state transition. Express workflows are priced by the number and duration of executions.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the workflow engine and keeps the state of each execution",
+        "Scales the number of executions"
+      ],
+      "customer": [
+        "Designs the workflow and handles errors in its steps",
+        "Gives each workflow only the permissions it needs"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Crea flujos de trabajo, llamados state machines, que ejecutan una serie de pasos para orquestar servicios de AWS y microservicios, automatizar procesos y crear pipelines de datos y de machine learning. La consola muestra cada flujo de forma visual para que revises el estado de cada paso.",
+    "examCues": [
+      "Coordinar varias funciones Lambda y servicios de AWS en un orden definido → Step Functions",
+      "Un proceso largo y auditable que espera la aprobación de una persona → Step Functions (Standard workflow)",
+      "Procesamiento de eventos de alto volumen, como streaming o ingesta de datos de IoT → Step Functions (Express workflow)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "eventbridge",
+        "difference": "EventBridge dirige los eventos a sus destinos en el momento en que ocurren; Step Functions ejecuta una secuencia definida de pasos y sigue el estado de cada uno."
+      },
+      {
+        "serviceId": "simple-queue-service",
+        "difference": "SQS guarda mensajes en una cola entre componentes; Step Functions decide el orden del trabajo y lo sigue hasta el final."
+      },
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda ejecuta una pieza de código; Step Functions une muchos pasos, a menudo funciones Lambda, en un flujo de trabajo."
+      }
+    ],
+    "pricingModel": "Los Standard workflows se cobran por transición de estado. Los Express workflows se cobran por la cantidad y la duración de las ejecuciones.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera el motor de flujos de trabajo y guarda el estado de cada ejecución",
+        "Escala la cantidad de ejecuciones"
+      ],
+      "customer": [
+        "Diseña el flujo de trabajo y maneja los errores de sus pasos",
+        "Da a cada flujo solo los permisos que necesita"
+      ]
+    }
+  }
+}

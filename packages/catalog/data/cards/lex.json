@@ -1,0 +1,74 @@
+{
+  "serviceId": "lex",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/lexv2/latest/dg/what-is.html",
+      "title": "What is Amazon Lex V2?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/lex/pricing/",
+      "title": "Amazon Lex pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A service for building conversational interfaces, such as chatbots, that understand voice and text. It provides automatic speech recognition and natural language understanding, so you define the conversation flow without deep learning expertise.",
+    "examCues": [
+      "Build a chatbot that understands what customers type or say → Lex",
+      "Add a voice or text conversational interface to a web or mobile app → Lex",
+      "A bot that completes a task for the user, such as a booking, by calling a Lambda function → Lex"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "polly",
+        "difference": "Polly only turns text into speech; Lex understands what the user means and manages the conversation."
+      },
+      {
+        "serviceId": "transcribe",
+        "difference": "Transcribe converts audio into text; Lex understands the intent behind the input and replies as part of a conversation."
+      }
+    ],
+    "pricingModel": "You pay per request, that is, for each user input in a conversation, and speech input is priced differently from text input. Streaming conversations have a separate pricing model.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the speech recognition and language understanding models",
+        "Scales the bots automatically"
+      ],
+      "customer": [
+        "Designs the intents, sample phrases and conversation flow",
+        "Writes and secures the Lambda code that fulfills requests"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio para crear interfaces conversacionales, como chatbots, que entienden voz y texto. Ofrece reconocimiento automático de voz y comprensión del lenguaje natural, así que defines el flujo de la conversación sin experiencia en deep learning.",
+    "examCues": [
+      "Crear un chatbot que entienda lo que los clientes escriben o dicen → Lex",
+      "Agregar una interfaz conversacional de voz o texto a una app web o móvil → Lex",
+      "Un bot que completa una tarea para el usuario, como una reserva, llamando a una función Lambda → Lex"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "polly",
+        "difference": "Polly solo convierte texto en voz; Lex entiende lo que el usuario quiere y maneja la conversación."
+      },
+      {
+        "serviceId": "transcribe",
+        "difference": "Transcribe convierte audio en texto; Lex entiende la intención detrás de lo que se dice y responde dentro de una conversación."
+      }
+    ],
+    "pricingModel": "Pagas por solicitud, es decir, por cada entrada del usuario en una conversación, y la entrada de voz tiene un precio distinto a la de texto. Las conversaciones por streaming tienen un modelo de precios aparte.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera los modelos de reconocimiento de voz y de comprensión del lenguaje",
+        "Escala los bots de forma automática"
+      ],
+      "customer": [
+        "Diseña los intents, las frases de ejemplo y el flujo de la conversación",
+        "Escribe y protege el código de Lambda que cumple las solicitudes"
+      ]
+    }
+  }
+}

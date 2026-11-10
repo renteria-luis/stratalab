@@ -1,0 +1,66 @@
+{
+  "serviceId": "amplify",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html",
+      "title": "Welcome to AWS Amplify Hosting",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/amplify/pricing/",
+      "title": "AWS Amplify pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Amplify Hosting hosts full-stack serverless web apps with a Git-based workflow: each change in the repository is built and deployed to the AWS content delivery network. With Amplify Gen 2, developers define the app's backend in TypeScript code.",
+    "examCues": [
+      "Deploy a React, Angular or Next.js web app from a Git repository with continuous deployment → Amplify Hosting",
+      "A preview environment for each pull request or feature branch → Amplify Hosting",
+      "Host a single-page app or static site on a CDN with a custom domain → Amplify Hosting"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "elastic-beanstalk",
+        "difference": "Elastic Beanstalk deploys web applications onto EC2 instances or an EKS cluster that it provisions; Amplify Hosting deploys serverless web apps from Git to a CDN."
+      }
+    ],
+    "pricingModel": "Hosting is billed for build and deploy minutes, data stored, data transferred out and server-side rendering requests and their duration, with some free allowance each month. Backend resources, such as Cognito, DynamoDB or Lambda, are billed by those services.",
+    "sharedResponsibility": {
+      "aws": [
+        "Runs the build servers and the CDN that serves the app",
+        "Updates the app only after the whole deployment finishes"
+      ],
+      "customer": [
+        "Writes the app and its build settings",
+        "Protects branches and secures the backend resources it connects"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Amplify Hosting aloja aplicaciones web serverless full-stack con un flujo basado en Git: cada cambio en el repositorio se compila y se despliega en la red de entrega de contenido (CDN) de AWS. Con Amplify Gen 2, los desarrolladores definen el backend de la app con código TypeScript.",
+    "examCues": [
+      "Desplegar una app web de React, Angular o Next.js desde un repositorio Git con despliegue continuo → Amplify Hosting",
+      "Un entorno de vista previa para cada pull request o rama de funcionalidad → Amplify Hosting",
+      "Alojar una single-page app o un sitio estático en una CDN con un dominio propio → Amplify Hosting"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "elastic-beanstalk",
+        "difference": "Elastic Beanstalk despliega aplicaciones web en instancias EC2 o en un clúster de EKS que crea; Amplify Hosting despliega apps web serverless desde Git a una CDN."
+      }
+    ],
+    "pricingModel": "El hosting se cobra por minutos de compilación y despliegue, datos guardados, datos transferidos hacia afuera y solicitudes de server-side rendering y su duración, con una cantidad gratis cada mes. Los recursos de backend, como Cognito, DynamoDB o Lambda, los cobra cada uno de esos servicios.",
+    "sharedResponsibility": {
+      "aws": [
+        "Opera los servidores de compilación y la CDN que sirve la app",
+        "Actualiza la app solo cuando termina todo el despliegue"
+      ],
+      "customer": [
+        "Escribe la app y su configuración de compilación",
+        "Protege las ramas y asegura los recursos de backend que conecta"
+      ]
+    }
+  }
+}

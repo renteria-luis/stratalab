@@ -1,0 +1,76 @@
+{
+  "serviceId": "translate",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/translate/latest/dg/what-is.html",
+      "title": "What is Amazon Translate?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/translate/pricing/",
+      "title": "Amazon Translate pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A text translation service that uses machine learning to translate text on demand. Use it to translate documents or to build applications that work in many languages.",
+    "examCues": [
+      "Show chat messages or user reviews in each customer's own language → Translate",
+      "Translate a large set of documents stored in S3 → Translate (batch translation)",
+      "Build an app that serves its content in several languages → Translate"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "transcribe",
+        "difference": "Transcribe turns speech into text; Translate converts text from one language to another."
+      },
+      {
+        "serviceId": "comprehend",
+        "difference": "Comprehend finds entities, sentiment and key phrases in text; Translate changes its language."
+      },
+      {
+        "serviceId": "polly",
+        "difference": "Polly reads text aloud; Translate changes the language of the text."
+      }
+    ],
+    "pricingModel": "You pay for the number of characters translated each month, spaces included. Real-time text translation and batch document translation have the same rate, while real-time translation of Word (DOCX) files and Active Custom Translation cost more.",
+    "sharedResponsibility": {
+      "aws": ["Runs and scales the translation models"],
+      "customer": [
+        "Chooses what text to translate and who can call the service",
+        "Checks whether machine translation is accurate enough for the content"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de traducción de texto que usa machine learning para traducir texto a pedido. Úsalo para traducir documentos o para crear aplicaciones que funcionen en muchos idiomas.",
+    "examCues": [
+      "Mostrar mensajes de chat o reseñas de usuarios en el idioma de cada cliente → Translate",
+      "Traducir un gran conjunto de documentos guardados en S3 → Translate (batch translation)",
+      "Crear una app que ofrezca su contenido en varios idiomas → Translate"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "transcribe",
+        "difference": "Transcribe convierte voz en texto; Translate convierte texto de un idioma a otro."
+      },
+      {
+        "serviceId": "comprehend",
+        "difference": "Comprehend encuentra entidades, sentimiento y frases clave en un texto; Translate cambia su idioma."
+      },
+      {
+        "serviceId": "polly",
+        "difference": "Polly lee el texto en voz alta; Translate cambia el idioma del texto."
+      }
+    ],
+    "pricingModel": "Pagas por la cantidad de caracteres traducidos cada mes, incluidos los espacios. La traducción de texto en tiempo real y la traducción de documentos por lotes tienen la misma tarifa, mientras que la traducción en tiempo real de archivos de Word (DOCX) y Active Custom Translation cuestan más.",
+    "sharedResponsibility": {
+      "aws": ["Opera y escala los modelos de traducción"],
+      "customer": [
+        "Elige qué texto traducir y quién puede llamar al servicio",
+        "Revisa si la traducción automática es suficientemente precisa para el contenido"
+      ]
+    }
+  }
+}

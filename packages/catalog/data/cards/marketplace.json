@@ -1,0 +1,55 @@
+{
+  "serviceId": "marketplace",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/marketplace/latest/buyerguide/what-is-marketplace.html",
+      "title": "What is AWS Marketplace?",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A curated digital catalog where you find, buy, deploy and manage third-party software, data and services. Charges for what you buy appear on your AWS bill, and AWS then pays the seller.",
+    "examCues": [
+      "Launch pre-configured third-party software as an AMI or subscribe to it as SaaS → Marketplace",
+      "Pay for third-party software through the AWS bill instead of separate contracts → Marketplace",
+      "Bring a software license you already own to AWS → Marketplace (BYOL pricing option)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "service-catalog",
+        "difference": "Service Catalog lets your organization offer its own approved products to internal users; Marketplace is where you buy software and data from third-party sellers."
+      }
+    ],
+    "pricingModel": "Each seller sets the price and terms of its product, with options such as free, free trial, hourly, monthly, annual, multi-year or bring your own license (BYOL). Charges appear on your AWS bill.",
+    "sharedResponsibility": {
+      "aws": ["Curates the product listings and handles billing and payment to sellers"],
+      "customer": [
+        "Reviews the price, terms and license agreement before subscribing",
+        "Configures and secures the software it deploys in its account"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un catálogo digital curado donde encuentras, compras, despliegas y administras software, datos y servicios de terceros. Los cargos de lo que compras aparecen en tu factura de AWS, y luego AWS le paga al vendedor.",
+    "examCues": [
+      "Lanzar software de terceros ya configurado como una AMI o suscribirse a él como SaaS → Marketplace",
+      "Pagar software de terceros en la factura de AWS en lugar de contratos separados → Marketplace",
+      "Usar en AWS una licencia de software que ya tienes → Marketplace (opción de precio BYOL)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "service-catalog",
+        "difference": "Service Catalog permite que tu organización ofrezca sus propios productos aprobados a usuarios internos; Marketplace es donde compras software y datos de vendedores externos."
+      }
+    ],
+    "pricingModel": "Cada vendedor define el precio y los términos de su producto, con opciones como gratis, prueba gratis, por hora, mensual, anual, de varios años o con tu propia licencia (BYOL). Los cargos aparecen en tu factura de AWS.",
+    "sharedResponsibility": {
+      "aws": ["Revisa los productos publicados y maneja la facturación y el pago a los vendedores"],
+      "customer": [
+        "Revisa el precio, los términos y el acuerdo de licencia antes de suscribirse",
+        "Configura y protege el software que despliega en su cuenta"
+      ]
+    }
+  }
+}

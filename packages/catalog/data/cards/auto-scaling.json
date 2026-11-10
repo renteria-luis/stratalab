@@ -1,0 +1,73 @@
+{
+  "serviceId": "auto-scaling",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/autoscaling/plans/userguide/what-is-a-scaling-plan.html",
+      "title": "What is a scaling plan?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/autoscaling/plans/userguide/how-it-works.html",
+      "title": "How scaling plans work",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/autoscaling/pricing/",
+      "title": "AWS Auto Scaling pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Uses scaling plans to set up automatic scaling for the related resources of an application in one place: EC2 Auto Scaling groups, ECS tasks, DynamoDB tables and indexes, Aurora read replicas and Spot Fleets. A plan combines dynamic and predictive scaling and optimizes for availability, cost or a balance of both.",
+    "examCues": [
+      "Configure scaling for all the scalable resources of one application in one place → AWS Auto Scaling (scaling plans)",
+      "Keep utilization near a target value by adding or removing capacity → dynamic scaling (target tracking)",
+      "Have capacity ready before regular traffic spikes → predictive scaling"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "compute-optimizer",
+        "difference": "Compute Optimizer recommends the right size for resources; AWS Auto Scaling changes how much capacity runs as demand changes."
+      },
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch collects metrics and raises alarms; scaling policies act on utilization to add or remove capacity."
+      }
+    ],
+    "pricingModel": "There is no additional charge for AWS Auto Scaling. You pay for the resources your application uses and for Amazon CloudWatch monitoring.",
+    "sharedResponsibility": {
+      "aws": ["Creates and runs the scaling policies and forecasts in the plan"],
+      "customer": [
+        "Chooses the resources and the scaling strategy",
+        "Makes sure the application keeps working when capacity is added or removed"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Usa scaling plans para configurar en un solo lugar el escalado automático de los recursos relacionados de una aplicación: Auto Scaling groups de EC2, tareas de ECS, tablas e índices de DynamoDB, réplicas de lectura de Aurora y Spot Fleets. Un plan combina escalado dinámico y predictivo, y optimiza para disponibilidad, costo o un equilibrio entre ambos.",
+    "examCues": [
+      "Configurar el escalado de todos los recursos escalables de una aplicación en un solo lugar → AWS Auto Scaling (scaling plans)",
+      "Mantener el uso cerca de un valor objetivo agregando o quitando capacidad → escalado dinámico (target tracking)",
+      "Tener capacidad lista antes de picos de tráfico que se repiten → escalado predictivo"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "compute-optimizer",
+        "difference": "Compute Optimizer recomienda el tamaño correcto de los recursos; AWS Auto Scaling cambia cuánta capacidad corre según cambia la demanda."
+      },
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch recolecta métricas y dispara alarmas; las políticas de escalado actúan según el uso para agregar o quitar capacidad."
+      }
+    ],
+    "pricingModel": "AWS Auto Scaling no tiene cargo adicional. Pagas por los recursos que usa tu aplicación y por el monitoreo de Amazon CloudWatch.",
+    "sharedResponsibility": {
+      "aws": ["Crea y ejecuta las políticas de escalado y los pronósticos del plan"],
+      "customer": [
+        "Elige los recursos y la estrategia de escalado",
+        "Se asegura de que la aplicación siga funcionando cuando se agrega o se quita capacidad"
+      ]
+    }
+  }
+}

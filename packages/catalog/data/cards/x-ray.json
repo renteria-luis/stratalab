@@ -1,0 +1,68 @@
+{
+  "serviceId": "x-ray",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html",
+      "title": "What is AWS X-Ray?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/cloudwatch/pricing/",
+      "title": "Amazon CloudWatch pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Collects data about the requests your application serves, including the calls it makes to downstream AWS resources, microservices, databases and web APIs. A trace map shows how the parts connect, so you can find bottlenecks, latency spikes and other issues.",
+    "examCues": [
+      "Find which microservice slows down requests in a distributed application → X-Ray",
+      "Follow one request end to end through Lambda functions, APIs and databases → X-Ray (traces)",
+      "See a map of how the services of an application call each other → X-Ray (trace map)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch collects metrics, logs and alarms for resources and applications; X-Ray follows individual requests through the parts of an application."
+      },
+      {
+        "serviceId": "cloudtrail",
+        "difference": "CloudTrail records the actions taken in your account for auditing; X-Ray traces requests inside your application to analyze performance."
+      }
+    ],
+    "pricingModel": "You pay for traces recorded, traces retrieved or scanned and, if you turn it on, traces processed by X-Ray Insights. A monthly free tier covers a set number of recorded and retrieved traces.",
+    "sharedResponsibility": {
+      "aws": ["Receives, stores and processes trace data and builds the trace map"],
+      "customer": [
+        "Instruments the application with SDKs or agents and decides what to trace",
+        "Keeps sensitive data out of trace data and metadata"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Recolecta datos de las solicitudes que atiende tu aplicación, incluidas las llamadas que hace a recursos de AWS, microservicios, bases de datos y APIs web. Un trace map muestra cómo se conectan las partes, para que encuentres cuellos de botella, picos de latencia y otros problemas.",
+    "examCues": [
+      "Encontrar qué microservicio hace lentas las solicitudes en una aplicación distribuida → X-Ray",
+      "Seguir una solicitud de principio a fin por funciones Lambda, APIs y bases de datos → X-Ray (traces)",
+      "Ver un mapa de cómo se llaman entre sí los servicios de una aplicación → X-Ray (trace map)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch recolecta métricas, logs y alarmas de recursos y aplicaciones; X-Ray sigue solicitudes individuales por las partes de una aplicación."
+      },
+      {
+        "serviceId": "cloudtrail",
+        "difference": "CloudTrail registra las acciones hechas en tu cuenta para auditoría; X-Ray sigue las solicitudes dentro de tu aplicación para analizar su rendimiento."
+      }
+    ],
+    "pricingModel": "Pagas por los traces registrados, los traces recuperados o escaneados y, si lo activas, los traces que procesa X-Ray Insights. Un free tier mensual cubre una cantidad fija de traces registrados y recuperados.",
+    "sharedResponsibility": {
+      "aws": ["Recibe, guarda y procesa los datos de traces y arma el trace map"],
+      "customer": [
+        "Instrumenta la aplicación con SDKs o agentes y decide qué rastrear",
+        "Evita que los datos sensibles terminen en los traces y su metadata"
+      ]
+    }
+  }
+}

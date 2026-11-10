@@ -1,0 +1,79 @@
+{
+  "serviceId": "firewall-manager",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/waf/latest/developerguide/fms-chapter.html",
+      "title": "AWS Firewall Manager",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/waf/latest/developerguide/fms-prereq.html",
+      "title": "AWS Firewall Manager prerequisites",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/firewall-manager/pricing/",
+      "title": "AWS Firewall Manager pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Sets up and maintains firewall protections across the accounts of an AWS Organizations organization from one administrator account, for AWS WAF, Shield Advanced, VPC security groups and network ACLs, AWS Network Firewall and Route 53 Resolver DNS Firewall. You define a policy once, and it is applied automatically, also to new accounts and resources.",
+    "examCues": [
+      "Apply the same AWS WAF rules to every account in an organization → Firewall Manager",
+      "New accounts and resources must get the company's firewall rules automatically → Firewall Manager",
+      "Manage security group rules for all member accounts from one place → Firewall Manager"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "waf-and-shield",
+        "difference": "AWS WAF and Shield protect individual resources; Firewall Manager applies and maintains those protections across many accounts and resources."
+      },
+      {
+        "serviceId": "organizations",
+        "difference": "Organizations groups accounts and applies policies; Firewall Manager needs an organization and uses it to apply firewall rules to its member accounts."
+      }
+    ],
+    "pricingModel": "You pay a monthly fee for each protection policy in each Region, plus the underlying services at their own rates, such as AWS WAF, Network Firewall, DNS Firewall and the AWS Config rules it creates. Shield Advanced customers don't pay the policy fee for Shield policies.",
+    "sharedResponsibility": {
+      "aws": [
+        "Applies policies to accounts and resources as they are added",
+        "Shows which resources comply with each policy"
+      ],
+      "customer": [
+        "Sets up AWS Organizations, AWS Config and the administrator account",
+        "Writes the policies and the rules inside them"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Configura y mantiene protecciones de firewall en las cuentas de una organización de AWS Organizations desde una cuenta de administrador, para AWS WAF, Shield Advanced, security groups y network ACLs de VPC, AWS Network Firewall y Route 53 Resolver DNS Firewall. Defines una política una vez y se aplica de forma automática, también a cuentas y recursos nuevos.",
+    "examCues": [
+      "Aplicar las mismas reglas de AWS WAF a todas las cuentas de una organización → Firewall Manager",
+      "Las cuentas y los recursos nuevos deben recibir las reglas de firewall de la empresa de forma automática → Firewall Manager",
+      "Administrar las reglas de security groups de todas las cuentas miembro desde un solo lugar → Firewall Manager"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "waf-and-shield",
+        "difference": "AWS WAF y Shield protegen recursos individuales; Firewall Manager aplica y mantiene esas protecciones en muchas cuentas y recursos."
+      },
+      {
+        "serviceId": "organizations",
+        "difference": "Organizations agrupa cuentas y aplica políticas; Firewall Manager necesita una organización y la usa para aplicar reglas de firewall a sus cuentas miembro."
+      }
+    ],
+    "pricingModel": "Pagas una tarifa mensual por cada política de protección en cada región, más los servicios de base con sus propias tarifas, como AWS WAF, Network Firewall, DNS Firewall y las reglas de AWS Config que crea. Los clientes de Shield Advanced no pagan la tarifa de política en las políticas de Shield.",
+    "sharedResponsibility": {
+      "aws": [
+        "Aplica las políticas a las cuentas y recursos a medida que se agregan",
+        "Muestra qué recursos cumplen con cada política"
+      ],
+      "customer": [
+        "Configura AWS Organizations, AWS Config y la cuenta de administrador",
+        "Escribe las políticas y las reglas que contienen"
+      ]
+    }
+  }
+}

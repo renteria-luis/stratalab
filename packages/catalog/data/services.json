@@ -83,7 +83,7 @@
       "name": "Batch",
       "category": "Compute",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -266,7 +266,7 @@
       "name": "FSx",
       "category": "Storage",
       "aliases": ["Amazon FSx (for all types)"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -331,7 +331,7 @@
       "name": "AWS Elastic Disaster Recovery",
       "category": "Storage",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": false
@@ -371,7 +371,7 @@
       "name": "Neptune",
       "category": "Database",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -384,7 +384,7 @@
       "name": "Amazon DocumentDB",
       "category": "Database",
       "aliases": ["Amazon DocumentDB (with MongoDB compatibility)"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -839,7 +839,7 @@
       "name": "X-Ray",
       "category": "Developer Tools",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1085,7 +1085,7 @@
       "name": "AWS Auto Scaling",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1408,7 +1408,7 @@
       "name": "Service Quotas",
       "category": "Management & Governance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": false
@@ -1614,7 +1614,7 @@
       "name": "Amazon Comprehend",
       "category": "Machine Learning",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1705,7 +1705,7 @@
       "name": "Amazon Textract",
       "category": "Machine Learning",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1731,7 +1731,7 @@
       "name": "Amazon Translate",
       "category": "Machine Learning",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -1898,7 +1898,7 @@
       "name": "Amazon Lex",
       "category": "Machine Learning",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2129,7 +2129,7 @@
       "name": "AWS Glue",
       "category": "Analytics",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2311,7 +2311,7 @@
       "name": "Directory Service",
       "category": "Security, Identity, & Compliance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2324,7 +2324,7 @@
       "name": "AWS Firewall Manager",
       "category": "Security, Identity, & Compliance",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2545,7 +2545,7 @@
       "name": "AWS Marketplace",
       "category": "Cloud Financial Management",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": false
@@ -2596,7 +2596,7 @@
       "name": "AWS Amplify",
       "category": "Front-end Web & Mobile",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2648,7 +2648,7 @@
       "name": "Step Functions",
       "category": "Application Integration",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": true
@@ -2791,7 +2791,7 @@
       "name": "Amazon Simple Email Service",
       "category": "Business Applications",
       "aliases": ["Amazon SES"],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": false
@@ -3037,7 +3037,7 @@
       "name": "IoT Core",
       "category": "Internet of Things",
       "aliases": [],
-      "kind": "nav-only",
+      "kind": "reference",
       "exam": {
         "clf": true,
         "saa": false

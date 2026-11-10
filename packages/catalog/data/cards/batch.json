@@ -1,0 +1,68 @@
+{
+  "serviceId": "batch",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/batch/latest/userguide/what-is-batch.html",
+      "title": "What is AWS Batch?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/batch/pricing/",
+      "title": "AWS Batch pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed service that runs batch computing workloads of any scale. It provisions compute for the jobs you submit, on Amazon ECS or Amazon EKS with EC2 instances or Fargate, and distributes the work based on the number and size of the jobs.",
+    "examCues": [
+      "Run large numbers of compute-heavy jobs, such as simulations, without installing or managing batch software → Batch",
+      "Queue jobs and let AWS start the compute for them, including Spot Instances to lower cost → Batch",
+      "Queue SageMaker training jobs by priority → Batch"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda runs code in response to events without servers; Batch queues large batch jobs and provisions the compute that runs them."
+      },
+      {
+        "serviceId": "elastic-container-service",
+        "difference": "ECS runs and scales containerized applications; Batch adds job queues and scheduling on top of ECS or EKS."
+      }
+    ],
+    "pricingModel": "There is no additional charge for AWS Batch. You pay for the resources that run your jobs, such as EC2 instances or Fargate, and Spot Instances or Savings Plans can lower that cost.",
+    "sharedResponsibility": {
+      "aws": ["Schedules the jobs and provisions and scales the compute capacity"],
+      "customer": [
+        "Packages each job as a container and sets the resources it needs",
+        "Chooses the compute types and the permissions jobs use"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio totalmente administrado que ejecuta cargas de procesamiento por lotes de cualquier escala. Aprovisiona cómputo para los trabajos que envías, en Amazon ECS o Amazon EKS con instancias EC2 o Fargate, y reparte el trabajo según la cantidad y el tamaño de los trabajos.",
+    "examCues": [
+      "Ejecutar muchos trabajos de cómputo pesado, como simulaciones, sin instalar ni administrar software de lotes → Batch",
+      "Poner trabajos en cola y dejar que AWS inicie el cómputo para ellos, incluso con Spot Instances para bajar el costo → Batch",
+      "Poner en cola trabajos de entrenamiento de SageMaker por prioridad → Batch"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "lambda",
+        "difference": "Lambda ejecuta código en respuesta a eventos sin servidores; Batch pone en cola trabajos grandes por lotes y aprovisiona el cómputo que los ejecuta."
+      },
+      {
+        "serviceId": "elastic-container-service",
+        "difference": "ECS ejecuta y escala aplicaciones en contenedores; Batch agrega colas de trabajos y su programación encima de ECS o EKS."
+      }
+    ],
+    "pricingModel": "AWS Batch no tiene cargo adicional. Pagas por los recursos que ejecutan tus trabajos, como instancias EC2 o Fargate, y las Spot Instances o los Savings Plans pueden bajar ese costo.",
+    "sharedResponsibility": {
+      "aws": ["Programa los trabajos y aprovisiona y escala la capacidad de cómputo"],
+      "customer": [
+        "Empaqueta cada trabajo como contenedor y define los recursos que necesita",
+        "Elige los tipos de cómputo y los permisos que usan los trabajos"
+      ]
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "serviceId": "fsx",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/what-is.html",
+      "title": "What is FSx for Windows File Server?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html",
+      "title": "What is Amazon FSx for Lustre?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/what-is-fsx-ontap.html",
+      "title": "What is Amazon FSx for NetApp ONTAP?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/what-is-fsx.html",
+      "title": "What is Amazon FSx for OpenZFS?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/fsx/pricing/",
+      "title": "Amazon FSx pricing",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/fsx/windows/pricing/",
+      "title": "Amazon FSx for Windows File Server pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Fully managed file systems in four types: FSx for Windows File Server, FSx for Lustre, FSx for NetApp ONTAP and FSx for OpenZFS. AWS sets up the file servers and storage volumes, so you can move file-based applications to AWS without changing them.",
+    "examCues": [
+      "Shared file storage for Windows applications over SMB → FSx for Windows File Server",
+      "A high-performance file system for HPC, machine learning or video processing → FSx for Lustre",
+      "Move on-premises NetApp ONTAP or ZFS file servers to AWS without changing applications → FSx for NetApp ONTAP or FSx for OpenZFS"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "efs",
+        "difference": "EFS is serverless, elastic file storage shared over NFS that you don't size; with FSx you pick a file system type and set its storage and throughput capacity."
+      },
+      {
+        "serviceId": "s3",
+        "difference": "S3 stores objects that applications reach through an API; FSx provides file systems that applications use like a file server."
+      }
+    ],
+    "pricingModel": "You pay only for the resources you use, with no minimum fees or setup charges. For FSx for Windows File Server, that is the storage and throughput capacity you provision, SSD IOPS above the included baseline, backup storage and some data transfer.",
+    "sharedResponsibility": {
+      "aws": [
+        "Sets up and runs the file servers and storage volumes",
+        "Installs and patches the file server software"
+      ],
+      "customer": [
+        "Chooses the file system type, capacity and deployment option, for example FSx for Lustre persistent instead of scratch when data must survive a file server failure",
+        "Controls network access and file permissions"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Sistemas de archivos totalmente administrados en cuatro tipos: FSx for Windows File Server, FSx for Lustre, FSx for NetApp ONTAP y FSx for OpenZFS. AWS configura los servidores de archivos y los volúmenes de almacenamiento, así que puedes llevar aplicaciones basadas en archivos a AWS sin cambiarlas.",
+    "examCues": [
+      "Almacenamiento de archivos compartido para aplicaciones Windows por SMB → FSx for Windows File Server",
+      "Un sistema de archivos de alto rendimiento para HPC, machine learning o procesamiento de video → FSx for Lustre",
+      "Llevar servidores de archivos NetApp ONTAP o ZFS on-premises a AWS sin cambiar las aplicaciones → FSx for NetApp ONTAP o FSx for OpenZFS"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "efs",
+        "difference": "EFS es almacenamiento de archivos serverless y elástico, compartido por NFS, al que no le defines tamaño; con FSx eliges un tipo de sistema de archivos y defines su capacidad de almacenamiento y de throughput."
+      },
+      {
+        "serviceId": "s3",
+        "difference": "S3 guarda objetos a los que las aplicaciones llegan por una API; FSx ofrece sistemas de archivos que las aplicaciones usan como un servidor de archivos."
+      }
+    ],
+    "pricingModel": "Pagas solo por los recursos que usas, sin tarifas mínimas ni cargos de configuración. En FSx for Windows File Server eso es la capacidad de almacenamiento y de throughput que aprovisionas, las SSD IOPS por encima de la base incluida, el almacenamiento de backups y parte de la transferencia de datos.",
+    "sharedResponsibility": {
+      "aws": [
+        "Configura y opera los servidores de archivos y los volúmenes de almacenamiento",
+        "Instala y aplica parches al software del servidor de archivos"
+      ],
+      "customer": [
+        "Elige el tipo de sistema de archivos, la capacidad y la opción de despliegue, por ejemplo FSx for Lustre persistent en lugar de scratch cuando los datos deben sobrevivir a la falla de un servidor de archivos",
+        "Controla el acceso de red y los permisos de los archivos"
+      ]
+    }
+  }
+}

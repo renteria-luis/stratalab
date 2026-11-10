@@ -1,0 +1,86 @@
+{
+  "serviceId": "comprehend",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/comprehend/latest/dg/what-is.html",
+      "title": "What is Amazon Comprehend?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/comprehend/pricing/",
+      "title": "Amazon Comprehend pricing",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html",
+      "title": "What is Amazon Macie?",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A natural language processing (NLP) service that finds insights in text, such as entities, key phrases, language, sentiment and personal data (PII). You can use its pre-trained models or train custom models to classify documents and recognize entities.",
+    "examCues": [
+      "Find out whether customer reviews or social media posts are positive or negative → Comprehend (sentiment)",
+      "Pull the names of people, places and products out of a large set of documents → Comprehend (entities)",
+      "Detect personal data, such as addresses or bank account numbers, in text → Comprehend (PII)",
+      "Sort documents into your own categories without building an ML model yourself → Comprehend (custom classification)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "textract",
+        "difference": "Textract extracts text, forms and tables from scanned documents; Comprehend analyzes the meaning of text."
+      },
+      {
+        "serviceId": "translate",
+        "difference": "Translate converts text from one language to another; Comprehend finds entities, sentiment and other insights in it."
+      },
+      {
+        "serviceId": "macie",
+        "difference": "Macie finds sensitive data stored in S3 buckets; Comprehend analyzes the text you send it."
+      }
+    ],
+    "pricingModel": "Most text analysis is billed in units of 100 characters, with a minimum per request. Custom models add charges for training, model management and the time synchronous endpoints stay active.",
+    "sharedResponsibility": {
+      "aws": ["Trains and maintains the pre-trained models", "Runs and scales the analysis APIs"],
+      "customer": [
+        "Chooses which text to analyze and controls access to it",
+        "Provides the training data for custom models"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de procesamiento de lenguaje natural (NLP) que encuentra información en textos, como entidades, frases clave, idioma, sentimiento y datos personales (PII). Puedes usar sus modelos preentrenados o entrenar modelos propios para clasificar documentos y reconocer entidades.",
+    "examCues": [
+      "Saber si las reseñas de clientes o las publicaciones en redes sociales son positivas o negativas → Comprehend (sentimiento)",
+      "Sacar nombres de personas, lugares y productos de un gran conjunto de documentos → Comprehend (entidades)",
+      "Detectar datos personales, como direcciones o números de cuenta bancaria, en un texto → Comprehend (PII)",
+      "Ordenar documentos en tus propias categorías sin construir tú mismo un modelo de ML → Comprehend (custom classification)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "textract",
+        "difference": "Textract extrae texto, formularios y tablas de documentos escaneados; Comprehend analiza el significado del texto."
+      },
+      {
+        "serviceId": "translate",
+        "difference": "Translate convierte texto de un idioma a otro; Comprehend encuentra entidades, sentimiento y otra información en él."
+      },
+      {
+        "serviceId": "macie",
+        "difference": "Macie encuentra datos sensibles guardados en buckets de S3; Comprehend analiza el texto que tú le envías."
+      }
+    ],
+    "pricingModel": "La mayor parte del análisis de texto se cobra en unidades de 100 caracteres, con un mínimo por solicitud. Los modelos propios suman cargos por entrenamiento, por administración del modelo y por el tiempo que los endpoints síncronos están activos.",
+    "sharedResponsibility": {
+      "aws": [
+        "Entrena y mantiene los modelos preentrenados",
+        "Opera y escala las APIs de análisis"
+      ],
+      "customer": [
+        "Elige qué texto analizar y controla quién accede a él",
+        "Aporta los datos de entrenamiento para los modelos propios"
+      ]
+    }
+  }
+}
