@@ -1,0 +1,73 @@
+{
+  "serviceId": "codepipeline",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html",
+      "title": "What is AWS CodePipeline?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-continuous-delivery-integration.html",
+      "title": "Continuous delivery and continuous integration",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/codepipeline/pricing/",
+      "title": "AWS CodePipeline pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A continuous delivery service that models, visualizes and automates the steps to release your software, such as building, testing and deploying each change. Before a change reaches production, a person, an automated test or a business rule can decide when it goes out.",
+    "examCues": [
+      "Build, test and deploy automatically every time the code changes → CodePipeline",
+      "Require a manual approval before releasing to production → CodePipeline (manual approval action)",
+      "Set up continuous integration and continuous delivery (CI/CD) on AWS → CodePipeline, with CodeBuild for the builds"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "codebuild",
+        "difference": "CodeBuild compiles and tests code; CodePipeline connects the build, test and deploy stages into a release workflow."
+      },
+      {
+        "serviceId": "step-functions",
+        "difference": "Step Functions orchestrates application workflows and AWS services; CodePipeline automates software releases."
+      }
+    ],
+    "pricingModel": "V1 pipelines are billed per active pipeline per month, and V2 pipelines per action execution minute, except manual approvals and custom actions. A monthly free tier covers one active V1 pipeline and 100 V2 action execution minutes.",
+    "sharedResponsibility": {
+      "aws": ["Runs the pipelines and moves each change through the stages"],
+      "customer": [
+        "Defines the stages, actions and approvals",
+        "Gives the pipeline only the permissions it needs"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de entrega continua que modela, muestra y automatiza los pasos para publicar tu software, como compilar, probar y desplegar cada cambio. Antes de que un cambio llegue a producción, una persona, una prueba automática o una regla del negocio puede decidir cuándo sale.",
+    "examCues": [
+      "Compilar, probar y desplegar de forma automática cada vez que cambia el código → CodePipeline",
+      "Exigir una aprobación manual antes de publicar en producción → CodePipeline (acción de aprobación manual)",
+      "Configurar integración continua y entrega continua (CI/CD) en AWS → CodePipeline, con CodeBuild para las compilaciones"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "codebuild",
+        "difference": "CodeBuild compila y prueba código; CodePipeline une las etapas de compilación, pruebas y despliegue en un flujo de entrega."
+      },
+      {
+        "serviceId": "step-functions",
+        "difference": "Step Functions orquesta flujos de aplicaciones y servicios de AWS; CodePipeline automatiza la entrega de software."
+      }
+    ],
+    "pricingModel": "Los pipelines V1 se cobran por pipeline activo por mes, y los pipelines V2 por minuto de ejecución de acciones, excepto las aprobaciones manuales y las acciones personalizadas. Un free tier mensual cubre un pipeline V1 activo y 100 minutos de ejecución de acciones V2.",
+    "sharedResponsibility": {
+      "aws": ["Ejecuta los pipelines y lleva cada cambio por las etapas"],
+      "customer": [
+        "Define las etapas, las acciones y las aprobaciones",
+        "Da al pipeline solo los permisos que necesita"
+      ]
+    }
+  }
+}

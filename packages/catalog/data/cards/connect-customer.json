@@ -1,0 +1,73 @@
+{
+  "serviceId": "connect-customer",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/what-is-amazon-connect.html",
+      "title": "What is Connect Customer?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lexv2/latest/dg/what-is.html",
+      "title": "What is Amazon Lex V2?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/connect/pricing/",
+      "title": "Amazon Connect Customer pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A contact center service, previously called Amazon Connect, that connects customers to agents over voice, chat, SMS and other channels, with intelligent routing and real-time performance tracking. Amazon Connect is now the name of a set of AI solutions for different business functions, and Connect Customer is the contact center one.",
+    "examCues": [
+      "Set up a contact center where agents handle customer calls and chats → Amazon Connect (Connect Customer)",
+      "Send each customer contact to the right queue of agents → Connect Customer (routing profiles and flows)",
+      "Add a chatbot to a contact center → Connect Customer with Lex"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "lex",
+        "difference": "Lex builds the conversational bot; Connect Customer runs the contact center where bots and agents talk to customers."
+      },
+      {
+        "serviceId": "simple-email-service",
+        "difference": "SES sends and receives email for applications; Connect Customer manages customer conversations with agents across channels."
+      }
+    ],
+    "pricingModel": "You pay for what you use, with no minimums, long-term contracts or per-seat licenses. Voice is billed per minute plus telephony rates, and chat, email and SMS per message.",
+    "sharedResponsibility": {
+      "aws": ["Runs and scales the contact center service"],
+      "customer": [
+        "Designs the flows, queues and routing profiles and manages the agents",
+        "Provisions phone numbers and protects the customer data it collects"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de contact center, antes llamado Amazon Connect, que conecta a los clientes con agentes por voz, chat, SMS y otros canales, con enrutamiento inteligente y seguimiento del rendimiento en tiempo real. Amazon Connect ahora es el nombre de un conjunto de soluciones de IA para distintas áreas del negocio, y Connect Customer es la del contact center.",
+    "examCues": [
+      "Montar un contact center donde los agentes atienden llamadas y chats de clientes → Amazon Connect (Connect Customer)",
+      "Enviar cada contacto de un cliente a la cola de agentes correcta → Connect Customer (routing profiles y flows)",
+      "Agregar un chatbot a un contact center → Connect Customer con Lex"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "lex",
+        "difference": "Lex crea el bot conversacional; Connect Customer opera el contact center donde los bots y los agentes hablan con los clientes."
+      },
+      {
+        "serviceId": "simple-email-service",
+        "difference": "SES envía y recibe emails para aplicaciones; Connect Customer maneja las conversaciones de los clientes con agentes en varios canales."
+      }
+    ],
+    "pricingModel": "Pagas por lo que usas, sin mínimos, contratos largos ni licencias por puesto. La voz se cobra por minuto más las tarifas de telefonía, y el chat, el email y los SMS por mensaje.",
+    "sharedResponsibility": {
+      "aws": ["Opera y escala el servicio de contact center"],
+      "customer": [
+        "Diseña los flows, las colas y los routing profiles y administra a los agentes",
+        "Aprovisiona los números de teléfono y protege los datos de clientes que recolecta"
+      ]
+    }
+  }
+}

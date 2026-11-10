@@ -1,0 +1,70 @@
+{
+  "serviceId": "license-manager",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/license-manager/latest/userguide/license-manager.html",
+      "title": "What is AWS License Manager?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/license-manager/pricing/",
+      "title": "AWS License Manager pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Manages software licenses from vendors such as Microsoft, SAP, Oracle and IBM across the AWS accounts and Regions of an organization, with dashboards and reports for license compliance. Rules can set hard or soft limits on license use, so it can stop non-compliant deployments before they happen.",
+    "examCues": [
+      "Track how many Microsoft or Oracle licenses you use across accounts to avoid overages → License Manager",
+      "Bring your own licenses (BYOL) to AWS and stay compliant → License Manager",
+      "Stop new instances from launching when a license limit is reached → License Manager (hard limits)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "marketplace",
+        "difference": "Marketplace is where you buy software; License Manager tracks and enforces the licenses you use, including licenses from Marketplace."
+      },
+      {
+        "serviceId": "service-quotas",
+        "difference": "Service Quotas manages the limits on AWS resources in your account; License Manager manages limits on software license use."
+      }
+    ],
+    "pricingModel": "There is no additional charge for AWS License Manager. You pay for the AWS resources, such as EC2 instances, that run your licensed software.",
+    "sharedResponsibility": {
+      "aws": ["Tracks license use as resources are launched and enforces the limits you set"],
+      "customer": [
+        "Enters license rules that match its vendor agreements",
+        "Stays compliant with each vendor's license terms"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Administra licencias de software de proveedores como Microsoft, SAP, Oracle e IBM en las cuentas y regiones de AWS de una organización, con dashboards y reportes de cumplimiento de licencias. Las reglas pueden poner límites estrictos o flexibles al uso de licencias, así puede frenar despliegues que no cumplen antes de que ocurran.",
+    "examCues": [
+      "Seguir cuántas licencias de Microsoft u Oracle usas en varias cuentas para no pasarte → License Manager",
+      "Traer tus propias licencias (BYOL) a AWS y seguir cumpliendo → License Manager",
+      "Impedir que se lancen instancias nuevas cuando se llega a un límite de licencias → License Manager (límites estrictos)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "marketplace",
+        "difference": "Marketplace es donde compras software; License Manager sigue y hace cumplir las licencias que usas, incluidas las de Marketplace."
+      },
+      {
+        "serviceId": "service-quotas",
+        "difference": "Service Quotas maneja los límites de recursos de AWS en tu cuenta; License Manager maneja los límites de uso de licencias de software."
+      }
+    ],
+    "pricingModel": "AWS License Manager no tiene cargo adicional. Pagas por los recursos de AWS, como instancias EC2, que ejecutan tu software con licencia.",
+    "sharedResponsibility": {
+      "aws": [
+        "Sigue el uso de licencias a medida que se lanzan recursos y aplica los límites que defines"
+      ],
+      "customer": [
+        "Registra reglas de licencias que coincidan con sus contratos con proveedores",
+        "Cumple los términos de licencia de cada proveedor"
+      ]
+    }
+  }
+}

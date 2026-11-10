@@ -1,0 +1,71 @@
+{
+  "serviceId": "migration-hub",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/migrationhub/latest/ug/whatishub.html",
+      "title": "What Is AWS Migration Hub?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/migration-services.html",
+      "title": "Overview of Amazon Web Services: Migration and transfer",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/migration-hub/pricing/",
+      "title": "AWS Migration Hub pricing (redirects to AWS Transform)",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A single place to discover existing servers, plan migrations and track the status of each application migration, whichever AWS or partner migration tool you use. It is no longer open to new customers since November 7, 2025, and AWS points them to AWS Transform.",
+    "examCues": [
+      "Track the progress of many application migrations across several AWS and partner tools in one place → Migration Hub",
+      "Group discovered servers into applications and follow each one through the migration → Migration Hub"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "transform-mgn",
+        "difference": "AWS Transform MGN replicates and moves servers; Migration Hub tracks the status that tools such as MGN and DMS report to it."
+      },
+      {
+        "serviceId": "application-discovery-service",
+        "difference": "Application Discovery Service collects data about on-premises servers; Migration Hub shows that data and tracks the migration."
+      }
+    ],
+    "pricingModel": "Its pricing page now redirects to AWS Transform and lists no Migration Hub fee. The migration tools that report to it, such as AWS Transform MGN and DMS, are billed by those services.",
+    "sharedResponsibility": {
+      "aws": ["Stores the migration tracking data in the home Region you choose"],
+      "customer": [
+        "Chooses the Migration Hub home Region",
+        "Groups servers into applications and connects the migration tools"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un solo lugar para descubrir los servidores existentes, planear migraciones y seguir el estado de la migración de cada aplicación, sin importar qué herramienta de migración de AWS o de partners uses. Ya no acepta clientes nuevos desde el 7 de noviembre de 2025, y AWS los dirige a AWS Transform.",
+    "examCues": [
+      "Seguir el avance de muchas migraciones de aplicaciones hechas con varias herramientas de AWS y de partners en un solo lugar → Migration Hub",
+      "Agrupar los servidores descubiertos en aplicaciones y seguir cada una durante la migración → Migration Hub"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "transform-mgn",
+        "difference": "AWS Transform MGN replica y mueve servidores; Migration Hub sigue el estado que le reportan herramientas como MGN y DMS."
+      },
+      {
+        "serviceId": "application-discovery-service",
+        "difference": "Application Discovery Service recolecta datos de los servidores on-premises; Migration Hub muestra esos datos y sigue la migración."
+      }
+    ],
+    "pricingModel": "Su página de precios ahora redirige a AWS Transform y no muestra ninguna tarifa de Migration Hub. Las herramientas de migración que le reportan, como AWS Transform MGN y DMS, las cobra cada uno de esos servicios.",
+    "sharedResponsibility": {
+      "aws": ["Guarda los datos de seguimiento de la migración en la home Region que elijas"],
+      "customer": [
+        "Elige la home Region de Migration Hub",
+        "Agrupa los servidores en aplicaciones y conecta las herramientas de migración"
+      ]
+    }
+  }
+}

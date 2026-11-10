@@ -1,0 +1,79 @@
+{
+  "serviceId": "workspaces-secure-browser",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/workspaces-web/latest/adminguide/what-is-workspaces-secure-browser.html",
+      "title": "What is Amazon WorkSpaces Secure Browser?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/workspaces-web/latest/APIReference/Welcome.html",
+      "title": "Amazon WorkSpaces Secure Browser API Reference",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/workspaces/secure-browser/pricing/",
+      "title": "Amazon WorkSpaces Secure Browser pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed, hosted browser service: users reach private websites, SaaS applications and the internet from their own browser, while the real browser runs isolated in AWS and only streams the content. It lowers the risk of company data leaving the network, and it is no longer open to new customers since October 29, 2026.",
+    "examCues": [
+      "Let contractors use internal web apps without a VPN or company-managed laptops → WorkSpaces Secure Browser",
+      "Keep sensitive company data off users' devices while they use web applications → WorkSpaces Secure Browser",
+      "Enforce URL allow and block lists and control clipboard, file transfer and printing in browser sessions → WorkSpaces Secure Browser"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "workspaces",
+        "difference": "WorkSpaces gives each user a full virtual desktop; WorkSpaces Secure Browser gives only a hosted browser and can cost less."
+      },
+      {
+        "serviceId": "workspaces-applications",
+        "difference": "WorkSpaces Applications streams desktop applications; WorkSpaces Secure Browser streams web content from a hosted browser."
+      }
+    ],
+    "pricingModel": "You pay a monthly fee for each active user, that is, each user who signs in to a portal that month. The rate depends on the instance tier, and streaming hours beyond the included amount cost extra.",
+    "sharedResponsibility": {
+      "aws": [
+        "Starts each session with a fresh, fully patched Chrome browser",
+        "Manages capacity, scaling and the browser image"
+      ],
+      "customer": [
+        "Sets browser policies, URL filters and session controls",
+        "Connects its identity provider and limits access with IP access controls"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de navegador alojado y totalmente administrado: los usuarios entran a sitios privados, aplicaciones SaaS e internet desde su propio navegador, mientras el navegador real corre aislado en AWS y solo transmite el contenido. Reduce el riesgo de que los datos de la empresa salgan de la red, y ya no acepta clientes nuevos desde el 29 de octubre de 2026.",
+    "examCues": [
+      "Dejar que contratistas usen apps web internas sin VPN ni laptops administradas por la empresa → WorkSpaces Secure Browser",
+      "Mantener los datos sensibles de la empresa fuera de los dispositivos de los usuarios mientras usan apps web → WorkSpaces Secure Browser",
+      "Aplicar listas de URLs permitidas y bloqueadas y controlar portapapeles, transferencia de archivos e impresión en las sesiones → WorkSpaces Secure Browser"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "workspaces",
+        "difference": "WorkSpaces da a cada usuario un escritorio virtual completo; WorkSpaces Secure Browser da solo un navegador alojado y puede costar menos."
+      },
+      {
+        "serviceId": "workspaces-applications",
+        "difference": "WorkSpaces Applications transmite aplicaciones de escritorio; WorkSpaces Secure Browser transmite contenido web desde un navegador alojado."
+      }
+    ],
+    "pricingModel": "Pagas una tarifa mensual por cada usuario activo, es decir, cada usuario que inicia sesión en un portal ese mes. La tarifa depende del nivel de instancia, y las horas de streaming que superan lo incluido cuestan aparte.",
+    "sharedResponsibility": {
+      "aws": [
+        "Inicia cada sesión con un navegador Chrome nuevo y con todos los parches",
+        "Administra la capacidad, el escalado y la imagen del navegador"
+      ],
+      "customer": [
+        "Define las políticas del navegador, los filtros de URL y los controles de sesión",
+        "Conecta su proveedor de identidad y limita el acceso con controles de acceso por IP"
+      ]
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "serviceId": "opensearch-service",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html",
+      "title": "What is Amazon OpenSearch Service?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/opensearch-service/pricing/",
+      "title": "Amazon OpenSearch Service pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A managed service to deploy, operate and scale OpenSearch clusters, called domains, for search and analytics such as log analytics, real-time application monitoring and clickstream analysis. It provisions the cluster, detects and replaces failed nodes, and also supports legacy Elasticsearch OSS.",
+    "examCues": [
+      "Add search to an application with a managed search engine → OpenSearch Service",
+      "Analyze and visualize application logs in near real time with dashboards → OpenSearch Service (OpenSearch Dashboards)",
+      "Move a self-managed Elasticsearch cluster to a managed AWS service → OpenSearch Service"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "athena",
+        "difference": "Athena runs SQL queries on data stored in S3; OpenSearch Service indexes data in a cluster for fast search and log analytics."
+      },
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch collects metrics, logs and alarms for your resources; OpenSearch Service is a search and analytics engine that you load data into."
+      }
+    ],
+    "pricingModel": "Managed clusters are billed for instance hours by instance type, EBS storage, UltraWarm and cold storage, and data transfer. OpenSearch Serverless bills compute in OpenSearch Compute Units (OCUs) per hour and storage per GB-month.",
+    "sharedResponsibility": {
+      "aws": [
+        "Provisions the cluster and detects and replaces failed nodes",
+        "Takes automated snapshots of the domain"
+      ],
+      "customer": [
+        "Chooses instance types, node counts and storage and scales the domain",
+        "Configures access control, VPC access and encryption"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio administrado para desplegar, operar y escalar clústeres de OpenSearch, llamados domains, para búsqueda y analítica como análisis de logs, monitoreo de aplicaciones en tiempo real y análisis de clickstreams. Aprovisiona el clúster, detecta y reemplaza los nodos que fallan, y también soporta el Elasticsearch OSS anterior.",
+    "examCues": [
+      "Agregar búsqueda a una aplicación con un motor de búsqueda administrado → OpenSearch Service",
+      "Analizar y visualizar logs de aplicaciones casi en tiempo real con dashboards → OpenSearch Service (OpenSearch Dashboards)",
+      "Llevar un clúster de Elasticsearch que administras tú a un servicio administrado de AWS → OpenSearch Service"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "athena",
+        "difference": "Athena ejecuta consultas SQL sobre datos guardados en S3; OpenSearch Service indexa datos en un clúster para búsqueda rápida y análisis de logs."
+      },
+      {
+        "serviceId": "cloudwatch",
+        "difference": "CloudWatch recolecta métricas, logs y alarmas de tus recursos; OpenSearch Service es un motor de búsqueda y analítica al que le cargas datos."
+      }
+    ],
+    "pricingModel": "Los clústeres administrados se cobran por horas de instancia según el tipo de instancia, almacenamiento EBS, almacenamiento UltraWarm y cold, y transferencia de datos. OpenSearch Serverless cobra el cómputo en OpenSearch Compute Units (OCUs) por hora y el almacenamiento por GB-mes.",
+    "sharedResponsibility": {
+      "aws": [
+        "Aprovisiona el clúster y detecta y reemplaza los nodos que fallan",
+        "Toma snapshots automáticos del domain"
+      ],
+      "customer": [
+        "Elige tipos de instancia, cantidad de nodos y almacenamiento, y escala el domain",
+        "Configura el control de acceso, el acceso por VPC y el cifrado"
+      ]
+    }
+  }
+}

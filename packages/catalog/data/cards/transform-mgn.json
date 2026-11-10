@@ -1,0 +1,78 @@
+{
+  "serviceId": "transform-mgn",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/mgn/latest/ug/what-is-mgn.html",
+      "title": "What Is AWS Transform MGN?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/mgn/latest/ug/migration_at_scale.html",
+      "title": "Migration at scale (Cost planning)",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/migrationhub/latest/ug/whatishub.html",
+      "title": "What Is AWS Migration Hub?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/application-migration-service/pricing/",
+      "title": "AWS Transform MGN pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "AWS Transform MGN, the console name of AWS Application Migration Service, moves physical, virtual and cloud servers to AWS with cutover windows that typically last minutes. It replicates source servers continuously at block level and converts them to launch on AWS, so you can rehost (lift and shift) many servers without compatibility issues.",
+    "examCues": [
+      "Lift and shift on-premises servers to Amazon EC2 with minimal downtime → AWS Application Migration Service (AWS Transform MGN)",
+      "Migrate a large number of servers in waves → AWS Transform MGN",
+      "Rehost first, then modernize the applications on AWS later → AWS Transform MGN"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "database-migration-service",
+        "difference": "DMS migrates databases and their data; MGN replicates whole servers."
+      },
+      {
+        "serviceId": "elastic-disaster-recovery",
+        "difference": "Elastic Disaster Recovery keeps replicating servers so you can recover on AWS and fail back; MGN replicates servers to move them to AWS for good."
+      }
+    ],
+    "pricingModel": "Each migrated server can use MGN free of the MGN service charge for 2,160 hours (90 days of continuous use). The resources created for replication and migration, such as EC2 instances and EBS volumes, are billed at your account rates, also during that time.",
+    "sharedResponsibility": {
+      "aws": ["Replicates the servers and converts them to boot and run on AWS"],
+      "customer": [
+        "Sets up replication on the source servers and configures the replication, launch and post-launch templates",
+        "Tests the launched servers before cutover and plans software licensing"
+      ]
+    }
+  },
+  "es": {
+    "summary": "AWS Transform MGN, el nombre en la consola de AWS Application Migration Service, mueve servidores físicos, virtuales y en la nube a AWS con ventanas de corte que suelen durar minutos. Replica los servidores de origen de forma continua a nivel de bloque y los convierte para que arranquen en AWS, así puedes hacer rehost (lift and shift) de muchos servidores sin problemas de compatibilidad.",
+    "examCues": [
+      "Hacer lift and shift de servidores on-premises a Amazon EC2 con mínimo tiempo de inactividad → AWS Application Migration Service (AWS Transform MGN)",
+      "Migrar una gran cantidad de servidores en oleadas (waves) → AWS Transform MGN",
+      "Hacer rehost primero y modernizar las aplicaciones en AWS después → AWS Transform MGN"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "database-migration-service",
+        "difference": "DMS migra bases de datos y sus datos; MGN replica servidores completos."
+      },
+      {
+        "serviceId": "elastic-disaster-recovery",
+        "difference": "Elastic Disaster Recovery sigue replicando servidores para que puedas recuperar en AWS y volver al sitio original; MGN replica servidores para moverlos a AWS de forma definitiva."
+      }
+    ],
+    "pricingModel": "Cada servidor migrado puede usar MGN sin el cargo del servicio durante 2,160 horas (90 días de uso continuo). Los recursos que se crean para la replicación y la migración, como instancias EC2 y volúmenes EBS, se cobran con las tarifas de tu cuenta, también durante ese tiempo.",
+    "sharedResponsibility": {
+      "aws": ["Replica los servidores y los convierte para que arranquen y corran en AWS"],
+      "customer": [
+        "Configura la replicación en los servidores de origen y las plantillas de replicación, lanzamiento y post-lanzamiento",
+        "Prueba los servidores lanzados antes del corte y planea el licenciamiento del software"
+      ]
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "serviceId": "quick",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/quick/latest/userguide/what-is.html",
+      "title": "What is Amazon Quick?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/quick/latest/userguide/how-quicksuite-works.html",
+      "title": "How Amazon Quick works",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html",
+      "title": "What is Amazon Q Business?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/quick/pricing/",
+      "title": "Amazon Quick pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "An AI-powered service for automating tasks, analyzing data, building web applications and doing research through natural language chat. It grew out of Amazon QuickSight, which continues inside it as Amazon Quick Sight for business intelligence dashboards and embedded analytics.",
+    "examCues": [
+      "Build interactive business intelligence dashboards and share them → Amazon Quick (Quick Sight)",
+      "Embed analytics dashboards in an application → Amazon Quick (Quick Sight)",
+      "Ask questions in natural language and get answers grounded in company documents and data → Amazon Quick",
+      "Automate repetitive business tasks with AI agents → Amazon Quick (Flows and Automate)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "athena",
+        "difference": "Athena runs SQL queries on data in S3; Quick Sight turns data into dashboards and visualizations."
+      },
+      {
+        "serviceId": "redshift",
+        "difference": "Redshift is a data warehouse that stores and queries data; Quick Sight connects to sources such as data warehouses to visualize the data."
+      },
+      {
+        "serviceId": "q",
+        "difference": "Amazon Q Business is no longer open to new customers, and AWS points them to Amazon Quick for similar capabilities."
+      }
+    ],
+    "pricingModel": "Per-user monthly subscriptions: Free, Plus and Max plans for individuals and teams, and Essentials, Professional and Enterprise plans for organizations, which add a per-account infrastructure fee. Use beyond each plan's allowances is billed as overage, and add-ons such as SPICE are metered by capacity.",
+    "sharedResponsibility": {
+      "aws": ["Runs the service, with no infrastructure to provision and no models to host"],
+      "customer": [
+        "Connects the data sources and controls who can see each dashboard and dataset",
+        "Checks AI-generated answers and automations before relying on them"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio con IA para automatizar tareas, analizar datos, crear aplicaciones web e investigar mediante chat en lenguaje natural. Nació de Amazon QuickSight, que sigue dentro de él como Amazon Quick Sight para dashboards de business intelligence y analítica embebida.",
+    "examCues": [
+      "Crear dashboards interactivos de business intelligence y compartirlos → Amazon Quick (Quick Sight)",
+      "Embeber dashboards de analítica en una aplicación → Amazon Quick (Quick Sight)",
+      "Hacer preguntas en lenguaje natural y recibir respuestas basadas en documentos y datos de la empresa → Amazon Quick",
+      "Automatizar tareas repetitivas del negocio con agentes de IA → Amazon Quick (Flows y Automate)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "athena",
+        "difference": "Athena ejecuta consultas SQL sobre datos en S3; Quick Sight convierte los datos en dashboards y visualizaciones."
+      },
+      {
+        "serviceId": "redshift",
+        "difference": "Redshift es un data warehouse que guarda y consulta datos; Quick Sight se conecta a fuentes como data warehouses para visualizar los datos."
+      },
+      {
+        "serviceId": "q",
+        "difference": "Amazon Q Business ya no acepta clientes nuevos, y AWS los dirige a Amazon Quick para funciones parecidas."
+      }
+    ],
+    "pricingModel": "Suscripciones mensuales por usuario: planes Free, Plus y Max para personas y equipos, y planes Essentials, Professional y Enterprise para organizaciones, que suman una tarifa de infraestructura por cuenta. El uso que supera lo incluido en cada plan se cobra como excedente, y los complementos como SPICE se miden por capacidad.",
+    "sharedResponsibility": {
+      "aws": ["Opera el servicio, sin infraestructura que aprovisionar ni modelos que alojar"],
+      "customer": [
+        "Conecta las fuentes de datos y controla quién puede ver cada dashboard y dataset",
+        "Revisa las respuestas y automatizaciones generadas por IA antes de confiar en ellas"
+      ]
+    }
+  }
+}

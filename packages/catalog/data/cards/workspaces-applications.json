@@ -1,0 +1,73 @@
+{
+  "serviceId": "workspaces-applications",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/appstream2/latest/developerguide/what-is-appstream.html",
+      "title": "What Is Amazon WorkSpaces Applications?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/managedservices/latest/userguide/amz-app-stream-2.0.html",
+      "title": "Use AMS SSP to provision Amazon WorkSpaces Applications in your AMS account",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/appstream2/pricing/",
+      "title": "Amazon WorkSpaces Applications pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Amazon WorkSpaces Applications, formerly Amazon AppStream 2.0, is a fully managed service that streams desktop applications to users on the device of their choice, also through an HTML5 web browser. The applications run on AWS compute, and data is never stored on the users' devices.",
+    "examCues": [
+      "Stream a desktop application to users through a web browser instead of installing it → WorkSpaces Applications (AppStream 2.0)",
+      "Give users an application without storing data on their devices → WorkSpaces Applications",
+      "Keep a single, up-to-date version of each application for all users → WorkSpaces Applications"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "workspaces",
+        "difference": "WorkSpaces gives each user a full virtual desktop; WorkSpaces Applications streams individual applications."
+      },
+      {
+        "serviceId": "workspaces-secure-browser",
+        "difference": "WorkSpaces Secure Browser streams a hosted web browser for websites and SaaS apps; WorkSpaces Applications streams desktop applications."
+      }
+    ],
+    "pricingModel": "You pay per instance-hour for the streaming instances, by instance type, size and operating system: Always-On instances while they run, On-Demand instances at the full rate only during streaming sessions, and Elastic fleets per second of streaming. Windows fleets add a monthly per-user Microsoft licensing fee.",
+    "sharedResponsibility": {
+      "aws": ["Manages and scales the AWS resources that host and run the applications"],
+      "customer": [
+        "Installs and updates the applications that users stream",
+        "Controls which users can access which applications"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Amazon WorkSpaces Applications, antes Amazon AppStream 2.0, es un servicio totalmente administrado que transmite aplicaciones de escritorio a los usuarios en el dispositivo que elijan, también desde un navegador web HTML5. Las aplicaciones corren en cómputo de AWS, y los datos nunca se guardan en los dispositivos de los usuarios.",
+    "examCues": [
+      "Transmitir una aplicación de escritorio a los usuarios por el navegador en lugar de instalarla → WorkSpaces Applications (AppStream 2.0)",
+      "Dar a los usuarios una aplicación sin guardar datos en sus dispositivos → WorkSpaces Applications",
+      "Mantener una sola versión actualizada de cada aplicación para todos los usuarios → WorkSpaces Applications"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "workspaces",
+        "difference": "WorkSpaces da a cada usuario un escritorio virtual completo; WorkSpaces Applications transmite aplicaciones sueltas."
+      },
+      {
+        "serviceId": "workspaces-secure-browser",
+        "difference": "WorkSpaces Secure Browser transmite un navegador web alojado para sitios y apps SaaS; WorkSpaces Applications transmite aplicaciones de escritorio."
+      }
+    ],
+    "pricingModel": "Pagas por hora de instancia de streaming, según tipo, tamaño y sistema operativo: las instancias Always-On mientras corren, las On-Demand a la tarifa completa solo durante las sesiones de streaming, y las flotas Elastic por segundo de streaming. Las flotas Windows suman una tarifa mensual por usuario por la licencia de Microsoft.",
+    "sharedResponsibility": {
+      "aws": ["Administra y escala los recursos de AWS que alojan y ejecutan las aplicaciones"],
+      "customer": [
+        "Instala y actualiza las aplicaciones que transmiten los usuarios",
+        "Controla qué usuarios pueden usar qué aplicaciones"
+      ]
+    }
+  }
+}

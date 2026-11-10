@@ -1,0 +1,68 @@
+{
+  "serviceId": "codebuild",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html",
+      "title": "What is AWS CodeBuild?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/codebuild/pricing/",
+      "title": "AWS CodeBuild pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A fully managed build service that compiles source code, runs unit tests and produces artifacts that are ready to deploy. You don't provision, manage or scale build servers, and it scales automatically to meet peak build demand.",
+    "examCues": [
+      "Compile code and run unit tests without managing build servers → CodeBuild",
+      "The build or test stage of a CodePipeline pipeline → CodeBuild",
+      "Pay only for the build time you use instead of keeping build servers running → CodeBuild"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "codepipeline",
+        "difference": "CodePipeline models and automates the whole release process; CodeBuild runs the build and test steps inside it."
+      },
+      {
+        "serviceId": "elastic-beanstalk",
+        "difference": "Elastic Beanstalk deploys and runs web applications; CodeBuild only builds and tests code."
+      }
+    ],
+    "pricingModel": "You pay for build time based on the compute type: per minute on EC2 compute, per second on Lambda compute, or per instance-minute for reserved capacity fleets. A monthly free tier covers some build time on select compute types.",
+    "sharedResponsibility": {
+      "aws": ["Sets up, patches, updates and scales the build servers"],
+      "customer": [
+        "Writes the build specification and the tests",
+        "Protects the source code, the secrets and the permissions builds use"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Un servicio de compilación totalmente administrado que compila el código fuente, ejecuta pruebas unitarias y produce artefactos listos para desplegar. No aprovisionas, administras ni escalas servidores de compilación, y escala solo para cubrir los picos de compilaciones.",
+    "examCues": [
+      "Compilar código y ejecutar pruebas unitarias sin administrar servidores de compilación → CodeBuild",
+      "La etapa de compilación o de pruebas de un pipeline de CodePipeline → CodeBuild",
+      "Pagar solo por el tiempo de compilación que usas en lugar de mantener servidores de compilación encendidos → CodeBuild"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "codepipeline",
+        "difference": "CodePipeline modela y automatiza todo el proceso de entrega; CodeBuild ejecuta los pasos de compilación y pruebas dentro de él."
+      },
+      {
+        "serviceId": "elastic-beanstalk",
+        "difference": "Elastic Beanstalk despliega y ejecuta aplicaciones web; CodeBuild solo compila y prueba código."
+      }
+    ],
+    "pricingModel": "Pagas por el tiempo de compilación según el tipo de cómputo: por minuto en cómputo EC2, por segundo en cómputo Lambda, o por minuto de instancia en flotas de capacidad reservada. Un free tier mensual cubre parte del tiempo de compilación en algunos tipos de cómputo.",
+    "sharedResponsibility": {
+      "aws": ["Configura, aplica parches, actualiza y escala los servidores de compilación"],
+      "customer": [
+        "Escribe la especificación de compilación y las pruebas",
+        "Protege el código fuente, los secretos y los permisos que usan las compilaciones"
+      ]
+    }
+  }
+}

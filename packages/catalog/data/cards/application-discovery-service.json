@@ -1,0 +1,78 @@
+{
+  "serviceId": "application-discovery-service",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html",
+      "title": "What is AWS Application Discovery Service?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/application-discovery/latest/userguide/application-discovery-service-availability-change.html",
+      "title": "AWS Application Discovery Service availability change",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/migration-services.html",
+      "title": "Overview of Amazon Web Services: Migration and transfer",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/application-discovery/pricing/",
+      "title": "AWS Application Discovery Service pricing (redirects to AWS Transform)",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Helps you plan a migration to AWS by collecting configuration, usage and network connection data about your on-premises servers and databases, through an agentless collector, an agent on each server or a file import. It is no longer open to new customers since November 7, 2025, and AWS points them to AWS Transform.",
+    "examCues": [
+      "Collect utilization and dependency data from on-premises servers before a migration → Application Discovery Service",
+      "Estimate what on-premises servers would cost on AWS from their real usage data → Application Discovery Service",
+      "Map the network connections between servers to group them into applications → Application Discovery Service (Discovery Agent)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "migration-hub",
+        "difference": "Migration Hub tracks migrations in one place; Application Discovery Service collects the server data that Migration Hub shows."
+      },
+      {
+        "serviceId": "transform-mgn",
+        "difference": "AWS Transform MGN moves the servers; Application Discovery Service only collects data to plan the move."
+      }
+    ],
+    "pricingModel": "Its pricing page now redirects to AWS Transform and lists no Application Discovery Service fee. AWS services you use to analyze the exported data, such as Athena, bill on their own.",
+    "sharedResponsibility": {
+      "aws": ["Stores the discovered data encrypted in the Migration Hub home Region"],
+      "customer": [
+        "Sets the home Region and deploys the collector or the agents",
+        "Groups the discovered servers into applications"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Te ayuda a planear una migración a AWS recolectando datos de configuración, de uso y de conexiones de red de tus servidores y bases de datos on-premises, con un collector sin agentes, un agente en cada servidor o una importación de archivo. Ya no acepta clientes nuevos desde el 7 de noviembre de 2025, y AWS los dirige a AWS Transform.",
+    "examCues": [
+      "Recolectar datos de uso y de dependencias de servidores on-premises antes de una migración → Application Discovery Service",
+      "Estimar cuánto costarían en AWS los servidores on-premises a partir de sus datos reales de uso → Application Discovery Service",
+      "Mapear las conexiones de red entre servidores para agruparlos en aplicaciones → Application Discovery Service (Discovery Agent)"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "migration-hub",
+        "difference": "Migration Hub sigue las migraciones en un solo lugar; Application Discovery Service recolecta los datos de servidores que Migration Hub muestra."
+      },
+      {
+        "serviceId": "transform-mgn",
+        "difference": "AWS Transform MGN mueve los servidores; Application Discovery Service solo recolecta datos para planear la mudanza."
+      }
+    ],
+    "pricingModel": "Su página de precios ahora redirige a AWS Transform y no muestra ninguna tarifa de Application Discovery Service. Los servicios de AWS que uses para analizar los datos exportados, como Athena, cobran por su cuenta.",
+    "sharedResponsibility": {
+      "aws": ["Guarda los datos descubiertos cifrados en la home Region de Migration Hub"],
+      "customer": [
+        "Define la home Region y despliega el collector o los agentes",
+        "Agrupa los servidores descubiertos en aplicaciones"
+      ]
+    }
+  }
+}

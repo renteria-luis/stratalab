@@ -1,0 +1,83 @@
+{
+  "serviceId": "q",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/what-is.html",
+      "title": "What is Amazon Q Developer?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html",
+      "title": "What is Amazon Q Business?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/q/developer/pricing/",
+      "title": "Amazon Q Developer pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "Generative AI assistants built on Amazon Bedrock. Amazon Q Developer helps you understand, build and operate AWS applications and, in the IDE, chats about code, writes and completes code and scans it for vulnerabilities; Amazon Q Business answers questions from enterprise data but is no longer open to new customers.",
+    "examCues": [
+      "Get AI help to write, explain or upgrade code in the IDE → Amazon Q Developer",
+      "Scan code for security vulnerabilities with an AI assistant → Amazon Q Developer",
+      "Ask in natural language about your AWS resources and best practices → Amazon Q Developer (in the console it is now the AWS assistant)",
+      "Employees get answers with citations from company data → Amazon Q Business"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "bedrock",
+        "difference": "Amazon Bedrock gives you foundation models through an API to build your own generative AI applications; Amazon Q is a ready-made assistant built on Bedrock."
+      },
+      {
+        "serviceId": "quick",
+        "difference": "Amazon Quick is an AI service for research, automation and business intelligence; AWS points new customers to it instead of Amazon Q Business."
+      },
+      {
+        "serviceId": "lex",
+        "difference": "Lex builds chatbots for your own applications and customers; Amazon Q is an assistant for developers and employees."
+      }
+    ],
+    "pricingModel": "Amazon Q Developer has a Free tier with monthly usage limits and a Pro tier billed per user per month, with higher limits and admin controls.",
+    "sharedResponsibility": {
+      "aws": ["Runs the models and applies Amazon Bedrock's automated abuse detection"],
+      "customer": [
+        "Reviews and tests generated code and answers before using them",
+        "Controls which users and data the assistant can access"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Asistentes de IA generativa construidos sobre Amazon Bedrock. Amazon Q Developer te ayuda a entender, construir y operar aplicaciones en AWS y, en el IDE, conversa sobre código, escribe y completa código y lo escanea en busca de vulnerabilidades; Amazon Q Business responde preguntas con datos de la empresa, pero ya no acepta clientes nuevos.",
+    "examCues": [
+      "Recibir ayuda de IA para escribir, explicar o actualizar código en el IDE → Amazon Q Developer",
+      "Escanear código en busca de vulnerabilidades de seguridad con un asistente de IA → Amazon Q Developer",
+      "Preguntar en lenguaje natural sobre tus recursos de AWS y buenas prácticas → Amazon Q Developer (en la consola ahora es el AWS assistant)",
+      "Empleados que reciben respuestas con citas a partir de datos de la empresa → Amazon Q Business"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "bedrock",
+        "difference": "Amazon Bedrock te da foundation models por una API para crear tus propias aplicaciones de IA generativa; Amazon Q es un asistente listo para usar construido sobre Bedrock."
+      },
+      {
+        "serviceId": "quick",
+        "difference": "Amazon Quick es un servicio de IA para investigación, automatización y business intelligence; AWS dirige ahí a los clientes nuevos en lugar de Amazon Q Business."
+      },
+      {
+        "serviceId": "lex",
+        "difference": "Lex crea chatbots para tus propias aplicaciones y clientes; Amazon Q es un asistente para desarrolladores y empleados."
+      }
+    ],
+    "pricingModel": "Amazon Q Developer tiene un Free tier con límites de uso mensuales y un Pro tier que se cobra por usuario por mes, con límites más altos y controles de administración.",
+    "sharedResponsibility": {
+      "aws": ["Opera los modelos y aplica la detección automática de abuso de Amazon Bedrock"],
+      "customer": [
+        "Revisa y prueba el código y las respuestas generadas antes de usarlos",
+        "Controla a qué usuarios y datos puede acceder el asistente"
+      ]
+    }
+  }
+}

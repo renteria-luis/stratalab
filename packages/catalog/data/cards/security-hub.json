@@ -1,0 +1,90 @@
+{
+  "serviceId": "security-hub",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/securityhub/latest/userguide/what-are-securityhub-services.html",
+      "title": "What are Security Hub and Security Hub CSPM?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub-v2.html",
+      "title": "Introduction to AWS Security Hub",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html",
+      "title": "Introduction to AWS Security Hub CSPM",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/security-hub/pricing/",
+      "title": "AWS Security Hub pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "AWS Security Hub correlates findings from Security Hub CSPM, GuardDuty, Inspector, Macie and IAM Access Analyzer to show your most critical risks, called exposures, and to help you respond. Its companion service, Security Hub CSPM, runs automatic checks against standards such as AWS Foundational Security Best Practices, CIS and PCI DSS and gathers findings from many services in one view.",
+    "examCues": [
+      "See the security findings from GuardDuty, Inspector and Macie in one place → Security Hub",
+      "Check accounts automatically against AWS security best practices, CIS or PCI DSS → Security Hub CSPM",
+      "Prioritize the most critical risks by correlating findings into exposures → Security Hub",
+      "Create tickets in Jira or ServiceNow from security findings → Security Hub"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "security-hub-cspm",
+        "difference": "Security Hub CSPM runs the posture checks against standards; Security Hub correlates those findings with other services to find exposures, and AWS recommends enabling both."
+      },
+      {
+        "serviceId": "guardduty",
+        "difference": "GuardDuty detects threats and produces findings; Security Hub collects and prioritizes findings from GuardDuty and other services."
+      },
+      {
+        "serviceId": "inspector",
+        "difference": "Inspector scans workloads for software vulnerabilities; Security Hub uses its findings to detect exposures."
+      }
+    ],
+    "pricingModel": "The Essentials plan is pay-as-you-go per monitored resource each month and includes Security Hub CSPM checks. Each account gets a 30-day free trial in each Region where it enables Security Hub.",
+    "sharedResponsibility": {
+      "aws": ["Runs the security checks and correlates findings from the integrated services"],
+      "customer": [
+        "Enables Security Hub, Security Hub CSPM and the standards in each account and Region",
+        "Investigates the findings and fixes the resources"
+      ]
+    }
+  },
+  "es": {
+    "summary": "AWS Security Hub correlaciona los hallazgos de Security Hub CSPM, GuardDuty, Inspector, Macie e IAM Access Analyzer para mostrar tus riesgos más críticos, llamados exposures, y ayudarte a responder. Su servicio complementario, Security Hub CSPM, revisa de forma automática tus cuentas contra estándares como AWS Foundational Security Best Practices, CIS y PCI DSS, y junta los hallazgos de muchos servicios en una sola vista.",
+    "examCues": [
+      "Ver en un solo lugar los hallazgos de seguridad de GuardDuty, Inspector y Macie → Security Hub",
+      "Revisar las cuentas de forma automática contra buenas prácticas de seguridad de AWS, CIS o PCI DSS → Security Hub CSPM",
+      "Priorizar los riesgos más críticos correlacionando hallazgos en exposures → Security Hub",
+      "Crear tickets en Jira o ServiceNow a partir de hallazgos de seguridad → Security Hub"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "security-hub-cspm",
+        "difference": "Security Hub CSPM hace las revisiones de postura contra estándares; Security Hub correlaciona esos hallazgos con los de otros servicios para encontrar exposures, y AWS recomienda activar ambos."
+      },
+      {
+        "serviceId": "guardduty",
+        "difference": "GuardDuty detecta amenazas y genera hallazgos; Security Hub junta y prioriza los hallazgos de GuardDuty y de otros servicios."
+      },
+      {
+        "serviceId": "inspector",
+        "difference": "Inspector escanea cargas de trabajo en busca de vulnerabilidades de software; Security Hub usa sus hallazgos para detectar exposures."
+      }
+    ],
+    "pricingModel": "El plan Essentials es de pago por uso, por recurso monitoreado al mes, e incluye las revisiones de Security Hub CSPM. Cada cuenta tiene una prueba gratis de 30 días en cada región donde activa Security Hub.",
+    "sharedResponsibility": {
+      "aws": [
+        "Ejecuta las revisiones de seguridad y correlaciona los hallazgos de los servicios integrados"
+      ],
+      "customer": [
+        "Activa Security Hub, Security Hub CSPM y los estándares en cada cuenta y región",
+        "Investiga los hallazgos y corrige los recursos"
+      ]
+    }
+  }
+}

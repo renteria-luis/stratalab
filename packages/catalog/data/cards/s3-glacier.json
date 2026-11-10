@@ -1,0 +1,64 @@
+{
+  "serviceId": "s3-glacier",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html",
+      "title": "Understanding S3 Glacier storage classes for long-term data storage",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/s3/pricing/",
+      "title": "Amazon S3 pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "The S3 Glacier storage classes keep rarely accessed, long-term data in S3 at a lower storage cost than S3 Standard, with the same durability. Glacier Instant Retrieval returns data in milliseconds, while Glacier Flexible Retrieval and Glacier Deep Archive archive objects that you must restore first, which takes minutes to hours or hours to days.",
+    "examCues": [
+      "Keep records for years for compliance at the lowest storage cost and wait hours to get them back → S3 Glacier Deep Archive",
+      "Backups or archives read once or twice a year that can wait minutes to hours → S3 Glacier Flexible Retrieval",
+      "Data read about once a quarter that still needs millisecond access → S3 Glacier Instant Retrieval",
+      "Move objects to an archive class automatically as they age → S3 Lifecycle configuration"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "s3",
+        "difference": "S3 Standard is for frequently accessed data; the Glacier classes cost less to store but charge for retrieval and have a minimum storage duration of 90 or 180 days."
+      }
+    ],
+    "pricingModel": "You pay for storage per GB-month and for requests. Glacier Instant Retrieval also charges when you read objects, Flexible Retrieval and Deep Archive charge for restores (faster retrieval tiers cost more), and deleting objects before the minimum storage duration costs the remaining days.",
+    "sharedResponsibility": {
+      "aws": ["Keeps the data with the same durability and resiliency as S3 Standard"],
+      "customer": [
+        "Chooses the storage class, or the Lifecycle rules that move data into it",
+        "Plans for restore times before it needs archived data",
+        "Encrypts the data and controls access to the buckets"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Las clases de almacenamiento S3 Glacier guardan en S3 datos de largo plazo que casi no se usan, con un costo de almacenamiento menor que S3 Standard y la misma durabilidad. Glacier Instant Retrieval devuelve los datos en milisegundos, mientras que Glacier Flexible Retrieval y Glacier Deep Archive archivan objetos que primero debes restaurar, lo que toma de minutos a horas o de horas a días.",
+    "examCues": [
+      "Guardar registros por años por cumplimiento al menor costo y esperar horas para recuperarlos → S3 Glacier Deep Archive",
+      "Backups o archivos que se leen una o dos veces al año y pueden esperar de minutos a horas → S3 Glacier Flexible Retrieval",
+      "Datos que se leen más o menos una vez por trimestre pero necesitan acceso en milisegundos → S3 Glacier Instant Retrieval",
+      "Mover objetos a una clase de archivo de forma automática según su antigüedad → S3 Lifecycle configuration"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "s3",
+        "difference": "S3 Standard es para datos que se usan seguido; las clases Glacier cuestan menos de almacenar, pero cobran por recuperar y tienen una duración mínima de almacenamiento de 90 o 180 días."
+      }
+    ],
+    "pricingModel": "Pagas el almacenamiento por GB-mes y las solicitudes. Glacier Instant Retrieval también cobra cuando lees objetos, Flexible Retrieval y Deep Archive cobran por las restauraciones (los niveles de recuperación más rápidos cuestan más), y borrar objetos antes de la duración mínima cobra los días que faltan.",
+    "sharedResponsibility": {
+      "aws": ["Guarda los datos con la misma durabilidad y resiliencia que S3 Standard"],
+      "customer": [
+        "Elige la clase de almacenamiento, o las reglas de Lifecycle que mueven los datos a ella",
+        "Planea los tiempos de restauración antes de necesitar datos archivados",
+        "Cifra los datos y controla el acceso a los buckets"
+      ]
+    }
+  }
+}

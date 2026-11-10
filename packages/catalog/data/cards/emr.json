@@ -1,0 +1,83 @@
+{
+  "serviceId": "emr",
+  "status": "verified 2026-11-07",
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-what-is-emr.html",
+      "title": "What is Amazon EMR?",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-overview-benefits.html",
+      "title": "Benefits of using Amazon EMR",
+      "accessedOn": "2026-11-07"
+    },
+    {
+      "url": "https://aws.amazon.com/emr/pricing/",
+      "title": "Amazon EMR pricing",
+      "accessedOn": "2026-11-07"
+    }
+  ],
+  "en": {
+    "summary": "A managed cluster platform for big data frameworks such as Apache Hadoop and Apache Spark, to process and analyze vast amounts of data. It can also transform and move large amounts of data into and out of data stores such as S3 and DynamoDB.",
+    "examCues": [
+      "Run Apache Spark or Hadoop jobs on large data sets without building the cluster yourself → EMR",
+      "Process vast amounts of data with open-source big data frameworks → EMR",
+      "Lower the cost of a big data cluster with Spot Instances → EMR"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "glue",
+        "difference": "Glue is serverless data integration with ETL jobs and a Data Catalog; EMR runs clusters of open-source big data frameworks that you configure."
+      },
+      {
+        "serviceId": "athena",
+        "difference": "Athena runs SQL queries on data in S3 with no cluster to manage; EMR runs clusters for big data processing."
+      },
+      {
+        "serviceId": "redshift",
+        "difference": "Redshift is a data warehouse for SQL analytics; EMR runs Hadoop and Spark clusters."
+      }
+    ],
+    "pricingModel": "On EC2 clusters, you pay a per-second EMR charge on top of the EC2 instances and EBS volumes, and Spot Instances can cut that cost. EMR on EKS charges for the vCPU and memory your applications use, and EMR Serverless for the vCPU, memory and storage its workers consume.",
+    "sharedResponsibility": {
+      "aws": [
+        "Launches the cluster on EC2 instances and configures the big data frameworks on them"
+      ],
+      "customer": [
+        "Chooses instance types, cluster size and pricing options",
+        "Writes the data processing jobs and secures the data in S3"
+      ]
+    }
+  },
+  "es": {
+    "summary": "Una plataforma administrada de clústeres para frameworks de big data como Apache Hadoop y Apache Spark, para procesar y analizar enormes cantidades de datos. También puede transformar y mover grandes cantidades de datos hacia y desde almacenes de datos como S3 y DynamoDB.",
+    "examCues": [
+      "Ejecutar trabajos de Apache Spark o Hadoop sobre grandes conjuntos de datos sin armar tú el clúster → EMR",
+      "Procesar enormes cantidades de datos con frameworks de big data de código abierto → EMR",
+      "Bajar el costo de un clúster de big data con Spot Instances → EMR"
+    ],
+    "notToConfuseWith": [
+      {
+        "serviceId": "glue",
+        "difference": "Glue es integración de datos serverless con trabajos de ETL y un Data Catalog; EMR ejecuta clústeres de frameworks de big data de código abierto que tú configuras."
+      },
+      {
+        "serviceId": "athena",
+        "difference": "Athena ejecuta consultas SQL sobre datos en S3 sin clúster que administrar; EMR ejecuta clústeres para procesar big data."
+      },
+      {
+        "serviceId": "redshift",
+        "difference": "Redshift es un data warehouse para analítica con SQL; EMR ejecuta clústeres de Hadoop y Spark."
+      }
+    ],
+    "pricingModel": "En clústeres sobre EC2 pagas un cargo de EMR por segundo además de las instancias EC2 y los volúmenes EBS, y las Spot Instances pueden bajar ese costo. EMR on EKS cobra por la vCPU y la memoria que usan tus aplicaciones, y EMR Serverless por la vCPU, la memoria y el almacenamiento que consumen sus workers.",
+    "sharedResponsibility": {
+      "aws": ["Lanza el clúster en instancias EC2 y configura en ellas los frameworks de big data"],
+      "customer": [
+        "Elige los tipos de instancia, el tamaño del clúster y las opciones de precio",
+        "Escribe los trabajos de procesamiento de datos y protege los datos en S3"
+      ]
+    }
+  }
+}
