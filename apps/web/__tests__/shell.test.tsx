@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { CONSOLE_TEXT } from '../src/console/text';
 import { en } from '../src/i18n/messages/en';
@@ -136,8 +136,9 @@ describe('reproduced console', () => {
     expect(await screen.findByRole('heading', { level: 1, name: /Subnets/ })).toBeDefined();
     expect(await screen.findByText('No subnets')).toBeDefined();
 
-    await router.navigate('/vpc/elastic-ips');
-    expect(await screen.findByRole('heading', { level: 1, name: /Elastic IPs/ })).toBeDefined();
+    // act() flushes the route change before the query, so slow CI runners can't time out.
+    await act(() => router.navigate('/vpc/elastic-ips'));
+    expect(screen.getByRole('heading', { level: 1, name: /Elastic IPs/ })).toBeDefined();
     expect(screen.getByText(CONSOLE_TEXT['empty.title'])).toBeDefined();
   });
 
