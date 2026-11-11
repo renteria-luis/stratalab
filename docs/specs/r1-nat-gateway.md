@@ -9,7 +9,7 @@ Adds one zonal public NAT gateway resource, the route target `nat-gateway` and t
 
 In: schema, `validate()`, `trace()` (F3, TCP), `deriveStatus()`, creation helper, the IGW-07 detach check.
 Out (Unsupported, can't be expressed): private and regional NAT gateways, secondary addresses, more than one Elastic IP (NAT-06), NAT gateway states other than `available`, deleting a NAT gateway, UDP and ICMP traces, peering, VPN and transit gateway (NAT-03).
-Not in this step: console views (NAT gateways page, Create NAT gateway form). They need console captures first.
+Console views (NAT gateways page, Create NAT gateway form, Edit routes target picker): section 9, added 2026-11-08 after the console capture of that day.
 
 ## 2. Schema
 
@@ -131,6 +131,8 @@ Helpers:
 - `createNatGateway(topology, { subnetId, name?, privateIpAddress? })` → `{ natGatewayId, privateIpAddress, elasticIpAddress }`. The private IP is the first free usable address unless given (AWS picks one at random: Inferred, as for launch). The Elastic IP comes from the public pool 203.0.113.0/24 ("Allocate Elastic IP"). The ID follows section 3.8 of the R0 spec with prefix `nat`.
 - Errors: `UNKNOWN_REFERENCE`, `NO_FREE_PRIVATE_ADDRESS`, `PUBLIC_POOL_EXHAUSTED`, and new `NAT_VPC_NO_INTERNET_GATEWAY` (NAT-07). A subnet without an internet gateway route is allowed; `validate()` warns.
 - `replaceRoutes` accepts NAT gateway targets through the schema; no new route helper.
+- `nextPublicAddress(topology)` (added 2026-11-08 for the console): the pool address the next allocation takes, the same one `createNatGateway` gives the Elastic IP. It doesn't depend on the internet gateway, so "Allocate Elastic IP" works before creation as in the console.
+- `setNameTag` accepts `{ type: 'nat-gateway' }` (2026-11-08); `UNKNOWN_REFERENCE` can name `nat-gateway`.
 - `detachInternetGateway` also counts NAT gateways' Elastic IPs for `IGW_HAS_PUBLIC_ADDRESSES` (IGW-07, NAT-07).
 
 The UI gets i18n strings for the new issue, reason and helper codes (`es`, `en`).
@@ -208,3 +210,24 @@ Golden (later, the user runs it; NAT gateways and Elastic IPs bill per hour): a 
 - Skill: TRC-03 F3 order, TRC-04 code lists (`NAT_VPC_NO_INTERNET_GATEWAY`, `UNSUPPORTED_FEATURE` as a hop code), IGW-07 engine line (NAT gateway Elastic IPs).
 - `docs/specs/r0-engine.md`: section 9 (NAT gateway moves out of Unsupported) and section 10 (NAT-05 verified).
 - JSDoc of the new evaluators with rule IDs and source URLs.
+
+## 9. Console views (2026-11-08)
+
+Source: `docs/console-capture/2026-11-08/` (read-only user, us-east-1, an account with no NAT gateways): the NAT gateways list, Create NAT gateway (default state and Zonal), and the Edit routes target picker with "NAT Gateway". Nothing was submitted; "Allocate Elastic IP" was not clicked.
+
+| View                | Captured                                                                                                                                                                                                                                                                    | App                                                                                                                                                                                                                                                                        |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| NAT gateways list   | 14 columns, Actions items, "Create NAT gateway", filter "Find NAT gateways by attribute or tag", empty state "No NAT gateways found" (title only), split panel "Select a NAT gateway"                                                                                       | Same. Cells: Public, Available, Zonal, the two addresses, "VPC" and "Subnet" as "id \| name"; State message, Route table ID, Primary network interface ID, Created and Deleted show "–" (not modeled). Name is editable inline. Actions other than Create are Unsupported. |
+| Details panel       | Not captured (no NAT gateway)                                                                                                                                                                                                                                               | One "Details" tab that repeats the table columns, with an Inferred label; "Tags" Unsupported.                                                                                                                                                                              |
+| Create NAT gateway  | Name (placeholder, 256-character constraint), Availability mode (Regional - new by default, Zonal), Subnet with zone tags, Connectivity type, Elastic IP allocation ID with "Allocate Elastic IP", Additional settings with "Primary private IPv4 address - optional", Tags | Same labels. Zonal is selected and Regional is disabled as Unsupported (NAT-06); Private is disabled as Unsupported. Subnet options show the zone name only (no zone IDs).                                                                                                 |
+| Allocate Elastic IP | Select and button disabled until a subnet is chosen ("Select a subnet to display the allocation IDs."); empty list "No Elastic IP addresses found"                                                                                                                          | The button reserves `nextPublicAddress()` and the select shows that address (Inferred: no allocation IDs, the address is allocated on create).                                                                                                                             |
+| Edit routes         | Local route as row 1 (no Remove); per row a "Target type" select (14 types, captured order) and a "Target" field that the type fills with its prefix ("nat-"), with 'Use: "nat-"' and "id (name)" suggestions; Destination suggestions 0.0.0.0/0 … /32, IPv6, prefix lists  | Same. Only Internet Gateway and NAT Gateway are enabled; the other 12 types and the IPv6 suggestions are disabled as Unsupported; prefix lists are left out until endpoints. The page title is "Edit routes: rtb-… / name".                                                |
+
+Decisions (the user delegated them, 2026-11-08):
+
+1. Zonal is preselected although the console preselects "Regional - new": R1 models only zonal NAT gateways, and a preselected disabled option would block the form.
+2. Validation messages aren't captured. The form uses "Choose a subnet." and "Choose an Elastic IP allocation ID.", in the style of the other forms; private IP problems come from `validate()` (IP_OUT_OF_SUBNET, IP_RESERVED, IP_DUPLICATE).
+3. Simulator notes (i18n): a new NAT gateway is Available at once (AWS shows Pending first) and AWS bills it per hour with its public IPv4 address; the Elastic IP note says when AWS allocates and bills it.
+4. The VPC dashboard counts NAT gateways and adds their Elastic IPs to "Elastic IPs".
+
+Open: capture the details panel, the cell values of a created NAT gateway and the Create errors when the golden scenario `s6-f3-nat` runs (it creates a NAT gateway anyway).

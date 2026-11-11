@@ -171,6 +171,12 @@ export const en = {
   'sim.publicPool':
     'Simulated public IPv4 addresses come from 203.0.113.0/24, a documentation range (RFC 5737).',
   'sim.subnetNoPreference': '"No preference" picks the first subnet of the VPC.',
+  'sim.natCreate':
+    'In AWS a new NAT gateway starts as Pending and becomes Available when it is ready, and it is billed per hour while it exists, plus its public IPv4 address. The simulator creates it as Available at once.',
+  'sim.natElasticIp':
+    'The simulator has no separate Elastic IP resources or allocation IDs. "Allocate Elastic IP" shows the address the NAT gateway gets when you create it, from 203.0.113.0/24, a documentation range (RFC 5737). In AWS the allocation happens right away, and an allocated Elastic IP is billed until you release it.',
+  'sim.natDetails':
+    'The details panel of a NAT gateway is not captured yet. It shows the table columns.',
   'sim.launchTime': 'The simulator keeps no launch time.',
   'sim.instanceDefaults':
     'The simulator doesn\'t model the AMI, the instance type, DNS hostnames, metadata options or the reservation, so those fields show "–". Settings it doesn\'t model show the console default for a new instance.',

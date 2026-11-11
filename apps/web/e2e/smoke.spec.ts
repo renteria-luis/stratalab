@@ -1,20 +1,8 @@
-import AxeBuilder from '@axe-core/playwright';
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import { expectNoWcagViolations } from './a11y';
 import { CONSOLE_TEXT } from '../src/console/text';
 import { en } from '../src/i18n/messages/en';
 import { PRODUCT_NAME } from '../src/product';
-
-async function expectNoWcagViolations(page: Page) {
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-    .analyze();
-  expect(
-    results.violations.map(
-      (violation) =>
-        `${violation.id}: ${violation.nodes.map((node) => `${node.target.join(' ')} ${node.failureSummary ?? ''}`).join(' | ')}`,
-    ),
-  ).toEqual([]);
-}
 
 test('SMOKE: the app opens straight into Console Home', async ({ page }) => {
   await page.goto('/');

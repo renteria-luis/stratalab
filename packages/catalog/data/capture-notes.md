@@ -102,3 +102,13 @@ Taken by the agent with the user's admin session, approved for that session only
 - Subnet details tab: 27 fields in 4 columns. The page text reads column by column, so the app renders each column as one group (`ColumnPairs`). Done 2026-11-06.
 - Details panels as column groups (Inferred from the page text order): Your VPCs (18 fields, 5/5/4/4; the encryption fields end columns 1 and 2), route tables (2/2/1/1), network ACLs (2/1/1/1, "Associated with" as "n Subnets"), internet gateways (1 each). Security groups live in their own frame and keep the row order, which matches the capture. Done 2026-11-06.
 - Open: the Your VPCs encryption columns and the "VPC encryption controls" tab of the list; "id | name" cells on the other lists; confirm the column grouping from the page structure in the next console session.
+
+## Capture of 2026-11-08 (page text, agent with the read-only user)
+
+Taken by the agent with the read-only console user, region us-east-1, an account with no NAT gateways. Page text plus notes from the accessibility tree, in `docs/console-capture/2026-11-08/` (4 files). Account ID, alias, user name and resource IDs replaced. Nothing was submitted.
+
+- NAT gateways list: columns, Actions items, filter placeholder "Find NAT gateways by attribute or tag" and the empty state "No NAT gateways found" (no description, no button). `nav/vpc.json` now opens it as `functional`.
+- Create NAT gateway now has "Availability mode" with "Regional - new" preselected; "Zonal" swaps "VPC" for "Subnet" and "Method of Elastic IP (EIP) allocation" for "Elastic IP allocation ID" with "Allocate Elastic IP". The docs procedure (nat-gateway-working-with.html) doesn't mention availability mode yet and calls the private IP field "Private IP address - optional"; the console says "Primary private IPv4 address - optional". The app follows the console.
+- Edit routes: the Target field is filled with the type's prefix ("nat-") when you choose "NAT Gateway"; the Destination field suggests 0.0.0.0/0, /8, /16, /24, /32, IPv6 blocks and the region's AWS-managed prefix lists.
+- Info links read "Info" again (2026-11-06 showed "Q help").
+- Open: details panel and cell values of an existing NAT gateway, Create errors, the result of "Allocate Elastic IP".

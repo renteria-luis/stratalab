@@ -35,9 +35,12 @@ export interface ResourceTableProps<T> {
   readonly selectedIds: readonly string[];
   readonly onSelectionChange: (ids: string[]) => void;
   readonly actions?: ReactNode;
+  /** The filter's placeholder as captured; default "Find <resourceName>". */
+  readonly filterPlaceholder?: string;
   readonly empty: {
     readonly title: string;
-    readonly description: string;
+    /** Absent when the console shows only the title (NAT gateways, captured 2026-11-08). */
+    readonly description?: string;
     readonly action?: ReactNode;
   };
   readonly loading?: boolean;
@@ -56,6 +59,7 @@ export function ResourceTable<T>({
   selectedIds,
   onSelectionChange,
   actions,
+  filterPlaceholder = `Find ${resourceName}`,
   empty,
   loading = false,
 }: ResourceTableProps<T>) {
@@ -144,8 +148,8 @@ export function ResourceTable<T>({
       filter={
         <TextFilter
           filteringText={filter}
-          filteringPlaceholder={`Find ${resourceName}`}
-          filteringAriaLabel={`Find ${resourceName}`}
+          filteringPlaceholder={filterPlaceholder}
+          filteringAriaLabel={filterPlaceholder}
           countText={`${String(filtered.length)} matches`}
           onChange={({ detail }) => {
             setFilter(detail.filteringText);
@@ -168,9 +172,11 @@ export function ResourceTable<T>({
             <Box variant="strong" color="inherit">
               {empty.title}
             </Box>
-            <Box variant="p" color="inherit">
-              {empty.description}
-            </Box>
+            {empty.description !== undefined && (
+              <Box variant="p" color="inherit">
+                {empty.description}
+              </Box>
+            )}
             {empty.action}
           </SpaceBetween>
         </Box>

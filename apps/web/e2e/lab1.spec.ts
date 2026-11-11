@@ -1,19 +1,7 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { expectNoWcagViolations } from './a11y';
 import { lab01 } from '@sim/labs';
 import { en } from '../src/i18n/messages/en';
-
-async function expectNoWcagViolations(page: Page) {
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-    .analyze();
-  expect(
-    results.violations.map(
-      (violation) =>
-        `${violation.id}: ${violation.nodes.map((node) => `${node.target.join(' ')} ${node.failureSummary ?? ''}`).join(' | ')}`,
-    ),
-  ).toEqual([]);
-}
 
 async function openWorkbenchTab(page: Page, tab: string) {
   const openButton = page.getByRole('button', { name: en['workbench.open'] });

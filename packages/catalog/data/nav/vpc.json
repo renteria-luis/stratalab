@@ -80,7 +80,7 @@
         },
         {
           "label": "NAT gateways",
-          "target": "empty",
+          "target": "functional",
           "route": "/vpc/nat-gateways"
         },
         {

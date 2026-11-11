@@ -2,6 +2,7 @@ import createWrapper from '@cloudscape-design/components/test-utils/dom';
 import {
   attachInternetGateway,
   createInternetGateway,
+  createNatGateway,
   createRouteTable,
   createSubnet,
   createVpc,
@@ -53,6 +54,24 @@ function seed(topology: Topology) {
 const current = () => activeTopology(topologyStore.getState());
 const page = () => createWrapper(document.body);
 
+/** Create NAT gateway: picks the subnet in the "Select a subnet" select. */
+function chooseSubnet(subnetId: string) {
+  const select = page()
+    .findAllSelects()
+    .find((candidate) => candidate.findTrigger().getElement().textContent === 'Select a subnet');
+  if (select === undefined) throw new Error('No subnet select');
+  select.openDropdown();
+  select.selectOptionByValue(subnetId);
+}
+
+/** The form's submit button (the list page also has a "Create NAT gateway" button). */
+function createNatButton(which: 'first' | 'last' = 'last'): HTMLElement {
+  const buttons = screen.getAllByRole('button', { name: 'Create NAT gateway' });
+  const button = which === 'first' ? buttons[0] : buttons.at(-1);
+  if (button === undefined) throw new Error('No Create NAT gateway button');
+  return button;
+}
+
 describe('console views', () => {
   it('CAT-05: every functional console page has a view', () => {
     const functional = consolePages().filter((p) => p.kind === 'functional');
@@ -99,13 +118,26 @@ describe('console views', () => {
     const { topology, routeTableId, internetGatewayId } = lab();
     seed(topology);
     const { router } = renderApp(`/vpc/route-tables/${routeTableId}/edit-routes`);
-    fireEvent.click(await screen.findByRole('button', { name: 'Add route' }));
-    const row = page().findAttributeEditor()?.findRow(1);
-    const destination = row?.findField(1)?.findControl()?.findInput();
-    destination?.setInputValue('0.0.0.0/0');
-    const target = row?.findField(2)?.findControl()?.findSelect();
-    target?.openDropdown();
-    target?.selectOptionByValue(internetGatewayId);
+    expect(
+      await screen.findByRole('heading', {
+        level: 1,
+        name: `Edit routes: ${routeTableId} / public-rt`,
+      }),
+    ).toBeDefined();
+    // Row 1 is the local route, as captured; it has no Remove button.
+    const editor = () => page().findAttributeEditor();
+    expect(editor()?.findRow(1)?.findRemoveButton()).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Add route' }));
+    const row = editor()?.findRow(2);
+    row?.findField(1)?.findControl()?.findAutosuggest()?.setInputValue('0.0.0.0/0');
+    const targetType = row?.findField(2)?.findControl()?.findSelect();
+    targetType?.openDropdown();
+    targetType?.selectOptionByValue('internet-gateway');
+    const target = editor()?.findRow(2)?.findField(2)?.findControl()?.findAutosuggest();
+    // Choosing the type fills in the ID prefix, as the console does.
+    expect(target?.findNativeInput().getElement().value).toBe('igw-');
+    target?.focus();
+    target?.selectSuggestionByValue(internetGatewayId);
     fireEvent.click(screen.getByRole('button', { name: 'Save changes' }));
 
     await waitFor(() => {
@@ -117,6 +149,154 @@ describe('console views', () => {
         target: { type: 'internet-gateway', internetGatewayId },
       },
     ]);
+  });
+
+  it('RT-05: Edit routes lists every captured target type and sends 0.0.0.0/0 to a NAT gateway', async () => {
+    const base = lab();
+    const nat = ok(createNatGateway(base.topology, { subnetId: base.subnetId, name: 'nat-a' }));
+    const { natGatewayId } = nat.created;
+    seed(nat.topology);
+    const { router } = renderApp(`/vpc/route-tables/${base.routeTableId}/edit-routes`);
+    fireEvent.click(await screen.findByRole('button', { name: 'Add route' }));
+    const row = () => page().findAttributeEditor()?.findRow(2);
+    row()?.findField(1)?.findControl()?.findAutosuggest()?.setInputValue('0.0.0.0/0');
+    const targetType = row()?.findField(2)?.findControl()?.findSelect();
+    targetType?.openDropdown();
+    const labels = targetType
+      ?.findDropdown()
+      .findOptions()
+      .map((option) => option.findLabel().getElement().textContent);
+    expect(labels).toEqual([
+      'Carrier Gateway',
+      'Core Network',
+      'Egress Only Internet Gateway',
+      'Gateway Load Balancer Endpoint',
+      'Instance',
+      'Internet Gateway',
+      'local',
+      'NAT Gateway',
+      'Network Interface',
+      'Outpost Local Gateway',
+      'Peering Connection',
+      'ODB Network',
+      'Transit Gateway',
+      'Virtual Private Gateway',
+    ]);
+    // Types R1 doesn't simulate stay listed, disabled (AGENTS.md, rule 8).
+    expect(targetType?.findDropdown().findDisabledOptions()).toHaveLength(12);
+    targetType?.selectOptionByValue('nat-gateway');
+    const target = row()?.findField(2)?.findControl()?.findAutosuggest();
+    expect(target?.findNativeInput().getElement().value).toBe('nat-');
+    target?.focus();
+    // As captured: 'Use: "nat-"' first, then "id (name)" for each NAT gateway of the VPC.
+    expect(target?.findEnteredTextOption()?.getElement().textContent).toBe('Use: "nat-"');
+    const suggestions = target
+      ?.findDropdown()
+      .findOptions()
+      .map((option) => option.getElement().textContent);
+    expect(suggestions).toEqual([`${natGatewayId} (nat-a)`]);
+    target?.selectSuggestionByValue(natGatewayId);
+    fireEvent.click(screen.getByRole('button', { name: 'Save changes' }));
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe('/vpc/route-tables');
+    });
+    expect(current().routeTables.find((table) => table.id === base.routeTableId)?.routes).toEqual([
+      { destinationCidrBlock: '0.0.0.0/0', target: { type: 'nat-gateway', natGatewayId } },
+    ]);
+  });
+
+  it('NAT-01: Create NAT gateway allocates an Elastic IP and lists the NAT gateway as Available', async () => {
+    const { topology, subnetId, vpcId } = lab();
+    seed(topology);
+    const { router } = renderApp('/vpc/nat-gateways');
+    expect(await screen.findByText('No NAT gateways found')).toBeDefined();
+    expect(screen.getByText('Select a NAT gateway')).toBeDefined();
+    fireEvent.click(createNatButton('first'));
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe('/vpc/create-nat-gateway');
+    });
+
+    // Before a subnet is chosen, the Elastic IP controls are disabled, as captured.
+    const allocate = await screen.findByRole('button', { name: 'Allocate Elastic IP' });
+    expect(allocate.hasAttribute('disabled')).toBe(true);
+    expect(screen.getByText('Select a subnet to display the allocation IDs.')).toBeDefined();
+    fireEvent.change(screen.getByRole('textbox', { name: 'Name - optional' }), {
+      target: { value: 'nat-a' },
+    });
+    chooseSubnet(subnetId);
+    fireEvent.click(screen.getByRole('button', { name: 'Allocate Elastic IP' }));
+    expect(screen.getByText('203.0.113.1')).toBeDefined();
+    fireEvent.click(createNatButton());
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe('/vpc/nat-gateways');
+    });
+    expect(current().natGateways).toEqual([
+      {
+        id: 'nat-00000001',
+        name: 'nat-a',
+        subnetId,
+        connectivityType: 'public',
+        privateIpAddress: '10.0.1.4',
+        elasticIpAddress: '203.0.113.1',
+      },
+    ]);
+    const table = page().findTable();
+    const cells = (table?.findRows()[0]?.findAll('td') ?? []).map(
+      (cell) => cell.getElement().textContent,
+    );
+    expect(cells.slice(1)).toEqual([
+      'nat-a',
+      'nat-00000001',
+      'Public',
+      'Available',
+      '–',
+      'Zonal',
+      '–',
+      '203.0.113.1',
+      '10.0.1.4',
+      '–',
+      `${vpcId} | lab-vpc`,
+      subnetId,
+      '–',
+      '–',
+    ]);
+    // The new NAT gateway opens selected, with its details below.
+    expect(
+      await screen.findByRole('heading', { level: 2, name: 'nat-00000001 / nat-a' }),
+    ).toBeDefined();
+  });
+
+  it('NAT-01: Create NAT gateway needs a subnet and an Elastic IP', async () => {
+    const { topology, subnetId } = lab();
+    seed(topology);
+    renderApp('/vpc/create-nat-gateway');
+    await screen.findByRole('button', { name: 'Allocate Elastic IP' });
+    fireEvent.click(createNatButton());
+    expect(await screen.findByText('Choose a subnet.')).toBeDefined();
+
+    chooseSubnet(subnetId);
+    fireEvent.click(createNatButton());
+    expect(await screen.findByText('Choose an Elastic IP allocation ID.')).toBeDefined();
+    expect(current().natGateways).toBeUndefined();
+  });
+
+  it('NAT-07: Create NAT gateway is rejected in a VPC without an internet gateway', async () => {
+    const vpc = ok(createVpc(EMPTY_TOPOLOGY, { cidrBlock: '10.0.0.0/16' }));
+    const subnet = ok(
+      createSubnet(vpc.topology, { vpcId: vpc.created.vpcId, cidrBlock: '10.0.1.0/24' }),
+    );
+    seed(subnet.topology);
+    renderApp('/vpc/create-nat-gateway');
+    await screen.findByRole('button', { name: 'Allocate Elastic IP' });
+    chooseSubnet(subnet.created.subnetId);
+    fireEvent.click(screen.getByRole('button', { name: 'Allocate Elastic IP' }));
+    fireEvent.click(createNatButton());
+
+    expect(await screen.findByText(en['change.failed'])).toBeDefined();
+    expect(screen.getByText(/has no internet gateway attached/)).toBeDefined();
+    expect(current().natGateways).toBeUndefined();
   });
 
   it('IGW-07: Detach from VPC is rejected while an instance has a public address', async () => {

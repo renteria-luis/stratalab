@@ -10,6 +10,7 @@ import {
   CreateInternetGatewayPage,
   InternetGateways,
 } from './vpc/InternetGateways';
+import { CreateNatGatewayPage, NatGateways } from './vpc/NatGateways';
 import {
   CreateNetworkAclPage,
   EditNetworkAclAssociations,
@@ -46,6 +47,7 @@ export const FUNCTIONAL_VIEWS: Readonly<Record<string, ComponentType>> = {
   '/vpc/subnets': Subnets,
   '/vpc/route-tables': RouteTables,
   '/vpc/internet-gateways': InternetGateways,
+  '/vpc/nat-gateways': NatGateways,
   '/vpc/network-acls': NetworkAcls,
   '/vpc/security-groups': bind(SecurityGroups, { base: '/vpc/security-groups' }),
   '/ec2': Ec2Home,
@@ -145,6 +147,12 @@ export const SUB_PAGES: readonly SubPageRoute[] = [
     parentPath: '/vpc/internet-gateways',
     label: 'Attach to VPC',
     Component: AttachInternetGateway,
+  },
+  {
+    path: '/vpc/create-nat-gateway',
+    parentPath: '/vpc/nat-gateways',
+    label: 'Create NAT gateway',
+    Component: CreateNatGatewayPage,
   },
   {
     path: '/vpc/create-network-acl',

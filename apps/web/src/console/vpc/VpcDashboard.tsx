@@ -29,9 +29,12 @@ export function VpcDashboard() {
   const topology = useTopology();
   const navigate = useNavigate();
   const region = regionShortName(topology.region);
-  const elasticIps = topology.instances.filter(
-    (instance) => instance.primaryNetworkInterface.publicIp?.kind === 'elastic-ip',
-  ).length;
+  const natGateways = topology.natGateways ?? [];
+  // A public NAT gateway's address is an Elastic IP (NAT-01).
+  const elasticIps =
+    topology.instances.filter(
+      (instance) => instance.primaryNetworkInterface.publicIp?.kind === 'elastic-ip',
+    ).length + natGateways.length;
 
   const resources: ResourceCount[] = [
     { label: 'VPCs', count: topology.vpcs.length, href: '/vpc/your-vpcs' },
@@ -48,7 +51,7 @@ export function VpcDashboard() {
     { label: 'Endpoints', count: 0 },
     { label: 'Instance Connect Endpoints', count: 0 },
     { label: 'Endpoint Services', count: 0 },
-    { label: 'NAT Gateways', count: 0 },
+    { label: 'NAT Gateways', count: natGateways.length, href: '/vpc/nat-gateways' },
     { label: 'VPC Peering Connections', count: 0 },
     { label: 'Network ACLs', count: topology.networkAcls.length, href: '/vpc/network-acls' },
     {
