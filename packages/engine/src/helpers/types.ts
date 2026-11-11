@@ -2,7 +2,8 @@ import type { RuleId } from '../rules';
 import type { Topology, TopologyInput } from '../schema';
 
 /**
- * Helper error codes (docs/specs/r0-engine.md sections 3.8 and 3.10). Helpers check only
+ * Helper error codes (docs/specs/r0-engine.md sections 3.8 and 3.10, docs/specs/r1-nat-gateway.md
+ * section 5). Helpers check only
  * lookups and state changes; AWS rules between resources stay in `validate()`.
  */
 export const HELPER_ERROR_CODES = [
@@ -14,6 +15,7 @@ export const HELPER_ERROR_CODES = [
   'VPC_ALREADY_HAS_IGW',
   'IGW_NOT_ATTACHED',
   'IGW_HAS_PUBLIC_ADDRESSES',
+  'NAT_VPC_NO_INTERNET_GATEWAY',
 ] as const;
 
 export type HelperErrorCode = (typeof HELPER_ERROR_CODES)[number];
@@ -41,7 +43,8 @@ export type HelperResult<T = NothingCreated> =
   | { readonly ok: false; readonly error: HelperError };
 
 /** Prefixes of the fake AWS-style IDs (r0-engine.md section 2). */
-export type IdPrefix = 'vpc' | 'subnet' | 'rtb' | 'igw' | 'sg' | 'sgr' | 'acl' | 'i' | 'eni';
+export type IdPrefix =
+  'vpc' | 'subnet' | 'rtb' | 'igw' | 'nat' | 'sg' | 'sgr' | 'acl' | 'i' | 'eni';
 
 /** A rule or entry direction, as the console's "Inbound rules" and "Outbound rules" tabs. */
 export type RuleDirection = 'inbound' | 'outbound';
@@ -65,6 +68,13 @@ type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K>
 
 /** Resources with a Name tag. A security group's name is its group name (SG-06). */
 export interface NameTagResource {
-  readonly type: 'vpc' | 'subnet' | 'route-table' | 'internet-gateway' | 'network-acl' | 'instance';
+  readonly type:
+    | 'vpc'
+    | 'subnet'
+    | 'route-table'
+    | 'internet-gateway'
+    | 'nat-gateway'
+    | 'network-acl'
+    | 'instance';
   readonly id: string;
 }

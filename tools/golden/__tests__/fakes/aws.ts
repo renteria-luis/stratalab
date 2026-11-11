@@ -73,14 +73,15 @@ export function deploymentOf(
     })),
     routes: topology.routeTables.flatMap((table) =>
       table.routes.map((route) => {
-        const igw = topology.internetGateways.find(
-          (gateway) => gateway.id === route.target.internetGatewayId,
-        );
+        // Golden scenarios have only internet gateway routes (GOLDEN_NAT_GATEWAY).
+        const gatewayId =
+          route.target.type === 'internet-gateway' ? route.target.internetGatewayId : '';
+        const igw = topology.internetGateways.find((gateway) => gateway.id === gatewayId);
         const fallback = igw?.attachedVpcId === undefined ? 'blackhole' : 'active';
         return {
           routeTableId: realId(table.id),
           destinationCidrBlock: route.destinationCidrBlock,
-          gatewayId: realId(route.target.internetGatewayId),
+          gatewayId: realId(gatewayId),
           state: routeStates[route.destinationCidrBlock] ?? fallback,
         };
       }),

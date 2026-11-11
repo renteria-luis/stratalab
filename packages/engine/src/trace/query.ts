@@ -1,6 +1,22 @@
-import { classifyNonPublic, formatCidr, mustParseCidr, parseIpv4, toBlock } from '../cidr';
-import { CLIENT_PORT_RANGES, type Model } from '../model';
+import {
+  classifyNonPublic,
+  formatCidr,
+  mustParseCidr,
+  mustParseIpv4,
+  parseIpv4,
+  toBlock,
+} from '../cidr';
+import {
+  CLIENT_PORT_RANGES,
+  effectiveRoutes,
+  lookupRoute,
+  natGatewaysOf,
+  routeTableOf,
+  type Model,
+} from '../model';
+import { mustGet } from '../internal/lookup';
 import type { RuleId } from '../rules';
+import type { NatGateway } from '../schema';
 import { endpointOf, type Endpoint } from './flows';
 import type { QueryIssue, TraceClient, TraceQuery } from './types';
 
@@ -14,7 +30,19 @@ export type TracePlan =
       destination: Endpoint;
       address: 'public' | 'private';
     }
-  | { flow: 'F2'; client: TraceClient; port: number; source: Endpoint; serverIp: string };
+  | { flow: 'F2'; client: TraceClient; port: number; source: Endpoint; serverIp: string }
+  | {
+      flow: 'F3';
+      client: TraceClient;
+      port: number;
+      source: Endpoint;
+      serverIp: string;
+      nat: NatGateway;
+      natPort: number;
+    };
+
+/** NAT-04: a NAT gateway remaps source ports to this range; the default port is the first. */
+export const NAT_PORT_RANGE = CLIENT_PORT_RANGES['nat-gateway'];
 
 export type PlanResult =
   | { readonly ok: true; readonly plan: TracePlan }
@@ -35,7 +63,9 @@ function invalidQuery(
  * Returns every query issue it finds, in a fixed order, or the plan.
  *
  * Rules:
- * - TRC-03 supported shapes (F0, F1, F2): .claude/skills/aws-network-rules/references/trace-model.md
+ * - TRC-03 supported shapes (F0, F1, F2, F3): .claude/skills/aws-network-rules/references/trace-model.md
+ * - F3 when the source subnet's route to the destination targets a NAT gateway (RT-04, NAT-04):
+ *   docs/specs/r1-nat-gateway.md section 4.1 and https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html
  * - TRC-04 instances in different VPCs are disconnected until R2: https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
  * - IGW-06 internet addresses must be public; hairpin through the internet gateway is
  *   Unsupported: https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
@@ -79,6 +109,17 @@ export function planTrace(model: Model, query: TraceQuery): PlanResult {
   ) {
     checkInstancePair(source, destination, query.destination.address, issues);
   }
+  const natPort = query.natSourcePort ?? NAT_PORT_RANGE.from;
+  if (!isPort(natPort, NAT_PORT_RANGE.from) || natPort > NAT_PORT_RANGE.to) {
+    issues.push(
+      invalidQuery(['query', 'natSourcePort'], ['NAT-04'], {
+        reason: 'nat-source-port-out-of-range',
+        natSourcePort: natPort,
+        from: NAT_PORT_RANGE.from,
+        to: NAT_PORT_RANGE.to,
+      }),
+    );
+  }
   const client = resolveClient(query, source, issues);
   if (issues.length > 0 || client === null) return { ok: false, issues };
 
@@ -90,6 +131,10 @@ export function planTrace(model: Model, query: TraceQuery): PlanResult {
   }
   if (query.destination.type === 'internet' && source !== null) {
     const serverIp = query.destination.ipAddress;
+    const nat = natGatewayOnTheWay(model, source, serverIp);
+    if (nat !== null) {
+      return { ok: true, plan: { flow: 'F3', client, port, source, serverIp, nat, natPort } };
+    }
     return { ok: true, plan: { flow: 'F2', client, port, source, serverIp } };
   }
   if (source !== null && destination !== null) {
@@ -97,6 +142,14 @@ export function planTrace(model: Model, query: TraceQuery): PlanResult {
   }
   // Every other shape raised an issue above.
   return { ok: false, issues };
+}
+
+/** The NAT gateway the source subnet's route table picks for `serverIp`, if any (RT-04). */
+function natGatewayOnTheWay(model: Model, source: Endpoint, serverIp: string): NatGateway | null {
+  const { table } = routeTableOf(model, source.subnet);
+  const { route } = lookupRoute(effectiveRoutes(model, table), mustParseIpv4(serverIp));
+  if (route?.targetType !== 'nat-gateway') return null;
+  return mustGet(model.natGateways, route.target);
 }
 
 function resolveInstance(
@@ -149,18 +202,27 @@ function checkInternetAddress(
     });
     return;
   }
-  // The public address of a modeled instance would make the path a hairpin.
-  const owner = model.topology.instances.find(
-    (instance) => instance.primaryNetworkInterface.publicIp?.address === ipAddress,
+  // The public address of a modeled instance or NAT gateway would make the path a hairpin.
+  const instance = model.topology.instances.find(
+    (candidate) => candidate.primaryNetworkInterface.publicIp?.address === ipAddress,
   );
-  if (owner !== undefined) {
+  const nat = natGatewaysOf(model.topology).find(
+    (candidate) => candidate.elasticIpAddress === ipAddress,
+  );
+  const owner =
+    instance !== undefined
+      ? ({ type: 'instance', id: instance.id } as const)
+      : nat !== undefined
+        ? ({ type: 'nat-gateway', id: nat.id } as const)
+        : null;
+  if (owner !== null) {
     issues.push({
       code: 'UNSUPPORTED_FEATURE',
       severity: 'error',
       ruleIds: ['IGW-06'],
       fidelity: 'Unsupported',
       path,
-      related: [{ type: 'instance', id: owner.id }],
+      related: [owner],
       params: { feature: 'igw-hairpin' },
     });
   }

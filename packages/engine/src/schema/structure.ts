@@ -5,7 +5,13 @@ export type StructuralCode =
   'DUPLICATE_ID' | 'UNKNOWN_REFERENCE' | 'DUPLICATE_SERVICE_PORT' | 'AZ_NOT_IN_REGION';
 
 export type ReferenceType =
-  'vpc' | 'subnet' | 'route-table' | 'internet-gateway' | 'security-group' | 'network-acl';
+  | 'vpc'
+  | 'subnet'
+  | 'route-table'
+  | 'internet-gateway'
+  | 'nat-gateway'
+  | 'security-group'
+  | 'network-acl';
 
 export interface StructuralIssue {
   readonly code: StructuralCode;
@@ -27,6 +33,7 @@ export function checkStructure(topology: TopologyShape): StructuralIssue[] {
     subnet: new Set(topology.subnets.map((subnet) => subnet.id)),
     'route-table': new Set(topology.routeTables.map((table) => table.id)),
     'internet-gateway': new Set(topology.internetGateways.map((igw) => igw.id)),
+    'nat-gateway': new Set((topology.natGateways ?? []).map((nat) => nat.id)),
     'security-group': new Set(topology.securityGroups.map((group) => group.id)),
     'network-acl': new Set(topology.networkAcls.map((acl) => acl.id)),
   } satisfies Record<ReferenceType, Set<string>>;
@@ -76,20 +83,26 @@ export function checkStructure(topology: TopologyShape): StructuralIssue[] {
     unique(table.id, ['routeTables', i, 'id']);
     reference('vpc', table.vpcId, ['routeTables', i, 'vpcId']);
     table.routes.forEach((route, j) => {
-      reference('internet-gateway', route.target.internetGatewayId, [
-        'routeTables',
-        i,
-        'routes',
-        j,
-        'target',
-        'internetGatewayId',
-      ]);
+      const targetPath = ['routeTables', i, 'routes', j, 'target'] as const;
+      if (route.target.type === 'internet-gateway') {
+        reference('internet-gateway', route.target.internetGatewayId, [
+          ...targetPath,
+          'internetGatewayId',
+        ]);
+      } else {
+        reference('nat-gateway', route.target.natGatewayId, [...targetPath, 'natGatewayId']);
+      }
     });
   });
 
   topology.internetGateways.forEach((igw, i) => {
     unique(igw.id, ['internetGateways', i, 'id']);
     reference('vpc', igw.attachedVpcId, ['internetGateways', i, 'attachedVpcId']);
+  });
+
+  (topology.natGateways ?? []).forEach((nat, i) => {
+    unique(nat.id, ['natGateways', i, 'id']);
+    reference('subnet', nat.subnetId, ['natGateways', i, 'subnetId']);
   });
 
   topology.securityGroups.forEach((group, i) => {

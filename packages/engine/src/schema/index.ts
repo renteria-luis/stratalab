@@ -2,6 +2,7 @@ export {
   topologySchema,
   type Instance,
   type InternetGateway,
+  type NatGateway,
   type NetworkAcl,
   type NetworkAclEntry,
   type NetworkInterface,

@@ -12,6 +12,7 @@ function allIds(topology: Topology): string[] {
     ...topology.subnets.map((subnet) => subnet.id),
     ...topology.routeTables.map((table) => table.id),
     ...topology.internetGateways.map((igw) => igw.id),
+    ...(topology.natGateways ?? []).map((nat) => nat.id),
     ...topology.securityGroups.flatMap((group) => [
       group.id,
       ...group.inboundRules.map((rule) => rule.id),

@@ -164,14 +164,18 @@ export function statefulSgStep(
   );
 }
 
+/** Route targets a route step can follow. */
+export type RouteTargetType = 'local' | 'internet-gateway' | 'nat-gateway';
+
 /**
  * Route lookup in the subnet's route table: longest prefix match (RT-04). A matching
  * blackhole route fails the hop (RT-08): with `MORE_SPECIFIC_ROUTE` when it shadows a less
  * specific active route, as Reachability Analyzer reports it (golden `s4-q8-blackhole`, Q14;
- * Inferred, Q8), otherwise with `BAD_STATE_ROUTE`. Returns the internet gateway the packet
- * goes to, if any.
+ * Inferred, Q8), otherwise with `BAD_STATE_ROUTE`. A route to a NAT gateway where the flow
+ * can't follow one (a reply, or the NAT gateway's own subnet) fails with
+ * `UNSUPPORTED_FEATURE` (Q15, Q16). Returns the gateway the packet goes to, if any.
  *
- * Rules: RT-04, RT-08 · https://docs.aws.amazon.com/vpc/latest/userguide/route-tables-priority.html ·
+ * Rules: RT-04, RT-05, RT-08 · https://docs.aws.amazon.com/vpc/latest/userguide/route-tables-priority.html ·
  * https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
  */
 export function routeStep(options: {
@@ -179,10 +183,12 @@ export function routeStep(options: {
   table: RouteTable;
   packet: Packet;
   destinationIp: string;
-  expectedTarget: 'local' | 'internet-gateway';
+  expectedTarget: RouteTargetType;
   ruleIds: readonly RuleId[];
   fidelity: Fidelity;
-}): { hop: HopDraft; internetGatewayId: string | null } {
+  /** Added to `ruleIds` when a NAT gateway route is unsupported here (Q15: NAT-02, Q16: NAT-01). */
+  unsupportedNatRuleId?: RuleId;
+}): { hop: HopDraft; internetGatewayId: string | null; natGatewayId: string | null } {
   const { model, table, packet, destinationIp, expectedTarget, ruleIds, fidelity } = options;
   const base: HopBase = {
     step: 'route-lookup',
@@ -191,10 +197,11 @@ export function routeStep(options: {
     ruleIds,
     fidelity,
   };
+  const none = { internetGatewayId: null, natGatewayId: null };
   const routes = effectiveRoutes(model, table);
   const { route, shadowsActiveRoute } = lookupRoute(routes, mustParseIpv4(destinationIp));
   if (route === null) {
-    return { hop: failed(base, 'NO_ROUTE_TO_DESTINATION'), internetGatewayId: null };
+    return { hop: failed(base, 'NO_ROUTE_TO_DESTINATION'), ...none };
   }
   const match: HopMatch = {
     type: 'route',
@@ -213,16 +220,58 @@ export function routeStep(options: {
         shadowsActiveRoute ? 'MORE_SPECIFIC_ROUTE' : 'BAD_STATE_ROUTE',
         match,
       ),
-      internetGatewayId: null,
+      ...none,
     };
   }
-  const isLocal = route.target === 'local';
-  if (isLocal !== (expectedTarget === 'local')) {
-    // Unreachable after the checks that block a trace: internet addresses are outside every
-    // VPC CIDR (IGW-06) and no stored route lies inside one (RT-03). Reported, never followed.
-    return { hop: failed(base, 'NO_ROUTE_TO_DESTINATION', match), internetGatewayId: null };
+  if (route.targetType === expectedTarget) {
+    return {
+      hop: passed(base, { match }),
+      internetGatewayId: route.targetType === 'internet-gateway' ? route.target : null,
+      natGatewayId: route.targetType === 'nat-gateway' ? route.target : null,
+    };
   }
-  return { hop: passed(base, { match }), internetGatewayId: isLocal ? null : route.target };
+  if (route.targetType === 'nat-gateway') {
+    const extra = options.unsupportedNatRuleId;
+    const natRuleIds =
+      extra === undefined || ruleIds.includes(extra) ? ruleIds : [...ruleIds, extra];
+    return {
+      hop: failed(
+        { ...base, ruleIds: natRuleIds, fidelity: 'Unsupported' },
+        'UNSUPPORTED_FEATURE',
+        match,
+      ),
+      ...none,
+    };
+  }
+  // Unreachable after the checks that block a trace: internet addresses are outside every
+  // VPC CIDR (IGW-06) and no stored route lies inside one (RT-03). Reported, never followed.
+  return { hop: failed(base, 'NO_ROUTE_TO_DESTINATION', match), ...none };
+}
+
+/**
+ * The NAT gateway translates the packet (NAT-04): on the way out the source becomes its
+ * private IP and NAT port, on the way back the destination becomes the instance again
+ * (NAT-02, stateful). It has no security group (NAT-05). `NGW_REQUIRES_SOURCE_IN_VPC`
+ * can't occur in R1: every source is an instance of the same VPC (NAT-03).
+ *
+ * Rules: NAT-02 to NAT-05 · https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html ·
+ * https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html
+ */
+export function natStep(options: {
+  natGatewayId: string;
+  packet: Packet;
+  translatedTo: Packet;
+  ruleIds: readonly RuleId[];
+}): HopDraft {
+  const { natGatewayId, packet, translatedTo, ruleIds } = options;
+  const base: HopBase = {
+    step: 'nat-gateway',
+    component: { type: 'nat-gateway', id: natGatewayId },
+    packet,
+    ruleIds,
+    fidelity: 'Exact',
+  };
+  return passed(base, { translatedTo });
 }
 
 /**
@@ -330,6 +379,7 @@ function verdictFor(step: HopStep): Exclude<Verdict, 'REACHED'> {
     case 'route-lookup':
     case 'igw-egress':
     case 'igw-ingress':
+    case 'nat-gateway':
       return 'BROKE_AT_HOP';
     case 'sg-egress':
     case 'sg-ingress':

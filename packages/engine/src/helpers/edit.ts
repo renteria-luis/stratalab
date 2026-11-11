@@ -27,7 +27,7 @@ import type {
  * Rules:
  * - RT-01, RT-03, RT-04, RT-11 · https://docs.aws.amazon.com/vpc/latest/userguide/subnet-route-tables.html
  * - IGW-05 · https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html
- * - IGW-07 · https://docs.aws.amazon.com/vpc/latest/userguide/delete-igw.html
+ * - IGW-07, NAT-07 · https://docs.aws.amazon.com/vpc/latest/userguide/delete-igw.html
  * - SG-02, SG-03, SG-04 · https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html
  * - NACL-01, NACL-02, NACL-08 · https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
  * - ADR-10 · https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html
@@ -122,7 +122,10 @@ export function attachInternetGateway(
   });
 }
 
-/** Detach from VPC: not while the VPC has public IPv4 addresses (IGW-07). */
+/**
+ * Detach from VPC: not while the VPC has public IPv4 addresses (IGW-07). A NAT gateway's
+ * Elastic IP counts (NAT-07: "resources with associated ... Elastic IP addresses").
+ */
 export function detachInternetGateway(topology: Topology, internetGatewayId: string): HelperResult {
   const gateway = topology.internetGateways.find((igw) => igw.id === internetGatewayId);
   if (gateway === undefined) return unknownReference('internet-gateway', internetGatewayId);
@@ -132,12 +135,17 @@ export function detachInternetGateway(topology: Topology, internetGatewayId: str
   const subnetsInVpc = new Set(
     topology.subnets.filter((subnet) => subnet.vpcId === vpcId).map((subnet) => subnet.id),
   );
-  const count = topology.instances.filter((instance) => {
+  const instanceCount = topology.instances.filter((instance) => {
     const eni = instance.primaryNetworkInterface;
     return eni.publicIp !== undefined && subnetsInVpc.has(eni.subnetId);
   }).length;
+  const natCount = (topology.natGateways ?? []).filter((nat) =>
+    subnetsInVpc.has(nat.subnetId),
+  ).length;
+  const count = instanceCount + natCount;
   if (count > 0) {
-    return fail('IGW_HAS_PUBLIC_ADDRESSES', ['IGW-07'], { internetGatewayId, vpcId, count });
+    const ruleIds = natCount > 0 ? (['IGW-07', 'NAT-07'] as const) : (['IGW-07'] as const);
+    return fail('IGW_HAS_PUBLIC_ADDRESSES', ruleIds, { internetGatewayId, vpcId, count });
   }
   return edited({
     ...topology,
@@ -243,6 +251,7 @@ const NAME_TAG_COLLECTION = {
   subnet: 'subnets',
   'route-table': 'routeTables',
   'internet-gateway': 'internetGateways',
+  'nat-gateway': 'natGateways',
   'network-acl': 'networkAcls',
   instance: 'instances',
 } as const satisfies Record<NameTagResource['type'], keyof Topology>;
@@ -254,7 +263,9 @@ export function setNameTag(
   name: string,
 ): HelperResult {
   const collection = NAME_TAG_COLLECTION[resource.type];
-  const items: readonly { readonly id: string; readonly name?: string }[] = topology[collection];
+  // `natGateways` is optional (r1-nat-gateway.md 2): absent means none.
+  const items: readonly { readonly id: string; readonly name?: string }[] =
+    topology[collection] ?? [];
   if (!has(items, resource.id)) {
     return unknownReference(resource.type satisfies HelperReferenceType, resource.id);
   }

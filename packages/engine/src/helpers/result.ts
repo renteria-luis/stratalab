@@ -39,6 +39,7 @@ export type HelperReferenceType =
   | 'subnet'
   | 'route-table'
   | 'internet-gateway'
+  | 'nat-gateway'
   | 'security-group'
   | 'network-acl'
   | 'instance';

@@ -4,6 +4,7 @@ import {
   buildModel,
   CLIENT_PORT_RANGES,
   effectiveRoutes,
+  natGatewaysOf,
   networkAclOf,
   routeTableOf,
   type PortRange,
@@ -25,7 +26,7 @@ export interface SubnetStatus {
 
 export interface RouteStatus {
   readonly destinationCidrBlock: string;
-  /** `local` or an internet gateway ID. */
+  /** `local`, an internet gateway ID or a NAT gateway ID. */
   readonly target: string;
   readonly state: 'active' | 'blackhole';
   readonly origin: 'CreateRouteTable' | 'CreateRoute';
@@ -41,6 +42,17 @@ export interface InternetGatewayStatus {
   readonly state: 'attached' | 'detached';
 }
 
+/** A NAT gateway as the console lists it (NAT-01, NAT-07). R1 models only `available`. */
+export interface NatGatewayStatus {
+  readonly state: 'available';
+  readonly connectivityType: 'public';
+  readonly vpcId: string;
+  readonly subnetId: string;
+  readonly availabilityZone: string;
+  readonly privateIpAddress: string;
+  readonly elasticIpAddress: string;
+}
+
 export interface InstanceStatus {
   readonly publicIpv4Address: string | null;
   readonly clientPortRange: PortRange;
@@ -52,6 +64,7 @@ export interface Status {
   readonly subnets: Readonly<Record<string, SubnetStatus>>;
   readonly routeTables: Readonly<Record<string, RouteTableStatus>>;
   readonly internetGateways: Readonly<Record<string, InternetGatewayStatus>>;
+  readonly natGateways: Readonly<Record<string, NatGatewayStatus>>;
   readonly instances: Readonly<Record<string, InstanceStatus>>;
 }
 
@@ -68,6 +81,8 @@ export interface Status {
  * - NACL-01 default network ACL: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
  * - IGW-05 attachment: https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html
  * - ADR-04 five reserved addresses per subnet: https://docs.aws.amazon.com/vpc/latest/userguide/subnet-sizing.html
+ * - NAT-07 a NAT gateway's network interface takes an address of its subnet:
+ *   https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html
  * - ADR-10 public IPv4 address: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  * - EPH-01 client port range by platform: https://docs.aws.amazon.com/vpc/latest/userguide/custom-network-acl.html
  */
@@ -90,11 +105,12 @@ export function deriveStatus(topology: Topology): Status {
     const { table, association } = routeTableOf(model, subnet);
     const { acl, association: aclAssociation } = networkAclOf(model, subnet);
     const routes = routesByTable.get(table.id) ?? [];
-    // R0 routes target only `local` or an internet gateway, so any non-local route counts.
-    const isPublic = routes.some((route) => route.target !== 'local');
-    const interfaces = topology.instances.filter(
-      (instance) => instance.primaryNetworkInterface.subnetId === subnet.id,
-    ).length;
+    // A route to a NAT gateway doesn't make a subnet public (RT-09).
+    const isPublic = routes.some((route) => route.targetType === 'internet-gateway');
+    const interfaces =
+      topology.instances.filter(
+        (instance) => instance.primaryNetworkInterface.subnetId === subnet.id,
+      ).length + natGatewaysOf(topology).filter((nat) => nat.subnetId === subnet.id).length;
     subnets[subnet.id] = {
       type: isPublic ? 'public' : 'private',
       routeTableId: table.id,
@@ -130,6 +146,20 @@ export function deriveStatus(topology: Topology): Status {
     internetGateways[igw.id] = { state: igw.attachedVpcId === undefined ? 'detached' : 'attached' };
   }
 
+  const natGateways: Record<string, NatGatewayStatus> = {};
+  for (const nat of natGatewaysOf(topology)) {
+    const subnet = model.subnets.get(nat.subnetId);
+    natGateways[nat.id] = {
+      state: 'available',
+      connectivityType: nat.connectivityType,
+      vpcId: subnet?.vpcId ?? '',
+      subnetId: nat.subnetId,
+      availabilityZone: subnet?.availabilityZone ?? '',
+      privateIpAddress: nat.privateIpAddress,
+      elasticIpAddress: nat.elasticIpAddress,
+    };
+  }
+
   const instances: Record<string, InstanceStatus> = {};
   for (const instance of topology.instances) {
     instances[instance.id] = {
@@ -138,5 +168,5 @@ export function deriveStatus(topology: Topology): Status {
     };
   }
 
-  return { vpcs, subnets, routeTables, internetGateways, instances };
+  return { vpcs, subnets, routeTables, internetGateways, natGateways, instances };
 }

@@ -44,6 +44,8 @@ function issueKey(issue: Issue): MessageKey {
           return 'issue.QUOTA_EXCEEDED.rules-per-security-group';
         case 'rules-per-network-acl':
           return 'issue.QUOTA_EXCEEDED.rules-per-network-acl';
+        case 'nat-gateways-per-az':
+          return 'issue.QUOTA_EXCEEDED.nat-gateways-per-az';
         default:
           return 'issue.QUOTA_EXCEEDED.security-groups-per-network-interface';
       }

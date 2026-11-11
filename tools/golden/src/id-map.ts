@@ -112,9 +112,11 @@ export function routeStateProblems(
   const scenarioIdOf = (realId: string) => map.ids.get(realId);
   for (const table of topology.routeTables) {
     for (const route of table.routes) {
-      const gateway = topology.internetGateways.find(
-        (candidate) => candidate.id === route.target.internetGatewayId,
-      );
+      const { target } = route;
+      const gateway =
+        target.type === 'internet-gateway'
+          ? topology.internetGateways.find((candidate) => candidate.id === target.internetGatewayId)
+          : undefined;
       const expected = gateway?.attachedVpcId === table.vpcId ? 'active' : 'blackhole';
       const deployed = snapshot.routes.find(
         (candidate) =>

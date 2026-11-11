@@ -67,7 +67,8 @@ export interface TranslateError {
     | 'GOLDEN_SG_PEER_EGRESS'
     | 'GOLDEN_WINDOWS'
     | 'GOLDEN_ELASTIC_IP'
-    | 'GOLDEN_PUBLIC_IP_WITHOUT_IGW';
+    | 'GOLDEN_PUBLIC_IP_WITHOUT_IGW'
+    | 'GOLDEN_NAT_GATEWAY';
   readonly message: string;
 }
 
@@ -112,6 +113,14 @@ export function translationErrors(topology: Topology): TranslateError[] {
   const attachedVpcs = new Set(
     topology.internetGateways.flatMap((gateway) => gateway.attachedVpcId ?? []),
   );
+
+  // NAT gateways bill per hour and need a P9 spec update first (r1-nat-gateway.md section 6).
+  for (const nat of topology.natGateways ?? []) {
+    errors.push({
+      code: 'GOLDEN_NAT_GATEWAY',
+      message: `${nat.id}: golden scenarios don't support NAT gateways yet (NAT-01)`,
+    });
+  }
 
   for (const vpc of topology.vpcs) {
     const main = topology.routeTables.find((table) => table.id === vpc.mainRouteTableId);
@@ -336,6 +345,9 @@ export function buildStack(app: App, stackName: string, topology: Topology): Tra
     );
     tables.set(table.id, resource);
     for (const route of table.routes) {
+      // translationErrors rejects NAT gateways, so every route here targets an internet gateway.
+      if (route.target.type !== 'internet-gateway')
+        throw new Error(`${table.id}: unexpected target`);
       const gatewayId = route.target.internetGatewayId;
       const gateway = gateways.get(gatewayId);
       if (gateway === undefined) throw new Error(`unknown internet gateway ${gatewayId}`);

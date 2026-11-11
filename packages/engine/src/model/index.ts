@@ -2,6 +2,7 @@ import { indexById } from '../internal/lookup';
 import type {
   Instance,
   InternetGateway,
+  NatGateway,
   NetworkAcl,
   RouteTable,
   SecurityGroup,
@@ -20,9 +21,16 @@ export interface Model {
   readonly subnets: ReadonlyMap<string, Subnet>;
   readonly routeTables: ReadonlyMap<string, RouteTable>;
   readonly internetGateways: ReadonlyMap<string, InternetGateway>;
+  /** Empty when the topology has no `natGateways` key. */
+  readonly natGateways: ReadonlyMap<string, NatGateway>;
   readonly securityGroups: ReadonlyMap<string, SecurityGroup>;
   readonly networkAcls: ReadonlyMap<string, NetworkAcl>;
   readonly instances: ReadonlyMap<string, Instance>;
+}
+
+/** The topology's NAT gateways; the key is optional (docs/specs/r1-nat-gateway.md section 2). */
+export function natGatewaysOf(topology: Topology): readonly NatGateway[] {
+  return topology.natGateways ?? [];
 }
 
 export function buildModel(topology: Topology): Model {
@@ -32,6 +40,7 @@ export function buildModel(topology: Topology): Model {
     subnets: indexById(topology.subnets),
     routeTables: indexById(topology.routeTables),
     internetGateways: indexById(topology.internetGateways),
+    natGateways: indexById(natGatewaysOf(topology)),
     securityGroups: indexById(topology.securityGroups),
     networkAcls: indexById(topology.networkAcls),
     instances: indexById(topology.instances),

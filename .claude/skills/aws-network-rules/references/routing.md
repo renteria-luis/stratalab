@@ -120,43 +120,63 @@ Source: https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.ht
 
 ### IGW-07 · Detach and delete
 Rule: You can't detach an internet gateway if the VPC has resources with associated public IP addresses or Elastic IP addresses. You can't delete an internet gateway while it is attached to a VPC.
-Engine: `detachInternetGateway` fails with helper error `IGW_HAS_PUBLIC_ADDRESSES` while any network interface in the VPC has a public IPv4 address (`params.count`). Deleting internet gateways is Unsupported in the R0 console. Whether an instance can get a public IPv4 address at launch in a VPC without an attached internet gateway is open (Q11); the launch helper allows it (Inferred).
+Engine: `detachInternetGateway` fails with helper error `IGW_HAS_PUBLIC_ADDRESSES` while any network interface in the VPC has a public IPv4 address or any NAT gateway in the VPC has an Elastic IP (`params.count`, NAT-07). Deleting internet gateways is Unsupported in the R0 console. Whether an instance can get a public IPv4 address at launch in a VPC without an attached internet gateway is open (Q11); the launch helper allows it (Inferred).
 Fidelity: Exact · Status: verified 2026-11-04 · Exam: SAA
 Source: https://docs.aws.amazon.com/vpc/latest/userguide/delete-igw.html
 
 ## NAT gateway (public, zonal)
 
 ### NAT-01 · Placement
-Rule: A public NAT gateway is created in a public subnet and must get an Elastic IP address at creation. Traffic goes from the NAT gateway to the VPC's internet gateway.
-Code: validation issue `NAT_SUBNET_NOT_PUBLIC` when the NAT gateway's subnet has no route to an internet gateway.
-Fidelity: Exact · Status: verified 2026-11-03 · Exam: SAA
-Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html
+Rule: A public NAT gateway is created in a public subnet and must get an Elastic IP address at creation. Traffic goes from the NAT gateway to the VPC's internet gateway, so the NAT gateway's subnet needs a route table that sends internet traffic to the internet gateway.
+Engine: "public" has the RT-09 meaning (a route to an internet gateway, whatever its state). The docs don't say that creation fails in a subnet without that route, so a NAT gateway in such a subnet is a warning and the trace shows where the traffic stops (Inferred).
+Code: validation warning `NAT_SUBNET_NOT_PUBLIC`.
+Fidelity: Exact (rule) · Inferred (warning, not error) · Status: verified 2026-11-07 · Exam: SAA
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html · https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-troubleshooting.html
 
-### NAT-02 · Outbound only
-Rule: Instances behind a NAT gateway can't receive unsolicited inbound connections. Connections must start inside the VPC.
-Fidelity: Exact · Status: verified 2026-11-03 · Exam: CLF, SAA
-Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html
+### NAT-02 · Outbound only, stateful
+Rule: Instances behind a NAT gateway can't receive unsolicited inbound connections. Connections must always start inside the VPC that contains the NAT gateway. The NAT gateway allows all outbound traffic and the traffic received in response to it (it is stateful).
+Fidelity: Exact · Status: verified 2026-11-07 · Exam: CLF, SAA
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html · https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-troubleshooting.html
 
 ### NAT-03 · The source must be in the same VPC
-Rule: A NAT gateway forwards only traffic from network interfaces in its own VPC, never from peering, VPN or Direct Connect (`NGW_REQUIRES_SOURCE_IN_VPC`).
-Fidelity: Exact · Status: verified 2026-11-03 · Exam: SAA
-Source: https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
+Rule: A NAT gateway forwards only traffic from network interfaces in its own VPC, never from peering, VPN or Direct Connect (`NGW_REQUIRES_SOURCE_IN_VPC`). Routing to a NAT gateway through a VPC peering connection, or from VPN or Direct Connect through a virtual private gateway, isn't supported; through a transit gateway it is (R2).
+Engine: R1 has no peering, VPN or transit gateway, so every NAT gateway source is an instance in the same VPC and the code can't occur yet.
+Fidelity: Exact · Status: verified 2026-11-07 · Exam: SAA
+Sources: https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html · https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html
 
 ### NAT-04 · Address and port translation
-Rule: The NAT gateway replaces the instance's private source IP with its own private IP. The internet gateway then maps that IP to the NAT gateway's Elastic IP. Outbound source ports are remapped to 1024–65535 (`REMAP_EPHEMERAL_PORT`).
-Engine: the internet reply targets the NAT gateway's port, so the NAT subnet's NACL must allow inbound 1024–65535 from the internet.
-Fidelity: Exact · Status: verified 2026-11-03
+Rule: The NAT gateway replaces the instance's private source IP with its own private IP (`NGW_SOURCE_ADDRESS_REASSIGN`) and doesn't change the destination address (`NGW_DEST_ADDRESS_PRESERVATION`). The internet gateway then maps the NAT gateway's private IP to its Elastic IP. Outbound source ports are remapped to 1024–65535 (`REMAP_EPHEMERAL_PORT`). On the way back the NAT gateway translates the address back to the original source.
+Engine: the internet reply targets the NAT gateway's port, so the NAT subnet's NACL must allow inbound 1024–65535 from the internet. The trace uses one concrete NAT port (EPH-02 style, see `docs/specs/r1-nat-gateway.md`).
+Fidelity: Exact · Status: verified 2026-11-07
 Sources: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html · https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
 
-### NAT-05 · No security group on a NAT gateway
-Rule: You can't attach a security group to a NAT gateway. The NACL of its subnet still applies in both directions.
-Fidelity: Exact (security group part) · Inferred (NACL part) · Status: to-verify
+### NAT-05 · No security group on a NAT gateway; its subnet's NACL applies
+Rule: You can't associate a security group with a NAT gateway; security groups go on the instances. You can use a network ACL to control the traffic to and from the NAT gateway's subnet. NAT gateways use ports 1024–65535.
+Fidelity: Exact · Status: verified 2026-11-07 (the NACL part is now documented) · Exam: SAA
 Source: https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html
 
 ### NAT-06 · Out of scope
-Regional NAT gateways (multi-AZ) and private NAT gateways exist. Both are Unsupported in the MVP: model one zonal public NAT gateway in one subnet.
-Status: verified 2026-11-03 (they exist)
-Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html
+Regional NAT gateways (`AvailabilityMode: regional`, multi-AZ) and private NAT gateways (`ConnectivityType: private`) exist. The defaults are zonal and public. Secondary IPv4 addresses (up to 8 per NAT gateway, 2 Elastic IPs by default) exist too. All are Unsupported in the MVP: model one zonal public NAT gateway in one subnet with one private IP and one Elastic IP.
+Status: verified 2026-11-07 (they exist)
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html · https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateNatGateway.html · https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html
+
+### NAT-07 · Creation requirements
+Rule: Each NAT gateway is created in one Availability Zone (its subnet's). AWS creates a requester-managed network interface for it with a private IPv4 address from the subnet; you can choose the address, otherwise AWS picks one, and you can't change it later. Creation fails (state `Failed`) when the subnet has no free private address, when the VPC has no attached internet gateway ("A NAT gateway must be created in a VPC with an internet gateway"), or when the Elastic IP address is already associated with another resource.
+Engine: the NAT gateway's private IP follows the instance address rules (ADR-04, ADR-09) and counts in the subnet's available addresses; its Elastic IP follows ADR-10. A NAT gateway in a VPC without an attached internet gateway can't exist, because creation needs one and IGW-07 blocks detaching while the NAT gateway's Elastic IP is associated (Inferred from NAT-07 and IGW-07).
+Fidelity: Exact (creation rules) · Inferred (the VPC can't lose its gateway later) · Status: verified 2026-11-07 · Exam: SAA
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html · https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-troubleshooting.html · https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateNatGateway.html · https://docs.aws.amazon.com/vpc/latest/userguide/delete-igw.html
+
+### NAT-08 · Quota
+Rule: 5 NAT gateways per Availability Zone by default (adjustable). NAT gateways count in the pending, active and deleting states.
+Code: validation warning `QUOTA_EXCEEDED`.
+Fidelity: Exact (default value) · Status: verified 2026-11-07
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html · https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-troubleshooting.html
+
+### NAT-09 · One NAT gateway per Availability Zone for resilience
+Rule: Subnets in other Availability Zones can route to a NAT gateway. If the NAT gateway's zone is down, resources in the other zones that share it lose internet access. AWS recommends a NAT gateway in each zone, with routing so resources use the NAT gateway in their own zone.
+Engine: cross-zone use is allowed and raises no issue.
+Fidelity: Exact · Status: verified 2026-11-07 · Exam: SAA
+Sources: https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html · https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-scenarios.html
 
 ## Open questions
 
@@ -165,3 +185,6 @@ Source: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html
 - Q8: Answered. Selection answered 2026-11-05 by golden `s4-q8-blackhole` (the blackhole route wins; see Q14 for the code). Public subnet decided 2026-11-06 (user) from the console: a subnet whose only internet gateway route is blackhole counts as public (RT-09, `docs/specs/q8-public-subnet.md`). Console evidence 2026-11-06 (us-east-1, `docs/console-capture/2026-11-06/vpc-virtual_private_cloud-subnets-public_with_blackhole_route.txt`): after detaching the gateway, the Routes tab shows 0.0.0.0/0 → igw as "Blackhole" and the Subnets column "Internet access" still shows "Yes (public)" (both lists refreshed); a subnet with only the local route shows "No (private)". Original question: confirm that a blackhole route still wins longest prefix match over a less specific active route, and decide whether a subnet whose only internet gateway route is blackhole counts as public (RT-08, RT-09). Golden test: 0.0.0.0/0 → attached igw plus 198.51.100.0/24 → a detached igw, then analyze instance → 198.51.100.10 (scenario `s4-q8-blackhole`, built in three stages because of RT-08 and IGW-07).
 - Q11: Can an instance get an auto-assigned public IPv4 address at launch in a VPC with no attached internet gateway (IGW-07, ADR-10)? IGW-07 forbids detaching while public addresses exist, so the console path to "detached gateway + public address" (used by the RT-08 and IGW-05 trace tests) may only exist through launch. No Reachability Analyzer cost: the user launches one instance in the sandbox account and terminates it (steps: `docs/specs/p9-golden.md` section 3). Associating an Elastic IP address needs an attached internet gateway (EC2 error `Gateway.NotAttached`), so only auto-assignment is open.
 - Q10: What happens to internet traffic aimed at an instance's public IPv4 address when the VPC has no attached internet gateway, and can that state exist at all (detaching an internet gateway while public addresses are mapped)? The engine uses `NO_INTERNET_GATEWAY` until the docs or a capture answer it (IGW-05). Manual steps: `docs/specs/p9-golden.md` section 3.
+- Q15: A server's reply that leaves through a route to a NAT gateway (asymmetric path: the request came in through the internet gateway to the server's public IP, the server subnet's route table sends 0.0.0.0/0 to a NAT gateway). The docs don't describe it. Proposed engine behavior: the return route lookup fails with `UNSUPPORTED_FEATURE` and never reports `REACHED` (`docs/specs/r1-nat-gateway.md`). A golden scenario could answer it.
+- Q16: The NAT gateway's own subnet route table sends the destination to a NAT gateway (itself or another one) instead of the internet gateway. The docs don't describe chained NAT gateways. Proposed: `UNSUPPORTED_FEATURE` at that route lookup, plus the `NAT_SUBNET_NOT_PUBLIC` warning when no internet gateway route exists.
+- Q17: Can a route target a NAT gateway of another VPC? `CreateRoute` says only "The ID of a NAT gateway". Proposed: validation error `VPC_MISMATCH` (Inferred), as for route tables of another VPC.

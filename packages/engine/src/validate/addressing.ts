@@ -14,7 +14,8 @@ import {
 } from '../cidr';
 import { indexById, mustGet } from '../internal/lookup';
 import type { Topology } from '../schema';
-import type { Issue } from './issue';
+import type { RuleId } from '../rules';
+import type { Issue, ResourceRef } from './issue';
 
 /** VPC and subnet IPv4 CIDRs are /16 to /28 (ADR-01, ADR-02). */
 const MIN_PREFIX = 16;
@@ -39,6 +40,9 @@ const isValidSize = (block: CidrBlock) => block.prefix >= MIN_PREFIX && block.pr
  * - ADR-09 primary private IPv4 address: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  * - ADR-10 public IPv4 address: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  *   and https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html (RFC 1918 and RFC 6598)
+ * - NAT-07 a NAT gateway's private IP comes from its subnet; its Elastic IP can't be in use:
+ *   https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html and
+ *   https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-troubleshooting.html
  */
 export function checkAddressing(topology: Topology): Issue[] {
   return [...checkVpcs(topology), ...checkSubnets(topology), ...checkInterfaces(topology)];
@@ -135,32 +139,74 @@ function checkSubnets(topology: Topology): Issue[] {
   return issues;
 }
 
-/** ADR-04, ADR-09, ADR-10 for each instance's primary network interface. */
+/** One private address and an optional public address to check (ADR-04, ADR-09, ADR-10). */
+interface AddressOwner {
+  readonly resource: ResourceRef;
+  readonly subnetId: string;
+  readonly privateIp: string;
+  readonly privatePath: Issue['path'];
+  readonly publicIp: string | null;
+  readonly publicPath: Issue['path'];
+  /** NAT gateways add NAT-07 to every address rule (r1-nat-gateway.md section 3). */
+  readonly extraRuleIds: readonly RuleId[];
+  /** An Elastic IP already associated elsewhere is a documented failure (NAT-07). */
+  readonly publicDuplicateFidelity: 'Exact' | 'Inferred';
+}
+
+/**
+ * ADR-04, ADR-09, ADR-10 for each NAT gateway (NAT-07), then each instance's primary network
+ * interface. NAT gateways come first, as in topology key order, so a later instance that
+ * reuses one of their addresses gets the `IP_DUPLICATE` issue.
+ */
 function checkInterfaces(topology: Topology): Issue[] {
+  const owners: AddressOwner[] = [
+    ...(topology.natGateways ?? []).map((nat, i): AddressOwner => ({
+      resource: { type: 'nat-gateway', id: nat.id },
+      subnetId: nat.subnetId,
+      privateIp: nat.privateIpAddress,
+      privatePath: ['natGateways', i, 'privateIpAddress'],
+      publicIp: nat.elasticIpAddress,
+      publicPath: ['natGateways', i, 'elasticIpAddress'],
+      extraRuleIds: ['NAT-07'],
+      publicDuplicateFidelity: 'Exact',
+    })),
+    ...topology.instances.map((instance, i): AddressOwner => {
+      const eni = instance.primaryNetworkInterface;
+      return {
+        resource: { type: 'network-interface', id: eni.id },
+        subnetId: eni.subnetId,
+        privateIp: eni.privateIpAddress,
+        privatePath: ['instances', i, 'primaryNetworkInterface', 'privateIpAddress'],
+        publicIp: eni.publicIp?.address ?? null,
+        publicPath: ['instances', i, 'primaryNetworkInterface', 'publicIp', 'address'],
+        extraRuleIds: [],
+        publicDuplicateFidelity: 'Inferred',
+      };
+    }),
+  ];
   const issues: Issue[] = [];
   const subnets = indexById(topology.subnets);
   const vpcBlocks = topology.vpcs.map((vpc) => mustParseCidr(vpc.cidrBlock));
-  /** First interface seen per "vpcId address" (private) and per address (public). */
-  const privateOwners = new Map<string, string>();
-  const publicOwners = new Map<string, string>();
+  /** First owner seen per "vpcId address" (private) and per address (public). */
+  const privateOwners = new Map<string, ResourceRef>();
+  const publicOwners = new Map<string, ResourceRef>();
 
-  topology.instances.forEach((instance, i) => {
-    const eni = instance.primaryNetworkInterface;
-    const subnet = mustGet(subnets, eni.subnetId);
+  for (const owner of owners) {
+    const { resource, privateIp, privatePath, publicPath, extraRuleIds } = owner;
+    const subnet = mustGet(subnets, owner.subnetId);
     const subnetBlock = mustParseCidr(subnet.cidrBlock);
-    const resource = { type: 'network-interface', id: eni.id } as const;
-    const privatePath = ['instances', i, 'primaryNetworkInterface', 'privateIpAddress'] as const;
-    const privateAddress = mustParseIpv4(eni.privateIpAddress);
+    const privateAddress = mustParseIpv4(privateIp);
+    const rules = (ruleId: RuleId): RuleId[] => [ruleId, ...extraRuleIds];
 
     if (!contains(subnetBlock, privateAddress)) {
       issues.push({
         code: 'IP_OUT_OF_SUBNET',
         severity: 'error',
-        ruleIds: ['ADR-09'],
+        ruleIds: rules('ADR-09'),
         fidelity: 'Exact',
         resource,
         path: privatePath,
-        params: { ipAddress: eni.privateIpAddress, subnetCidrBlock: subnet.cidrBlock },
+        params: { ipAddress: privateIp, subnetCidrBlock: subnet.cidrBlock },
       });
     } else {
       const purpose = reservedPurpose(subnetBlock, privateAddress);
@@ -168,49 +214,48 @@ function checkInterfaces(topology: Topology): Issue[] {
         issues.push({
           code: 'IP_RESERVED',
           severity: 'error',
-          ruleIds: ['ADR-04'],
+          ruleIds: rules('ADR-04'),
           fidelity: 'Exact',
           resource,
           path: privatePath,
-          params: { ipAddress: eni.privateIpAddress, subnetCidrBlock: subnet.cidrBlock, purpose },
+          params: { ipAddress: privateIp, subnetCidrBlock: subnet.cidrBlock, purpose },
         });
       }
     }
 
     // Private addresses repeat legitimately across VPCs, so uniqueness is per VPC (Inferred).
-    const privateKey = `${subnet.vpcId} ${eni.privateIpAddress}`;
+    const privateKey = `${subnet.vpcId} ${privateIp}`;
     const privateOwner = privateOwners.get(privateKey);
     if (privateOwner === undefined) {
-      privateOwners.set(privateKey, eni.id);
+      privateOwners.set(privateKey, resource);
     } else {
       issues.push({
         code: 'IP_DUPLICATE',
         severity: 'error',
-        ruleIds: ['ADR-09'],
+        ruleIds: rules('ADR-09'),
         fidelity: 'Inferred',
         resource,
         path: privatePath,
-        related: [{ type: 'network-interface', id: privateOwner }],
-        params: { ipAddress: eni.privateIpAddress, kind: 'private' },
+        related: [privateOwner],
+        params: { ipAddress: privateIp, kind: 'private' },
       });
     }
 
-    if (eni.publicIp === undefined) return;
-    const publicAddress = eni.publicIp.address;
-    const publicPath = ['instances', i, 'primaryNetworkInterface', 'publicIp', 'address'] as const;
+    const publicAddress = owner.publicIp;
+    if (publicAddress === null) continue;
 
     const publicOwner = publicOwners.get(publicAddress);
     if (publicOwner === undefined) {
-      publicOwners.set(publicAddress, eni.id);
+      publicOwners.set(publicAddress, resource);
     } else {
       issues.push({
         code: 'IP_DUPLICATE',
         severity: 'error',
-        ruleIds: ['ADR-10'],
-        fidelity: 'Inferred',
+        ruleIds: rules('ADR-10'),
+        fidelity: owner.publicDuplicateFidelity,
         resource,
         path: publicPath,
-        related: [{ type: 'network-interface', id: publicOwner }],
+        related: [publicOwner],
         params: { ipAddress: publicAddress, kind: 'public' },
       });
     }
@@ -220,7 +265,7 @@ function checkInterfaces(topology: Topology): Issue[] {
       issues.push({
         code: 'PUBLIC_IP_INVALID',
         severity: 'error',
-        ruleIds: ['ADR-10'],
+        ruleIds: rules('ADR-10'),
         fidelity: 'Exact',
         resource,
         path: publicPath,
@@ -231,6 +276,6 @@ function checkInterfaces(topology: Topology): Issue[] {
         },
       });
     }
-  });
+  }
   return issues;
 }

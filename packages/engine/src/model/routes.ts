@@ -7,8 +7,9 @@ import type { Model } from './index';
 export interface EffectiveRoute {
   readonly destinationCidrBlock: string;
   readonly block: CidrBlock;
-  /** `local` or an internet gateway ID. */
+  /** `local`, an internet gateway ID or a NAT gateway ID. */
   readonly target: string;
+  readonly targetType: 'local' | 'internet-gateway' | 'nat-gateway';
   readonly state: 'active' | 'blackhole';
   readonly origin: 'CreateRouteTable' | 'CreateRoute';
 }
@@ -16,10 +17,12 @@ export interface EffectiveRoute {
 /**
  * The routes of a table with their state. The local route (VPC CIDR → local) is derived and
  * always active. A route to an internet gateway that isn't attached to the table's VPC is
- * `blackhole`.
+ * `blackhole`. A route to a NAT gateway is `active`: R1 models only `available` NAT gateways,
+ * and one in another VPC is a `validate()` error (Q17).
  *
  * Rules:
  * - RT-03 local route: https://docs.aws.amazon.com/vpc/latest/userguide/route-tables-priority.html
+ * - RT-05 static targets: https://docs.aws.amazon.com/vpc/latest/userguide/route-tables-priority.html
  * - RT-08 blackhole state: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Route.html
  */
 export function effectiveRoutes(model: Model, table: RouteTable): EffectiveRoute[] {
@@ -28,17 +31,26 @@ export function effectiveRoutes(model: Model, table: RouteTable): EffectiveRoute
     destinationCidrBlock: vpc.cidrBlock,
     block: mustParseCidr(vpc.cidrBlock),
     target: 'local',
+    targetType: 'local',
     state: 'active',
     origin: 'CreateRouteTable',
   };
   const stored = table.routes.map((route): EffectiveRoute => {
-    const igw = mustGet(model.internetGateways, route.target.internetGatewayId);
-    return {
+    const common = {
       destinationCidrBlock: route.destinationCidrBlock,
       block: mustParseCidr(route.destinationCidrBlock),
-      target: igw.id,
-      state: igw.attachedVpcId === table.vpcId ? 'active' : 'blackhole',
       origin: 'CreateRoute',
+    } as const;
+    if (route.target.type === 'nat-gateway') {
+      const nat = mustGet(model.natGateways, route.target.natGatewayId);
+      return { ...common, target: nat.id, targetType: 'nat-gateway', state: 'active' };
+    }
+    const igw = mustGet(model.internetGateways, route.target.internetGatewayId);
+    return {
+      ...common,
+      target: igw.id,
+      targetType: 'internet-gateway',
+      state: igw.attachedVpcId === table.vpcId ? 'active' : 'blackhole',
     };
   });
   return [local, ...stored];

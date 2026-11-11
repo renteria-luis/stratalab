@@ -154,6 +154,9 @@ export function hopNodeId(hop: Hop, query: TraceQuery, topology: Topology, statu
         topology.instances.find((instance) => instance.primaryNetworkInterface.id === component.id)
           ?.id ?? component.id
       );
+    case 'nat-gateway':
+      // No NAT gateway node yet: the hop is drawn on its subnet (r1-nat-gateway.md 1).
+      return topology.natGateways?.find((nat) => nat.id === component.id)?.subnetId ?? component.id;
     case 'route-table': {
       const sender =
         hop.direction === 'forward'
@@ -167,7 +170,15 @@ export function hopNodeId(hop: Hop, query: TraceQuery, topology: Topology, statu
               : undefined;
       const instance = topology.instances.find((candidate) => candidate.id === sender);
       const subnetId = instance?.primaryNetworkInterface.subnetId;
-      return subnetId ?? status.routeTables[component.id]?.subnetIds[0] ?? INTERNET_NODE_ID;
+      // F3 also looks up the NAT gateway's subnet table, which the instance doesn't use.
+      const usesTable =
+        subnetId !== undefined && status.subnets[subnetId]?.routeTableId === component.id;
+      return (
+        (usesTable ? subnetId : undefined) ??
+        status.routeTables[component.id]?.subnetIds[0] ??
+        subnetId ??
+        INTERNET_NODE_ID
+      );
     }
   }
 }

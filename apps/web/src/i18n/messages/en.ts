@@ -98,9 +98,11 @@ export const en = {
     '{vpcId} already has internet gateway {internetGatewayId}. A VPC can have only one internet gateway.',
   'helper.IGW_NOT_ATTACHED': 'Internet gateway {internetGatewayId} is not attached to a VPC.',
   'helper.IGW_HAS_PUBLIC_ADDRESSES_one':
-    "Internet gateway {internetGatewayId} can't be detached: {vpcId} has {count} network interface with a public IPv4 address.",
+    "Internet gateway {internetGatewayId} can't be detached: {vpcId} has {count} network interface or NAT gateway with a public IPv4 address.",
   'helper.IGW_HAS_PUBLIC_ADDRESSES_other':
-    "Internet gateway {internetGatewayId} can't be detached: {vpcId} has {count} network interfaces with a public IPv4 address.",
+    "Internet gateway {internetGatewayId} can't be detached: {vpcId} has {count} network interfaces or NAT gateways with a public IPv4 address.",
+  'helper.NAT_VPC_NO_INTERNET_GATEWAY':
+    "Network {vpcId} has no internet gateway attached, so a public NAT gateway can't be created in {subnetId}.",
 
   'issue.VPC_SIZE_INVALID':
     'VPC CIDR {cidrBlock} is a /{prefixLength}. A VPC CIDR must be between /{minPrefixLength} and /{maxPrefixLength}.',
@@ -132,6 +134,10 @@ export const en = {
   'issue.LOCAL_ROUTE_CONFLICT':
     'Destination {destinationCidrBlock} is the VPC CIDR {vpcCidrBlock} or inside it. The local route already covers it.',
   'issue.IGW_MULTIPLE_ATTACHED': '{vpcId} already has internet gateway {relatedId} attached.',
+  'issue.NAT_SUBNET_NOT_PUBLIC':
+    'NAT gateway {resourceId} is in subnet {subnetId}, whose route table {routeTableId} has no route to an internet gateway. A public NAT gateway needs a public subnet.',
+  'issue.NAT_VPC_NO_INTERNET_GATEWAY':
+    'NAT gateway {resourceId} is in {vpcId}, which has no attached internet gateway.',
   'issue.SG_NAME_INVALID.empty': 'The security group {field} is required.',
   'issue.SG_NAME_INVALID.too-long':
     'The security group {field} can have up to {maxLength} characters.',
@@ -147,6 +153,8 @@ export const en = {
     'The network ACL has {count} {direction} rules. The default quota is {limit}.',
   'issue.QUOTA_EXCEEDED.security-groups-per-network-interface':
     'The network interface has {count} security groups. The default quota is {limit}.',
+  'issue.QUOTA_EXCEEDED.nat-gateways-per-az':
+    '{availabilityZone} has {count} NAT gateways. The default quota is {limit} per Availability Zone.',
   'issue.purpose.network': 'network address',
   'issue.purpose.vpc-router': 'VPC router',
   'issue.purpose.dns': 'reserved by AWS (DNS)',
@@ -196,6 +204,8 @@ export const en = {
     'The security groups on the network interface have no rules in this direction.',
   'reason.NO_LISTENER': 'Nothing on the instance listens on this port.',
   'reason.NO_INTERNET_GATEWAY': 'The VPC has no attached internet gateway.',
+  'reason.UNSUPPORTED_FEATURE':
+    'The route sends this packet to a NAT gateway on a path the simulator does not model.',
 
   'query.UNKNOWN_REFERENCE': 'The query names an instance that does not exist.',
   'query.INVALID_QUERY': 'The query is not valid.',
@@ -219,6 +229,7 @@ export const en = {
   'step.igw-ingress': 'Internet gateway (in)',
   'step.nacl-inbound': 'Network ACL (inbound)',
   'step.sg-ingress': 'Security group (inbound)',
+  'step.nat-gateway': 'NAT gateway',
   'step.host': 'Instance',
   'outcome.pass': 'Passed',
   'outcome.fail': 'Stopped here',

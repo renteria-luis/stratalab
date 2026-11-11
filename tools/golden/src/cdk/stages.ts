@@ -35,8 +35,10 @@ export function planStages(topology: Topology): StagePlan {
   const routedDetached = new Map<string, Set<string>>();
   for (const table of topology.routeTables) {
     for (const route of table.routes) {
+      const { target } = route;
+      if (target.type !== 'internet-gateway') continue;
       const gateway = topology.internetGateways.find(
-        (candidate) => candidate.id === route.target.internetGatewayId,
+        (candidate) => candidate.id === target.internetGatewayId,
       );
       if (gateway === undefined || gateway.attachedVpcId === table.vpcId) continue;
       const set = routedDetached.get(table.vpcId) ?? new Set<string>();
@@ -72,7 +74,11 @@ export function planStages(topology: Topology): StagePlan {
     for (const [vpcId, spare] of spareOf) if (gateway.id === spare) gateway.attachedVpcId = vpcId;
   }
   for (const table of first.routeTables) {
-    table.routes = table.routes.filter((route) => !ownGateways.has(route.target.internetGatewayId));
+    table.routes = table.routes.filter(
+      (route) =>
+        route.target.type !== 'internet-gateway' ||
+        !ownGateways.has(route.target.internetGatewayId),
+    );
   }
 
   const second = clone(first);

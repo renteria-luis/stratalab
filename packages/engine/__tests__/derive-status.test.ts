@@ -63,6 +63,7 @@ describe('deriveStatus', () => {
         },
       },
       internetGateways: { 'igw-0000000a': { state: 'attached' } },
+      natGateways: {},
       instances: {
         'i-0000000a': {
           publicIpv4Address: '203.0.113.25',

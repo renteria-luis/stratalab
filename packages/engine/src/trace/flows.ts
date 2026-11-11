@@ -1,13 +1,14 @@
 import { mustParseIpv4 } from '../cidr';
 import { mustGet } from '../internal/lookup';
 import { attachedInternetGateway, networkAclOf, routeTableOf, type Model } from '../model';
-import type { Instance, NetworkInterface, Subnet, Vpc } from '../schema';
+import type { Instance, NatGateway, NetworkInterface, Subnet, Vpc } from '../schema';
 import {
   edgeIngressStep,
   hostStep,
   igwEgressStep,
   igwIngressStep,
   naclStep,
+  natStep,
   routeStep,
   runFlow,
   sameSubnetNaclStep,
@@ -127,6 +128,8 @@ export function traceF1(
           expectedTarget: 'internet-gateway',
           ruleIds: ['RT-02', 'RT-04', 'RT-08', 'IGW-04'],
           fidelity: 'Inferred',
+          // A reply sent to a NAT gateway: not documented, so not modeled (Q15).
+          unsupportedNatRuleId: 'NAT-02',
         });
         egressGatewayId = routed.internetGatewayId;
         return routed.hop;
@@ -343,6 +346,183 @@ export function traceF0(
           'NACL-04',
         ]),
       () => statefulSgStep('sg-ingress', source.networkInterface, reply),
+    ],
+  );
+}
+
+/**
+ * F3 · instance → internet server through a NAT gateway, then the response
+ * (docs/specs/r1-nat-gateway.md section 4.2). Forward: security group outbound → NACL
+ * outbound → route to the NAT gateway → NAT subnet NACL inbound → NAT gateway (source becomes
+ * its private IP and NAT port) → NAT subnet NACL outbound → NAT subnet route to the internet
+ * gateway → internet gateway (private IP → Elastic IP). Return: internet gateway → NAT subnet
+ * NACL inbound to the NAT port → NAT gateway (back to the instance) → NAT subnet NACL outbound
+ * to the client port → local route → NACL inbound → security group (stateful).
+ * Network ACL hops between the instance and the NAT gateway are skipped when they share a
+ * subnet (NACL-04). The order follows TRC-01, as in F1 and F2 (Inferred until Q7 for F3).
+ *
+ * Rules: TRC-01, TRC-02, NAT-01 to NAT-05, RT-02 to RT-05, RT-08, IGW-01 to IGW-03,
+ * NACL-02 to NACL-04, SG-01 to SG-03, EPH-01, EPH-02 ·
+ * https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html ·
+ * https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html ·
+ * https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
+ */
+export function traceF3(
+  model: Model,
+  plan: {
+    source: Endpoint;
+    serverIp: string;
+    client: TraceClient;
+    port: number;
+    nat: NatGateway;
+    natPort: number;
+  },
+): EvaluatedTrace {
+  const { source, serverIp, client, port, nat, natPort } = plan;
+  const { networkInterface, subnet } = source;
+  const privateIp = networkInterface.privateIpAddress;
+  const clientPort = client.sourcePort;
+  const natSubnet = mustGet(model.subnets, nat.subnetId);
+  const sameSubnet = natSubnet.id === subnet.id;
+  const sourceAcl = networkAclOf(model, subnet).acl;
+  const natAcl = networkAclOf(model, natSubnet).acl;
+  const sourceTable = routeTableOf(model, subnet).table;
+  const natTable = routeTableOf(model, natSubnet).table;
+  const natIp = nat.privateIpAddress;
+
+  const request = tcp(privateIp, clientPort, serverIp, port);
+  const fromNat = tcp(natIp, natPort, serverIp, port);
+  const arriving = tcp(serverIp, port, nat.elasticIpAddress, natPort);
+  const replyToNat = tcp(serverIp, port, natIp, natPort);
+  const reply = tcp(serverIp, port, privateIp, clientPort);
+  let gatewayId: string | null = null;
+
+  /** A NACL hop between the instance and the NAT gateway (NACL-04). */
+  const innerNacl = (
+    step: 'nacl-inbound' | 'nacl-outbound',
+    naclSubnet: Subnet,
+    packet: Packet,
+    remoteIp: string,
+    naclPort: number,
+    ruleIds: Parameters<typeof naclStep>[0]['ruleIds'],
+  ) => {
+    if (sameSubnet) return sameSubnetNaclStep(step, naclSubnet, packet);
+    const acl = naclSubnet.id === subnet.id ? sourceAcl : natAcl;
+    return naclStep({ step, subnet: naclSubnet, acl, packet, remoteIp, port: naclPort, ruleIds });
+  };
+
+  return runFlow(
+    'F3',
+    client,
+    [
+      () =>
+        sgStep({
+          step: 'sg-egress',
+          model,
+          networkInterface,
+          packet: request,
+          remote: { ip: mustParseIpv4(serverIp), networkInterface: null },
+          port,
+          ruleIds: ['SG-02', 'SG-03'],
+        }),
+      () => innerNacl('nacl-outbound', subnet, request, serverIp, port, ['NACL-02', 'NACL-04']),
+      () =>
+        routeStep({
+          model,
+          table: sourceTable,
+          packet: request,
+          destinationIp: serverIp,
+          expectedTarget: 'nat-gateway',
+          ruleIds: ['RT-02', 'RT-04', 'RT-05'],
+          fidelity: 'Exact',
+        }).hop,
+      () => innerNacl('nacl-inbound', natSubnet, request, privateIp, port, ['NACL-02', 'NAT-05']),
+      () =>
+        natStep({
+          natGatewayId: nat.id,
+          packet: request,
+          translatedTo: fromNat,
+          ruleIds: ['NAT-03', 'NAT-04', 'NAT-05'],
+        }),
+      () =>
+        naclStep({
+          step: 'nacl-outbound',
+          subnet: natSubnet,
+          acl: natAcl,
+          packet: fromNat,
+          remoteIp: serverIp,
+          port,
+          ruleIds: ['NACL-02', 'NAT-05'],
+        }),
+      () => {
+        const routed = routeStep({
+          model,
+          table: natTable,
+          packet: fromNat,
+          destinationIp: serverIp,
+          expectedTarget: 'internet-gateway',
+          ruleIds: ['RT-04', 'RT-08', 'NAT-01'],
+          fidelity: 'Exact',
+          // The NAT gateway's subnet sends the packet to a NAT gateway again (Q16).
+          unsupportedNatRuleId: 'NAT-01',
+        });
+        gatewayId = routed.internetGatewayId;
+        return routed.hop;
+      },
+      () =>
+        igwEgressStep({
+          // Set by the route step, which passes only with an internet gateway target.
+          internetGatewayId: gatewayId ?? '',
+          packet: fromNat,
+          publicIp: nat.elasticIpAddress,
+          ruleIds: ['IGW-01', 'IGW-03', 'NAT-04'],
+        }),
+    ],
+    [
+      () =>
+        igwIngressStep({
+          internetGatewayId: gatewayId ?? '',
+          packet: arriving,
+          privateIp: natIp,
+          ruleIds: ['IGW-02', 'RT-02'],
+          fidelity: 'Inferred',
+        }),
+      () =>
+        naclStep({
+          step: 'nacl-inbound',
+          subnet: natSubnet,
+          acl: natAcl,
+          packet: replyToNat,
+          remoteIp: serverIp,
+          port: natPort,
+          ruleIds: ['NAT-04', 'NAT-05', 'EPH-01'],
+        }),
+      () =>
+        natStep({
+          natGatewayId: nat.id,
+          packet: replyToNat,
+          translatedTo: reply,
+          ruleIds: ['NAT-02', 'NAT-04'],
+        }),
+      () =>
+        innerNacl('nacl-outbound', natSubnet, reply, privateIp, clientPort, [
+          'NACL-03',
+          'NAT-05',
+          'EPH-02',
+        ]),
+      () =>
+        routeStep({
+          model,
+          table: natTable,
+          packet: reply,
+          destinationIp: privateIp,
+          expectedTarget: 'local',
+          ruleIds: ['RT-03'],
+          // The docs don't list this lookup; it follows TRC-01 (r1-nat-gateway.md 4.2).
+          fidelity: 'Inferred',
+        }).hop,
+      () => innerNacl('nacl-inbound', subnet, reply, serverIp, clientPort, ['NACL-03', 'EPH-01']),
+      () => statefulSgStep('sg-ingress', networkInterface, reply),
     ],
   );
 }

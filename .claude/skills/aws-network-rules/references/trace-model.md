@@ -40,8 +40,9 @@ Use these as test fixtures and lab templates.
 - Return: internet gateway → NACL inbound to the instance's ephemeral port (by OS) → security group passes (stateful).
 
 **F3 · Instance in a private subnet → internet through a NAT gateway (TCP 443)**
-- Forward: security group outbound 443 → private subnet NACL outbound → private route 0.0.0.0/0 → nat → NAT subnet NACL inbound → NAT gateway (NAT-04) → NAT subnet route 0.0.0.0/0 → igw → NAT subnet NACL outbound → internet gateway (NAT private IP → Elastic IP) → internet.
-- Return: internet gateway → NAT subnet NACL inbound to the NAT gateway's port (1024–65535) → NAT gateway → NAT subnet NACL outbound to the instance's ephemeral port → private subnet NACL inbound → security group passes.
+- Forward: security group outbound 443 → private subnet NACL outbound → private route 0.0.0.0/0 → nat → NAT subnet NACL inbound → NAT gateway (no security group, NAT-05; instance IP → NAT private IP, port remapped, NAT-04) → NAT subnet NACL outbound → NAT subnet route 0.0.0.0/0 → igw → internet gateway (NAT private IP → Elastic IP) → internet.
+- Return: internet gateway → NAT subnet NACL inbound to the NAT gateway's port (1024–65535) → NAT gateway (back to the instance, stateful, NAT-02) → NAT subnet NACL outbound to the instance's ephemeral port → NAT subnet route lookup (local) → private subnet NACL inbound → security group passes.
+- NACL outbound comes before the route lookup, as TRC-01 and the golden-checked F1 and F2 order (changed 2026-11-08 from "route, then NACL"; Inferred until Q7 covers F3). NACL hops between the instance and the NAT gateway are skipped when they share a subnet (NACL-04). Hop table: `docs/specs/r1-nat-gateway.md` section 4.2.
 
 **F4 · Instance → interface endpoint in another subnet (SSM, TCP 443)**
 - First, DNS: VPCE-I03 and DNS-03 decide whether the service name points to the endpoint.
@@ -61,7 +62,8 @@ Reuse these Reachability Analyzer explanation codes with the same name and meani
 Our own codes, for cases Reachability Analyzer doesn't cover:
 - `NO_LISTENER`: no service on the destination port (`ROUTED_THEN_DROPPED`).
 - `NO_INTERNET_GATEWAY`: internet traffic aimed at a VPC with no attached internet gateway (`BROKE_AT_HOP`, Inferred, IGW-05, Q10).
-- Validation: `VPC_SIZE_INVALID`, `VPC_CIDR_RESTRICTED`, `SUBNET_SIZE_INVALID`, `SUBNET_CIDR_OUT_OF_VPC`, `CIDR_OVERLAP`, `IP_RESERVED`, `IP_OUT_OF_SUBNET`, `IP_DUPLICATE`, `PUBLIC_IP_INVALID`, `ROUTE_DUPLICATE_DESTINATION`, `ROUTE_DESTINATION_RESERVED`, `LOCAL_ROUTE_CONFLICT`, `IGW_MULTIPLE_ATTACHED`, `VPC_MISMATCH`, `SG_NAME_DUPLICATE`, `SG_NAME_INVALID`, `NACL_RULE_NUMBER_DUPLICATE`, `QUOTA_EXCEEDED`, `NAT_SUBNET_NOT_PUBLIC`. Reference and structure checks are listed in `docs/specs/r0-engine.md`.
+- `UNSUPPORTED_FEATURE` as a hop code: a route lookup picks a NAT gateway where the flow can't follow one (a reply, Q15, or the NAT gateway's own subnet, Q16). `BROKE_AT_HOP`, hop fidelity Unsupported.
+- Validation: `VPC_SIZE_INVALID`, `VPC_CIDR_RESTRICTED`, `SUBNET_SIZE_INVALID`, `SUBNET_CIDR_OUT_OF_VPC`, `CIDR_OVERLAP`, `IP_RESERVED`, `IP_OUT_OF_SUBNET`, `IP_DUPLICATE`, `PUBLIC_IP_INVALID`, `ROUTE_DUPLICATE_DESTINATION`, `ROUTE_DESTINATION_RESERVED`, `LOCAL_ROUTE_CONFLICT`, `IGW_MULTIPLE_ATTACHED`, `VPC_MISMATCH`, `SG_NAME_DUPLICATE`, `SG_NAME_INVALID`, `NACL_RULE_NUMBER_DUPLICATE`, `QUOTA_EXCEEDED`, `NAT_SUBNET_NOT_PUBLIC` (warning), `NAT_VPC_NO_INTERNET_GATEWAY`. Reference and structure checks are listed in `docs/specs/r0-engine.md`.
 - SSM status: see SSM-04.
 - `UNSUPPORTED_FEATURE`: the path needs something the engine doesn't model. Never report `REACHED` in that case.
 

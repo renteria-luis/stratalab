@@ -6,6 +6,7 @@ import {
   internetGatewayIdSchema,
   ipv4Schema,
   nameSchema,
+  natGatewayIdSchema,
   networkAclIdSchema,
   networkInterfaceIdSchema,
   portSchema,
@@ -18,8 +19,8 @@ import {
 import { checkStructure } from './structure';
 
 /**
- * R0 topology model: docs/specs/r0-engine.md section 3.
- * Objects are strict so YAML typos fail. Only shape is checked here; AWS rules between
+ * Topology model: docs/specs/r0-engine.md section 3, plus the NAT gateway of
+ * docs/specs/r1-nat-gateway.md section 2. Objects are strict so YAML typos fail. Only shape is checked here; AWS rules between
  * resources are `validate()`'s job.
  */
 
@@ -47,11 +48,18 @@ export const subnetSchema = z.strictObject({
   networkAclId: networkAclIdSchema.optional(), // absent = the VPC's default network ACL (NACL-01)
 });
 
-/** R0 has one target type. The local route is derived, so `type: local` is rejected (RT-03). */
+/**
+ * Static route targets (RT-05). The local route is derived, so `type: local` is rejected
+ * (RT-03).
+ */
 const routeTargetSchema = z.discriminatedUnion('type', [
   z.strictObject({
     type: z.literal('internet-gateway'),
     internetGatewayId: internetGatewayIdSchema,
+  }),
+  z.strictObject({
+    type: z.literal('nat-gateway'),
+    natGatewayId: natGatewayIdSchema,
   }),
 ]);
 
@@ -71,6 +79,19 @@ export const internetGatewaySchema = z.strictObject({
   id: internetGatewayIdSchema,
   name: nameSchema.optional(),
   attachedVpcId: vpcIdSchema.optional(), // absent = detached (IGW-05)
+});
+
+/**
+ * A zonal public NAT gateway (NAT-01, NAT-07). Private and regional NAT gateways, secondary
+ * addresses and more Elastic IPs are Unsupported and can't be expressed (NAT-06).
+ */
+export const natGatewaySchema = z.strictObject({
+  id: natGatewayIdSchema,
+  name: nameSchema.optional(),
+  subnetId: subnetIdSchema, // its Availability Zone is the subnet's (NAT-07)
+  connectivityType: z.literal('public').default('public'), // NAT-06
+  privateIpAddress: ipv4Schema, // ADR-04, ADR-09, NAT-07
+  elasticIpAddress: ipv4Schema, // ADR-10, NAT-01
 });
 
 /** SG-04: one source or destination per rule. Prefix lists are R1. */
@@ -178,6 +199,8 @@ const topologyShapeSchema = z.strictObject({
   subnets: z.array(subnetSchema),
   routeTables: z.array(routeTableSchema),
   internetGateways: z.array(internetGatewaySchema),
+  /** Optional: absent means none, and parsing doesn't add the key (r1-nat-gateway.md 2). */
+  natGateways: z.array(natGatewaySchema).optional(),
   securityGroups: z.array(securityGroupSchema),
   networkAcls: z.array(networkAclSchema),
   instances: z.array(instanceSchema),
@@ -212,6 +235,7 @@ export type Subnet = Topology['subnets'][number];
 export type RouteTable = Topology['routeTables'][number];
 export type Route = RouteTable['routes'][number];
 export type InternetGateway = Topology['internetGateways'][number];
+export type NatGateway = NonNullable<Topology['natGateways']>[number];
 export type SecurityGroup = Topology['securityGroups'][number];
 export type SecurityGroupRule = SecurityGroup['inboundRules'][number];
 export type NetworkAcl = Topology['networkAcls'][number];

@@ -95,9 +95,11 @@ export const es: Messages = {
   'helper.IGW_NOT_ATTACHED':
     'El internet gateway {internetGatewayId} no está conectado a ninguna VPC.',
   'helper.IGW_HAS_PUBLIC_ADDRESSES_one':
-    'No se puede desconectar el internet gateway {internetGatewayId}: {vpcId} tiene {count} interfaz de red con IPv4 pública.',
+    'No se puede desconectar el internet gateway {internetGatewayId}: {vpcId} tiene {count} interfaz de red o NAT gateway con IPv4 pública.',
   'helper.IGW_HAS_PUBLIC_ADDRESSES_other':
-    'No se puede desconectar el internet gateway {internetGatewayId}: {vpcId} tiene {count} interfaces de red con IPv4 pública.',
+    'No se puede desconectar el internet gateway {internetGatewayId}: {vpcId} tiene {count} interfaces de red o NAT gateways con IPv4 pública.',
+  'helper.NAT_VPC_NO_INTERNET_GATEWAY':
+    'La red {vpcId} no tiene un internet gateway conectado, así que no se puede crear un NAT gateway público en {subnetId}.',
 
   'issue.VPC_SIZE_INVALID':
     'El CIDR de VPC {cidrBlock} es un /{prefixLength}. Un CIDR de VPC debe estar entre /{minPrefixLength} y /{maxPrefixLength}.',
@@ -131,6 +133,10 @@ export const es: Messages = {
   'issue.LOCAL_ROUTE_CONFLICT':
     'El destino {destinationCidrBlock} es el CIDR de la VPC {vpcCidrBlock} o está dentro de él. La ruta local ya lo cubre.',
   'issue.IGW_MULTIPLE_ATTACHED': '{vpcId} ya tiene conectado el internet gateway {relatedId}.',
+  'issue.NAT_SUBNET_NOT_PUBLIC':
+    'El NAT gateway {resourceId} está en la subred {subnetId}, cuya tabla de rutas {routeTableId} no tiene una ruta a un internet gateway. Un NAT gateway público necesita una subred pública.',
+  'issue.NAT_VPC_NO_INTERNET_GATEWAY':
+    'El NAT gateway {resourceId} está en {vpcId}, que no tiene un internet gateway conectado.',
   'issue.SG_NAME_INVALID.empty': 'El campo {field} del grupo de seguridad es obligatorio.',
   'issue.SG_NAME_INVALID.too-long':
     'El campo {field} del grupo de seguridad admite hasta {maxLength} caracteres.',
@@ -147,6 +153,8 @@ export const es: Messages = {
     'La ACL de red tiene {count} reglas {direction}. La cuota por defecto es {limit}.',
   'issue.QUOTA_EXCEEDED.security-groups-per-network-interface':
     'La interfaz de red tiene {count} grupos de seguridad. La cuota por defecto es {limit}.',
+  'issue.QUOTA_EXCEEDED.nat-gateways-per-az':
+    '{availabilityZone} tiene {count} NAT gateways. La cuota por defecto es {limit} por zona de disponibilidad.',
   'issue.purpose.network': 'dirección de red',
   'issue.purpose.vpc-router': 'router de la VPC',
   'issue.purpose.dns': 'reservada por AWS (DNS)',
@@ -196,6 +204,8 @@ export const es: Messages = {
     'Los grupos de seguridad de la interfaz de red no tienen reglas en esta dirección.',
   'reason.NO_LISTENER': 'Nada en la instancia escucha en este puerto.',
   'reason.NO_INTERNET_GATEWAY': 'La VPC no tiene un internet gateway conectado.',
+  'reason.UNSUPPORTED_FEATURE':
+    'La ruta envía este paquete a un NAT gateway en un camino que el simulador no modela.',
 
   'query.UNKNOWN_REFERENCE': 'La consulta nombra una instancia que no existe.',
   'query.INVALID_QUERY': 'La consulta no es válida.',
@@ -219,6 +229,7 @@ export const es: Messages = {
   'step.igw-ingress': 'Internet gateway (entrada)',
   'step.nacl-inbound': 'ACL de red (entrada)',
   'step.sg-ingress': 'Grupo de seguridad (entrada)',
+  'step.nat-gateway': 'NAT gateway',
   'step.host': 'Instancia',
   'outcome.pass': 'Pasó',
   'outcome.fail': 'Se detuvo aquí',

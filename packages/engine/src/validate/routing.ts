@@ -1,6 +1,12 @@
 import { isWithin, mustParseCidr, ROUTE_RESERVED_BLOCK, formatCidr } from '../cidr';
 import { mustGet } from '../internal/lookup';
-import type { Model } from '../model';
+import {
+  attachedInternetGateway,
+  effectiveRoutes,
+  natGatewaysOf,
+  routeTableOf,
+  type Model,
+} from '../model';
 import type { Issue } from './issue';
 
 /**
@@ -12,11 +18,18 @@ import type { Issue } from './issue';
  * - RT-03 local route: https://docs.aws.amazon.com/vpc/latest/userguide/route-tables-priority.html
  * - IGW-05 one internet gateway per VPC: https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html
  *
+ * - NAT-01 a public NAT gateway goes in a public subnet (RT-09 meaning):
+ *   https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html and
+ *   https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-troubleshooting.html
+ * - NAT-07, IGW-07 a NAT gateway needs a VPC with an attached internet gateway:
+ *   https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-troubleshooting.html and
+ *   https://docs.aws.amazon.com/vpc/latest/userguide/delete-igw.html
+ *
  * A route to an internet gateway that isn't attached to the table's VPC is not an issue: its
  * state is `blackhole` (RT-08).
  */
 export function checkRouting(model: Model): Issue[] {
-  return [...checkRoutes(model), ...checkInternetGateways(model)];
+  return [...checkRoutes(model), ...checkInternetGateways(model), ...checkNatGateways(model)];
 }
 
 function checkRoutes(model: Model): Issue[] {
@@ -101,6 +114,47 @@ function checkInternetGateways(model: Model): Issue[] {
       related: [{ type: 'internet-gateway', id: first }],
       params: { vpcId },
     });
+  });
+  return issues;
+}
+
+/**
+ * NAT-01: a warning, not an error, because the docs don't say that creation fails in such a
+ * subnet; the trace then shows where the traffic stops (Inferred severity).
+ * NAT-07: an error, because creation needs an attached internet gateway and IGW-07 blocks
+ * detaching it while the NAT gateway's Elastic IP is associated (Inferred).
+ */
+function checkNatGateways(model: Model): Issue[] {
+  const issues: Issue[] = [];
+  natGatewaysOf(model.topology).forEach((nat, i) => {
+    const subnet = mustGet(model.subnets, nat.subnetId);
+    const resource = { type: 'nat-gateway', id: nat.id } as const;
+    const path = ['natGateways', i, 'subnetId'] as const;
+    const { table } = routeTableOf(model, subnet);
+    const routes = effectiveRoutes(model, table);
+    if (!routes.some((route) => route.targetType === 'internet-gateway')) {
+      issues.push({
+        code: 'NAT_SUBNET_NOT_PUBLIC',
+        severity: 'warning',
+        ruleIds: ['NAT-01', 'RT-09'],
+        fidelity: 'Exact',
+        resource,
+        path,
+        related: [{ type: 'route-table', id: table.id }],
+        params: { subnetId: subnet.id, routeTableId: table.id },
+      });
+    }
+    if (attachedInternetGateway(model.topology, subnet.vpcId) === null) {
+      issues.push({
+        code: 'NAT_VPC_NO_INTERNET_GATEWAY',
+        severity: 'error',
+        ruleIds: ['NAT-07', 'IGW-07'],
+        fidelity: 'Inferred',
+        resource,
+        path,
+        params: { vpcId: subnet.vpcId },
+      });
+    }
   });
   return issues;
 }

@@ -23,6 +23,8 @@ import type { HelperResult, RunningServiceInput } from './types';
  * - SG-05 · https://docs.aws.amazon.com/vpc/latest/userguide/default-security-group.html
  * - IGW-05 · https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html
  * - ADR-04, ADR-09, ADR-10 · https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
+ * - NAT-01, NAT-07 · https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html ·
+ *   https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-troubleshooting.html
  */
 
 const ALL_IPV4 = '0.0.0.0/0';
@@ -281,22 +283,49 @@ function firstFreePrivateAddress(block: CidrBlock, used: ReadonlySet<number>): s
   return null;
 }
 
-/** First address of the pool, from .1 to .254, that no interface uses and no VPC CIDR holds. */
+/**
+ * The public IPv4 address the next allocation takes from the pool (ADR-10, NAT-01): what
+ * "Allocate Elastic IP" shows before `createNatGateway` runs. Null when the pool is full.
+ */
+export function nextPublicAddress(topology: Topology): string | null {
+  return firstFreePublicAddress(topology);
+}
+
+/**
+ * First address of the pool, from .1 to .254, that no interface or NAT gateway uses and no
+ * VPC CIDR holds.
+ */
 function firstFreePublicAddress(topology: Topology): string | null {
   const pool = mustParseCidr(PUBLIC_POOL);
   const vpcBlocks = topology.vpcs.map((vpc) => mustParseCidr(vpc.cidrBlock));
-  const used = new Set(
-    topology.instances.flatMap((instance) => {
+  const used = new Set([
+    ...topology.instances.flatMap((instance) => {
       const publicIp = instance.primaryNetworkInterface.publicIp;
       return publicIp === undefined ? [] : [mustParseIpv4(publicIp.address)];
     }),
-  );
+    ...(topology.natGateways ?? []).map((nat) => mustParseIpv4(nat.elasticIpAddress)),
+  ]);
   for (let address = pool.start + 1; address < pool.end; address += 1) {
     if (used.has(address)) continue;
     if (vpcBlocks.some((block) => contains(block, address))) continue;
     return formatIpv4(address);
   }
   return null;
+}
+
+/** Private addresses of the instances and NAT gateways in `vpcId` (ADR-09, NAT-07). */
+function privateAddressesInVpc(topology: Topology, vpcId: string): Set<number> {
+  const subnets = indexById(topology.subnets);
+  const inVpc = (subnetId: string) => subnets.get(subnetId)?.vpcId === vpcId;
+  return new Set([
+    ...topology.instances.flatMap((instance) => {
+      const eni = instance.primaryNetworkInterface;
+      return inVpc(eni.subnetId) ? [mustParseIpv4(eni.privateIpAddress)] : [];
+    }),
+    ...(topology.natGateways ?? []).flatMap((nat) =>
+      inVpc(nat.subnetId) ? [mustParseIpv4(nat.privateIpAddress)] : [],
+    ),
+  ]);
 }
 
 /**
@@ -318,16 +347,10 @@ export function launchInstance(
 
   let privateIpAddress = input.privateIpAddress;
   if (privateIpAddress === undefined) {
-    const block = mustParseCidr(subnet.cidrBlock);
-    const usedInVpc = new Set(
-      topology.instances.flatMap((instance) => {
-        const eni = instance.primaryNetworkInterface;
-        return subnets.get(eni.subnetId)?.vpcId === vpc.id
-          ? [mustParseIpv4(eni.privateIpAddress)]
-          : [];
-      }),
+    const free = firstFreePrivateAddress(
+      mustParseCidr(subnet.cidrBlock),
+      privateAddressesInVpc(topology, vpc.id),
     );
-    const free = firstFreePrivateAddress(block, usedInVpc);
     if (free === null) {
       return fail('NO_FREE_PRIVATE_ADDRESS', ['ADR-09', 'ADR-04'], {
         subnetId: subnet.id,
@@ -373,5 +396,78 @@ export function launchInstance(
       ],
     },
     { instanceId, networkInterfaceId },
+  );
+}
+
+export interface CreateNatGatewayInput {
+  readonly subnetId: string;
+  readonly name?: string;
+  /** Absent: the first free usable address of the subnet (AWS picks one at random: Inferred). */
+  readonly privateIpAddress?: string;
+}
+
+export interface CreatedNatGateway {
+  readonly natGatewayId: string;
+  readonly privateIpAddress: string;
+  readonly elasticIpAddress: string;
+}
+
+/**
+ * Create NAT gateway, connectivity type Public, with "Allocate Elastic IP" (NAT-01): a new
+ * Elastic IP from the public pool and a private IP from the subnet (NAT-07). Fails like the
+ * real creation when the VPC has no attached internet gateway or the subnet has no free
+ * address. A subnet without an internet gateway route is allowed; `validate()` warns (NAT-01).
+ * Address problems of a chosen `privateIpAddress` are `validate()`'s job.
+ */
+export function createNatGateway(
+  topology: Topology,
+  input: CreateNatGatewayInput,
+): HelperResult<CreatedNatGateway> {
+  const subnet = topology.subnets.find((candidate) => candidate.id === input.subnetId);
+  if (subnet === undefined) return unknownReference('subnet', input.subnetId);
+  if (!topology.internetGateways.some((igw) => igw.attachedVpcId === subnet.vpcId)) {
+    return fail('NAT_VPC_NO_INTERNET_GATEWAY', ['NAT-07'], {
+      vpcId: subnet.vpcId,
+      subnetId: subnet.id,
+    });
+  }
+
+  let privateIpAddress = input.privateIpAddress;
+  if (privateIpAddress === undefined) {
+    const free = firstFreePrivateAddress(
+      mustParseCidr(subnet.cidrBlock),
+      privateAddressesInVpc(topology, subnet.vpcId),
+    );
+    if (free === null) {
+      return fail('NO_FREE_PRIVATE_ADDRESS', ['NAT-07', 'ADR-04'], {
+        subnetId: subnet.id,
+        cidrBlock: subnet.cidrBlock,
+      });
+    }
+    privateIpAddress = free;
+  }
+
+  const elasticIpAddress = firstFreePublicAddress(topology);
+  if (elasticIpAddress === null) {
+    return fail('PUBLIC_POOL_EXHAUSTED', ['ADR-10', 'NAT-01'], { pool: PUBLIC_POOL });
+  }
+
+  const natGatewayId = createIdAllocator(topology)('nat');
+  return finish(
+    {
+      ...topology,
+      natGateways: [
+        ...(topology.natGateways ?? []),
+        {
+          id: natGatewayId,
+          ...nameTag(input.name),
+          subnetId: subnet.id,
+          connectivityType: 'public',
+          privateIpAddress,
+          elasticIpAddress,
+        },
+      ],
+    },
+    { natGatewayId, privateIpAddress, elasticIpAddress },
   );
 }

@@ -2,7 +2,10 @@ import type { ClientType, PortRange } from '../model';
 import type { Fidelity, RuleId } from '../rules';
 import type { Issue, ResourceRef } from '../validate';
 
-/** What to trace (docs/specs/r0-engine.md section 5.1). R0 traces are TCP only. */
+/**
+ * What to trace (docs/specs/r0-engine.md section 5.1, docs/specs/r1-nat-gateway.md section 4.1).
+ * Traces are TCP only.
+ */
 export interface TraceQuery {
   readonly protocol: 'tcp';
   readonly source:
@@ -21,11 +24,18 @@ export interface TraceQuery {
   readonly clientType?: ClientType;
   /** Default: the first port of the client range. Required for `custom` (EPH-02). */
   readonly sourcePort?: number;
+  /**
+   * The source port a NAT gateway gives the connection, 1024 to 65535 (NAT-04). Default 1024.
+   * Ignored when the path has no NAT gateway.
+   */
+  readonly natSourcePort?: number;
 }
 
 /**
- * Reason codes a hop can fail with. All but the last two are Reachability Analyzer
- * explanation codes (TRC-04); `NO_LISTENER` and `NO_INTERNET_GATEWAY` are our own.
+ * Reason codes a hop can fail with. All but the last three are Reachability Analyzer
+ * explanation codes (TRC-04); `NO_LISTENER`, `NO_INTERNET_GATEWAY` and `UNSUPPORTED_FEATURE`
+ * are our own. `UNSUPPORTED_FEATURE` marks a path the engine doesn't model, such as a route
+ * to a NAT gateway where only an internet gateway works (Q15, Q16); it never ends `REACHED`.
  */
 export const REASON_CODES = [
   'NO_ROUTE_TO_DESTINATION',
@@ -42,6 +52,7 @@ export const REASON_CODES = [
   'SG_HAS_NO_RULES',
   'NO_LISTENER',
   'NO_INTERNET_GATEWAY',
+  'UNSUPPORTED_FEATURE',
 ] as const;
 
 export type ReasonCode = (typeof REASON_CODES)[number];
@@ -54,6 +65,7 @@ export type HopStep =
   | 'route-lookup'
   | 'igw-egress'
   | 'igw-ingress'
+  | 'nat-gateway'
   | 'nacl-inbound'
   | 'sg-ingress'
   | 'host';
@@ -72,7 +84,7 @@ export type HopMatch =
       readonly type: 'route';
       readonly routeTableId: string;
       readonly destinationCidrBlock: string;
-      /** `local` or an internet gateway ID. */
+      /** `local`, an internet gateway ID or a NAT gateway ID. */
       readonly target: string;
       readonly state: 'active' | 'blackhole';
     }
@@ -92,12 +104,21 @@ export interface Hop {
   readonly step: HopStep;
   readonly component: {
     readonly type:
-      'network-interface' | 'subnet' | 'route-table' | 'internet-gateway' | 'vpc' | 'instance';
+      | 'network-interface'
+      | 'subnet'
+      | 'route-table'
+      | 'internet-gateway'
+      | 'nat-gateway'
+      | 'vpc'
+      | 'instance';
     readonly id: string;
   };
   /** The packet as it arrives at this hop. */
   readonly packet: Packet;
-  /** The packet after address translation; internet gateway hops that pass only (IGW-02, ADR-10). */
+  /**
+   * The packet after address translation; internet gateway and NAT gateway hops that pass
+   * only (IGW-02, ADR-10, NAT-04).
+   */
   readonly translatedTo?: Packet;
   readonly outcome: 'pass' | 'fail' | 'skipped';
   readonly skippedBecause?: 'stateful-response' | 'same-subnet';
@@ -118,7 +139,7 @@ export interface TraceClient {
 
 export interface EvaluatedTrace {
   readonly status: 'evaluated';
-  readonly flow: 'F0' | 'F1' | 'F2';
+  readonly flow: 'F0' | 'F1' | 'F2' | 'F3';
   readonly verdict: Verdict;
   /** Absent when the verdict is `REACHED`. */
   readonly failure?: {

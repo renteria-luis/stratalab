@@ -712,21 +712,21 @@ R0 needs golden fixtures (TRC-06) for F1 and F2 split into two analyses each, pl
 
 None of these can be expressed in the R0 schema, except where noted.
 
-| Feature                                                         | Rule IDs                    | Planned             |
-| --------------------------------------------------------------- | --------------------------- | ------------------- |
-| IPv6, secondary VPC CIDRs                                       | ADR-01, ADR-08              | not in MVP          |
-| Secondary private addresses and network interfaces              | ADR-09                      | not planned         |
-| Instance stop and start, address release                        | ADR-10                      | not planned         |
-| Deleting resources and terminating instances in the console     | RT-12, IGW-07               | after lab 1         |
-| Local route retargeting, middlebox routes, gateway route tables | RT-02, RT-03                | not in MVP          |
-| Prefix lists, NAT gateway, VPC endpoints, SSM status            | RT-06, NAT-_, VPCE-_, SSM-* | R1                  |
-| Peering, transit gateway, VPN (`DISCONNECTED_VPCS` until then)  | PCX-_, TGW-_, VPN-*         | R2                  |
-| Hairpin through the internet gateway (`UNSUPPORTED_FEATURE`)    | IGW-06                      | not planned         |
-| Security Group VPC Association                                  | SG-06                       | not planned         |
-| Adjusted quotas                                                 | SG-07, NACL-09              | not planned         |
-| UDP and ICMP traces (rules can be stored)                       | TRC-02                      | R1                  |
-| Host firewalls, services bound to one address                   | TRC-01                      | not planned         |
-| Default VPC, DNS hostnames                                      | DNS-*                       | R1 (DNS attributes) |
+| Feature                                                         | Rule IDs             | Planned             |
+| --------------------------------------------------------------- | -------------------- | ------------------- |
+| IPv6, secondary VPC CIDRs                                       | ADR-01, ADR-08       | not in MVP          |
+| Secondary private addresses and network interfaces              | ADR-09               | not planned         |
+| Instance stop and start, address release                        | ADR-10               | not planned         |
+| Deleting resources and terminating instances in the console     | RT-12, IGW-07        | after lab 1         |
+| Local route retargeting, middlebox routes, gateway route tables | RT-02, RT-03         | not in MVP          |
+| Prefix lists, VPC endpoints, SSM status (NAT gateway: R1 spec)  | RT-06, VPCE-_, SSM-* | R1                  |
+| Peering, transit gateway, VPN (`DISCONNECTED_VPCS` until then)  | PCX-_, TGW-_, VPN-*  | R2                  |
+| Hairpin through the internet gateway (`UNSUPPORTED_FEATURE`)    | IGW-06               | not planned         |
+| Security Group VPC Association                                  | SG-06                | not planned         |
+| Adjusted quotas                                                 | SG-07, NACL-09       | not planned         |
+| UDP and ICMP traces (rules can be stored)                       | TRC-02               | R1                  |
+| Host firewalls, services bound to one address                   | TRC-01               | not planned         |
+| Default VPC, DNS hostnames                                      | DNS-*                | R1 (DNS attributes) |
 
 ## 10. `to-verify` rules R0 depended on
 
@@ -747,7 +747,7 @@ All were checked with the AWS documentation MCP on 2026-11-04 and updated in the
 
 New rules added from the same pages: ADR-09, ADR-10, RT-11, IGW-06, SG-06, SG-07, NACL-08, NACL-09, F0 in TRC-03. IGW-03 now includes RFC 6598 and the ingress codes. Q2 is resolved.
 
-`to-verify` rules not needed in R0 (left unchanged): NAT-05, VPCE-G01, VPCE-I01, DNS-02 (R1); PCX and TGW items (R2).
+`to-verify` rules not needed in R0 (left unchanged): NAT-05, VPCE-G01, VPCE-I01, DNS-02 (R1); PCX and TGW items (R2). NAT-05 was verified 2026-11-07 for `docs/specs/r1-nat-gateway.md`.
 
 ## 11. Open questions and decisions to confirm
 

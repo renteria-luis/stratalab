@@ -26,6 +26,7 @@ export const vpcIdSchema = idSchema('vpc');
 export const subnetIdSchema = idSchema('subnet');
 export const routeTableIdSchema = idSchema('rtb');
 export const internetGatewayIdSchema = idSchema('igw');
+export const natGatewayIdSchema = idSchema('nat');
 export const securityGroupIdSchema = idSchema('sg');
 export const securityGroupRuleIdSchema = idSchema('sgr');
 export const networkAclIdSchema = idSchema('acl');

@@ -19,6 +19,8 @@ export const ISSUE_CODES = [
   'ROUTE_DESTINATION_RESERVED',
   'LOCAL_ROUTE_CONFLICT',
   'IGW_MULTIPLE_ATTACHED',
+  'NAT_SUBNET_NOT_PUBLIC',
+  'NAT_VPC_NO_INTERNET_GATEWAY',
   'SG_NAME_INVALID',
   'SG_NAME_DUPLICATE',
   'NACL_RULE_NUMBER_DUPLICATE',
@@ -32,6 +34,7 @@ export type ResourceType =
   | 'subnet'
   | 'route-table'
   | 'internet-gateway'
+  | 'nat-gateway'
   | 'security-group'
   | 'network-acl'
   | 'instance'
@@ -48,6 +51,7 @@ export const TOPOLOGY_COLLECTIONS = [
   'subnets',
   'routeTables',
   'internetGateways',
+  'natGateways',
   'securityGroups',
   'networkAcls',
   'instances',

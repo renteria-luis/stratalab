@@ -55,7 +55,7 @@ Source: https://docs.aws.amazon.com/...
 - "Public subnet" means a route to an internet gateway, not a name. Internet access also needs a public IPv4 address (RT-09, IGW-01).
 - Security groups are stateful and allow-only. NACLs are stateless, ordered, first match wins, and act only at the subnet boundary (SG-01, SG-02, NACL-02, NACL-03, NACL-04).
 - Replies go to the client's ephemeral port, and that range depends on the client type (EPH-01, EPH-02).
-- A public NAT gateway sits in a public subnet with an Elastic IP and never accepts unsolicited inbound connections (NAT-01, NAT-02).
+- A public NAT gateway sits in a public subnet with an Elastic IP and never accepts unsolicited inbound connections. It has no security group; its subnet NACL must allow 1024–65535 back from the internet (NAT-01, NAT-02, NAT-04, NAT-05).
 - Interface endpoint private DNS needs `enableDnsSupport` and `enableDnsHostnames` (VPCE-I03, DNS-02).
 - SSM "Online" needs the agent, credentials and an HTTPS path. DHMC exists but isn't modeled in the MVP (SSM-01, SSM-02).
 

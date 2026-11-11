@@ -103,7 +103,15 @@ export function CreateRouteTablePage() {
 
 interface RouteRow {
   readonly destination: string;
-  readonly internetGatewayId: string | null;
+  /** An internet gateway or NAT gateway ID, or null before a target is chosen. */
+  readonly targetId: string | null;
+}
+
+/** The route target of a row: NAT gateway IDs start with `nat-` (r1-nat-gateway.md 2). */
+function routeTarget(targetId: string) {
+  return targetId.startsWith('nat-')
+    ? ({ type: 'nat-gateway', natGatewayId: targetId } as const)
+    : ({ type: 'internet-gateway', internetGatewayId: targetId } as const);
 }
 
 export function EditRoutes() {
@@ -115,7 +123,10 @@ export function EditRoutes() {
   const [rows, setRows] = useState<RouteRow[]>(
     (table?.routes ?? []).map((route) => ({
       destination: route.destinationCidrBlock,
-      internetGatewayId: route.target.internetGatewayId,
+      targetId:
+        route.target.type === 'nat-gateway'
+          ? route.target.natGatewayId
+          : route.target.internetGatewayId,
     })),
   );
   const [submitted, setSubmitted] = useState(false);
@@ -123,11 +134,17 @@ export function EditRoutes() {
   if (table === undefined || vpc === undefined) {
     return <NotFoundResource id={routeTableId} backHref={LIST} backLabel="Route tables" />;
   }
-  const gateways = topology.internetGateways;
+  // Simplified target picker: internet gateways, then the VPC's NAT gateways. The real
+  // console picks a target type first; that view waits for a capture (r1-nat-gateway.md 1).
+  const subnetVpc = new Map(topology.subnets.map((subnet) => [subnet.id, subnet.vpcId]));
+  const targets = [
+    ...topology.internetGateways,
+    ...(topology.natGateways ?? []).filter((nat) => subnetVpc.get(nat.subnetId) === vpc.id),
+  ];
   const rowError = (row: RouteRow) =>
     cidr.parseCidr(row.destination.trim()) === null
       ? 'Enter a valid IPv4 CIDR block.'
-      : row.internetGatewayId === null
+      : row.targetId === null
         ? 'Choose a target.'
         : undefined;
 
@@ -155,10 +172,7 @@ export function EditRoutes() {
               table.id,
               rows.map((row) => ({
                 destinationCidrBlock: row.destination.trim(),
-                target: {
-                  type: 'internet-gateway',
-                  internetGatewayId: row.internetGatewayId ?? '',
-                },
+                target: routeTarget(row.targetId ?? ''),
               })),
             ),
           () => ({ href: LIST, selectId: table.id }),
@@ -185,7 +199,7 @@ export function EditRoutes() {
             removeButtonText="Remove"
             empty={<Box color="text-body-secondary">{DASH}</Box>}
             onAddButtonClick={() => {
-              setRows([...rows, { destination: '', internetGatewayId: null }]);
+              setRows([...rows, { destination: '', targetId: null }]);
             }}
             onRemoveButtonClick={({ detail }) => {
               setRows(rows.filter((_, index) => index !== detail.itemIndex));
@@ -214,26 +228,24 @@ export function EditRoutes() {
               {
                 label: 'Target',
                 errorText: (row) =>
-                  submitted && row.internetGatewayId === null ? 'Choose a target.' : undefined,
+                  submitted && row.targetId === null ? 'Choose a target.' : undefined,
                 control: (row, index) => (
                   <Select
                     selectedOption={
-                      row.internetGatewayId === null
-                        ? null
-                        : { value: row.internetGatewayId, label: row.internetGatewayId }
+                      row.targetId === null ? null : { value: row.targetId, label: row.targetId }
                     }
                     placeholder="Internet Gateway"
                     empty="No internet gateways"
-                    options={gateways.map((igw) => ({
-                      value: igw.id,
-                      label: igw.id,
-                      description: igw.name,
+                    options={targets.map((target) => ({
+                      value: target.id,
+                      label: target.id,
+                      description: target.name,
                     }))}
                     onChange={({ detail }) => {
                       setRows(
                         rows.map((item, i) =>
                           i === index
-                            ? { ...item, internetGatewayId: detail.selectedOption.value ?? null }
+                            ? { ...item, targetId: detail.selectedOption.value ?? null }
                             : item,
                         ),
                       );
@@ -249,7 +261,7 @@ export function EditRoutes() {
                   const saved = savedRoutes.find(
                     (route) =>
                       route.destinationCidrBlock === row.destination.trim() &&
-                      route.target === row.internetGatewayId,
+                      route.target === row.targetId,
                   );
                   if (saved === undefined) return DASH;
                   if (label === 'Status') return STATE_LABEL[saved.state];

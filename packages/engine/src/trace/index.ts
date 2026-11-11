@@ -1,13 +1,13 @@
 import { buildModel } from '../model';
 import type { Topology } from '../schema';
 import { validate } from '../validate';
-import { traceF0, traceF1, traceF2 } from './flows';
+import { traceF0, traceF1, traceF2, traceF3 } from './flows';
 import { planTrace } from './query';
 import type { TraceQuery, TraceResult } from './types';
 
 /**
  * Traces one TCP connection hop by hop in both directions (docs/specs/r0-engine.md
- * section 5). Returns `blocked` without evaluating when the topology has `validate()` errors
+ * section 5, F3 in docs/specs/r1-nat-gateway.md section 4). Returns `blocked` without evaluating when the topology has `validate()` errors
  * or the query can't be traced; otherwise the hops, the verdict and the failing hop.
  * Pure and deterministic: the same topology and query always give the same result (TRC-05).
  *
@@ -29,6 +29,8 @@ export function trace(topology: Topology, query: TraceQuery): TraceResult {
       return traceF1(model, plan);
     case 'F2':
       return traceF2(model, plan);
+    case 'F3':
+      return traceF3(model, plan);
   }
 }
 
