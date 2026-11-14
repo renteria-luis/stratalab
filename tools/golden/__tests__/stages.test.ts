@@ -79,6 +79,24 @@ describe('stage plan (docs/specs/p9-golden.md section 2.5)', () => {
     expect(templates[2]?.Rtb00000002Route198d51d100d0s24).toBeDefined();
   });
 
+  it('NAT-07: a staged scenario with a NAT gateway is rejected', () => {
+    const topology = structuredClone(scenario('s4-q8-blackhole').topology);
+    topology.natGateways = [
+      {
+        id: 'nat-0000000a',
+        subnetId: 'subnet-0000000a',
+        connectivityType: 'public',
+        privateIpAddress: '10.0.1.20',
+        elasticIpAddress: '203.0.113.30',
+      },
+    ];
+    expect(validate(topology).filter((issue) => issue.severity === 'error')).toEqual([]);
+    expect(planStages(topology)).toEqual({
+      ok: false,
+      errors: [{ code: 'GOLDEN_STAGE_INVALID', message: "stage 2 isn't a valid topology" }],
+    });
+  });
+
   it('RT-08: two routed detached gateways in one VPC are rejected', () => {
     const input: TopologyInput = lab1Topology(true);
     input.internetGateways.push({ id: 'igw-0000000b' }, { id: 'igw-0000000c' });

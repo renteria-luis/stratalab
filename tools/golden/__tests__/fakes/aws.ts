@@ -27,6 +27,7 @@ const TYPE_PREFIX: Record<string, string> = {
   'AWS::EC2::SecurityGroup': 'sg',
   'AWS::EC2::NetworkAcl': 'acl',
   'AWS::EC2::Instance': 'i',
+  'AWS::EC2::NatGateway': 'nat',
 };
 
 /** A real-looking 17-hex-character ID for a scenario ID (`vpc-0a1b2c3d` → `vpc-0f0000000000a1b2c3d`-like). */
@@ -38,6 +39,16 @@ export function realId(scenarioId: string): string {
 /** A real-looking Amazon public address for a scenario public address. */
 export function realPublicIp(scenarioIp: string): string {
   return `54.0.0.${scenarioIp.split('.').at(-1) ?? '1'}`;
+}
+
+/** The requester-managed network interface AWS creates for a NAT gateway (NAT-07). */
+export function realNatInterfaceId(natId: string): string {
+  return realId(natId.replace('nat-', 'eni-ff'));
+}
+
+/** The allocation ID of a NAT gateway's Elastic IP. */
+export function realAllocationId(natId: string): string {
+  return realId(natId.replace('nat-', 'eipalloc-'));
 }
 
 export interface Deployment {
@@ -73,15 +84,23 @@ export function deploymentOf(
     })),
     routes: topology.routeTables.flatMap((table) =>
       table.routes.map((route) => {
-        // Golden scenarios have only internet gateway routes (GOLDEN_NAT_GATEWAY).
-        const gatewayId =
-          route.target.type === 'internet-gateway' ? route.target.internetGatewayId : '';
-        const igw = topology.internetGateways.find((gateway) => gateway.id === gatewayId);
+        const { target } = route;
+        if (target.type === 'nat-gateway') {
+          return {
+            routeTableId: realId(table.id),
+            destinationCidrBlock: route.destinationCidrBlock,
+            natGatewayId: realId(target.natGatewayId),
+            state: routeStates[route.destinationCidrBlock] ?? 'active',
+          };
+        }
+        const igw = topology.internetGateways.find(
+          (gateway) => gateway.id === target.internetGatewayId,
+        );
         const fallback = igw?.attachedVpcId === undefined ? 'blackhole' : 'active';
         return {
           routeTableId: realId(table.id),
           destinationCidrBlock: route.destinationCidrBlock,
-          gatewayId: realId(gatewayId),
+          gatewayId: realId(target.internetGatewayId),
           state: routeStates[route.destinationCidrBlock] ?? fallback,
         };
       }),
@@ -97,6 +116,15 @@ export function deploymentOf(
           : { publicIpAddress: realPublicIp(nic.publicIp.address) }),
       };
     }),
+    natGateways: (topology.natGateways ?? []).map((nat) => ({
+      natGatewayId: realId(nat.id),
+      subnetId: realId(nat.subnetId),
+      state: 'available',
+      privateIpAddress: nat.privateIpAddress,
+      publicIpAddress: realPublicIp(nat.elasticIpAddress),
+      networkInterfaceId: realNatInterfaceId(nat.id),
+      allocationId: realAllocationId(nat.id),
+    })),
   };
   return { resources, snapshot };
 }
@@ -113,7 +141,7 @@ export class FakeAws implements AwsPorts {
   goldenStacks: string[] = [];
   deployment: Deployment = {
     resources: [],
-    snapshot: { vpcs: [], subnets: [], routes: [], instances: [] },
+    snapshot: { vpcs: [], subnets: [], routes: [], instances: [], natGateways: [] },
   };
   /** The analysis result for a path request (real IDs). */
   answer: (request: PathRequest) => RawAnalysis = () => ({

@@ -10,8 +10,9 @@ import {
 } from './shared';
 
 /**
- * Golden scenarios S1 to S5 (docs/specs/p9-golden.md section 2.4). Expected results are the
- * engine's results on 2026-11-05; Reachability Analyzer fixtures are the oracle.
+ * Golden scenarios S1 to S5 (docs/specs/p9-golden.md section 2.4) and S6 (section 15).
+ * Expected results are the engine's results on 2026-11-05 (S1 to S5) and 2026-11-14 (S6);
+ * Reachability Analyzer fixtures are the oracle.
  */
 
 type ExpectedInput = GoldenScenarioInput['queries'][number]['expected'];
@@ -224,8 +225,114 @@ const s5: GoldenScenarioInput = {
   ],
 };
 
+/**
+ * S6 (docs/specs/p9-golden.md section 15): lab 1 solution without web-1, plus the `nat-base`
+ * additions of r1-nat-gateway.md section 6 (private-a on private-rt → nat-a, app-1) and web-2
+ * from its Q15 test (public IP in private-a, so its replies are routed to the NAT gateway).
+ */
+function s6Topology(): TopologyInput {
+  const topology = lab1Topology(true);
+  topology.instances = [];
+  topology.subnets.push({
+    id: 'subnet-0000000b',
+    name: 'private-a',
+    vpcId: 'vpc-0a1b2c3d',
+    cidrBlock: '10.0.2.0/24',
+    availabilityZone: 'us-east-1a',
+    routeTableId: 'rtb-00000003',
+  });
+  topology.routeTables.push({
+    id: 'rtb-00000003',
+    name: 'private-rt',
+    vpcId: 'vpc-0a1b2c3d',
+    routes: [
+      {
+        destinationCidrBlock: '0.0.0.0/0',
+        target: { type: 'nat-gateway', natGatewayId: 'nat-0000000a' },
+      },
+    ],
+  });
+  topology.natGateways = [
+    {
+      id: 'nat-0000000a',
+      name: 'nat-a',
+      subnetId: 'subnet-0000000a',
+      connectivityType: 'public',
+      privateIpAddress: '10.0.1.20',
+      elasticIpAddress: '203.0.113.30',
+    },
+  ];
+  topology.securityGroups.push({
+    id: 'sg-0000000b',
+    vpcId: 'vpc-0a1b2c3d',
+    name: 'app',
+    description: 'App servers',
+    inboundRules: [],
+    outboundRules: [
+      { id: 'sgr-000000b1', protocol: 'all', peer: { type: 'cidr', cidrBlock: '0.0.0.0/0' } },
+    ],
+  });
+  topology.instances.push(
+    {
+      id: 'i-0000000b',
+      name: 'app-1',
+      platform: 'linux',
+      primaryNetworkInterface: {
+        id: 'eni-0000000b',
+        subnetId: 'subnet-0000000b',
+        privateIpAddress: '10.0.2.10',
+        securityGroupIds: ['sg-0000000b'],
+      },
+      runningServices: [],
+    },
+    {
+      id: 'i-0000000c',
+      name: 'web-2',
+      platform: 'linux',
+      primaryNetworkInterface: {
+        id: 'eni-0000000c',
+        subnetId: 'subnet-0000000b',
+        privateIpAddress: '10.0.2.11',
+        publicIp: { kind: 'auto-assigned', address: '203.0.113.26' },
+        securityGroupIds: ['sg-0000000a'],
+      },
+      runningServices: [{ protocol: 'tcp', port: 80, name: 'nginx' }],
+    },
+  );
+  return topology;
+}
+
+const s6: GoldenScenarioInput = {
+  id: 's6-f3-nat',
+  title: 'F3 and Q15: private instance → internet through a NAT gateway, and a reply routed to it',
+  topology: s6Topology(),
+  queries: [
+    {
+      id: 'app-to-igw-443',
+      label: `app-1:${String(CLIENT_PORT)} → ${CLIENT_IP}:443 through nat-a (private-rt 0.0.0.0/0 → nat)`,
+      ruleIds: ['TRC-03', 'NAT-04', 'NAT-05'],
+      leg: 'request',
+      query: toInternet('i-0000000b', CLIENT_IP, 443),
+      expected: { verdict: 'REACHED' },
+    },
+    {
+      id: 'igw-to-web-2-80',
+      label: `${CLIENT_IP}:${String(CLIENT_PORT)} → web-2 public :80 (its reply is routed to nat-a, Q15)`,
+      ruleIds: ['NAT-02', 'IGW-04'],
+      leg: 'request',
+      query: fromInternet('i-0000000c', 80),
+      expected: {
+        verdict: 'BROKE_AT_HOP',
+        direction: 'return',
+        hopIndex: 6,
+        reasonCodes: ['NO_ROUTE_TO_DESTINATION'],
+      },
+    },
+  ],
+};
+
 /** Scenario inputs, as written. */
-export const GOLDEN_SCENARIO_INPUTS: readonly GoldenScenarioInput[] = [s1, s2, s3, s4, s5];
+export const GOLDEN_SCENARIO_INPUTS: readonly GoldenScenarioInput[] = [s1, s2, s3, s4, s5, s6];
 
 /** Parsed scenarios (canonical CIDRs). Parsing fails loudly if a scenario is malformed. */
 export const GOLDEN_SCENARIOS: readonly GoldenScenario[] = GOLDEN_SCENARIO_INPUTS.map((input) =>

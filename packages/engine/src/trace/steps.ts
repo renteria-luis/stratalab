@@ -172,10 +172,11 @@ export type RouteTargetType = 'local' | 'internet-gateway' | 'nat-gateway';
  * blackhole route fails the hop (RT-08): with `MORE_SPECIFIC_ROUTE` when it shadows a less
  * specific active route, as Reachability Analyzer reports it (golden `s4-q8-blackhole`, Q14;
  * Inferred, Q8), otherwise with `BAD_STATE_ROUTE`. A route to a NAT gateway where the flow
- * can't follow one (a reply, or the NAT gateway's own subnet) fails with
- * `UNSUPPORTED_FEATURE` (Q15, Q16). Returns the gateway the packet goes to, if any.
+ * can't follow one fails as `natRoute` says: a reply gets `NO_ROUTE_TO_DESTINATION`, as
+ * Reachability Analyzer reports it (golden `s6-f3-nat`, Q15, Inferred); the NAT gateway's own
+ * subnet gets `UNSUPPORTED_FEATURE` (Q16). Returns the gateway the packet goes to, if any.
  *
- * Rules: RT-04, RT-05, RT-08 · https://docs.aws.amazon.com/vpc/latest/userguide/route-tables-priority.html ·
+ * Rules: RT-04, RT-05, RT-08, NAT-01, NAT-02 · https://docs.aws.amazon.com/vpc/latest/userguide/route-tables-priority.html ·
  * https://docs.aws.amazon.com/vpc/latest/reachability/explanation-codes.html
  */
 export function routeStep(options: {
@@ -186,8 +187,11 @@ export function routeStep(options: {
   expectedTarget: RouteTargetType;
   ruleIds: readonly RuleId[];
   fidelity: Fidelity;
-  /** Added to `ruleIds` when a NAT gateway route is unsupported here (Q15: NAT-02, Q16: NAT-01). */
-  unsupportedNatRuleId?: RuleId;
+  /**
+   * How a route to a NAT gateway fails here: the code and the rule ID added to `ruleIds`
+   * (Q15: `NO_ROUTE_TO_DESTINATION`, NAT-02; Q16: `UNSUPPORTED_FEATURE`, NAT-01).
+   */
+  natRoute?: { code: 'NO_ROUTE_TO_DESTINATION' | 'UNSUPPORTED_FEATURE'; ruleId: RuleId };
 }): { hop: HopDraft; internetGatewayId: string | null; natGatewayId: string | null } {
   const { model, table, packet, destinationIp, expectedTarget, ruleIds, fidelity } = options;
   const base: HopBase = {
@@ -231,15 +235,14 @@ export function routeStep(options: {
     };
   }
   if (route.targetType === 'nat-gateway') {
-    const extra = options.unsupportedNatRuleId;
+    const code = options.natRoute?.code ?? 'UNSUPPORTED_FEATURE';
+    const extra = options.natRoute?.ruleId;
     const natRuleIds =
       extra === undefined || ruleIds.includes(extra) ? ruleIds : [...ruleIds, extra];
+    const natFidelity =
+      code === 'UNSUPPORTED_FEATURE' ? 'Unsupported' : lowestFidelity([fidelity, 'Inferred']);
     return {
-      hop: failed(
-        { ...base, ruleIds: natRuleIds, fidelity: 'Unsupported' },
-        'UNSUPPORTED_FEATURE',
-        match,
-      ),
+      hop: failed({ ...base, ruleIds: natRuleIds, fidelity: natFidelity }, code, match),
       ...none,
     };
   }

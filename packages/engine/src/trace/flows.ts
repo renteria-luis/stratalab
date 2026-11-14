@@ -128,8 +128,9 @@ export function traceF1(
           expectedTarget: 'internet-gateway',
           ruleIds: ['RT-02', 'RT-04', 'RT-08', 'IGW-04'],
           fidelity: 'Inferred',
-          // A reply sent to a NAT gateway: not documented, so not modeled (Q15).
-          unsupportedNatRuleId: 'NAT-02',
+          // A reply sent to a NAT gateway: Reachability Analyzer reports no route to the
+          // destination (golden s6-f3-nat, Q15).
+          natRoute: { code: 'NO_ROUTE_TO_DESTINATION', ruleId: 'NAT-02' },
         });
         egressGatewayId = routed.internetGatewayId;
         return routed.hop;
@@ -464,7 +465,7 @@ export function traceF3(
           ruleIds: ['RT-04', 'RT-08', 'NAT-01'],
           fidelity: 'Exact',
           // The NAT gateway's subnet sends the packet to a NAT gateway again (Q16).
-          unsupportedNatRuleId: 'NAT-01',
+          natRoute: { code: 'UNSUPPORTED_FEATURE', ruleId: 'NAT-01' },
         });
         gatewayId = routed.internetGatewayId;
         return routed.hop;

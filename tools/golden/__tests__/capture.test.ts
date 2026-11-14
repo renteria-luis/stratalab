@@ -12,6 +12,8 @@ import {
   deploymentOf,
   fixedClock,
   realId,
+  realNatInterfaceId,
+  realPublicIp,
 } from './fakes/aws';
 
 const ACCOUNT = '000000000000';
@@ -71,6 +73,69 @@ describe('capture (docs/specs/p9-golden.md section 8)', () => {
     expect(out.text).toContain('Reachability Analyzer analyses: 2');
     expect(out.text).toContain('Engine expected: BROKE_AT_HOP forward hop 2 MORE_SPECIFIC_ROUTE');
     expect(out.text).toContain('Dry run: no AWS call was made.');
+  });
+
+  it('TRC-06: the dry run counts the NAT gateway and its Elastic IP as billable', async () => {
+    const { run, out } = setup('s6-f3-nat');
+    expect(await run({ dryRun: true, account: undefined })).toBe(0);
+    expect(out.text).toMatch(/AWS::EC2::NatGateway\s+Nat0000000a\s+nat-0000000a/);
+    expect(out.text).toMatch(/AWS::EC2::EIP\s+Nat0000000aEip\s+nat-0000000a/);
+    expect(out.text).toContain(
+      'Billable while deployed: 2 × t3.micro instance, 2 × EBS root volume, 2 × public IPv4 address (1 of them an Elastic IP), 1 × NAT gateway',
+    );
+    expect(out.text).toContain('Reachability Analyzer analyses: 2');
+    expect(out.text).toContain(
+      'Engine expected: BROKE_AT_HOP return hop 6 NO_ROUTE_TO_DESTINATION',
+    );
+  });
+
+  it('NAT-04: an S6 capture maps the NAT gateway and writes a clean fixture', async () => {
+    const { run, aws, fixtures } = setup('s6-f3-nat');
+    aws.answer = (request) =>
+      request.Source === realId('i-0000000b')
+        ? {
+            Status: 'succeeded',
+            NetworkPathFound: true,
+            ForwardPathComponents: [
+              { SequenceNumber: 1, Component: { Id: realId('i-0000000b') } },
+              {
+                SequenceNumber: 2,
+                Component: { Id: realId('nat-0000000a') },
+                AttachedTo: { Id: realNatInterfaceId('nat-0000000a') },
+              },
+              {
+                SequenceNumber: 3,
+                Component: { Id: realId('igw-0000000a') },
+                OutboundHeader: { SourceAddresses: [`${realPublicIp('203.0.113.30')}/32`] },
+              },
+            ],
+          }
+        : {
+            Status: 'succeeded',
+            NetworkPathFound: false,
+            Explanations: [
+              {
+                ExplanationCode: 'NO_ROUTE_TO_DESTINATION',
+                NatGateway: { Id: realId('nat-0000000a') },
+              },
+            ],
+          };
+    expect(await run({ yes: true })).toBe(0);
+    expect(fixtures.written).toHaveLength(1);
+    const fixture = goldenFixtureSchema.parse(JSON.parse(fixtures.written[0]?.json ?? '{}'));
+    const [app, web2] = fixture.analyses;
+    expect(app?.forwardPathComponents.map((component) => component.component)).toEqual([
+      { id: 'i-0000000b', type: 'instance' },
+      { id: 'nat-0000000a', type: 'nat-gateway' },
+      { id: 'igw-0000000a', type: 'internet-gateway' },
+    ]);
+    expect(app?.forwardPathComponents[2]?.outboundHeader?.sourceAddresses).toEqual([
+      '203.0.113.30/32',
+    ]);
+    expect(web2?.explanations).toEqual([
+      { explanationCode: 'NO_ROUTE_TO_DESTINATION', natGateway: 'nat-0000000a' },
+    ]);
+    expect(fixtures.written[0]?.json).not.toMatch(/0f[e0-9a-f]{15}|54\.0\.0\./);
   });
 
   it('TRC-06: an unknown scenario fails before anything else', async () => {

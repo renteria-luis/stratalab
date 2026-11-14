@@ -90,18 +90,18 @@ Fixture `nat-base` (section 6): `app-1` 10.0.2.10 (linux, port 32768) → 198.51
 | 13  | return  | nacl-inbound  | private subnet         | same                                                  | `SUBNET_ACL_RESTRICTION`; skipped `same-subnet` as in hop 1                                    | NACL-03, EPH-01         |
 | 14  | return  | sg-ingress    | eni of app-1           | same                                                  | skipped `stateful-response`                                                                    | SG-01                   |
 
-- Order: TRC-01, the same as the golden-checked F1 and F2 (NACL outbound before the route lookup). TRC-03 F3 in the skill lists the route before the NACL and changes to this order. Fidelity of the order: Inferred until a golden F3 run answers Q7.
+- Order: TRC-01, the same as the golden-checked F1 and F2 (NACL outbound before the route lookup). TRC-03 F3 in the skill lists the route before the NACL and changes to this order. Fidelity of the order: confirmed by golden `s6-f3-nat` on 2026-11-14 (Q7); the hop labels below stay as they are.
 - Hop fidelity: Exact, except hop 8 (Inferred, Q1, as in F2) and hop 12 (Inferred, the docs don't list it).
 - Verdicts as TRC-02: route, NAT gateway and internet gateway hops give `BROKE_AT_HOP`; NACL and security group hops give `ROUTED_THEN_DROPPED`.
 
 ### 4.3 Routes to a NAT gateway outside F3
 
-| Case                                                                                     | Result                                                                             | Rule IDs       | Fidelity    |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------- | ----------- |
-| F1 return: the server subnet's route table sends the client to a NAT gateway             | `BROKE_AT_HOP`, return route lookup, `UNSUPPORTED_FEATURE`; never `REACHED`        | NAT-02, Q15    | Unsupported |
-| F3 hop 6: the NAT subnet's route table sends the destination to a NAT gateway            | `BROKE_AT_HOP`, hop 6, `UNSUPPORTED_FEATURE`                                       | NAT-01, Q16    | Unsupported |
-| F0: a route to a NAT gateway can't win for a VPC address (`LOCAL_ROUTE_CONFLICT`, RT-03) | no change                                                                          | RT-03          | Exact       |
-| Internet client → instance behind a NAT gateway                                          | F1, hop 0 `IGW_PRIVATE_IP_ASSOCIATION_FOR_INGRESS` (the instance has no public IP) | NAT-02, IGW-02 | Exact       |
+| Case                                                                                     | Result                                                                             | Rule IDs       | Fidelity                                  |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------- | ----------------------------------------- |
+| F1 return: the server subnet's route table sends the client to a NAT gateway             | `BROKE_AT_HOP`, return route lookup, `NO_ROUTE_TO_DESTINATION`; never `REACHED`    | NAT-02, Q15    | Inferred (golden `s6-f3-nat`, 2026-11-14) |
+| F3 hop 6: the NAT subnet's route table sends the destination to a NAT gateway            | `BROKE_AT_HOP`, hop 6, `UNSUPPORTED_FEATURE`                                       | NAT-01, Q16    | Unsupported                               |
+| F0: a route to a NAT gateway can't win for a VPC address (`LOCAL_ROUTE_CONFLICT`, RT-03) | no change                                                                          | RT-03          | Exact                                     |
+| Internet client → instance behind a NAT gateway                                          | F1, hop 0 `IGW_PRIVATE_IP_ASSOCIATION_FOR_INGRESS` (the instance has no public IP) | NAT-02, IGW-02 | Exact                                     |
 
 ## 5. `deriveStatus()` and helpers
 
@@ -160,27 +160,27 @@ Schema and validate:
 
 Trace:
 
-| Test                                                                          | Change to `nat-base`                                                            | Query                       | Expected                                                                               |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------- | -------------------------------------------------------------------------------------- |
-| `TRC-02: F3 reaches the internet through the NAT gateway`                     | none                                                                            | F3                          | `REACHED`, flow `F3`, 15 hops, translations on hops 4, 7, 8 and 10 as in 4.2           |
-| `NAT-05: no security group hop at the NAT gateway`                            | none                                                                            | F3                          | no `sg-*` hop has component `nat-0000000a`                                             |
-| `NAT-04: the NAT port can be chosen`                                          | none                                                                            | F3, `natSourcePort` 40000   | `REACHED`, hop 4 `translatedTo.sourcePort` 40000                                       |
-| `NAT-04: a NAT port outside 1024-65535 is rejected`                           | none                                                                            | F3, `natSourcePort` 80      | `blocked`, `INVALID_QUERY`                                                             |
-| `NAT-05: the NAT subnet NACL must let the reply in on 1024-65535`             | `public-a` NACL: in 100 allow tcp 443 from 10.0.0.0/16; out 100 allow all       | F3                          | `ROUTED_THEN_DROPPED`, return, hop 9, `SUBNET_ACL_RESTRICTION`, match `*`              |
-| `EPH-03: allowing 1024-65535 inbound on the NAT subnet fixes it`              | same plus in 110 allow tcp 1024–65535 from 0.0.0.0/0                            | F3                          | `REACHED`                                                                              |
-| `NAT-05: the NAT subnet NACL must let the private subnet in`                  | `public-a` NACL: in 90 deny all from 10.0.2.0/24, in 100 allow all              | F3                          | `ROUTED_THEN_DROPPED`, forward, hop 3, match rule 90                                   |
-| `NAT-05: the NAT subnet NACL must let the reply out to the instance`          | `public-a` NACL: out 100 allow tcp 443 only                                     | F3                          | `ROUTED_THEN_DROPPED`, return, hop 11                                                  |
-| `NAT-01: a NAT gateway in a private subnet breaks at its route lookup`        | move `nat-a` to a new subnet 10.0.3.0/24 on the main table (NAT IP 10.0.3.20)   | F3                          | warning `NAT_SUBNET_NOT_PUBLIC`; `BROKE_AT_HOP`, hop 6, `NO_ROUTE_TO_DESTINATION`      |
-| `RT-04: a more specific internet gateway route bypasses the NAT gateway`      | `private-rt` adds 198.51.100.0/24 → `igw-0000000a`                              | F3                          | flow `F2`, `BROKE_AT_HOP`, hop 3, `IGW_PUBLIC_IP_ASSOCIATION_FOR_EGRESS`               |
-| `NAT-02: an internet client can't reach an instance behind a NAT gateway`     | none                                                                            | internet → app-1 public :80 | `BROKE_AT_HOP`, hop 0, `IGW_PRIVATE_IP_ASSOCIATION_FOR_INGRESS`, `destinationIp: null` |
-| `SG-02: no outbound rules, no NAT gateway use`                                | `app` outbound empty                                                            | F3                          | `ROUTED_THEN_DROPPED`, hop 0, `SG_HAS_NO_RULES`                                        |
-| `SG-01: the reply skips the instance security group`                          | none (`app` has no inbound rules)                                               | F3                          | `REACHED`, hop 14 `skipped` `stateful-response`                                        |
-| `NAT-09: a subnet in another zone can use the NAT gateway`                    | `private-a` in us-east-1b                                                       | F3                          | `REACHED`, no issues                                                                   |
-| `NAT-02: a reply routed to a NAT gateway is unsupported (Q15)`                | `web-2` in `private-a` with public IP 203.0.113.26 and group `web`, nginx on 80 | internet → web-2 public :80 | `BROKE_AT_HOP`, return route lookup, `UNSUPPORTED_FEATURE`, fidelity `Unsupported`     |
-| `NAT-01: a NAT subnet route to a NAT gateway is unsupported (Q16)`            | `public-rt` adds 198.51.100.0/24 → `nat-0000000a`                               | F3                          | `BROKE_AT_HOP`, hop 6, `UNSUPPORTED_FEATURE`                                           |
-| `NAT-07: a NAT gateway in a VPC without an internet gateway blocks the trace` | detach `igw-0000000a`                                                           | F3                          | `blocked`, `NAT_VPC_NO_INTERNET_GATEWAY`                                               |
-| `IGW-06: the NAT gateway's Elastic IP as an internet address is a hairpin`    | none                                                                            | app-1 → 203.0.113.30:443    | `blocked`, `UNSUPPORTED_FEATURE`                                                       |
-| `TRC-05: F3 gives the same result for the same input`                         | none                                                                            | F3                          | deep-equal results, contiguous hop indexes                                             |
+| Test                                                                            | Change to `nat-base`                                                            | Query                       | Expected                                                                               |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------- | -------------------------------------------------------------------------------------- |
+| `TRC-02: F3 reaches the internet through the NAT gateway`                       | none                                                                            | F3                          | `REACHED`, flow `F3`, 15 hops, translations on hops 4, 7, 8 and 10 as in 4.2           |
+| `NAT-05: no security group hop at the NAT gateway`                              | none                                                                            | F3                          | no `sg-*` hop has component `nat-0000000a`                                             |
+| `NAT-04: the NAT port can be chosen`                                            | none                                                                            | F3, `natSourcePort` 40000   | `REACHED`, hop 4 `translatedTo.sourcePort` 40000                                       |
+| `NAT-04: a NAT port outside 1024-65535 is rejected`                             | none                                                                            | F3, `natSourcePort` 80      | `blocked`, `INVALID_QUERY`                                                             |
+| `NAT-05: the NAT subnet NACL must let the reply in on 1024-65535`               | `public-a` NACL: in 100 allow tcp 443 from 10.0.0.0/16; out 100 allow all       | F3                          | `ROUTED_THEN_DROPPED`, return, hop 9, `SUBNET_ACL_RESTRICTION`, match `*`              |
+| `EPH-03: allowing 1024-65535 inbound on the NAT subnet fixes it`                | same plus in 110 allow tcp 1024–65535 from 0.0.0.0/0                            | F3                          | `REACHED`                                                                              |
+| `NAT-05: the NAT subnet NACL must let the private subnet in`                    | `public-a` NACL: in 90 deny all from 10.0.2.0/24, in 100 allow all              | F3                          | `ROUTED_THEN_DROPPED`, forward, hop 3, match rule 90                                   |
+| `NAT-05: the NAT subnet NACL must let the reply out to the instance`            | `public-a` NACL: out 100 allow tcp 443 only                                     | F3                          | `ROUTED_THEN_DROPPED`, return, hop 11                                                  |
+| `NAT-01: a NAT gateway in a private subnet breaks at its route lookup`          | move `nat-a` to a new subnet 10.0.3.0/24 on the main table (NAT IP 10.0.3.20)   | F3                          | warning `NAT_SUBNET_NOT_PUBLIC`; `BROKE_AT_HOP`, hop 6, `NO_ROUTE_TO_DESTINATION`      |
+| `RT-04: a more specific internet gateway route bypasses the NAT gateway`        | `private-rt` adds 198.51.100.0/24 → `igw-0000000a`                              | F3                          | flow `F2`, `BROKE_AT_HOP`, hop 3, `IGW_PUBLIC_IP_ASSOCIATION_FOR_EGRESS`               |
+| `NAT-02: an internet client can't reach an instance behind a NAT gateway`       | none                                                                            | internet → app-1 public :80 | `BROKE_AT_HOP`, hop 0, `IGW_PRIVATE_IP_ASSOCIATION_FOR_INGRESS`, `destinationIp: null` |
+| `SG-02: no outbound rules, no NAT gateway use`                                  | `app` outbound empty                                                            | F3                          | `ROUTED_THEN_DROPPED`, hop 0, `SG_HAS_NO_RULES`                                        |
+| `SG-01: the reply skips the instance security group`                            | none (`app` has no inbound rules)                                               | F3                          | `REACHED`, hop 14 `skipped` `stateful-response`                                        |
+| `NAT-09: a subnet in another zone can use the NAT gateway`                      | `private-a` in us-east-1b                                                       | F3                          | `REACHED`, no issues                                                                   |
+| `NAT-02: a reply routed to a NAT gateway has no route to the destination (Q15)` | `web-2` in `private-a` with public IP 203.0.113.26 and group `web`, nginx on 80 | internet → web-2 public :80 | `BROKE_AT_HOP`, return route lookup, `NO_ROUTE_TO_DESTINATION`, fidelity `Inferred`    |
+| `NAT-01: a NAT subnet route to a NAT gateway is unsupported (Q16)`              | `public-rt` adds 198.51.100.0/24 → `nat-0000000a`                               | F3                          | `BROKE_AT_HOP`, hop 6, `UNSUPPORTED_FEATURE`                                           |
+| `NAT-07: a NAT gateway in a VPC without an internet gateway blocks the trace`   | detach `igw-0000000a`                                                           | F3                          | `blocked`, `NAT_VPC_NO_INTERNET_GATEWAY`                                               |
+| `IGW-06: the NAT gateway's Elastic IP as an internet address is a hairpin`      | none                                                                            | app-1 → 203.0.113.30:443    | `blocked`, `UNSUPPORTED_FEATURE`                                                       |
+| `TRC-05: F3 gives the same result for the same input`                           | none                                                                            | F3                          | deep-equal results, contiguous hop indexes                                             |
 
 deriveStatus and helpers:
 
@@ -193,7 +193,7 @@ deriveStatus and helpers:
 - `IGW-07: detach is rejected while a NAT gateway has an Elastic IP`.
 - `HELPERS: console steps build nat-base`, then F3 gives `REACHED`.
 
-Golden (later, the user runs it; NAT gateways and Elastic IPs bill per hour): a scenario `s6-f3-nat` with app-1 → internet gateway would answer Q7 for F3, and a second analysis would answer Q15. It needs a P9 spec update first.
+Golden (the user runs it; NAT gateways and Elastic IPs bill per hour): scenario `s6-f3-nat`, specified in `docs/specs/p9-golden.md` section 15 (2026-11-14). Query `app-to-igw-443` answers Q7 for F3 and `igw-to-web-2-80` answers Q15.
 
 ## 7. Decisions to confirm
 
@@ -202,7 +202,7 @@ Golden (later, the user runs it; NAT gateways and Elastic IPs bill per hour): a 
 3. One concrete NAT port per trace: `natSourcePort`, default 1024.
 4. F3 order as in 4.2 (TRC-01, like F1 and F2), with a local route lookup on the way back. The skill's TRC-03 F3 text changes to match.
 5. `NAT_SUBNET_NOT_PUBLIC` is a warning (the trace shows the break); `NAT_VPC_NO_INTERNET_GATEWAY` is an error.
-6. Q15 and Q16: `UNSUPPORTED_FEATURE` also becomes a hop reason code (`BROKE_AT_HOP`, fidelity `Unsupported`). Q17: `VPC_MISMATCH`.
+6. Q15 and Q16: `UNSUPPORTED_FEATURE` also becomes a hop reason code (`BROKE_AT_HOP`, fidelity `Unsupported`). Q17: `VPC_MISMATCH`. Changed 2026-11-14 for Q15 after golden `s6-f3-nat` (decided with the user): `NO_ROUTE_TO_DESTINATION`, fidelity `Inferred`. Q16 keeps `UNSUPPORTED_FEATURE`.
 7. Console views come in a later step, after captures of the NAT gateways pages.
 
 ## 8. Docs to update with the code

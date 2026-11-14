@@ -4,7 +4,13 @@ import type { RawAnalysis } from '../src/aws/ports';
 import { buildIdMap, routeStateProblems, type IdMap } from '../src/id-map';
 import { finalizeFixture, normalizeAnalysis } from '../src/normalize';
 import { planCapture } from '../src/plan';
-import { deploymentOf, realId, realPublicIp } from './fakes/aws';
+import {
+  deploymentOf,
+  realAllocationId,
+  realId,
+  realNatInterfaceId,
+  realPublicIp,
+} from './fakes/aws';
 
 const ARN = 'arn:aws:ec2:us-east-1:123456789012:network-interface/eni-0123456789abcdef0';
 
@@ -141,6 +147,129 @@ describe('normalizer (docs/specs/p9-golden.md section 5.1)', () => {
     expect(JSON.stringify(result)).not.toMatch(/arn:|123456789012|use1-az1|web-1|lab-igw/);
   });
 
+  it('TRC-06: NAT gateway components, routes and explanations are normalized', () => {
+    const natMap: IdMap = {
+      ids: new Map([
+        [realId('rtb-00000003'), 'rtb-00000003'],
+        [realId('nat-0000000a'), 'nat-0000000a'],
+        [realNatInterfaceId('nat-0000000a'), 'nat-0000000a'],
+      ]),
+      addresses: new Map([[realPublicIp('203.0.113.30'), '203.0.113.30']]),
+    };
+    const result = normalizeAnalysis(
+      'app-to-igw-443',
+      {
+        Status: 'succeeded',
+        NetworkPathFound: false,
+        ForwardPathComponents: [
+          {
+            SequenceNumber: 3,
+            Component: { Id: realId('rtb-00000003') },
+            RouteTableRoute: {
+              DestinationCidr: '0.0.0.0/0',
+              NatGatewayId: realId('nat-0000000a'),
+              Origin: 'createroute',
+              State: 'active',
+            },
+          },
+          {
+            SequenceNumber: 5,
+            Component: { Id: realId('nat-0000000a'), Arn: ARN },
+            AttachedTo: { Id: realNatInterfaceId('nat-0000000a') },
+            OutboundHeader: {
+              SourceAddresses: ['10.0.1.20/32'],
+              SourcePortRanges: [{ From: 1024, To: 65535 }],
+            },
+          },
+        ],
+        ReturnPathComponents: [],
+        Explanations: [
+          {
+            ExplanationCode: 'NO_ROUTE_TO_DESTINATION',
+            NatGateway: { Id: realId('nat-0000000a'), Arn: ARN },
+            Addresses: [realPublicIp('203.0.113.30')],
+          },
+        ],
+      },
+      natMap,
+    );
+    expect(result).toEqual({
+      ok: true,
+      analysis: {
+        queryId: 'app-to-igw-443',
+        status: 'succeeded',
+        networkPathFound: false,
+        forwardPathComponents: [
+          {
+            sequenceNumber: 3,
+            component: { id: 'rtb-00000003', type: 'route-table' },
+            routeTableRoute: {
+              destinationCidr: '0.0.0.0/0',
+              natGatewayId: 'nat-0000000a',
+              origin: 'createroute',
+              state: 'active',
+            },
+          },
+          {
+            sequenceNumber: 5,
+            component: { id: 'nat-0000000a', type: 'nat-gateway' },
+            attachedTo: 'nat-0000000a',
+            outboundHeader: {
+              sourceAddresses: ['10.0.1.20/32'],
+              sourcePortRanges: [{ from: 1024, to: 65535 }],
+            },
+          },
+        ],
+        returnPathComponents: [],
+        explanations: [
+          {
+            explanationCode: 'NO_ROUTE_TO_DESTINATION',
+            natGateway: 'nat-0000000a',
+            addresses: ['203.0.113.30'],
+          },
+        ],
+      },
+    });
+  });
+
+  it('RT-03: the local route keeps gatewayId "local", which is not an ID', () => {
+    const result = normalizeAnalysis(
+      'app-to-igw-443',
+      {
+        Status: 'succeeded',
+        NetworkPathFound: true,
+        ReturnPathComponents: [
+          {
+            SequenceNumber: 7,
+            Component: { Id: realId('rtb-00000002') },
+            RouteTableRoute: {
+              DestinationCidr: '10.0.0.0/16',
+              GatewayId: 'local',
+              Origin: 'createroutetable',
+              State: 'active',
+            },
+          },
+        ],
+      },
+      map,
+    );
+    expect(result).toMatchObject({
+      ok: true,
+      analysis: {
+        returnPathComponents: [
+          {
+            routeTableRoute: {
+              destinationCidr: '10.0.0.0/16',
+              gatewayId: 'local',
+              origin: 'createroutetable',
+              state: 'active',
+            },
+          },
+        ],
+      },
+    });
+  });
+
   it('TRC-06: an unknown ID stops the capture', () => {
     const unknown: RawAnalysis = {
       ...raw,
@@ -250,6 +379,82 @@ describe('ID map (docs/specs/p9-golden.md section 5.1)', () => {
         'i-0000000a: deployed private address 10.0.1.99, topology 10.0.1.10',
       ],
     });
+  });
+
+  it("NAT-04: the NAT gateway's interface and allocation map to its ID and its Elastic IP to the scenario address", () => {
+    const s6 = planCapture('s6-f3-nat');
+    if (!s6.ok) throw new Error(s6.problems.join('; '));
+    const deployment = deploymentOf(s6.scenario, s6.logicalIds, s6.resourceTypes);
+    const result = buildIdMap(
+      s6.scenario,
+      s6.logicalIds,
+      deployment.resources,
+      deployment.snapshot,
+    );
+    if (!result.ok) throw new Error(result.problems.join('; '));
+    expect(result.map.ids.get(realId('nat-0000000a'))).toBe('nat-0000000a');
+    expect(result.map.ids.get(realNatInterfaceId('nat-0000000a'))).toBe('nat-0000000a');
+    expect(result.map.ids.get(realAllocationId('nat-0000000a'))).toBe('nat-0000000a');
+    expect(result.map.ids.get(realId('eni-0000000b'))).toBe('eni-0000000b');
+    expect(Object.fromEntries(result.map.addresses)).toEqual({
+      [realPublicIp('203.0.113.26')]: '203.0.113.26',
+      [realPublicIp('203.0.113.30')]: '203.0.113.30',
+    });
+    expect(routeStateProblems(s6.scenario, deployment.snapshot, result.map)).toEqual([]);
+  });
+
+  it("NAT-07: a NAT gateway that isn't available or has another private IP stops the capture", () => {
+    const s6 = planCapture('s6-f3-nat');
+    if (!s6.ok) throw new Error(s6.problems.join('; '));
+    const deployment = deploymentOf(s6.scenario, s6.logicalIds, s6.resourceTypes);
+    const nat = deployment.snapshot.natGateways[0];
+    if (nat === undefined) throw new Error('s6 deploys a NAT gateway');
+    const broken = {
+      ...deployment.snapshot,
+      natGateways: [
+        {
+          natGatewayId: nat.natGatewayId,
+          subnetId: realId('subnet-0000000b'),
+          state: 'failed',
+          privateIpAddress: '10.0.1.99',
+          networkInterfaceId: nat.networkInterfaceId,
+        },
+      ],
+    };
+    expect(buildIdMap(s6.scenario, s6.logicalIds, deployment.resources, broken)).toEqual({
+      ok: false,
+      problems: [
+        'nat-0000000a: deployed state failed, expected available',
+        'nat-0000000a: deployed in another subnet than subnet-0000000a',
+        'nat-0000000a: deployed private address 10.0.1.99, topology 10.0.1.20',
+        'nat-0000000a: no Elastic IP after deploy',
+      ],
+    });
+    expect(
+      buildIdMap(s6.scenario, s6.logicalIds, deployment.resources, {
+        ...deployment.snapshot,
+        natGateways: [],
+      }),
+    ).toEqual({ ok: false, problems: ['nat-0000000a: not found after deploy'] });
+  });
+
+  it('RT-05: a route to a NAT gateway must be active', () => {
+    const s6 = planCapture('s6-f3-nat');
+    if (!s6.ok) throw new Error(s6.problems.join('; '));
+    const deployment = deploymentOf(s6.scenario, s6.logicalIds, s6.resourceTypes, {
+      '0.0.0.0/0': 'blackhole',
+    });
+    const result = buildIdMap(
+      s6.scenario,
+      s6.logicalIds,
+      deployment.resources,
+      deployment.snapshot,
+    );
+    if (!result.ok) throw new Error(result.problems.join('; '));
+    expect(routeStateProblems(s6.scenario, deployment.snapshot, result.map)).toEqual([
+      'rtb-00000002 0.0.0.0/0: deployed state blackhole, expected active',
+      'rtb-00000003 0.0.0.0/0: deployed state blackhole, expected active',
+    ]);
   });
 
   it('RT-08: route states must match the topology before any analysis', () => {

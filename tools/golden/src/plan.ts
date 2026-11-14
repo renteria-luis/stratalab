@@ -51,7 +51,10 @@ export interface CapturePlan {
   readonly billable: {
     readonly instances: number;
     readonly ebsVolumes: number;
+    /** Auto-assigned addresses plus Elastic IPs. */
     readonly publicIpv4: number;
+    readonly elasticIps: number;
+    readonly natGateways: number;
   };
 }
 
@@ -111,6 +114,7 @@ export function planCapture(scenarioId: string): PlanResult {
   }
 
   const instances = scenario.topology.instances;
+  const natGateways = scenario.topology.natGateways ?? [];
   return {
     ok: true,
     scenario,
@@ -124,9 +128,11 @@ export function planCapture(scenarioId: string): PlanResult {
     billable: {
       instances: instances.length,
       ebsVolumes: instances.length,
-      publicIpv4: instances.filter(
-        (instance) => instance.primaryNetworkInterface.publicIp !== undefined,
-      ).length,
+      publicIpv4:
+        instances.filter((instance) => instance.primaryNetworkInterface.publicIp !== undefined)
+          .length + natGateways.length,
+      elasticIps: natGateways.length,
+      natGateways: natGateways.length,
     },
   };
 }
@@ -137,8 +143,10 @@ function describeExpected(expected: GoldenExpected): string {
 }
 
 export function billableLine(plan: CapturePlan): string {
-  const { instances, ebsVolumes, publicIpv4 } = plan.billable;
-  return `Billable while deployed: ${String(instances)} × ${INSTANCE_TYPE} instance, ${String(ebsVolumes)} × EBS root volume, ${String(publicIpv4)} × public IPv4 address`;
+  const { instances, ebsVolumes, publicIpv4, elasticIps, natGateways } = plan.billable;
+  const elastic = elasticIps > 0 ? ` (${String(elasticIps)} of them an Elastic IP)` : '';
+  const nat = natGateways > 0 ? `, ${String(natGateways)} × NAT gateway` : '';
+  return `Billable while deployed: ${String(instances)} × ${INSTANCE_TYPE} instance, ${String(ebsVolumes)} × EBS root volume, ${String(publicIpv4)} × public IPv4 address${elastic}${nat}`;
 }
 
 /** The dry-run report (also printed before a real capture asks for confirmation). */

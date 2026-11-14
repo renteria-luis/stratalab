@@ -16,6 +16,7 @@ import {
 import {
   CreateNetworkInsightsPathCommand,
   DeleteInternetGatewayCommand,
+  DeleteNatGatewayCommand,
   DeleteNetworkAclCommand,
   DeleteNetworkInsightsAnalysisCommand,
   DeleteNetworkInsightsPathCommand,
@@ -23,8 +24,10 @@ import {
   DeleteSecurityGroupCommand,
   DeleteSubnetCommand,
   DeleteVpcCommand,
+  DescribeAddressesCommand,
   DescribeInstancesCommand,
   DescribeInternetGatewaysCommand,
+  DescribeNatGatewaysCommand,
   DescribeNetworkAclsCommand,
   DescribeNetworkInsightsAnalysesCommand,
   DescribeNetworkInsightsPathsCommand,
@@ -34,9 +37,11 @@ import {
   DescribeVpcsCommand,
   DetachInternetGatewayCommand,
   EC2Client,
+  ReleaseAddressCommand,
   StartNetworkInsightsAnalysisCommand,
   TerminateInstancesCommand,
   waitUntilInstanceTerminated,
+  waitUntilNatGatewayDeleted,
   type Filter,
   type Tag as Ec2Tag,
 } from '@aws-sdk/client-ec2';
@@ -57,6 +62,9 @@ import {
 
 const STACK_WAIT_SECONDS = 20 * 60;
 const INSTANCE_WAIT_SECONDS = 15 * 60;
+const NAT_GATEWAY_WAIT_SECONDS = 15 * 60;
+/** NAT gateway states that still hold the network interface and the Elastic IP. */
+const LIVE_NAT_STATES = ['pending', 'available', 'deleting', 'failed'];
 const POLL_MS = 5000;
 
 const goldenFilter: Filter = { Name: `tag:${GOLDEN_TAG.key}`, Values: [GOLDEN_TAG.value] };
@@ -207,7 +215,7 @@ export function createAwsPorts(): AwsPorts {
 
     inventory: {
       describe: async (vpcIds) => {
-        const [vpcs, tables, acls, groups, subnets, instances] = await Promise.all([
+        const [vpcs, tables, acls, groups, subnets, instances, natGateways] = await Promise.all([
           ec2.send(new DescribeVpcsCommand({ VpcIds: [...vpcIds] })),
           ec2.send(new DescribeRouteTablesCommand({ Filters: byVpc(vpcIds) })),
           ec2.send(
@@ -229,6 +237,7 @@ export function createAwsPorts(): AwsPorts {
               ],
             }),
           ),
+          ec2.send(new DescribeNatGatewaysCommand({ Filter: byVpc(vpcIds) })),
         ]);
         return {
           vpcs: (vpcs.Vpcs ?? []).map((vpc) => ({
@@ -252,11 +261,15 @@ export function createAwsPorts(): AwsPorts {
           })),
           routes: (tables.RouteTables ?? []).flatMap((table) =>
             (table.Routes ?? [])
-              .filter((route) => route.GatewayId?.startsWith('igw-') === true)
+              .filter(
+                (route) =>
+                  route.GatewayId?.startsWith('igw-') === true || route.NatGatewayId !== undefined,
+              )
               .map((route) => ({
                 routeTableId: table.RouteTableId ?? '',
                 destinationCidrBlock: route.DestinationCidrBlock ?? '',
                 ...(route.GatewayId === undefined ? {} : { gatewayId: route.GatewayId }),
+                ...(route.NatGatewayId === undefined ? {} : { natGatewayId: route.NatGatewayId }),
                 state: route.State ?? '',
               })),
           ),
@@ -272,29 +285,54 @@ export function createAwsPorts(): AwsPorts {
                 ? {}
                 : { publicIpAddress: instance.PublicIpAddress }),
             })),
+          natGateways: (natGateways.NatGateways ?? [])
+            .filter((nat) => nat.State !== 'deleted')
+            .map((nat) => {
+              const primary =
+                (nat.NatGatewayAddresses ?? []).find((address) => address.IsPrimary === true) ??
+                nat.NatGatewayAddresses?.[0];
+              return {
+                natGatewayId: nat.NatGatewayId ?? '',
+                subnetId: nat.SubnetId ?? '',
+                state: nat.State ?? '',
+                privateIpAddress: primary?.PrivateIp ?? '',
+                networkInterfaceId: primary?.NetworkInterfaceId ?? '',
+                ...(primary?.PublicIp === undefined ? {} : { publicIpAddress: primary.PublicIp }),
+                ...(primary?.AllocationId === undefined
+                  ? {}
+                  : { allocationId: primary.AllocationId }),
+              };
+            }),
         };
       },
       listTagged: async () => {
         const filters = [goldenFilter];
-        const [instances, gateways, subnets, tables, acls, groups, vpcs] = await Promise.all([
-          ec2.send(
-            new DescribeInstancesCommand({
-              Filters: [
-                ...filters,
-                {
-                  Name: 'instance-state-name',
-                  Values: ['pending', 'running', 'stopping', 'stopped', 'shutting-down'],
-                },
-              ],
-            }),
-          ),
-          ec2.send(new DescribeInternetGatewaysCommand({ Filters: filters })),
-          ec2.send(new DescribeSubnetsCommand({ Filters: filters })),
-          ec2.send(new DescribeRouteTablesCommand({ Filters: filters })),
-          ec2.send(new DescribeNetworkAclsCommand({ Filters: filters })),
-          ec2.send(new DescribeSecurityGroupsCommand({ Filters: filters })),
-          ec2.send(new DescribeVpcsCommand({ Filters: filters })),
-        ]);
+        const [instances, natGateways, addresses, gateways, subnets, tables, acls, groups, vpcs] =
+          await Promise.all([
+            ec2.send(
+              new DescribeInstancesCommand({
+                Filters: [
+                  ...filters,
+                  {
+                    Name: 'instance-state-name',
+                    Values: ['pending', 'running', 'stopping', 'stopped', 'shutting-down'],
+                  },
+                ],
+              }),
+            ),
+            ec2.send(
+              new DescribeNatGatewaysCommand({
+                Filter: [...filters, { Name: 'state', Values: LIVE_NAT_STATES }],
+              }),
+            ),
+            ec2.send(new DescribeAddressesCommand({ Filters: filters })),
+            ec2.send(new DescribeInternetGatewaysCommand({ Filters: filters })),
+            ec2.send(new DescribeSubnetsCommand({ Filters: filters })),
+            ec2.send(new DescribeRouteTablesCommand({ Filters: filters })),
+            ec2.send(new DescribeNetworkAclsCommand({ Filters: filters })),
+            ec2.send(new DescribeSecurityGroupsCommand({ Filters: filters })),
+            ec2.send(new DescribeVpcsCommand({ Filters: filters })),
+          ]);
         const found: TaggedResource[] = [
           ...(instances.Reservations ?? [])
             .flatMap((reservation) => reservation.Instances ?? [])
@@ -303,6 +341,17 @@ export function createAwsPorts(): AwsPorts {
               id: item.InstanceId ?? '',
               tags: fromSdkTags(item.Tags),
             })),
+          ...(natGateways.NatGateways ?? []).map((item) => ({
+            kind: 'nat-gateway' as const,
+            id: item.NatGatewayId ?? '',
+            ...(item.State === undefined ? {} : { state: item.State }),
+            tags: fromSdkTags(item.Tags),
+          })),
+          ...(addresses.Addresses ?? []).map((item) => ({
+            kind: 'elastic-ip' as const,
+            id: item.AllocationId ?? '',
+            tags: fromSdkTags(item.Tags),
+          })),
           ...(gateways.InternetGateways ?? []).map((item) => {
             const attachedVpcId = item.Attachments?.[0]?.VpcId;
             return {
@@ -356,6 +405,18 @@ export function createAwsPorts(): AwsPorts {
               { client: ec2, maxWaitTime: INSTANCE_WAIT_SECONDS },
               { InstanceIds: [resource.id] },
             );
+            return;
+          case 'nat-gateway':
+            // A NAT gateway keeps its interface in the subnet until it is `deleted`.
+            if (resource.state !== 'deleting')
+              await ec2.send(new DeleteNatGatewayCommand({ NatGatewayId: resource.id }));
+            await waitUntilNatGatewayDeleted(
+              { client: ec2, maxWaitTime: NAT_GATEWAY_WAIT_SECONDS },
+              { NatGatewayIds: [resource.id] },
+            );
+            return;
+          case 'elastic-ip':
+            await ec2.send(new ReleaseAddressCommand({ AllocationId: resource.id }));
             return;
           case 'internet-gateway':
             if (resource.attachedVpcId !== undefined) {

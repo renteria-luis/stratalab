@@ -37,6 +37,7 @@ const TYPE_BY_PREFIX: Readonly<Record<string, ComponentType>> = {
   acl: 'network-acl',
   i: 'instance',
   eni: 'network-interface',
+  nat: 'nat-gateway',
 };
 
 type Mutable<T> = { -readonly [K in keyof T]: T[K] };
@@ -120,7 +121,10 @@ class Normalizer {
     if (route === undefined) return undefined;
     return compact({
       destinationCidr: route.DestinationCidr,
-      gatewayId: this.idValue(route.GatewayId, `${path}.gatewayId`),
+      // The VPC's local route names its target `local`, not an ID (RT-03, section 15.3).
+      gatewayId:
+        route.GatewayId === 'local' ? 'local' : this.idValue(route.GatewayId, `${path}.gatewayId`),
+      natGatewayId: this.idValue(route.NatGatewayId, `${path}.natGatewayId`),
       origin: route.Origin,
       state: route.State,
     });
@@ -159,6 +163,7 @@ class Normalizer {
       subnet: ref('Subnet', raw.Subnet),
       vpc: ref('Vpc', raw.Vpc),
       internetGateway: ref('InternetGateway', raw.InternetGateway),
+      natGateway: ref('NatGateway', raw.NatGateway),
       networkInterface: ref('NetworkInterface', raw.NetworkInterface),
       destination: ref('Destination', raw.Destination),
       aclRule: this.aclRule(raw.AclRule),

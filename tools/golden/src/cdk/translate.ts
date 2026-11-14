@@ -9,8 +9,10 @@ import {
   type CfnTag,
 } from 'aws-cdk-lib';
 import {
+  CfnEIP,
   CfnInstance,
   CfnInternetGateway,
+  CfnNatGateway,
   CfnNetworkAcl,
   CfnNetworkAclEntry,
   CfnRoute,
@@ -30,8 +32,10 @@ import {
  * the mismatches with our model, are in section 7.1; the translator rejects what it can't
  * build faithfully instead of approximating it.
  *
- * Rules: RT-01, SG-05, NACL-05, IGW-05, ADR-10 ·
+ * Rules: RT-01, RT-05, SG-05, NACL-05, IGW-05, ADR-10, NAT-01, NAT-06, NAT-07 ·
  * https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-ec2-vpc.html ·
+ * https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-ec2-natgateway.html ·
+ * https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-ec2-eip.html ·
  * https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-ec2-securitygroup.html ·
  * https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-ec2-instance.html
  */
@@ -50,6 +54,8 @@ export const ALLOWED_RESOURCE_TYPES = [
   'AWS::EC2::NetworkAclEntry',
   'AWS::EC2::SubnetNetworkAclAssociation',
   'AWS::EC2::Instance',
+  'AWS::EC2::EIP',
+  'AWS::EC2::NatGateway',
 ] as const;
 
 /** Amazon Linux 2023 x86_64 through the public SSM parameter (D6). */
@@ -67,8 +73,7 @@ export interface TranslateError {
     | 'GOLDEN_SG_PEER_EGRESS'
     | 'GOLDEN_WINDOWS'
     | 'GOLDEN_ELASTIC_IP'
-    | 'GOLDEN_PUBLIC_IP_WITHOUT_IGW'
-    | 'GOLDEN_NAT_GATEWAY';
+    | 'GOLDEN_PUBLIC_IP_WITHOUT_IGW';
   readonly message: string;
 }
 
@@ -113,14 +118,6 @@ export function translationErrors(topology: Topology): TranslateError[] {
   const attachedVpcs = new Set(
     topology.internetGateways.flatMap((gateway) => gateway.attachedVpcId ?? []),
   );
-
-  // NAT gateways bill per hour and need a P9 spec update first (r1-nat-gateway.md section 6).
-  for (const nat of topology.natGateways ?? []) {
-    errors.push({
-      code: 'GOLDEN_NAT_GATEWAY',
-      message: `${nat.id}: golden scenarios don't support NAT gateways yet (NAT-01)`,
-    });
-  }
 
   for (const vpc of topology.vpcs) {
     const main = topology.routeTables.find((table) => table.id === vpc.mainRouteTableId);
@@ -345,9 +342,8 @@ export function buildStack(app: App, stackName: string, topology: Topology): Tra
     );
     tables.set(table.id, resource);
     for (const route of table.routes) {
-      // translationErrors rejects NAT gateways, so every route here targets an internet gateway.
-      if (route.target.type !== 'internet-gateway')
-        throw new Error(`${table.id}: unexpected target`);
+      // NAT gateways need their subnet, so their routes are added after the subnets.
+      if (route.target.type !== 'internet-gateway') continue;
       const gatewayId = route.target.internetGatewayId;
       const gateway = gateways.get(gatewayId);
       if (gateway === undefined) throw new Error(`unknown internet gateway ${gatewayId}`);
@@ -505,6 +501,62 @@ export function buildStack(app: App, stackName: string, topology: Topology): Tra
             }),
         );
       }
+    }
+  }
+
+  // NAT-01: a public NAT gateway gets its Elastic IP at creation. Both depend on the VPC's
+  // gateway attachment: the EIP docs require it, and creation fails without one (NAT-07).
+  const natGateways = new Map<string, CfnNatGateway>();
+  for (const nat of topology.natGateways ?? []) {
+    const subnet = subnets.get(nat.subnetId);
+    const subnetFacts = topology.subnets.find((candidate) => candidate.id === nat.subnetId);
+    if (subnet === undefined || subnetFacts === undefined)
+      throw new Error(`unknown subnet ${nat.subnetId}`);
+    const gatewayId = attachedGatewayOf(subnetFacts.vpcId);
+    const attachment = gatewayId === undefined ? undefined : attachments.get(gatewayId);
+    const eip = add(
+      `${logicalIdOf(nat.id)}Eip`,
+      nat.id,
+      (id) => new CfnEIP(stack, id, { domain: 'vpc', tags: tagsOf(nat.id, nat.name) }),
+    );
+    const resource = add(
+      logicalIdOf(nat.id),
+      nat.id,
+      (id) =>
+        new CfnNatGateway(stack, id, {
+          allocationId: eip.attrAllocationId,
+          subnetId: subnet.ref,
+          // Both are the defaults; written out because regional and private exist (NAT-06).
+          connectivityType: nat.connectivityType,
+          availabilityMode: 'zonal',
+          privateIpAddress: nat.privateIpAddress,
+          tags: tagsOf(nat.id, nat.name),
+        }),
+    );
+    if (attachment !== undefined) {
+      eip.addResourceDependency(attachment);
+      resource.addResourceDependency(attachment);
+    }
+    natGateways.set(nat.id, resource);
+  }
+  for (const table of topology.routeTables) {
+    const tableResource = tables.get(table.id);
+    if (tableResource === undefined) continue;
+    for (const route of table.routes) {
+      const { target } = route;
+      if (target.type !== 'nat-gateway') continue;
+      const nat = natGateways.get(target.natGatewayId);
+      if (nat === undefined) throw new Error(`unknown NAT gateway ${target.natGatewayId}`);
+      add(
+        routeLogicalIdOf(table.id, route.destinationCidrBlock),
+        table.id,
+        (id) =>
+          new CfnRoute(stack, id, {
+            routeTableId: tableResource.ref,
+            destinationCidrBlock: route.destinationCidrBlock,
+            natGatewayId: nat.ref,
+          }),
+      );
     }
   }
 

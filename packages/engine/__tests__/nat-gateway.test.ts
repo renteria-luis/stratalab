@@ -586,7 +586,7 @@ describe('NAT gateway: trace F3', () => {
     expect(traceNat(change).verdict).toBe('REACHED');
   });
 
-  it('NAT-02: a reply routed to a NAT gateway is unsupported (Q15)', () => {
+  it('NAT-02: a reply routed to a NAT gateway has no route to the destination (Q15)', () => {
     const result = traceNat(
       (input) => {
         input.instances.push({
@@ -615,13 +615,15 @@ describe('NAT gateway: trace F3', () => {
     expect(result.failure).toEqual({
       direction: 'return',
       hopIndex: 6,
-      reasonCodes: ['UNSUPPORTED_FEATURE'],
+      reasonCodes: ['NO_ROUTE_TO_DESTINATION'],
     });
     const hop = at(result.hops, 6);
     expect(hop.step).toBe('route-lookup');
     expect(hop.match).toMatchObject({ target: 'nat-0000000a', state: 'active' });
-    expect(hop.fidelity).toBe('Unsupported');
-    expect(result.fidelity).toBe('Unsupported');
+    expect(hop.ruleIds).toContain('NAT-02');
+    // Golden s6-f3-nat (2026-11-14): Reachability Analyzer reports this code here.
+    expect(hop.fidelity).toBe('Inferred');
+    expect(result.fidelity).toBe('Inferred');
   });
 
   it('NAT-01: a NAT subnet route to a NAT gateway is unsupported (Q16)', () => {

@@ -149,9 +149,10 @@ S5 q1 has two stacked faults. The engine stops at the first failing hop. Reachab
 | S3       | 1      | 2         | 2        |
 | S4       | 3      | 1         | 2        |
 | S5       | 1      | 1         | 3        |
-| Total    |        | 6         | 12       |
+| S6       | 1      | 2         | 2        |
+| Total    |        | 8         | 14       |
 
-Suggested order: S1 (checks the whole pipeline and the mapping), S3, S4, S2, S5.
+Suggested order: S1 (checks the whole pipeline and the mapping), S3, S4, S2, S5. S6 (R1, NAT gateway) is in section 15.
 
 ## 3. Manual checks for Q11 and Q10 (no Reachability Analyzer)
 
@@ -364,6 +365,8 @@ L1 constructs only (`Cfn*`), created directly under the stack with logical IDs d
 | `subnet.networkAclId` (custom ACL)   | `AWS::EC2::SubnetNetworkAclAssociation`                                                                                                                                                                                                                                                                                                                                                                 |
 | Custom route table                   | `AWS::EC2::RouteTable`                                                                                                                                                                                                                                                                                                                                                                                  |
 | Route → internet gateway             | `AWS::EC2::Route` (`DestinationCidrBlock`, `GatewayId`), `DependsOn` the gateway's attachment                                                                                                                                                                                                                                                                                                           |
+| Route → NAT gateway                  | `AWS::EC2::Route` (`DestinationCidrBlock`, `NatGatewayId`) (section 15.2)                                                                                                                                                                                                                                                                                                                               |
+| NAT gateway                          | `AWS::EC2::EIP` + `AWS::EC2::NatGateway`, both `DependsOn` the gateway's attachment (section 15.2)                                                                                                                                                                                                                                                                                                      |
 | Internet gateway / `attachedVpcId`   | `AWS::EC2::InternetGateway` / `AWS::EC2::VPCGatewayAttachment`                                                                                                                                                                                                                                                                                                                                          |
 | Custom security group                | `AWS::EC2::SecurityGroup` (`GroupName`, `GroupDescription`, `VpcId`, CIDR rules inline, `SecurityGroupEgress` always explicit)                                                                                                                                                                                                                                                                          |
 | Rule with a security group peer      | `AWS::EC2::SecurityGroupIngress` / `AWS::EC2::SecurityGroupEgress` (inline references can create circular dependencies)                                                                                                                                                                                                                                                                                 |
@@ -433,7 +436,7 @@ Same flag, identity and region checks. It lists, then (unless `--dry-run`) delet
 
 1. Network insights analyses, then paths (filtered by their tags).
 2. Stacks `sim-golden-*` tagged `sim:golden=true`: `DeleteStack` and wait.
-3. EC2 resources still tagged (a stack in `DELETE_FAILED`): terminate instances and wait, detach and delete internet gateways, delete subnets, custom route tables, custom network ACLs, custom security groups, then VPCs. Then retry the stack delete.
+3. EC2 resources still tagged (a stack in `DELETE_FAILED`): terminate instances and wait, delete NAT gateways and wait until they are `deleted` (their network interfaces leave the subnet), release Elastic IPs, detach and delete internet gateways, delete subnets, custom route tables, custom network ACLs, custom security groups, then VPCs. Then retry the stack delete.
 
 `--dry-run` here makes read-only calls, so it needs credentials.
 
@@ -441,7 +444,7 @@ Same flag, identity and region checks. It lists, then (unless `--dry-run`) delet
 
 ### 9.1 Before the first run
 
-- A dedicated sandbox account with a budget alarm. Check that its plan allows EC2 instances, public IPv4 addresses and Reachability Analyzer (some free plan accounts block services).
+- A dedicated sandbox account with a budget alarm. Check that its plan allows EC2 instances, public IPv4 addresses and Reachability Analyzer (some free plan accounts block services), and for S6 also NAT gateways and Elastic IP addresses.
 - Region us-east-1 (all scenarios). Check that t3.micro is offered in the zone your account calls `us-east-1a`; if not, CloudFormation fails fast and the tool tears down.
 - A role or permission set with the policy in 9.2. The tool picks it up through `AWS_PROFILE`.
 
@@ -501,6 +504,8 @@ Stored as `tools/golden/iam/capture-policy.json` in phase B. Replace `<ACCOUNT_I
         "ec2:CreateNetworkAcl",
         "ec2:CreateNetworkAclEntry",
         "ec2:ReplaceNetworkAclAssociation",
+        "ec2:AllocateAddress",
+        "ec2:CreateNatGateway",
         "ec2:CreateTags"
       ],
       "Resource": "*",
@@ -550,6 +555,9 @@ Stored as `tools/golden/iam/capture-policy.json` in phase B. Replace `<ACCOUNT_I
         "ec2:RevokeSecurityGroupIngress",
         "ec2:DeleteNetworkAcl",
         "ec2:DeleteNetworkAclEntry",
+        "ec2:DeleteNatGateway",
+        "ec2:DisassociateAddress",
+        "ec2:ReleaseAddress",
         "ec2:DeleteTags"
       ],
       "Resource": "*",
@@ -676,14 +684,16 @@ With D1 nothing needs bootstrapping: the template has no assets, no bootstrap ve
 
 ### 9.4 Billable resources per run
 
-| Item                                 | S1  | S2  | S3  | S4  | S5  |
-| ------------------------------------ | --- | --- | --- | --- | --- |
-| t3.micro instance (standard credits) | 1   | 1   | 2   | 1   | 1   |
-| EBS root volume (AMI default)        | 1   | 1   | 2   | 1   | 1   |
-| Public IPv4 address (auto-assigned)  | 1   | 1   | 2   | 1   | 1   |
-| Reachability Analyzer analyses       | 3   | 2   | 2   | 2   | 3   |
+| Item                                 | S1  | S2  | S3  | S4  | S5  | S6  |
+| ------------------------------------ | --- | --- | --- | --- | --- | --- |
+| t3.micro instance (standard credits) | 1   | 1   | 2   | 1   | 1   | 2   |
+| EBS root volume (AMI default)        | 1   | 1   | 2   | 1   | 1   | 2   |
+| Public IPv4 address (auto-assigned)  | 1   | 1   | 2   | 1   | 1   | 1   |
+| Elastic IP address (NAT gateway)     | 0   | 0   | 0   | 0   | 0   | 1   |
+| NAT gateway (zonal, public)          | 0   | 0   | 0   | 0   | 0   | 1   |
+| Reachability Analyzer analyses       | 3   | 2   | 2   | 2   | 3   | 2   |
 
-They exist from the first stage that creates them until the stack delete finishes. No NAT gateways, Elastic IPs or transit gateways. No prices here; check:
+They exist from the first stage that creates them until the stack delete finishes. A NAT gateway bills per hour and per GB it processes (the analyses send no traffic); an Elastic IP bills per hour like any public IPv4 address. No transit gateways. No prices here; check:
 
 - Reachability Analyzer and public IPv4 addresses: https://aws.amazon.com/vpc/pricing/
 - EC2 instances: https://aws.amazon.com/ec2/pricing/on-demand/
@@ -790,3 +800,97 @@ Reference cards batch 2 and the second review of batch 1; the missing console ca
 - First S4 run (2026-11-05) failed at stage 3 with `UPDATE_ROLLBACK_COMPLETE`, then tore down cleanly. Cause: route logical IDs used the route's position, so the blackhole route was `Route0` in stage 1 and `Route1` in stage 3, and CloudFormation tried to recreate it toward the detached gateway. Route logical IDs now come from the destination (`Rtb00000002Route198d51d100d0s24`), and a test checks that resources shared by consecutive stages keep the same properties. Stack failures now print CloudFormation's own reasons. The S1 and S3 fixtures stay valid: logical IDs aren't part of the hash.
 - All five fixtures captured on 2026-11-05. Eleven of twelve analyses matched at once; `s4-q8-blackhole` `web-to-198-51-100-10-443` agreed on the verdict but reported `MORE_SPECIFIC_ROUTE` instead of the engine's `BAD_STATE_ROUTE`. Decided with the user (Q14, RT-08): the engine now reports `MORE_SPECIFIC_ROUTE` when a blackhole route shadows a less specific active route, and keeps `BAD_STATE_ROUTE` (Inferred) when no active route matches. Answered: Q1, Q12, Q13; Q7 for F1 and F2. Open: Q8 (public subnet with only a blackhole route), the `BAD_STATE_ROUTE` case, Q10 and Q11 (manual checks, section 3).
 - Checking a fixture by hand: `grep -nE 'arn:|[0-9]{12}'` also matches digit runs inside `scenarioHash`. Use the golden test's leak check instead (`pnpm test:engine`).
+
+## 15. S6: NAT gateway and flow F3 (R1, 2026-11-14)
+
+Status: written 2026-11-14 together with the code (the user asked for the whole code phase in one go, so spec and code are reviewed together). Rules: TRC-06, TRC-01, TRC-03 (F3), NAT-01, NAT-02, NAT-04, NAT-05, NAT-06, NAT-07, RT-05, IGW-04, IGW-07. Open questions it answers: Q7 for F3 (trace-model), Q15 (routing). Engine: `docs/specs/r1-nat-gateway.md` sections 4 and 6.
+
+### 15.1 Scenario
+
+**S6 `s6-f3-nat`** · topology: lab 1 solution without `web-1`, plus the `nat-base` additions of r1-nat-gateway.md section 6 and `web-2` from its Q15 test:
+
+- subnet `private-a` (`subnet-0000000b`, 10.0.2.0/24, us-east-1a) on route table `private-rt` (`rtb-00000003`: 0.0.0.0/0 → `nat-0000000a`);
+- NAT gateway `nat-a` (`nat-0000000a`) in `public-a`, private IP 10.0.1.20, Elastic IP 203.0.113.30;
+- security group `app` (`sg-0000000b`): no inbound rules, outbound all to 0.0.0.0/0;
+- `app-1` (`i-0000000b`, `eni-0000000b`, 10.0.2.10, no public IP, group `app`, no services);
+- `web-2` (`i-0000000c`, `eni-0000000c`, 10.0.2.11, public 203.0.113.26 auto-assigned, group `web`, nginx on 80).
+
+`web-1` is left out: no query needs it, and it would add an instance and a public IPv4 address.
+
+| Query             | Leg     | Packet                                                                     | Engine expected                                                  | Rule IDs               |
+| ----------------- | ------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------- |
+| `app-to-igw-443`  | request | app-1:32768 → 198.51.100.7:443 (private-rt sends it to nat-a)              | `REACHED` (15 hops, flow F3)                                     | TRC-03, NAT-04, NAT-05 |
+| `igw-to-web-2-80` | request | 198.51.100.7:32768 → web-2 public :80 (its reply's route lookup picks nat) | `BROKE_AT_HOP`, return 6, `NO_ROUTE_TO_DESTINATION` (since 15.8) | NAT-02, IGW-04         |
+
+Both use the mapping of section 2.2 unchanged: q1 is "instance → internet" (the internet gateway is the destination and the NAT gateway an intermediate component, which Reachability Analyzer supports), q2 is "internet → instance".
+
+Reading the fixture:
+
+- q1 answers Q7 for F3. Compare the forward and return path components with the hop table in r1-nat-gateway.md 4.2: NACL outbound before the route lookup, the NAT subnet's NACL on both sides of the NAT gateway, no security group at the NAT gateway (NAT-05). Check the headers: the NAT gateway changes the source to 10.0.1.20 and a port in 1024–65535, the internet gateway changes 10.0.1.20 to 203.0.113.30 (NAT-04). The golden test still compares only verdicts and codes (D9).
+- q2 answers Q15. Its comparison fails on the first capture whatever Reachability Analyzer reports, because `UNSUPPORTED_FEATURE` is our own code: a found path differs in the verdict, a blocked one in the codes. Don't commit the fixture alone: decide with the user first (as for Q14), change the skill, then the engine, and commit them together.
+
+Sources: https://docs.aws.amazon.com/vpc/latest/reachability/how-reachability-analyzer-works.html (NAT gateways are intermediate and path components; NAT gateways and internet gateways change packet headers; checked 2026-11-14)
+
+### 15.2 Translation (adds to section 7)
+
+| Topology            | CloudFormation                                                                                                                                                                                                                                         |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| NAT gateway         | `AWS::EC2::EIP` (`Domain: vpc`, tags), logical ID `Nat0000000aEip`, and `AWS::EC2::NatGateway` (`AllocationId: GetAtt <Eip>.AllocationId`, `SubnetId`, `ConnectivityType: public`, `AvailabilityMode: zonal`, `PrivateIpAddress`, tags), `Nat0000000a` |
+| Route → NAT gateway | `AWS::EC2::Route` (`DestinationCidrBlock`, `NatGatewayId: Ref <NatGateway>`), logical ID from the destination as in Phase B notes                                                                                                                      |
+
+| Default or requirement                                                                                                                                            | Source                                 | Handling                                                                                                                        |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| An Elastic IP for a VPC defined in the same template must `DependsOn` the VPC-gateway attachment                                                                  | AWS::EC2::EIP (`Domain`)               | The EIP depends on the attachment of the gateway attached to the NAT gateway's VPC                                              |
+| Creating a NAT gateway fails when the VPC has no attached internet gateway                                                                                        | NAT-07                                 | The NAT gateway depends on the same attachment                                                                                  |
+| `ConnectivityType` defaults to `public`, `AvailabilityMode` to `zonal`; regional and private NAT gateways exist                                                   | API_CreateNatGateway, NAT-06           | Both written explicitly                                                                                                         |
+| Without `PrivateIpAddress` AWS picks the address                                                                                                                  | AWS::EC2::NatGateway, NAT-07           | Always set from the topology                                                                                                    |
+| The Elastic IP comes from Amazon's pool                                                                                                                           | ADR-10                                 | 203.0.113.0/24 stand-in; the ID map maps the real address back                                                                  |
+| Stack delete order follows dependencies: the NAT gateway (it references the EIP) goes first, then the EIP, then the attachment, so IGW-07 never blocks the detach | CloudFormation dependencies (Inferred) | Nothing to add                                                                                                                  |
+| A staged scenario (2.5) with a NAT gateway leaves its VPC without an attached gateway in stage 2 (`NAT_VPC_NO_INTERNET_GATEWAY`)                                  | NAT-07, IGW-07                         | `GOLDEN_STAGE_INVALID`. The blanket `GOLDEN_NAT_GATEWAY` translator error (added with the engine work on 2026-11-08) is removed |
+
+Sources: https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-ec2-natgateway.html · https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-ec2-eip.html · https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateNatGateway.html (checked 2026-11-14)
+
+### 15.3 Fixture, ID map and normalization (adds to sections 5 and 5.1)
+
+- Component type `nat-gateway` (prefix `nat`). Optional `routeTableRoute.natGatewayId` (SDK `NatGatewayId`) and explanation `natGateway` (SDK `NatGateway`). `fixtureVersion` stays 1: the S1 to S5 fixtures still parse.
+- `GOLDEN_MAPPING_VERSION` stays 1: the query shapes, the stage plan and the comparison rule don't change, so the S1 to S5 hashes stay the same.
+- ID map: the NAT gateway from `DescribeStackResources`. From `DescribeNatGateways` (read-only, by VPC): the NAT gateway's network interface and its Elastic IP allocation ID map to the NAT gateway's ID, because the model has no separate resources for them; the Elastic IP maps to `elasticIpAddress`.
+- Before any analysis the tool stops unless each NAT gateway is `available`, sits in its topology subnet, has its topology private IP and has an Elastic IP, and each route to it is `active` (RT-05).
+
+### 15.4 Cleanup (adds to section 8.3)
+
+`listTagged` also returns NAT gateways that aren't `deleted` and tagged Elastic IPs. Delete order: instances, NAT gateways (wait until `deleted`), Elastic IPs (`ReleaseAddress`), then as before.
+
+### 15.5 IAM (adds to section 9.2)
+
+- `CreateNetworkInRegion`: `ec2:AllocateAddress`, `ec2:CreateNatGateway`.
+- `ChangeOrDeleteOnlyTagged`: `ec2:DeleteNatGateway`, `ec2:DisassociateAddress`, `ec2:ReleaseAddress`. The `natgateway` and `elastic-ip` resource types support `aws:ResourceTag`, and stack tags propagate to both.
+- Left out: `ec2:AssociateAddress` and `ec2:AcceptAddressTransfer` (EIP create handler, only for `InstanceId` and `TransferAddress`, which we never set) and the update-handler actions (S6 has one stage). Same rule as before: add an action only after an `AccessDenied`, with the same scoping.
+
+Sources: CloudFormation registry schemas `AWS::EC2::NatGateway` (create `ec2:CreateNatGateway`, `ec2:CreateTags`, `ec2:DescribeNatGateways`; delete `ec2:DeleteNatGateway`, `ec2:DescribeNatGateways`) and `AWS::EC2::EIP` (create `ec2:AllocateAddress`, `ec2:AssociateAddress`, `ec2:AcceptAddressTransfer`, `ec2:CreateTags`, `ec2:DescribeAddresses`; delete `ec2:DescribeAddresses`, `ec2:DisassociateAddress`, `ec2:ReleaseAddress`), https://schema.cloudformation.us-east-1.amazonaws.com/CloudformationSchema.zip · EC2 service authorization reference (resource types and condition keys), https://servicereference.us-east-1.amazonaws.com/v1/ec2/ec2.json (both downloaded 2026-11-14)
+
+### 15.6 Run
+
+- Billable while deployed (9.4): 2 instances, 2 EBS volumes, 1 auto-assigned public IPv4 address, 1 Elastic IP, 1 NAT gateway, then 2 analyses.
+- No pause before teardown: the capture tears down right after the analyses, as for S1 to S5. The NAT gateway console pages that r1-nat-gateway.md section 9 leaves open are captured another time.
+- Commands for the user: `pnpm golden:capture s6-f3-nat --dry-run`, then `pnpm golden:capture s6-f3-nat --account <id>`, then `pnpm golden:cleanup --account <id> --dry-run`.
+
+### 15.7 Tests (TDD)
+
+Engine: `TRC-06: s6-f3-nat scenario is valid and the engine matches its expected results` (generated by the golden test); `TRC-06: the fixture schema accepts NAT gateway components, routes and explanations`.
+
+Tools:
+
+- Translation: `NAT-01: a NAT gateway gets an Elastic IP and a zonal public NAT gateway with its private IP`; `NAT-07: the Elastic IP and the NAT gateway depend on the gateway attachment`; `RT-05: a route to a NAT gateway uses NatGatewayId`; the allow-list test adds `AWS::EC2::EIP` and `AWS::EC2::NatGateway`.
+- Stages: `NAT-07: a staged scenario with a NAT gateway is rejected`.
+- ID map: `NAT-04: the NAT gateway's interface and allocation map to its ID and its Elastic IP to the scenario address`; `NAT-07: a NAT gateway that isn't available or has another private IP stops the capture`; `RT-05: a route to a NAT gateway must be active`.
+- Normalizer: `TRC-06: NAT gateway components, routes and explanations are normalized`.
+- Plan: `TRC-06: the dry run counts the NAT gateway and its Elastic IP as billable`.
+- Cleanup: `TRC-06: cleanup deletes NAT gateways and releases Elastic IPs before internet gateways and subnets`.
+
+### 15.8 Results (2026-11-14)
+
+- First run: both analyses succeeded, but the fixture wasn't written. The F3 return path crosses the NAT subnet's local route, whose `GatewayId` is `local`, and the normalizer treated it as an unknown ID. Fixed (the value is kept as is); checked offline against that run's raw responses before the second run. Teardown was complete.
+- Second run: fixture `s6-f3-nat.json` written, teardown complete, cleanup found nothing.
+- `app-to-igw-443`: `REACHED`, as the engine. The component order matches the hop table of r1-nat-gateway.md 4.2, so Q7 is answered for F3. The NAT gateway's network interface appears on both sides of the NAT gateway.
+- `igw-to-web-2-80`: not found, `NO_ROUTE_TO_DESTINATION` at `private-rt` on the return path (destination: the internet gateway); the engine had `UNSUPPORTED_FEATURE` at the same hop. Decided with the user: the engine now reports `NO_ROUTE_TO_DESTINATION` there (NAT-02, Inferred), and the scenario's expected result changes with it. Q15 is answered.

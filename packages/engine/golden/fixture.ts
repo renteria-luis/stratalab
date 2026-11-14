@@ -29,6 +29,8 @@ const securityGroupRule = z.strictObject({
 const routeTableRoute = z.strictObject({
   destinationCidr: z.string().optional(),
   gatewayId: z.string().optional(),
+  /** Section 15.3: a route to a NAT gateway names it here, not in `gatewayId`. */
+  natGatewayId: z.string().optional(),
   origin: z.string().optional(),
   state: z.string().optional(),
 });
@@ -50,6 +52,7 @@ export const COMPONENT_TYPES = [
   'network-acl',
   'instance',
   'network-interface',
+  'nat-gateway',
 ] as const;
 
 export type ComponentType = (typeof COMPONENT_TYPES)[number];
@@ -66,6 +69,7 @@ export const fixtureExplanationSchema = z.strictObject({
   subnet: z.string().optional(),
   vpc: z.string().optional(),
   internetGateway: z.string().optional(),
+  natGateway: z.string().optional(),
   networkInterface: z.string().optional(),
   destination: z.string().optional(),
   aclRule: aclRule.optional(),

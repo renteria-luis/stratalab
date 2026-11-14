@@ -25,6 +25,7 @@ const PRIMARY_TYPES = new Set([
   'AWS::EC2::SecurityGroup',
   'AWS::EC2::NetworkAcl',
   'AWS::EC2::Instance',
+  'AWS::EC2::NatGateway',
 ]);
 
 export function buildIdMap(
@@ -98,10 +99,38 @@ export function buildIdMap(
     }
   }
 
+  // Section 15.3: the NAT gateway's interface and Elastic IP allocation have no topology ID of
+  // their own, so they map to the NAT gateway (NAT-04, NAT-07).
+  for (const nat of topology.natGateways ?? []) {
+    const facts = snapshot.natGateways.find(
+      (candidate) => candidate.natGatewayId === realOf.get(nat.id),
+    );
+    if (facts === undefined) {
+      problems.push(`${nat.id}: not found after deploy`);
+      continue;
+    }
+    if (facts.state !== 'available')
+      problems.push(`${nat.id}: deployed state ${facts.state}, expected available`);
+    if (facts.subnetId !== realOf.get(nat.subnetId))
+      problems.push(`${nat.id}: deployed in another subnet than ${nat.subnetId}`);
+    if (facts.privateIpAddress !== nat.privateIpAddress) {
+      problems.push(
+        `${nat.id}: deployed private address ${facts.privateIpAddress}, topology ${nat.privateIpAddress}`,
+      );
+    }
+    if (facts.publicIpAddress === undefined) problems.push(`${nat.id}: no Elastic IP after deploy`);
+    else addresses.set(facts.publicIpAddress, nat.elasticIpAddress);
+    ids.set(facts.networkInterfaceId, nat.id);
+    if (facts.allocationId !== undefined) ids.set(facts.allocationId, nat.id);
+  }
+
   return problems.length === 0 ? { ok: true, map: { ids, addresses } } : { ok: false, problems };
 }
 
-/** Each route's deployed state must be `active`, or `blackhole` when its gateway is detached (RT-08). */
+/**
+ * Each route's deployed state must be `active`, or `blackhole` when its gateway is detached
+ * (RT-08). A route to a NAT gateway is always `active` (RT-05, section 15.3).
+ */
 export function routeStateProblems(
   scenario: GoldenScenario,
   snapshot: InventorySnapshot,
@@ -117,7 +146,10 @@ export function routeStateProblems(
         target.type === 'internet-gateway'
           ? topology.internetGateways.find((candidate) => candidate.id === target.internetGatewayId)
           : undefined;
-      const expected = gateway?.attachedVpcId === table.vpcId ? 'active' : 'blackhole';
+      const expected =
+        target.type === 'nat-gateway' || gateway?.attachedVpcId === table.vpcId
+          ? 'active'
+          : 'blackhole';
       const deployed = snapshot.routes.find(
         (candidate) =>
           scenarioIdOf(candidate.routeTableId) === table.id &&

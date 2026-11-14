@@ -242,7 +242,7 @@ export function TraceTab() {
                 cell: (hop) =>
                   hop.reasonCodes.length > 0
                     ? hop.reasonCodes
-                        .map((code) => `${reasonMessage(code, translator)} (${code})`)
+                        .map((code) => `${reasonMessage(code, translator, hop)} (${code})`)
                         .join(' ')
                     : hop.skippedBecause === undefined
                       ? '–'

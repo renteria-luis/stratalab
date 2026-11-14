@@ -31,6 +31,13 @@ function webGroup(input: TopologyInput) {
   return group;
 }
 
+/** S6: lab 1 without web-1, plus private-a, private-rt → nat-a, app-1 and web-2 (section 15). */
+function s6Topology(): Topology {
+  const scenario = findScenario('s6-f3-nat');
+  if (scenario === undefined) throw new Error('s6 is missing');
+  return scenario.topology;
+}
+
 function web1(input: TopologyInput) {
   const instance = input.instances[0];
   if (instance === undefined) throw new Error('lab 1 has web-1');
@@ -39,16 +46,65 @@ function web1(input: TopologyInput) {
 
 describe('topology → CDK translation, L1 only', () => {
   it('TRC-06: only allow-listed resource types, no CDK metadata resource, no bootstrap parameter or rule', () => {
-    const json = template(parsed()).toJSON() as {
-      Resources: Record<string, { Type: string }>;
-      Parameters?: Record<string, unknown>;
-      Rules?: Record<string, unknown>;
-    };
-    const types = Object.values(json.Resources).map((resource) => resource.Type);
-    for (const type of types) expect(ALLOWED_RESOURCE_TYPES).toContain(type);
-    expect(types).not.toContain('AWS::CDK::Metadata');
-    expect(json.Parameters?.BootstrapVersion).toBeUndefined();
-    expect(json.Rules?.CheckBootstrapVersion).toBeUndefined();
+    for (const topology of [parsed(), s6Topology()]) {
+      const json = template(topology).toJSON() as {
+        Resources: Record<string, { Type: string }>;
+        Parameters?: Record<string, unknown>;
+        Rules?: Record<string, unknown>;
+      };
+      const types = Object.values(json.Resources).map((resource) => resource.Type);
+      for (const type of types) expect(ALLOWED_RESOURCE_TYPES).toContain(type);
+      expect(types).not.toContain('AWS::CDK::Metadata');
+      expect(json.Parameters?.BootstrapVersion).toBeUndefined();
+      expect(json.Rules?.CheckBootstrapVersion).toBeUndefined();
+    }
+    expect(ALLOWED_RESOURCE_TYPES).toContain('AWS::EC2::EIP');
+    expect(ALLOWED_RESOURCE_TYPES).toContain('AWS::EC2::NatGateway');
+  });
+
+  it('NAT-01: a NAT gateway gets an Elastic IP and a zonal public NAT gateway with its private IP', () => {
+    const nat = template(s6Topology());
+    nat.resourceCountIs('AWS::EC2::EIP', 1);
+    nat.resourceCountIs('AWS::EC2::NatGateway', 1);
+    nat.hasResourceProperties('AWS::EC2::EIP', {
+      Domain: 'vpc',
+      Tags: Match.arrayWith([{ Key: 'sim:resource', Value: 'nat-0000000a' }]),
+    });
+    nat.hasResourceProperties('AWS::EC2::NatGateway', {
+      AllocationId: { 'Fn::GetAtt': ['Nat0000000aEip', 'AllocationId'] },
+      SubnetId: { Ref: 'Subnet0000000a' },
+      ConnectivityType: 'public',
+      AvailabilityMode: 'zonal',
+      PrivateIpAddress: '10.0.1.20',
+      Tags: [
+        { Key: 'Name', Value: 'nat-a' },
+        { Key: 'sim:resource', Value: 'nat-0000000a' },
+      ],
+    });
+    const { logicalIds } = buildStack(new App(), 'sim-golden-test', s6Topology());
+    expect(logicalIds.get('Nat0000000a')).toBe('nat-0000000a');
+    expect(logicalIds.get('Nat0000000aEip')).toBe('nat-0000000a');
+    expect(codesOf(s6Topology())).toEqual([]);
+  });
+
+  it('NAT-07: the Elastic IP and the NAT gateway depend on the gateway attachment', () => {
+    const nat = template(s6Topology());
+    nat.hasResource('AWS::EC2::EIP', { DependsOn: ['Igw0000000aAttachment'] });
+    nat.hasResource('AWS::EC2::NatGateway', { DependsOn: ['Igw0000000aAttachment'] });
+  });
+
+  it('RT-05: a route to a NAT gateway uses NatGatewayId', () => {
+    const nat = template(s6Topology());
+    nat.hasResourceProperties('AWS::EC2::Route', {
+      RouteTableId: { Ref: 'Rtb00000003' },
+      DestinationCidrBlock: '0.0.0.0/0',
+      NatGatewayId: { Ref: 'Nat0000000a' },
+    });
+    const routes = nat.findResources('AWS::EC2::Route', {
+      Properties: { NatGatewayId: Match.anyValue() },
+    });
+    expect(Object.keys(routes)).toEqual(['Rtb00000003Route0d0d0d0s0']);
+    expect(Object.values(routes)[0]?.Properties).not.toHaveProperty('GatewayId');
   });
 
   it('TRC-06: logical IDs come from topology IDs', () => {

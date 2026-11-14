@@ -49,6 +49,8 @@
         "ec2:CreateNetworkAcl",
         "ec2:CreateNetworkAclEntry",
         "ec2:ReplaceNetworkAclAssociation",
+        "ec2:AllocateAddress",
+        "ec2:CreateNatGateway",
         "ec2:CreateTags"
       ],
       "Resource": "*",
@@ -110,6 +112,9 @@
         "ec2:RevokeSecurityGroupIngress",
         "ec2:DeleteNetworkAcl",
         "ec2:DeleteNetworkAclEntry",
+        "ec2:DeleteNatGateway",
+        "ec2:DisassociateAddress",
+        "ec2:ReleaseAddress",
         "ec2:DeleteTags"
       ],
       "Resource": "*",

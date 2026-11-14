@@ -35,7 +35,7 @@ export interface TraceQuery {
  * Reason codes a hop can fail with. All but the last three are Reachability Analyzer
  * explanation codes (TRC-04); `NO_LISTENER`, `NO_INTERNET_GATEWAY` and `UNSUPPORTED_FEATURE`
  * are our own. `UNSUPPORTED_FEATURE` marks a path the engine doesn't model, such as a route
- * to a NAT gateway where only an internet gateway works (Q15, Q16); it never ends `REACHED`.
+ * in a NAT gateway's subnet to a NAT gateway (Q16); it never ends `REACHED`.
  */
 export const REASON_CODES = [
   'NO_ROUTE_TO_DESTINATION',

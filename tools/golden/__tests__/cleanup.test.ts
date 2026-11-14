@@ -85,6 +85,25 @@ describe('cleanup (docs/specs/p9-golden.md section 8.3)', () => {
     expect(aws.taggedResources.map((item) => item.id)).toEqual(['vpc-0fe0000000000099']);
   });
 
+  it('TRC-06: cleanup deletes NAT gateways and releases Elastic IPs before internet gateways and subnets', async () => {
+    const { run, aws } = setup();
+    aws.taggedResources = [
+      resource('subnet', 'subnet-0fe0000000000001'),
+      resource('elastic-ip', 'eipalloc-0fe000000000001'),
+      resource('internet-gateway', 'igw-0fe0000000000001'),
+      resource('nat-gateway', 'nat-0fe0000000000001'),
+      resource('instance', 'i-0fe0000000000001'),
+    ];
+    expect(await run({ yes: true })).toBe(0);
+    expect(aws.calls.filter((call) => call.startsWith('inventory.remove'))).toEqual([
+      'inventory.remove instance i-0fe0000000000001',
+      'inventory.remove nat-gateway nat-0fe0000000000001',
+      'inventory.remove elastic-ip eipalloc-0fe000000000001',
+      'inventory.remove internet-gateway igw-0fe0000000000001',
+      'inventory.remove subnet subnet-0fe0000000000001',
+    ]);
+  });
+
   it('TRC-06: a clean run exits 0', async () => {
     const { run, aws } = setup();
     aws.taggedPaths = ['nip-00000000000000001'];

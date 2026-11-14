@@ -1,4 +1,4 @@
-import type { HelperError, Issue, QueryIssue, ReasonCode } from '@sim/engine';
+import type { HelperError, Hop, Issue, QueryIssue, ReasonCode } from '@sim/engine';
 import type { MessageKey, MessageParams } from './translate';
 import type { Translator } from './useT';
 
@@ -102,8 +102,24 @@ export function helperErrorMessage(error: HelperError, { t, tPlural }: Translato
   }
 }
 
-/** The message of a trace reason code (`reason.<code>`). */
-export function reasonMessage(code: ReasonCode, { t }: Translator): string {
+/**
+ * The message of a trace reason code (`reason.<code>`). A reply whose route lookup picks a NAT
+ * gateway names it, since the table does have a route, just not to the internet gateway
+ * (NAT-02, Q15, golden `s6-f3-nat`).
+ */
+export function reasonMessage(
+  code: ReasonCode,
+  { t }: Translator,
+  hop?: Pick<Hop, 'match'>,
+): string {
+  const match = hop?.match;
+  if (
+    code === 'NO_ROUTE_TO_DESTINATION' &&
+    match?.type === 'route' &&
+    match.target.startsWith('nat-')
+  ) {
+    return t('reason.NO_ROUTE_TO_DESTINATION.natGateway', { natGatewayId: match.target });
+  }
   return t(`reason.${code}`);
 }
 

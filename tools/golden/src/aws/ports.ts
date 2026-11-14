@@ -54,7 +54,21 @@ export interface RouteFacts {
   readonly routeTableId: string;
   readonly destinationCidrBlock: string;
   readonly gatewayId?: string;
+  readonly natGatewayId?: string;
   readonly state: string;
+}
+
+/** `DescribeNatGateways`, primary address only (section 15.3). */
+export interface NatGatewayFacts {
+  readonly natGatewayId: string;
+  readonly subnetId: string;
+  readonly state: string;
+  readonly privateIpAddress: string;
+  readonly publicIpAddress?: string;
+  /** The requester-managed network interface AWS creates for it (NAT-07). */
+  readonly networkInterfaceId: string;
+  /** The Elastic IP's allocation ID. */
+  readonly allocationId?: string;
 }
 
 export interface SubnetFacts {
@@ -68,10 +82,13 @@ export interface InventorySnapshot {
   readonly subnets: readonly SubnetFacts[];
   readonly routes: readonly RouteFacts[];
   readonly instances: readonly InstanceFacts[];
+  readonly natGateways: readonly NatGatewayFacts[];
 }
 
 export type TaggedKind =
   | 'instance'
+  | 'nat-gateway'
+  | 'elastic-ip'
   | 'internet-gateway'
   | 'subnet'
   | 'route-table'
@@ -81,7 +98,10 @@ export type TaggedKind =
 
 export interface TaggedResource {
   readonly kind: TaggedKind;
+  /** The resource ID; for an Elastic IP, its allocation ID. */
   readonly id: string;
+  /** For a NAT gateway: its state (`deleting` is only waited for). */
+  readonly state?: string;
   /** For an internet gateway: the VPC it is attached to, if any. */
   readonly attachedVpcId?: string;
   readonly tags: readonly Tag[];
@@ -91,7 +111,10 @@ export interface Inventory {
   describe(vpcIds: readonly string[]): Promise<InventorySnapshot>;
   /** EC2 resources tagged `sim:golden=true` (instances that aren't terminated). */
   listTagged(): Promise<readonly TaggedResource[]>;
-  /** Deletes one resource (terminates and waits for an instance; detaches a gateway first). */
+  /**
+   * Deletes one resource: terminates and waits for an instance, deletes a NAT gateway and waits
+   * until it is `deleted`, releases an Elastic IP, detaches a gateway first.
+   */
   remove(resource: TaggedResource): Promise<void>;
 }
 
@@ -140,6 +163,7 @@ export interface RawSecurityGroupRule {
 export interface RawRouteTableRoute {
   readonly DestinationCidr?: string | undefined;
   readonly GatewayId?: string | undefined;
+  readonly NatGatewayId?: string | undefined;
   readonly Origin?: string | undefined;
   readonly State?: string | undefined;
 }
@@ -165,6 +189,7 @@ export interface RawExplanation {
   readonly Subnet?: RawComponentRef | undefined;
   readonly Vpc?: RawComponentRef | undefined;
   readonly InternetGateway?: RawComponentRef | undefined;
+  readonly NatGateway?: RawComponentRef | undefined;
   readonly NetworkInterface?: RawComponentRef | undefined;
   readonly Destination?: RawComponentRef | undefined;
   readonly AclRule?: RawAclRule | undefined;

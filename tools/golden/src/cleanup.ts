@@ -26,8 +26,11 @@ export interface CleanupDeps {
   readonly out: Output;
 }
 
+/** NAT gateways go before subnets (their interfaces) and Elastic IPs before gateways (IGW-07). */
 const DELETE_ORDER: readonly TaggedKind[] = [
   'instance',
+  'nat-gateway',
+  'elastic-ip',
   'internet-gateway',
   'subnet',
   'route-table',

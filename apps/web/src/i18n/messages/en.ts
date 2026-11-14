@@ -188,6 +188,8 @@ export const en = {
   'sim.software.none': 'None',
   'sim.software.webServer': 'Web server (nginx on TCP port 80)',
   'reason.NO_ROUTE_TO_DESTINATION': 'The route table has no route to the destination.',
+  'reason.NO_ROUTE_TO_DESTINATION.natGateway':
+    'The route table sends this reply to NAT gateway {natGatewayId}, but a reply to an internet client must go back through the internet gateway. A NAT gateway only carries connections that start inside the VPC.',
   'reason.BAD_STATE_ROUTE': 'The matching route is a blackhole: its target is not available.',
   'reason.MORE_SPECIFIC_ROUTE':
     'A more specific route matches and wins, but it is a blackhole, so the traffic is dropped instead of using the less specific route.',
